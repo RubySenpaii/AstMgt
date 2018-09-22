@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a24c2062-470b-4168-97ba-6306a0a71598">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="batch_num" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select b.batchnum,b.date_issued,bi.model,inv.price,concat(bi.model,',',inv.price) as QrEncode
+,concat(item.series,'/ ',item.watch_type,'/ ',item.gender,'/ ',item.watch_color) as Description
+from batch b join batch_inventory bi on b.batchnum=bi.batchnum 
+			 join item item on item.model=bi.model
+			join inventory inv on inv.location=b.store_num and inv.model=bi.model
+where b.batchnum=$P{batch_num}]]>
+	</queryString>
+	<field name="batchnum" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_issued" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="model" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QrEncode" class="java.lang.String"/>
+	<field name="Description" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="48056338-78d3-49e5-906b-8942df1bfe81"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="08c3187b-88d2-4f94-b831-c74ae4a345fa"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[West Star Inc.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="e00f90c7-d5bd-4f8a-a7b4-54073fa281b7"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[ITEM DETAILS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="72" width="49" height="20" forecolor="#FFFFFF" uuid="5950c3d8-a651-4e07-8605-3efb8087cfd6"/>
+					<text><![CDATA[BATCH #]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="444" y="72" width="100" height="20" forecolor="#FFFFFF" uuid="376c6e28-fb3e-4809-831a-0c42a27a6abd"/>
+					<textFieldExpression><![CDATA[$F{batchnum}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="7ff475d3-5b2f-4756-b7df-b150988291f0"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="276" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5519e1dd-a432-4b30-8475-bcac2d2a2b41"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QR CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="276" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="94f48f45-4ed7-473c-9dfc-6cfce82db942"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="414" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7798e29a-7008-4243-8201-151a7afe970d"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="84">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="114" y="24" width="153" height="20" uuid="1261f2de-065c-4427-9665-a75fc7d6b011"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="146" y="44" width="104" height="20" uuid="081009dd-919b-4827-852b-858c587cbf03"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="57" y="4" width="57" height="57" uuid="d8ac8e47-0b95-4a09-bd69-fbfc6c182f63"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+     new com.google.zxing.qrcode.QRCodeWriter().encode(
+         $F{QrEncode},
+         com.google.zxing.BarcodeFormat.QR_CODE, 300, 300))]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="194" y="4" width="67" height="20" uuid="54cc23dd-c80f-443f-a139-f55e05f17bc4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{model}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="114" y="4" width="80" height="20" forecolor="#000000" uuid="a9d56abb-9caf-4101-9a1e-a9b5b3e4b52d"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[MODEL NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="44" width="32" height="20" forecolor="#000000" uuid="577776c2-1b71-403c-b93a-0ba9383e4ce6"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PhP]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="194" y="64" width="100" height="20" forecolor="#000000" uuid="9770bc32-d0bf-48b0-bc34-a30827f48736"/>
+				<textFieldExpression><![CDATA[$F{batchnum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="114" y="64" width="74" height="20" forecolor="#000000" uuid="ef6e8db0-9462-4bdd-9411-4e7685f282e3"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BATCH NO]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="90d77c55-2095-4c12-b678-7c6162429332"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5baca875-2a23-49c9-b131-9a8a87965dfa"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="1f9943b9-e495-47a0-ae07-e937682c2cac"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

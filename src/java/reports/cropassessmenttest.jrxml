@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cropassessmenttest" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d177d097-53ad-4e0b-93da-6b79c93038d2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<subDataset name="dataset1" uuid="a5ed0790-44c8-414d-84f1-7ea8277d24e5"/>
+	<parameter name="week_ending" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="year" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="district" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select year,district, date_format(week_ending, '%M %e, %Y') as week_ending,weather,prices_of_sugar,mill_operation,prices_of_inputs,others,overall_analysis from cropassessment where year=$P{year} and district=$P{district} AND week_ending=$P{week_ending} order by year,district,week_ending;]]>
+	</queryString>
+	<field name="year" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="district" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="week_ending" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="weather" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prices_of_sugar" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mill_operation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prices_of_inputs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="others" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="overall_analysis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="223">
+				<break type="Column">
+					<reportElement x="0" y="29" width="100" height="1" uuid="537e612b-7e36-439e-8b3f-becff9320fa1"/>
+				</break>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="49">
+				<staticText>
+					<reportElement x="291" y="10" width="100" height="20" uuid="fba529bc-7008-4f33-b105-49b788f1152c"/>
+					<text><![CDATA[Prepared By:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="410" y="41" width="117" height="1" uuid="69978562-648d-4d8c-b2fb-62537c344b1c"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<staticText>
+					<reportElement x="1" y="0" width="450" height="44" uuid="5337db78-a742-4d47-97fb-db276762e912"/>
+					<textElement verticalAlignment="Middle">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PART II. NARRATIVE REPORT]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="140" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="554" height="24" uuid="17682fe8-311d-4c2f-93bd-ed69baf6e5b9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUGAR REGULATORY ADMINISTRATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="24" width="304" height="20" uuid="b05bf7cb-e61a-46d0-96a9-2ec62272e7e5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MILL DISTRICT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="84" width="71" height="20" uuid="a6a1d3dd-a89d-4a0d-89f0-0565b1c42ad7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Crop Year]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="84" width="46" height="20" uuid="f2332c13-f14a-4181-b74a-ddefcc36b818"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="24" width="76" height="20" uuid="01196611-9473-4e9d-a9aa-c7499ee91644"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{district}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="152" y="64" width="249" height="20" uuid="257121f7-7eed-4d93-9f2c-80a55d2b531a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CROP ASSESSMENT REPORT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="73" y="120" width="100" height="20" uuid="21536ed6-2d57-44a8-9916-2a5198064990"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{week_ending}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="120" width="71" height="20" uuid="9a9c3e5e-d11b-45c8-af29-590695ac3315"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Week Ending :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="64" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="246" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="cffc69ef-bfbb-4bc4-ba9c-a20492d25901"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="1" y="94" width="112" height="38" uuid="24dcf333-9222-465d-8d9e-00584dcbbf29"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MILL OPERATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="132" width="112" height="38" uuid="33f6ee96-d147-4065-bbff-921912913420"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRICES OF INPUTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="170" width="112" height="38" uuid="f69288dd-f699-4209-ac35-e29085d721fc"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTHERS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="208" width="112" height="38" uuid="bc35f28d-5363-41a6-bbe7-f41c1b66b332"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OVERAL ANALYSIS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="113" y="56" width="442" height="38" uuid="1ae796b9-be04-423a-89bd-b448722a60f0"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{prices_of_sugar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="16" width="442" height="40" uuid="472f6885-fc86-4212-a908-09933ead6190"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{weather}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="94" width="442" height="38" uuid="b06f8c07-8777-4c5b-a951-839a1bece4b4"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{mill_operation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="132" width="441" height="38" uuid="a330f562-2699-4f7a-b9f3-5393edb36040"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{prices_of_inputs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="208" width="441" height="38" uuid="c0e5be26-16ec-4c02-bc09-05cdedfa836d"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{overall_analysis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="170" width="441" height="38" uuid="90fc4131-6ff1-4bc9-8e49-f2cdf83ec61a"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{others}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<elementGroup>
+					<staticText>
+						<reportElement mode="Transparent" x="1" y="56" width="112" height="39" forecolor="#000000" backcolor="#FFFFFF" uuid="93caa0cb-86ea-439c-a931-a98cdb5ebfa5"/>
+						<box>
+							<topPen lineWidth="1.0"/>
+							<leftPen lineWidth="1.0"/>
+							<rightPen lineWidth="1.0"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+							<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<text><![CDATA[PRICES OF SUGAR]]></text>
+					</staticText>
+				</elementGroup>
+				<staticText>
+					<reportElement x="1" y="16" width="112" height="40" uuid="1b5192f1-aecc-42c5-831a-566d4abaf52f"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[WEATHER]]></text>
+				</staticText>
+			</elementGroup>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="78829c59-cd1e-4ee9-9b0a-1c02ecfb1d27"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
