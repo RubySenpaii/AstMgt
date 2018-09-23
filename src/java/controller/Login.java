@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.Employee;
  // THIS IS THE CODE TO GET TODAYS' DIFFERENT DETAILS (JUST COPY PASTE IT 
                 //TO THE METHODS AND AVOID USING THIS IN SERVLETS AS TO LESSEN ERRORS
                 //AND MAKE THINGS MORE READABLE)               
@@ -33,8 +34,9 @@ public class Login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-//            oneUser.setUsername(request.getParameter("username"));
-//            oneUser.setPassword(request.getParameter("password"));
+            Employee oneUser = new Employee();
+            oneUser.Username = request.getParameter("username");
+            oneUser.Password = request.getParameter("password");
             String successful = null;
             if (successful != null) {
                 ServletContext context = getServletContext();
