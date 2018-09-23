@@ -10,6 +10,13 @@ package objects;
  * @author RubySenpaii
  */
 public class Asset {
+    public static final String COLUMN_ASSET_ID = "AssetId";
+    public static final String COLUMN_STOCK_NO = "StockNo";
+    public static final String COLUMN_ASSET_Name = "AssetName";
+    public static final String COLUMN_UNIT = "Unit";
+    public static final String COLUMN_DESCRIPTION = "Description";
+    public static final String COLUMN_FUND_CLUSTER = "FundCluster";
+    
     public int AssetId;
     public String StockNo;
     public String AssetName;

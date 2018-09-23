@@ -12,6 +12,27 @@ import java.util.Date;
  * @author RubySenpaii
  */
 public class PurchaseOrder {
+    public static final String COLUMN_PURCHASE_ORDER_ID = "PurchaseOrderId";
+    public static final String COLUMN_PURCHASE_REQUEST_ID = "PurchaseRequestId";
+    public static final String COLUMN_PURCHASE_ORDER_NO = "PurchaseOrderNo";
+    public static final String COLUMN_SUPPLIER_ID = "SupplierId";
+    public static final String COLUMN_ORDER_DATE = "OrderDate";
+    public static final String COLUMN_MODE_OF_PROCUREMENT = "ModeOfProcurement";
+    public static final String COLUMN_REMARKS = "Remarks";
+    public static final String COLUMN_DELIVERY_ADDRESS = "DeliveryAddress";
+    public static final String COLUMN_DELIVERY_DATE = "DeliveryDate";
+    public static final String COLUMN_DELIVERY_TERMS = "DeliveryTerms";
+    public static final String COLUMN_PAYMENT_TERMS = "PaymentTerms";
+    public static final String COLUMN_CONFORME_SUPPLIER = "ConformeSupplier";
+    public static final String COLUMN_CONFORME_DATE = "ConformeDate";
+    public static final String COLUMN_AUTHORIZED_BY = "AuthorizedBy";
+    public static final String COLUMN_APPROVED_BY = "ApprovedBy";
+    public static final String COLUMN_APPROVED_DATE = "ApprovedDate";
+    public static final String COLUMN_ORS_NUMBER = "ORSNumber";
+    public static final String COLUMN_ORS_DATE = "ORSDate";
+    public static final String COLUMN_RECEIVED_BY = "ReceivedBy";
+    public static final String COLUMN_RECEIVED_DATE = "ReceivedDate";
+    
     public int PurchaseOrderId;
     public int PurchaseRequestId;
     public String PurchaseOrderNumber;
