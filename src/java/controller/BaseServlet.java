@@ -1,6 +1,5 @@
 package controller;
 
-import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -24,7 +23,7 @@ public abstract class BaseServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession();
-            User user =  (User) session.getAttribute("user");
+//            User user =  (User) session.getAttribute("user");
             if (user != null) {
                 servletAction(request, response);
             } else {
