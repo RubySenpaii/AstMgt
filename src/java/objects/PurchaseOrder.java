@@ -42,12 +42,12 @@ public class PurchaseOrder {
     public String Remarks;
     public String DeliveryAddress;
     public Date DeliveryDate;
-    public String DeliveryTerm;
+    public String DeliveryTerms;
     public String PaymentTerm;
     public String ConformeSupplier;
     public Date ConformeDate;
     public int AuthorizedBy;
-    public Date AuthorizedDate;
+    public Date ApprovedDate;
     public String ORSNumber;
     public Date ORSDate;
     public int ReceivedBy;
