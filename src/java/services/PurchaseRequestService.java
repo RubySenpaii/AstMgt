@@ -19,13 +19,13 @@ import objects.PurchaseRequest;
  */
 public class PurchaseRequestService {
 
-    private String AddQuery = "INSERT INTO PurchaseRequest(" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + "," + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + "," + PurchaseRequest.COLUMN_ENTITY_NAME + ","
+    private final String AddQuery = "INSERT INTO PurchaseRequest(" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + "," + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + "," + PurchaseRequest.COLUMN_ENTITY_NAME + ","
             + PurchaseRequest.COLUMN_OFFICE + "," + PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE + "," + PurchaseRequest.COLUMN_DATE + "," + PurchaseRequest.COLUMN_PURPOSE + ","
             + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE + "," + PurchaseRequest.COLUMN_APPROVED_BY + "," + PurchaseRequest.COLUMN_APPROVED_DATE
             + ")VALUES(?,?,?,?,?,?,?,?,?,?,?);";
-    private String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ";
-    private String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ";
-    private String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
+    private final String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ";
+    private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ";
+    private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
 
     public int AddPurchaseRequest(PurchaseRequest pr) {
         try {
