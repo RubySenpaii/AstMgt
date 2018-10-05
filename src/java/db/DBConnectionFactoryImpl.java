@@ -20,6 +20,8 @@ public class DBConnectionFactoryImpl extends DBConnectionFactory {
     @Override
     public Connection getConnection() {
         try {
+            String username = "";
+            String password = "";
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(url, username, password);
             return conn;
