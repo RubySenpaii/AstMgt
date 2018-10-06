@@ -12,6 +12,11 @@ import java.util.Date;
  * @author RubySenpaii
  */
 public class Supplies {
+    public static final String COLUMN_ASSET_ID = "AssetId";
+    public static final String COLUMN_AMOUNT_ACQUIRED = "AmountAcquired";
+    public static final String COLUMN_DATE_ACQUIRED = "DateAcquired";
+    public static final String COLUMN_TOTALQUANTITY = "TotalQuantity";
+    
     public int AssetId;
     public int AmountAcquired;
     public Date DateAcquired;

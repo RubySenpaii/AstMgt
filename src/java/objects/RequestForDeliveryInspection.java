@@ -12,6 +12,16 @@ import java.util.Date;
  * @author RubySenpaii
  */
 public class RequestForDeliveryInspection {
+    public static final String COLUMN_DELIVERY_INSPECTION_ID = "DeliveryInspectionId";
+    public static final String COLUMN_PURCHASE_ORDER_ID = "PurchaseOrderId";
+    public static final String COLUMN_INVOICE = "Invoice";
+    public static final String COLUMN_DELIVERY_RECEIPT = "DeliveryReceipt";
+    public static final String COLUMN_CREATED_BY = "CreatedBy";
+    public static final String COLUMN_CREATED_DATE = "CreatedDate";
+    public static final String COLUMN_REMARKS = "Remarks";
+    public static final String COLUMN_MANAGEMENT_REMARKS = "ManagementRemarks";
+    public static final String COLUMN_FROM_BIDDING = "FromBidding";
+    
     public int DeliveryInspectionId;
     public int PurchaseOrderId;
     public String Invoice;

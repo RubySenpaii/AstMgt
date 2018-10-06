@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.Employee;
 
 @WebServlet(name = "BaseServlet", urlPatterns = {"/BaseServlet"})
 public abstract class BaseServlet extends HttpServlet {
@@ -23,7 +24,7 @@ public abstract class BaseServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession();
-//            User user =  (User) session.getAttribute("user");
+            Employee user =  (Employee) session.getAttribute("user");
             if (user != null) {
                 servletAction(request, response);
             } else {

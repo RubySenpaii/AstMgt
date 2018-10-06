@@ -12,6 +12,22 @@ import java.util.Date;
  * @author RubySenpaii
  */
 public class Employee {
+    public static final String COLUMN_EMPLOYEE_ID = "EmployeeId";
+    public static final String COLUMN_LAST_NAME = "LastName";
+    public static final String COLUMN_FIRST_NAME = "FirstName";
+    public static final String COLUMN_EMAIL = "Email";
+    public static final String COLUMN_CONTACT_NUMBER = "ContactNumber";
+    public static final String COLUMN_DIVISION = "Division";
+    public static final String COLUMN_CIVIL_STATUS = "CivilStatus";
+    public static final String COLUMN_BIRTHDATE = "BirthDate";
+    public static final String COLUMN_GENDER = "Gender";
+    public static final String COLUMN_EMPLOYEE_STATUS = "EmployeeStatus";
+    public static final String COLUMN_USERNAME = "Username";
+    public static final String COLUMN_PASSWORD = "Password";
+    public static final String COLUMN_START_DATE = "StartDate";
+    public static final String COLUMN_END_DATE = "EndDate";
+    public static final String COLUMN_FLAG = "Flag";
+    
     public int EmployeeId;
     public String LastName;
     public String FirstName;
