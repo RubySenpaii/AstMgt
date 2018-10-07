@@ -53,6 +53,39 @@ public class PurchaseRequestService {
         }
         return 0;
     }
+    
+    public int UpdatePurchaseRequest(PurchaseRequest purchaseRequest) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ?, " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?, "
+                    + PurchaseRequest.COLUMN_DATE + " = ?, " + PurchaseRequest.COLUMN_ENTITY_NAME + " = ?, " + PurchaseRequest.COLUMN_OFFICE +  " = ?, "
+                    + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ?, " + PurchaseRequest.COLUMN_PURPOSE + " = ?, "
+                    + PurchaseRequest.COLUMN_REQUESTED_BY + " = ?, " + PurchaseRequest.COLUMN_REQUESTED_DATE + " = ?, "
+                    + PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE + " = ? WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, purchaseRequest.ApprovedBy);
+            ps.setObject(2, purchaseRequest.ApprovedDate);
+            ps.setObject(3, purchaseRequest.Date);
+            ps.setString(4, purchaseRequest.EntityName);
+            ps.setString(5, purchaseRequest.Office);
+            ps.setString(6, purchaseRequest.PurchaseRequestNo);
+            ps.setString(7, purchaseRequest.Purpose);
+            ps.setInt(8, purchaseRequest.RequestedBy);
+            ps.setObject(9, purchaseRequest.RequestedDate);
+            ps.setString(10, purchaseRequest.ResponsibilityCenterCode);
+            ps.setInt(11, purchaseRequest.PurchaseRequestId);
+            
+            int result = ps.executeUpdate();
+            ps.close();
+            con.close();
+            return result;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return -1;
+        }
+    }
 
     public ArrayList<PurchaseRequest> FindPurhcaseRequesById(int prid) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
