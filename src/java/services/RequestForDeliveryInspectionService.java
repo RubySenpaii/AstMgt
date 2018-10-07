@@ -91,7 +91,7 @@ public class RequestForDeliveryInspectionService {
             String query = "SELECT * FROM RequestForDeliveryInspection";
             PreparedStatement ps = con.prepareStatement(query);
             
-            ArrayList<RequestForDeliveryInspection> deliveryRequests = GetResult(ps.executeQuery());
+            ArrayList<RequestForDeliveryInspection> deliveryRequests = getResult(ps.executeQuery());
             ps.close();
             con.close();
             return deliveryRequests;
@@ -111,7 +111,7 @@ public class RequestForDeliveryInspectionService {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, deliveryInspectionId);
             
-            RequestForDeliveryInspection deliveryRequest = GetResult(ps.executeQuery()).get(0);
+            RequestForDeliveryInspection deliveryRequest = getResult(ps.executeQuery()).get(0);
             ps.close();
             con.close();
             return deliveryRequest;
@@ -121,7 +121,7 @@ public class RequestForDeliveryInspectionService {
         }
     }
      
-    private ArrayList<RequestForDeliveryInspection> GetResult(ResultSet rs) throws SQLException {
+    private ArrayList<RequestForDeliveryInspection> getResult(ResultSet rs) throws SQLException {
         ArrayList<RequestForDeliveryInspection> deliveryRequests = new ArrayList<>();
         while(rs.next()) {
             RequestForDeliveryInspection deliveryRequest = new RequestForDeliveryInspection();

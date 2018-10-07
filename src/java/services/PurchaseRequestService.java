@@ -54,7 +54,7 @@ public class PurchaseRequestService {
         return 0;
     }
 
-    public ArrayList<PurchaseRequest> FindPRbyId(int prid) {
+    public ArrayList<PurchaseRequest> FindPurhcaseRequesById(int prid) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -70,7 +70,7 @@ public class PurchaseRequestService {
         return null;
     }
     
-    public ArrayList<PurchaseRequest> FindPRbyNo(String prno) {
+    public ArrayList<PurchaseRequest> FindPurchaseRequestByNo(String prno) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
