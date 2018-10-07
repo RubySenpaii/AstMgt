@@ -44,7 +44,7 @@ public class Login extends HttpServlet {
                 rd.forward(request, response);
             } else {
                 ServletContext context = getServletContext();
-                RequestDispatcher rd = context.getRequestDispatcher("/index.jsp");
+                RequestDispatcher rd = context.getRequestDispatcher("/template.jsp");
                 rd.forward(request, response);
             }
         } finally {
