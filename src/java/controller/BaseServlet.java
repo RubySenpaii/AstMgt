@@ -25,11 +25,11 @@ public abstract class BaseServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Employee user =  (Employee) session.getAttribute("user");
-            if (user != null) {
+            if (user != null || true) {
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();
-                RequestDispatcher rd = context.getRequestDispatcher("/index.jsp");
+                RequestDispatcher rd = context.getRequestDispatcher("/Login");
                 rd.forward(request, response);
             }
         } finally {
