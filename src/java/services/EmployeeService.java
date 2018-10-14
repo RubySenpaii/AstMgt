@@ -127,6 +127,7 @@ public class EmployeeService {
             e.Password = rs.getString(Employee.COLUMN_PASSWORD);
             e.StartDate = rs.getDate(Employee.COLUMN_START_DATE);
             e.Username = rs.getString(Employee.COLUMN_USERNAME);
+            employees.add(e);
         }
         rs.close();
         return employees;
