@@ -16,7 +16,7 @@ public class Employee {
     public static final String COLUMN_LAST_NAME = "LastName";
     public static final String COLUMN_FIRST_NAME = "FirstName";
     public static final String COLUMN_EMAIL = "Email";
-    public static final String COLUMN_CONTACT_NUMBER = "ContactNumber";
+    public static final String COLUMN_CONTACT_NUMBER = "ContactNo";
     public static final String COLUMN_DIVISION = "Division";
     public static final String COLUMN_CIVIL_STATUS = "CivilStatus";
     public static final String COLUMN_BIRTHDATE = "BirthDate";
