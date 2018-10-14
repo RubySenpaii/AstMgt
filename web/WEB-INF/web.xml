@@ -16,6 +16,10 @@
         <servlet-name>PurchaseRequestServlet</servlet-name>
         <servlet-class>controller.PurchaseRequestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExpenditureServlet</servlet-name>
+        <servlet-class>controller.ExpenditureServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseRequestServlet</servlet-name>
         <url-pattern>/PurchaseRequestServlet/*</url-pattern>
@@ -24,9 +28,11 @@
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExpenditureServlet</servlet-name>
+        <url-pattern>/ExpenditureServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
 </web-app>

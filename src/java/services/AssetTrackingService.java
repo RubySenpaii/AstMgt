@@ -27,8 +27,8 @@ public class AssetTrackingService {
             String query = "INSERT INTO AssetTracking(" + AssetTracking.COLUMN_APPROVED_BY + ", "
                     + AssetTracking.COLUMN_APPROVED_DATE + ", " + AssetTracking.COLUMN_ASSET_TAG + ", "
                     + AssetTracking.COLUMN_RELEASED_BY + ", " + AssetTracking.COLUMN_RELEASED_TO + ", "
-                    + AssetTracking.COLUMN_TRANSFER_DATE + ") "
-                    + "VALUES (?, ?, ?, ?, ?, ?)";
+                    + AssetTracking.COLUMN_TRANSFER_DATE + ", " + assetTracking.COLUMN_REMARKS + ") "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, assetTracking.ApprovedBy);
             ps.setObject(2, assetTracking.ApprovedDate);
@@ -36,6 +36,7 @@ public class AssetTrackingService {
             ps.setInt(4, assetTracking.ReleasedBy);
             ps.setInt(5, assetTracking.ReleasedTo);
             ps.setObject(6, assetTracking.TransferDate);
+            ps.setString(7, assetTracking.Remarks);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -54,7 +55,8 @@ public class AssetTrackingService {
             
             String query = "UPDATE AssetTracking SET " + AssetTracking.COLUMN_APPROVED_BY + " = ?, "
                     + AssetTracking.COLUMN_APPROVED_DATE + " = ?, " + AssetTracking.COLUMN_RELEASED_BY + " = ?, " 
-                    + AssetTracking.COLUMN_RELEASED_TO + " = ?, " + AssetTracking.COLUMN_TRANSFER_DATE + " = ? "
+                    + AssetTracking.COLUMN_RELEASED_TO + " = ?, " + AssetTracking.COLUMN_TRANSFER_DATE + " = ?, "
+                    + AssetTracking.COLUMN_REMARKS + " = ? "
                     + "WHERE " + AssetTracking.COLUMN_ASSET_TAG + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, assetTracking.ApprovedBy);
@@ -62,7 +64,8 @@ public class AssetTrackingService {
             ps.setInt(3, assetTracking.ReleasedBy);
             ps.setInt(4, assetTracking.ReleasedTo);
             ps.setObject(5, assetTracking.TransferDate);
-            ps.setString(6, assetTracking.AssetTag);
+            ps.setString(6, assetTracking.Remarks);
+            ps.setString(7, assetTracking.AssetTag);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -122,6 +125,7 @@ public class AssetTrackingService {
             assetStatus.ReleasedBy = rs.getInt(AssetTracking.COLUMN_RELEASED_BY);
             assetStatus.ReleasedTo = rs.getInt(AssetTracking.COLUMN_RELEASED_TO);
             assetStatus.TransferDate = rs.getDate(AssetTracking.COLUMN_TRANSFER_DATE);
+            assetStatus.Remarks = rs.getString(AssetTracking.COLUMN_REMARKS);
             assetHistory.add(assetStatus);
         }
         rs.close();
