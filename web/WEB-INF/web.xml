@@ -22,7 +22,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseRequestServlet</servlet-name>
-        <url-pattern>/PurchaseRequestServlet/*</url-pattern>
+        <url-pattern>/PurchaseRequest/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>

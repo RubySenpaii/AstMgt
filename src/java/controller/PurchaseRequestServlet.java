@@ -7,7 +7,10 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -33,7 +36,7 @@ public class PurchaseRequestServlet extends BaseServlet {
                     url = "/AMS/forms/purchase-request/add.jsp";
                     break;
                 case "Submit":
-                    url = AddPurchaseRequest();
+                    url = AddPurchaseRequest(request);
                     break;
                 case "Edit":
                     url = EditPurchaseRequest();
@@ -53,26 +56,43 @@ public class PurchaseRequestServlet extends BaseServlet {
         }
     }
 
-    private String AddPurchaseRequest() {
+    private String AddPurchaseRequest(HttpServletRequest request) throws ParseException {
+
+        PurchaseRequest pr = new PurchaseRequest();
+        pr.PurchaseRequestId = Integer.parseInt(request.getParameter("pri"));
+        pr.ApprovedBy = Integer.parseInt(request.getParameter("appby"));
+        pr.RequestedBy = Integer.parseInt(request.getParameter("reqby"));
+        pr.PurchaseRequestNo = request.getParameter("pr");
+        pr.Purpose = request.getParameter("purpose");
+        pr.ResponsibilityCenterCode = request.getParameter("rcc");
+        System.out.println(request.getParameter("date"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        pr.Date = sdf.parse(request.getParameter("date"));
+        pr.ApprovedDate = sdf.parse(request.getParameter("appdate"));
+        pr.RequestedDate = sdf.parse(request.getParameter("reqdate"));
+        
         PurchaseRequestService purchaseRequestService = new PurchaseRequestService();
-        PurchaseRequest purchaseRequest = new PurchaseRequest();
-        int result = purchaseRequestService.AddPurchaseRequest(purchaseRequest);
+        int result = purchaseRequestService.AddPurchaseRequest(pr);
         switch (result) {
-            case 0: return "";
-            case 1: return "";
-            default: return "";
+            case 0:
+                return "/forms/login.jsp";
+            case 1:
+                return "/forms/purchase-request/add.jsp";
+            default:
+                return "/forms/login.jsp";
         }
     }
-    
+
     private String EditPurchaseRequest() {
         PurchaseRequestService purchaseRequestService = new PurchaseRequestService();
         PurchaseRequest purchaseRequest = new PurchaseRequest();
         int result = purchaseRequestService.UpdatePurchaseRequest(purchaseRequest);
         switch (result) {
-            default: return "";
+            default:
+                return "";
         }
     }
-    
+
     private String NoAction() {
         return "/forms/purchase-request/add.jsp";
     }
