@@ -20,6 +20,10 @@
         <servlet-name>ExpenditureServlet</servlet-name>
         <servlet-class>controller.ExpenditureServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AssetServlet</servlet-name>
+        <servlet-class>controller.AssetServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseRequestServlet</servlet-name>
         <url-pattern>/PurchaseRequest/*</url-pattern>
@@ -30,7 +34,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExpenditureServlet</servlet-name>
-        <url-pattern>/ExpenditureServlet</url-pattern>
+        <url-pattern>/ExpenditureServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssetServlet</servlet-name>
+        <url-pattern>/AssetServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

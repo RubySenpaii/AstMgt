@@ -13,7 +13,7 @@ import java.sql.Connection;
  * @author Garfield
  */
 public abstract class DBConnectionFactory {
-        String url = "jdbc:mysql://localhost/mydb";
+        String url = "jdbc:mysql://localhost/astmgt";
         String username="root";
         String password="delfin";
 
