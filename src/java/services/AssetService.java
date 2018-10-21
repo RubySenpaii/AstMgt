@@ -26,8 +26,8 @@ public class AssetService {
 
             String query = "INSERT INTO Asset(" + Asset.COLUMN_ASSET_ID + ", " + Asset.COLUMN_ASSET_NAME + ", "
                     + Asset.COLUMN_DESCRIPTION + ", " + Asset.COLUMN_FUND_CLUSTER + ", " + Asset.COLUMN_STOCK_NO + ", "
-                    + Asset.COLUMN_UNIT + ") "
-                    + "VALUES(?, ?, ?, ?, ?, ?)";
+                    + Asset.COLUMN_UNIT + ", " + Asset.COLUMN_ASSET_TYPE + ") "
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, asset.AssetId);
             ps.setString(2, asset.AssetName);
@@ -35,6 +35,7 @@ public class AssetService {
             ps.setString(4, asset.FundCluster);
             ps.setString(5, asset.StockNo);
             ps.setString(6, asset.Unit);
+            ps.setString(7, asset.AssetType);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -121,6 +122,7 @@ public class AssetService {
             asset.FundCluster = rs.getString(Asset.COLUMN_FUND_CLUSTER);
             asset.StockNo = rs.getString(Asset.COLUMN_STOCK_NO);
             asset.Unit = rs.getString(Asset.COLUMN_UNIT);
+            asset.AssetType = rs.getString(Asset.COLUMN_ASSET_TYPE);
             assets.add(asset);
         }
         rs.close();
