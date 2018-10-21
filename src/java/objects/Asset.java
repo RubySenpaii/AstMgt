@@ -16,6 +16,7 @@ public class Asset {
     public static final String COLUMN_UNIT = "Unit";
     public static final String COLUMN_DESCRIPTION = "Description";
     public static final String COLUMN_FUND_CLUSTER = "FundCluster";
+    public static final String COLUMN_ASSET_TYPE = "AssetType";
     
     public int AssetId;
     public String StockNo;
@@ -23,4 +24,5 @@ public class Asset {
     public String Unit;
     public String Description;
     public String FundCluster;
+    public String AssetType;
 }

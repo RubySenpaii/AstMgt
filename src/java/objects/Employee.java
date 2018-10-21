@@ -16,7 +16,9 @@ public class Employee {
     public static final String COLUMN_LAST_NAME = "LastName";
     public static final String COLUMN_FIRST_NAME = "FirstName";
     public static final String COLUMN_EMAIL = "Email";
-    public static final String COLUMN_CONTACT_NUMBER = "ContactNumber";
+    public static final String COLUMN_CONTACT_NUMBER = "ContactNo";
+    public static final String COLUMN_ENTITY_NAME = "EntityName";
+    public static final String COLUMN_OFFICE = "Office";
     public static final String COLUMN_DIVISION = "Division";
     public static final String COLUMN_CIVIL_STATUS = "CivilStatus";
     public static final String COLUMN_BIRTHDATE = "BirthDate";
@@ -33,6 +35,8 @@ public class Employee {
     public String FirstName;
     public String Email;
     public String ContactNumber;
+    public String EntityName;
+    public String Office;
     public String Division;
     public String CivilStatus;
     public Date BirthDate;

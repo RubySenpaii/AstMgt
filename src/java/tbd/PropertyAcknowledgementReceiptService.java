@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package services;
+package tbd;
 
 import db.DBConnectionFactory;
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import objects.PropertyAcknowledgementReceipt;
+import tbd.PropertyAcknowledgementReceipt;
 
 /**
  *

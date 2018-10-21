@@ -22,8 +22,9 @@ public class EmployeeService {
     private String AddQuery = "INSERT INTO Employee(" + Employee.COLUMN_EMPLOYEE_ID + "," + Employee.COLUMN_LAST_NAME + ","
             + Employee.COLUMN_FIRST_NAME + "," + Employee.COLUMN_EMAIL + "," + Employee.COLUMN_CONTACT_NUMBER + "," + Employee.COLUMN_DIVISION + ","
             + Employee.COLUMN_CIVIL_STATUS + "," + Employee.COLUMN_BIRTHDATE + "," + Employee.COLUMN_GENDER + "," + Employee.COLUMN_EMPLOYEE_STATUS + ","
-            + Employee.COLUMN_USERNAME + "," + Employee.COLUMN_PASSWORD + "," + Employee.COLUMN_START_DATE + "," + Employee.COLUMN_END_DATE + "," + Employee.COLUMN_FLAG
-            + ")VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            + Employee.COLUMN_USERNAME + "," + Employee.COLUMN_PASSWORD + "," + Employee.COLUMN_START_DATE + "," + Employee.COLUMN_END_DATE + "," 
+            + Employee.COLUMN_FLAG + ", " + Employee.COLUMN_ENTITY_NAME + ", " + Employee.COLUMN_OFFICE
+            + ")VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
     private String SelectOneQuery = "Select * FROM Employee WHERE " + Employee.COLUMN_USERNAME + " = ? AND " + Employee.COLUMN_PASSWORD + " = ? ;";
     private String SelectOneByEmployeeId = "Select * FROM Employee WHERE " + Employee.COLUMN_EMPLOYEE_ID + " = ?";
@@ -96,6 +97,8 @@ public class EmployeeService {
             ps.setObject(13, employee.StartDate);
             ps.setObject(14, employee.EndDate);
             ps.setInt(15, employee.Flag);
+            ps.setString(16, employee.EntityName);
+            ps.setString(17, employee.Office);
 
             int result = ps.executeUpdate();
             conn.close();
@@ -127,6 +130,8 @@ public class EmployeeService {
             e.Password = rs.getString(Employee.COLUMN_PASSWORD);
             e.StartDate = rs.getDate(Employee.COLUMN_START_DATE);
             e.Username = rs.getString(Employee.COLUMN_USERNAME);
+            e.EntityName = rs.getString(Employee.COLUMN_ENTITY_NAME);
+            employees.add(e);
         }
         rs.close();
         return employees;

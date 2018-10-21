@@ -18,6 +18,7 @@ public class AssetTracking {
     public static final String COLUMN_RELEASED_TO = "ReleasedTo";
     public static final String COLUMN_APPROVED_BY = "ApprovedBy";
     public static final String COLUMN_APPROVED_DATE = "ApprovedDate";
+    public static final String COLUMN_REMARKS = "Remarks";
     
     public String AssetTag;
     public int ReleasedBy;
@@ -25,6 +26,7 @@ public class AssetTracking {
     public int ReleasedTo;
     public int ApprovedBy;
     public Date ApprovedDate;
+    public String Remarks;
     
     public Asset Asset;
 }

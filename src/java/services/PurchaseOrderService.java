@@ -59,7 +59,7 @@ public class PurchaseOrderService {
         return 0;
     }
     
-    public ArrayList<PurchaseOrder> FindPRbyNo(int prno) {
+    public ArrayList<PurchaseOrder> FindPurchaseOrderByNo(int prno) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 

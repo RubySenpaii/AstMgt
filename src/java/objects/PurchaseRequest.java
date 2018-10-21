@@ -15,8 +15,6 @@ public class PurchaseRequest {
     
     public static final String COLUMN_PURCHASE_REQUEST_ID = "PurchaseRequestId";
     public static final String COLUMN_PURCHASE_REQUEST_NO = "PurchaseRequestNo";
-    public static final String COLUMN_ENTITY_NAME = "EntityName";
-    public static final String COLUMN_OFFICE = "Office";
     public static final String COLUMN_RESPONSIBILITY_CENTER_CODE = "ResponsibilityCenterCode";
     public static final String COLUMN_DATE = "Date";
     public static final String COLUMN_PURPOSE = "Purpose";
@@ -27,8 +25,6 @@ public class PurchaseRequest {
     
     public int PurchaseRequestId;
     public String PurchaseRequestNo;
-    public String EntityName;
-    public String Office;
     public String ResponsibilityCenterCode;
     public Date Date;
     public String Purpose;

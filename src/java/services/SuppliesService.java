@@ -19,7 +19,7 @@ import objects.Supplies;
  */
 public class SuppliesService {
     private String AddSuppliesQuery = "INSERT INTO Supplies(" + Supplies.COLUMN_ASSET_ID + "," + Supplies.COLUMN_AMOUNT_ACQUIRED + ","
-            + Supplies.COLUMN_DATE_ACQUIRED + "," + Supplies.COLUMN_TOTALQUANTITY + ")VALUES(?,?,?,?)";
+            + Supplies.COLUMN_TIMESTAMP + "," + Supplies.COLUMN_TOTALQUANTITY + ", " + Supplies.COLUMN_AMOUNT_DISPOSED + ")VALUES(?,?,?,?)";
 
     private String FindSuppliesByIdQuery = "SELECT * FROM Supplies WHERE " + Supplies.COLUMN_ASSET_ID + " = ?";
     private String FindAllSuppliesQuery = "SELECT * FROM Supplies;";
@@ -31,8 +31,9 @@ public class SuppliesService {
             PreparedStatement ps = conn.prepareStatement(AddSuppliesQuery);
             ps.setInt(1, s.AssetId);
             ps.setInt(2, s.AmountAcquired);
-            ps.setObject(3, s.DateAcquired);
+            ps.setObject(3, s.Timestamp);
             ps.setInt(4, s.TotalQuantity);
+            ps.setInt(5, s.AmountDisposed);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();
@@ -80,8 +81,10 @@ public class SuppliesService {
             Supplies e = new Supplies();
             e.AssetId = rs.getInt(Supplies.COLUMN_ASSET_ID);
             e.AmountAcquired = rs.getInt(Supplies.COLUMN_AMOUNT_ACQUIRED);
-            e.DateAcquired = rs.getDate(Supplies.COLUMN_DATE_ACQUIRED);
+            e.Timestamp = rs.getDate(Supplies.COLUMN_TIMESTAMP);
             e.TotalQuantity = rs.getInt(Supplies.COLUMN_TOTALQUANTITY);
+            e.AmountDisposed = rs.getInt(Supplies.COLUMN_AMOUNT_DISPOSED);
+            purchaserequestList.add(e);
         }
         rs.close();
         return purchaserequestList;

@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -6,6 +7,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 //import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.Employee;
- // THIS IS THE CODE TO GET TODAYS' DIFFERENT DETAILS (JUST COPY PASTE IT 
-                //TO THE METHODS AND AVOID USING THIS IN SERVLETS AS TO LESSEN ERRORS
-                //AND MAKE THINGS MORE READABLE)               
-                //CalendarDB caldb= new CalendarDB();
-                //ArrayList<Calendar> calist= caldb.getCurrentYearDetails();
-                //int cropyr=calist.get(0).getYear();
-
+import services.EmployeeService;
+// THIS IS THE CODE TO GET TODAYS' DIFFERENT DETAILS (JUST COPY PASTE IT 
+//TO THE METHODS AND AVOID USING THIS IN SERVLETS AS TO LESSEN ERRORS
+//AND MAKE THINGS MORE READABLE)               
+//CalendarDB caldb= new CalendarDB();
+//ArrayList<Calendar> calist= caldb.getCurrentYearDetails();
+//int cropyr=calist.get(0).getYear();
 
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
@@ -33,20 +35,26 @@ public class Login extends HttpServlet {
             throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        System.out.println("Entering Log In Service : " + Calendar.getInstance().getTime());
         try {
             Employee oneUser = new Employee();
+            EmployeeService employeeDB = new EmployeeService();
             oneUser.Username = request.getParameter("username");
             oneUser.Password = request.getParameter("password");
-            String successful = null;
-            if (successful != null) {
-                ServletContext context = getServletContext();
-                RequestDispatcher rd = context.getRequestDispatcher("/Homepage.jsp");
-                rd.forward(request, response);
-            } else {
+            System.out.println("Authenticating user ......" + Calendar.getInstance().getTime());
+            ArrayList<Employee> checker = employeeDB.Authenticate(oneUser.Username, oneUser.Password);
+            System.out.println("Returning with object : " + checker.size());
+            if (checker.size() != 0) {
                 ServletContext context = getServletContext();
                 RequestDispatcher rd = context.getRequestDispatcher("/template.jsp");
                 rd.forward(request, response);
+            } else {
+                ServletContext context = getServletContext();
+                RequestDispatcher rd = context.getRequestDispatcher("/404.jsp");
+                rd.forward(request, response);
             }
+        } catch (Exception e) {
+            System.out.println("ERROR : " + e);
         } finally {
             out.close();
         }

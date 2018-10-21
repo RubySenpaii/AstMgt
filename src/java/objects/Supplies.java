@@ -14,11 +14,13 @@ import java.util.Date;
 public class Supplies {
     public static final String COLUMN_ASSET_ID = "AssetId";
     public static final String COLUMN_AMOUNT_ACQUIRED = "AmountAcquired";
-    public static final String COLUMN_DATE_ACQUIRED = "DateAcquired";
+    public static final String COLUMN_AMOUNT_DISPOSED = "AmountDisposed";
+    public static final String COLUMN_TIMESTAMP = "Timestamp";
     public static final String COLUMN_TOTALQUANTITY = "TotalQuantity";
     
     public int AssetId;
     public int AmountAcquired;
-    public Date DateAcquired;
+    public int AmountDisposed;
+    public Date Timestamp;
     public int TotalQuantity;
 }
