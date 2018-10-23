@@ -20,16 +20,17 @@ import objects.PurchaseOrder;
  */
 public class PurchaseOrderService {
 
-    private String AddPurchaseOrderQuery = "INSERT INTO PurchaseOrder(" + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + PurchaseOrder.COLUMN_PURCHASE_ORDER_NO + ","
+    private String AddPurchaseOrderQuery = "INSERT INTO PurchaseOrder(" + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + "," + PurchaseOrder.COLUMN_PURCHASE_ORDER_NO + ","
             + PurchaseOrder.COLUMN_ORDER_DATE + "," + PurchaseOrder.COLUMN_MODE_OF_PROCUREMENT + "," + PurchaseOrder.COLUMN_REMARKS + ","
             + PurchaseOrder.COLUMN_DELIVERY_ADDRESS + "," + PurchaseOrder.COLUMN_DELIVERY_DATE + "," + PurchaseOrder.COLUMN_DELIVERY_TERMS + ","
             + PurchaseOrder.COLUMN_PAYMENT_TERMS + "," + PurchaseOrder.COLUMN_CONFORME_SUPPLIER + "," + PurchaseOrder.COLUMN_CONFORME_DATE + ","
-            + PurchaseOrder.COLUMN_APPROVED_DATE + "," + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_RECEIVED_DATE
-            + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    
-    private String FindPurchaseOrderIdQuery = "SELECT * FROM PurchaseOrder WHERE "+PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
-    private String FindAllPurchaseOrder = "SELECT * FROM PurchaseOrder;";
-    public int AddNewPurchaseOrder(PurchaseOrder po){
+            + PurchaseOrder.COLUMN_APPROVED_DATE + "," + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_RECEIVED_DATE + "," + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + ","
+            + PurchaseOrder.COLUMN_SUPPLIER_ID + "," + PurchaseOrder.COLUMN_AUTHORIZED_BY + "," + PurchaseOrder.COLUMN_APPROVED_BY + "," + PurchaseOrder.COLUMN_RECEIVED_BY + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    private String FindPurchaseOrderIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
+    private String FindAllPurchaseOrderQ = "SELECT * FROM PurchaseOrder ;";
+
+    public int AddNewPurchaseOrder(PurchaseOrder po) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection conn = db.getConnection();
@@ -49,6 +50,11 @@ public class PurchaseOrderService {
             ps.setString(13, po.ORSNumber);
             ps.setObject(14, po.OrderDate);
             ps.setObject(15, po.ReceivedDate);
+            ps.setInt(16, po.PurchaseRequestId);
+            ps.setInt(17, po.SupplierId);
+            ps.setInt(18, po.AuthorizedBy);
+            ps.setInt(19, po.ApprovedBy);
+            ps.setInt(20, po.ReceivedBy);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();
@@ -58,7 +64,7 @@ public class PurchaseOrderService {
         }
         return 0;
     }
-    
+
     public ArrayList<PurchaseOrder> FindPurchaseOrderByNo(int prno) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
@@ -74,7 +80,21 @@ public class PurchaseOrderService {
         }
         return null;
     }
-    
+
+    public ArrayList<PurchaseOrder> FindAllPurchaseOrder() throws SQLException {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(FindAllPurchaseOrderQ);
+            ArrayList<PurchaseOrder> elist = getResult(ps.executeQuery());
+            ps.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
     private ArrayList<PurchaseOrder> getResult(ResultSet rs) throws SQLException {
         ArrayList<PurchaseOrder> purchaserequestList = new ArrayList<PurchaseOrder>();
         while (rs.next()) {
@@ -93,16 +113,16 @@ public class PurchaseOrderService {
             e.ConformeSupplier = rs.getString(PurchaseOrder.COLUMN_CONFORME_SUPPLIER);
             e.ConformeDate = rs.getDate(PurchaseOrder.COLUMN_CONFORME_DATE);
             e.AuthorizedBy = rs.getInt(PurchaseOrder.COLUMN_AUTHORIZED_BY);
-            e.Approver = (Employee)rs.getObject(PurchaseOrder.COLUMN_APPROVED_BY);
+            e.ApprovedBy = rs.getInt(PurchaseOrder.COLUMN_APPROVED_BY);
             e.ApprovedDate = rs.getDate(PurchaseOrder.COLUMN_APPROVED_DATE);
             e.ORSNumber = rs.getString(PurchaseOrder.COLUMN_ORS_NUMBER);
             e.ORSDate = rs.getDate(PurchaseOrder.COLUMN_ORS_DATE);
             e.ReceivedBy = rs.getInt(PurchaseOrder.COLUMN_RECEIVED_BY);
             e.ReceivedDate = rs.getDate(PurchaseOrder.COLUMN_RECEIVED_DATE);
+            purchaserequestList.add(e);
         }
         rs.close();
         return purchaserequestList;
     }
-    
-    
+
 }

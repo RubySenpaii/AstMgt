@@ -52,6 +52,7 @@ public class PurchaseOrder {
     public Date ORSDate;
     public int ReceivedBy;
     public Date ReceivedDate;
+    public int ApprovedBy;
     
     public PurchaseRequest PurchaseRequest;
     public Supplier Supplier;

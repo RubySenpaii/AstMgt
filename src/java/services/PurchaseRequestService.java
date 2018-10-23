@@ -114,7 +114,7 @@ public class PurchaseRequestService {
         return null;
     }
     
-    public ArrayList<PurchaseRequest> FindAllPR(String prno) {
+    public ArrayList<PurchaseRequest> FindAllPR() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 

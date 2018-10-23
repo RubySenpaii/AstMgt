@@ -36,8 +36,18 @@
                     <span>Purchase Request</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/AssetServlet/Add">Create</a></li>
-                    <li><a href="/AMS/AssetServlet/List">List</a></li>
+                    <li><a href="/AMS/PurchaseRequest/Add">Create</a></li>
+                    <li><a href="/AMS/PurchaseRequest/List">List</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa fa-desktop"></i>
+                    <span>Purchase Order</span>
+                </a>
+                <ul class="sub">
+                    <li><a href="/AMS/PurchaseOrderServlet/Add">Create</a></li>
+                    <li><a href="/AMS/PurchaseOrderServlet/List">View</a></li>
                 </ul>
             </li>
         </ul>

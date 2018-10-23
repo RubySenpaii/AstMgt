@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import objects.PurchaseRequest;
 import services.PurchaseRequestService;
 
@@ -33,7 +34,7 @@ public class PurchaseRequestServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Add":
-                    url = "/AMS/forms/purchase-request/add.jsp";
+                    url = "/forms/purchase-request/add.jsp";
                     break;
                 case "Submit":
                     url = AddPurchaseRequest(request);
@@ -43,6 +44,8 @@ public class PurchaseRequestServlet extends BaseServlet {
                     break;
                 case "View":
                 case "List":
+                    url = ListPurchaseRequest(request);
+                    break;
                 case "Flag":
                 default:
                     url = NoAction();
@@ -55,7 +58,15 @@ public class PurchaseRequestServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-
+    
+    private String ListPurchaseRequest(HttpServletRequest request){
+        PurchaseRequestService prservice = new PurchaseRequestService();
+        ArrayList<PurchaseRequest> PRList = new ArrayList<>();
+        PRList = prservice.FindAllPR();
+        HttpSession session = request.getSession();
+        session.setAttribute("PR", PRList);
+        return "/forms/purchase-request/list.jsp";
+    }
     private String AddPurchaseRequest(HttpServletRequest request) throws ParseException {
 
         PurchaseRequest pr = new PurchaseRequest();
