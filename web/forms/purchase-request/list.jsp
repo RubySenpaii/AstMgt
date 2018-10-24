@@ -39,6 +39,7 @@
                                             <th>Requested Date</th>
                                             <th>Approved By</th>
                                             <th>Approved Date</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,6 +55,9 @@
                                             <td><c:out value="<%= pr.RequestedDate %>"></c:out></td>
                                             <td><c:out value="<%= pr.ApprovedBy %>"></c:out></td>
                                             <td><c:out value="<%= pr.ApprovedDate %>"></c:out></td>
+                                            <td>
+                                                <button type="submit" formaction="">View</button>
+                                            </td>
                                         </tr>
                                         <%
                                             }
