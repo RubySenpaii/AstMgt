@@ -32,9 +32,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Purchase Request Id</th>
                                             <th>Purchase Request No</th>
-                                            <th>Responsibility Center Code</th>
                                             <th>Date</th>
                                             <th>Purpose</th>
                                             <th>Requested By</th>
@@ -49,9 +47,7 @@
                                             for (PurchaseRequest pr : PR) {
                                         %>
                                         <tr>
-                                            <td><c:out value="<%= pr.PurchaseRequestId %>"></c:out></td>
                                             <td><c:out value="<%= pr.PurchaseRequestNo %>"></c:out></td>
-                                            <td><c:out value="<%= pr.ResponsibilityCenterCode %>"></c:out></td>
                                             <td><c:out value="<%= pr.Date %>"></c:out></td>
                                             <td><c:out value="<%= pr.Purpose %>"></c:out></td>
                                             <td><c:out value="<%= pr.RequestedBy %>"></c:out></td>

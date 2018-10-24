@@ -43,12 +43,10 @@ public class PurchaseRequestServlet extends BaseServlet {
                     url = EditPurchaseRequest();
                     break;
                 case "View":
-                case "List":
-                    url = ListPurchaseRequest(request);
-                    break;
                 case "Flag":
+                case "List":
                 default:
-                    url = NoAction();
+                    url = ListPurchaseRequest(request);
                     break;
             }
             ServletContext context = getServletContext();
@@ -102,9 +100,5 @@ public class PurchaseRequestServlet extends BaseServlet {
             default:
                 return "";
         }
-    }
-
-    private String NoAction() {
-        return "/forms/purchase-request/add.jsp";
     }
 }

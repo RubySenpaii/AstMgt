@@ -25,33 +25,22 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div>
+                        <div class="col-md-12">
                             <div class="content-panel">
                                 <h4>List of Purchase Order</h4>
                                 <br/>
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>PurchaseOrderId</th>
-                                            <th>PurchaseRequestId</th>
-                                            <th>PurchaseOrderNo</th>
-                                            <th>SupplierId</th>
-                                            <th>OrderDate</th>
-                                            <th>ModeOfProcurement</th>
-                                            <th>Remarks</th>
-                                            <th>DeliveryAddress</th>
-                                            <th>DeliveryDate</th>
-                                            <th>DeliveryTerms</th>
-                                            <th>PaymentTerms</th>
-                                            <th>ConformeSupplier</th>
-                                            <th>ConformeDate</th>
-                                            <th>AuthorizedBy</th>
-                                            <th>ApprovedBy</th>
-                                            <th>ApprovedDate</th>
-                                            <th>ORSNumber</th>
-                                            <th>ORSDate</th>
-                                            <th>ReceivedBy</th>
-                                            <th>ReceivedDate</th>
+                                            <th>Purchase Order No</th>
+                                            <th>Supplier Name</th>
+                                            <th>Order Date</th>
+                                            <th>Delivery Address</th>
+                                            <th>Delivery Date</th>
+                                            <th>Delivery Terms</th>
+                                            <th>Payment Terms</th>
+                                            <th>Received By</th>
+                                            <th>Received Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -60,27 +49,16 @@
                                             for (PurchaseOrder po : PO) {
                                         %>
                                         <tr>
-                                            <td><c:out value="<%= po.PurchaseOrderId %>"></c:out></td>
-                                            <td><c:out value="<%= po.PurchaseRequestId %>"></c:out></td>
-                                            <td><c:out value="<%= po.PurchaseOrderNumber %>"></c:out></td>
-                                            <td><c:out value="<%= po.SupplierId %>"></c:out></td>
-                                            <td><c:out value="<%= po.OrderDate %>"></c:out></td>
-                                            <td><c:out value="<%= po.ModeOfProcurement %>"></c:out></td>
-                                            <td><c:out value="<%= po.Remarks %>"></c:out></td>
-                                            <td><c:out value="<%= po.DeliveryAddress %>"></c:out></td>
-                                            <td><c:out value="<%= po.DeliveryDate %>"></c:out></td>
-                                            <td><c:out value="<%= po.DeliveryTerms %>"></c:out></td>
-                                            <td><c:out value="<%= po.PaymentTerm %>"></c:out></td>
-                                            <td><c:out value="<%= po.ConformeSupplier %>"></c:out></td>
-                                            <td><c:out value="<%= po.ConformeDate %>"></c:out></td>
-                                            <td><c:out value="<%= po.AuthorizedBy %>"></c:out></td>
-                                            <td><c:out value="<%= po.ApprovedBy %>"></c:out></td>
-                                            <td><c:out value="<%= po.ApprovedDate %>"></c:out></td>
-                                            <td><c:out value="<%= po.ORSNumber %>"></c:out></td>
-                                            <td><c:out value="<%= po.ORSDate %>"></c:out></td>
-                                            <td><c:out value="<%= po.ReceivedBy %>"></c:out></td>
-                                            <td><c:out value="<%= po.ReceivedDate %>"></c:out></td>
-                                        </tr>
+                                            <td><c:out value="<%= po.PurchaseOrderNumber%>"></c:out></td>
+                                            <td><c:out value="<%= po.Supplier.SupplierName%>"></c:out></td>
+                                            <td><c:out value="<%= po.OrderDate%>"></c:out></td>
+                                            <td><c:out value="<%= po.DeliveryAddress%>"></c:out></td>
+                                            <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
+                                            <td><c:out value="<%= po.DeliveryTerms%>"></c:out></td>
+                                            <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
+                                            <td><c:out value="<%= po.ReceivedBy%>"></c:out></td>
+                                            <td><c:out value="<%= po.ReceivedDate%>"></c:out></td>
+                                            </tr>
                                         <%
                                             }
                                         %>

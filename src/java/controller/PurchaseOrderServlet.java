@@ -44,12 +44,10 @@ public class PurchaseOrderServlet extends BaseServlet {
                     url = EditPurchaseOrder();
                     break;
                 case "View":
-                case "List":
-                    url = ListPurchaseOrder(request);
-                    break;
                 case "Flag":
+                case "List":
                 default:
-                    url = NoAction();
+                    url = ListPurchaseOrder(request);
                     break;
             }
             ServletContext context = getServletContext();
@@ -111,9 +109,5 @@ public class PurchaseOrderServlet extends BaseServlet {
             default:
                 return "";
         }
-    }
-
-    private String NoAction() {
-        return "/forms/purchase-order/add.jsp";
     }
 }
