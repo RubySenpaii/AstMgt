@@ -43,6 +43,8 @@ public class PurchaseRequestServlet extends BaseServlet {
                     url = EditPurchaseRequest();
                     break;
                 case "View":
+                    url = ViewPurchaseRequestById(request);
+                    break;
                 case "Flag":
                 case "List":
                 default:
@@ -56,8 +58,19 @@ public class PurchaseRequestServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-    
-    private String ListPurchaseRequest(HttpServletRequest request){
+
+    private String ViewPurchaseRequestById(HttpServletRequest request) {
+        PurchaseRequestService prservice = new PurchaseRequestService();
+        ArrayList<PurchaseRequest> PRList = new ArrayList<>();
+        HttpSession session = request.getSession(); 
+        int id = (int) session.getAttribute("id");
+        System.out.println("Getting the number : " + id);
+        PRList = prservice.FindPurhcaseRequesById(id);
+        session.setAttribute("PR", PRList);
+        return "/forms/purchase-request/view.jsp";
+    }
+
+    private String ListPurchaseRequest(HttpServletRequest request) {
         PurchaseRequestService prservice = new PurchaseRequestService();
         ArrayList<PurchaseRequest> PRList = new ArrayList<>();
         PRList = prservice.FindAllPR();
@@ -65,6 +78,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         session.setAttribute("PR", PRList);
         return "/forms/purchase-request/list.jsp";
     }
+
     private String AddPurchaseRequest(HttpServletRequest request) throws ParseException {
 
         PurchaseRequest pr = new PurchaseRequest();
@@ -79,7 +93,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         pr.Date = sdf.parse(request.getParameter("date"));
         pr.ApprovedDate = sdf.parse(request.getParameter("appdate"));
         pr.RequestedDate = sdf.parse(request.getParameter("reqdate"));
-        
+
         PurchaseRequestService purchaseRequestService = new PurchaseRequestService();
         int result = purchaseRequestService.AddPurchaseRequest(pr);
         switch (result) {

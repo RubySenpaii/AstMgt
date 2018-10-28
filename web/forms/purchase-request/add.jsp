@@ -26,6 +26,12 @@
                             <h4>Create Purchase Request</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
                                 <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputEmail1">Purchase Request Id</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="pri" name="pri" aria-describedby="emailHelp" placeholder="Enter Purchase Request No.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputEmail1">Purchase Request No</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" id="pr" name="pr" aria-describedby="emailHelp" placeholder="Enter Purchase Request No.">

@@ -34,11 +34,8 @@
                                         <tr>
                                             <th>Purchase Request No</th>
                                             <th>Date</th>
-                                            <th>Purpose</th>
                                             <th>Requested By</th>
                                             <th>Requested Date</th>
-                                            <th>Approved By</th>
-                                            <th>Approved Date</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -50,13 +47,15 @@
                                         <tr>
                                             <td><c:out value="<%= pr.PurchaseRequestNo %>"></c:out></td>
                                             <td><c:out value="<%= pr.Date %>"></c:out></td>
-                                            <td><c:out value="<%= pr.Purpose %>"></c:out></td>
                                             <td><c:out value="<%= pr.RequestedBy %>"></c:out></td>
                                             <td><c:out value="<%= pr.RequestedDate %>"></c:out></td>
-                                            <td><c:out value="<%= pr.ApprovedBy %>"></c:out></td>
-                                            <td><c:out value="<%= pr.ApprovedDate %>"></c:out></td>
                                             <td>
-                                                <button type="submit" formaction="">View</button>
+                                                <form action="/AMS/PurchaseRequest/View">
+                                                    <%
+                                                        session.setAttribute("id", pr.PurchaseRequestId);
+                                                    %>
+                                                <button type="submit" >View</button>
+                                                </form>
                                             </td>
                                         </tr>
                                         <%
