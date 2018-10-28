@@ -24,7 +24,7 @@ public class SuppliesService {
     private String FindSuppliesByIdQuery = "SELECT * FROM Supplies WHERE " + Supplies.COLUMN_ASSET_ID + " = ?";
     private String FindAllSuppliesQuery = "SELECT * FROM Supplies;";
     
-    public int AddNewSupplier(Supplies s) {
+    public int AddNewSupply(Supplies s) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection conn = db.getConnection();
@@ -60,7 +60,7 @@ public class SuppliesService {
         return null;
     }
     
-    public ArrayList<Supplies> FindAllSupplier() {
+    public ArrayList<Supplies> FindAllSupplies() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 

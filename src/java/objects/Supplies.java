@@ -23,4 +23,6 @@ public class Supplies {
     public int AmountDisposed;
     public Date Timestamp;
     public int TotalQuantity;
+    
+    public Asset Asset;
 }

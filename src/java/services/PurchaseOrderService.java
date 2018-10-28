@@ -65,7 +65,7 @@ public class PurchaseOrderService {
         return 0;
     }
 
-    public ArrayList<PurchaseOrder> FindPurchaseOrderByNo(int prno) {
+    public PurchaseOrder FindPurchaseOrderByNo(int prno) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -74,7 +74,7 @@ public class PurchaseOrderService {
             ps.setInt(1, prno);
             ArrayList<PurchaseOrder> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }
