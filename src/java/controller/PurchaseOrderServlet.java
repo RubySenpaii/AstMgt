@@ -77,12 +77,9 @@ public class PurchaseOrderServlet extends BaseServlet {
         po.DeliveryDate = sdf.parse(request.getParameter("deldate"));
         po.ConformeDate = sdf.parse(request.getParameter("condate"));
         po.ORSDate = sdf.parse(request.getParameter("orsdate"));
-        po.ReceivedDate = sdf.parse(request.getParameter("recdate"));
-        po.AuthorizedBy = Integer.parseInt(request.getParameter("autby"));
         po.ApprovedBy = Integer.parseInt(request.getParameter("appby"));
         po.PurchaseOrderId = Integer.parseInt(request.getParameter("pro"));
         po.PurchaseRequestId = Integer.parseInt(request.getParameter("pri"));
-        po.ReceivedBy = Integer.parseInt(request.getParameter("recby"));
         po.SupplierId = Integer.parseInt(request.getParameter("sid"));
         po.PurchaseOrderNumber = request.getParameter("pono");
         po.ModeOfProcurement = request.getParameter("mop");

@@ -24,8 +24,8 @@ public class PurchaseOrderService {
             + PurchaseOrder.COLUMN_ORDER_DATE + "," + PurchaseOrder.COLUMN_MODE_OF_PROCUREMENT + "," + PurchaseOrder.COLUMN_REMARKS + ","
             + PurchaseOrder.COLUMN_DELIVERY_ADDRESS + "," + PurchaseOrder.COLUMN_DELIVERY_DATE + "," + PurchaseOrder.COLUMN_DELIVERY_TERMS + ","
             + PurchaseOrder.COLUMN_PAYMENT_TERMS + "," + PurchaseOrder.COLUMN_CONFORME_SUPPLIER + "," + PurchaseOrder.COLUMN_CONFORME_DATE + ","
-            + PurchaseOrder.COLUMN_APPROVED_DATE + "," + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_RECEIVED_DATE + "," + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + ","
-            + PurchaseOrder.COLUMN_SUPPLIER_ID + "," + PurchaseOrder.COLUMN_AUTHORIZED_BY + "," + PurchaseOrder.COLUMN_APPROVED_BY + "," + PurchaseOrder.COLUMN_RECEIVED_BY + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + PurchaseOrder.COLUMN_APPROVED_DATE + "," + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + ","
+            + PurchaseOrder.COLUMN_SUPPLIER_ID + "," + PurchaseOrder.COLUMN_APPROVED_BY + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private String FindPurchaseOrderIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
     private String FindAllPurchaseOrderQ = "SELECT * FROM PurchaseOrder ;";
@@ -49,12 +49,9 @@ public class PurchaseOrderService {
             ps.setObject(12, po.ApprovedDate);
             ps.setString(13, po.ORSNumber);
             ps.setObject(14, po.OrderDate);
-            ps.setObject(15, po.ReceivedDate);
-            ps.setInt(16, po.PurchaseRequestId);
-            ps.setInt(17, po.SupplierId);
-            ps.setInt(18, po.AuthorizedBy);
-            ps.setInt(19, po.ApprovedBy);
-            ps.setInt(20, po.ReceivedBy);
+            ps.setInt(15, po.PurchaseRequestId);
+            ps.setInt(16, po.SupplierId);
+            ps.setInt(17, po.ApprovedBy);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();
@@ -112,13 +109,10 @@ public class PurchaseOrderService {
             e.PaymentTerm = rs.getString(PurchaseOrder.COLUMN_PAYMENT_TERMS);
             e.ConformeSupplier = rs.getString(PurchaseOrder.COLUMN_CONFORME_SUPPLIER);
             e.ConformeDate = rs.getDate(PurchaseOrder.COLUMN_CONFORME_DATE);
-            e.AuthorizedBy = rs.getInt(PurchaseOrder.COLUMN_AUTHORIZED_BY);
             e.ApprovedBy = rs.getInt(PurchaseOrder.COLUMN_APPROVED_BY);
             e.ApprovedDate = rs.getDate(PurchaseOrder.COLUMN_APPROVED_DATE);
             e.ORSNumber = rs.getString(PurchaseOrder.COLUMN_ORS_NUMBER);
             e.ORSDate = rs.getDate(PurchaseOrder.COLUMN_ORS_DATE);
-            e.ReceivedBy = rs.getInt(PurchaseOrder.COLUMN_RECEIVED_BY);
-            e.ReceivedDate = rs.getDate(PurchaseOrder.COLUMN_RECEIVED_DATE);
             purchaserequestList.add(e);
         }
         rs.close();

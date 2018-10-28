@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author RubySenpaii
  */
-public class RepairHistory {
+public class RepairLog {
     public static final String COLUMN_ASSET_TAG = "AssetTag";
     public static final String COLUMN_ARTICLE = "Article";
     public static final String COLUMN_COST = "Cost";

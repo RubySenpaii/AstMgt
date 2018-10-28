@@ -56,6 +56,10 @@ public class InventoryServlet extends BaseServlet {
         }
     }
     
+    private String Acknowledge(HttpServletRequest request) {
+        return "";
+    }
+    
     private String ListEquipment(HttpServletRequest request) {
         equipmentService = new EquipmentService();
         ArrayList<Equipment> equipments = equipmentService.GetListOfEquipments();

@@ -25,13 +25,10 @@ public class PurchaseOrder {
     public static final String COLUMN_PAYMENT_TERMS = "PaymentTerms";
     public static final String COLUMN_CONFORME_SUPPLIER = "ConformeSupplier";
     public static final String COLUMN_CONFORME_DATE = "ConformeDate";
-    public static final String COLUMN_AUTHORIZED_BY = "AuthorizedBy";
     public static final String COLUMN_APPROVED_BY = "ApprovedBy";
     public static final String COLUMN_APPROVED_DATE = "ApprovedDate";
     public static final String COLUMN_ORS_NUMBER = "ORSNumber";
     public static final String COLUMN_ORS_DATE = "ORSDate";
-    public static final String COLUMN_RECEIVED_BY = "ReceivedBy";
-    public static final String COLUMN_RECEIVED_DATE = "ReceivedDate";
     
     public int PurchaseOrderId;
     public int PurchaseRequestId;
@@ -46,17 +43,12 @@ public class PurchaseOrder {
     public String PaymentTerm;
     public String ConformeSupplier;
     public Date ConformeDate;
-    public int AuthorizedBy;
+    public int ApprovedBy;
     public Date ApprovedDate;
     public String ORSNumber;
     public Date ORSDate;
-    public int ReceivedBy;
-    public Date ReceivedDate;
-    public int ApprovedBy;
     
     public PurchaseRequest PurchaseRequest;
     public Supplier Supplier;
-    public Employee Authorizer;
     public Employee Approver;
-    public Employee Receiver;
 }
