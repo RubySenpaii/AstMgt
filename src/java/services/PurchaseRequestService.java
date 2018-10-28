@@ -21,8 +21,8 @@ public class PurchaseRequestService {
 
     private final String AddQuery = "INSERT INTO PurchaseRequest(" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + "," + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + "," 
             + PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE + "," + PurchaseRequest.COLUMN_DATE + "," + PurchaseRequest.COLUMN_PURPOSE + ","
-            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE + "," + PurchaseRequest.COLUMN_APPROVED_BY + "," + PurchaseRequest.COLUMN_APPROVED_DATE
-            + ")VALUES(?,?,?,?,?,?,?,?,?);";
+            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE 
+            + ")VALUES(?,?,?,?,?,?,?);";
     private final String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
     private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ;";
     private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
@@ -39,8 +39,6 @@ public class PurchaseRequestService {
             ps.setString(5, pr.Purpose);
             ps.setInt(6, pr.RequestedBy);
             ps.setObject(7, pr.RequestedDate);
-            ps.setInt(8, pr.ApprovedBy);
-            ps.setObject(9, pr.ApprovedDate);
 
             int res = ps.executeUpdate();
             ps.close();

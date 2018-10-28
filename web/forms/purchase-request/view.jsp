@@ -82,15 +82,19 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-lg-6" style="text-align: center">
+                                            <form action="/AMS/PurchaseOrderServlet/Add">
+                                            <%
+                                                session.setAttribute("purchaseRequest", pr);
+                                            %>
                                             <button class="btn btn-info" type="submit">Approve</button> 
-                                        </div>
-                                        <div class="col-lg-6" style="text-align: center">
-                                            <button class="btn btn-warning" type="submit">Reject</button> 
-                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-6" style="text-align: center">
+                                        <button class="btn btn-warning" type="submit">Reject</button> 
                                     </div>
                                 </div>
-                            <%
-                                }
+                            </div>
+                            <%                                }
                             %>
                         </div>
                     </div>

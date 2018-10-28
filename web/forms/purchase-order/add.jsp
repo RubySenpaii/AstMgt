@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="objects.Supplier"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,21 +28,20 @@
                             <h4>Create Purchase Order</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/PurchaseOrderServlet/Submit">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputEmail1">Purchase Order No</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="pono" name="pono" aria-describedby="emailHelp" placeholder="Enter Purchase Order No.">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Id</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="sid" name="sid" placeholder="Supplier Id">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Order Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="odate" name="odate" placeholder="Date">
+                                        <input list="supp" name="supplier">
+                                        <datalist id="supp">
+                                            <%
+                                                ArrayList<Supplier> slist = new ArrayList<Supplier>();
+                                                slist = (ArrayList<Supplier>) session.getAttribute("supplier");
+                                                for (Supplier supp : slist) {
+                                            %>
+                                            <option value="<%= supp.SupplierName %>">
+                                                <%
+                                                    }
+                                                %>
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -79,7 +80,7 @@
                                         <input type="text" class="form-control" id="payterms" name="payterms" placeholder="Payment Terms">
                                     </div>
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Supplier</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" id="consupp" name="consupp" placeholder="Conforme Supplier">
@@ -92,24 +93,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Authorized By</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="autby" name="autby" placeholder="Authorized By">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved By</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="appby" name="appby" placeholder="Approved By">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="appdate" name="appdate" placeholder="Approved Date">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Number</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" id="orsno" name="orsno" placeholder="ORS Number">
@@ -119,18 +102,6 @@
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
                                     <div class="col-lg-10">
                                         <input type="date" class="form-control" id="orsdate" name="orsdate" placeholder="ORS Date">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Received By</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="recby" name="recby" placeholder="Received By">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Received Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="recdate" name="recdate" placeholder="Received Date">
                                     </div>
                                 </div>
                                 <div class="form-group">

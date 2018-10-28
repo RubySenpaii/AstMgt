@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -18,7 +19,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.Asset;
+import objects.AssetRequested;
+import objects.Employee;
 import objects.PurchaseRequest;
+import services.AssetRequestedService;
+import services.AssetService;
 import services.PurchaseRequestService;
 
 /**
@@ -34,6 +40,11 @@ public class PurchaseRequestServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Add":
+                    AssetService assetDB = new AssetService();
+                    ArrayList<Asset> assetList = new ArrayList<Asset>();
+                    assetList = assetDB.GetAssets();
+                    HttpSession session = request.getSession();
+                    session.setAttribute("assets", assetList);
                     url = "/forms/purchase-request/add.jsp";
                     break;
                 case "Submit":
@@ -62,7 +73,7 @@ public class PurchaseRequestServlet extends BaseServlet {
     private String ViewPurchaseRequestById(HttpServletRequest request) {
         PurchaseRequestService prservice = new PurchaseRequestService();
         ArrayList<PurchaseRequest> PRList = new ArrayList<>();
-        HttpSession session = request.getSession(); 
+        HttpSession session = request.getSession();
         int id = (int) session.getAttribute("id");
         System.out.println("Getting the number : " + id);
         PRList = prservice.FindPurhcaseRequesById(id);
@@ -82,25 +93,49 @@ public class PurchaseRequestServlet extends BaseServlet {
     private String AddPurchaseRequest(HttpServletRequest request) throws ParseException {
 
         PurchaseRequest pr = new PurchaseRequest();
-        pr.PurchaseRequestId = Integer.parseInt(request.getParameter("pri"));
-        pr.ApprovedBy = Integer.parseInt(request.getParameter("appby"));
-        pr.RequestedBy = Integer.parseInt(request.getParameter("reqby"));
-        pr.PurchaseRequestNo = request.getParameter("pr");
+        PurchaseRequestService purchaseRequestService = new PurchaseRequestService();
+        String[] assets = request.getParameterValues("assets");
+        String[] quantity = request.getParameterValues("quantity");
+        String[] price = request.getParameterValues("price");
+        Date test = new Date(System.currentTimeMillis());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(test);
+        int year = cal.get(Calendar.YEAR);
+        pr.PurchaseRequestId = purchaseRequestService.FindAllPR().size() + 1;
+        String prNoTemplate = "PR" + year + "-" + pr.PurchaseRequestId;
+        HttpSession session = request.getSession();
+        Employee user = (Employee) session.getAttribute("employee");
+
+        pr.RequestedBy = user.EmployeeId;
+        pr.PurchaseRequestNo = prNoTemplate;
         pr.Purpose = request.getParameter("purpose");
         pr.ResponsibilityCenterCode = request.getParameter("rcc");
-        System.out.println(request.getParameter("date"));
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        pr.Date = sdf.parse(request.getParameter("date"));
-        pr.ApprovedDate = sdf.parse(request.getParameter("appdate"));
-        pr.RequestedDate = sdf.parse(request.getParameter("reqdate"));
-
-        PurchaseRequestService purchaseRequestService = new PurchaseRequestService();
+        System.out.println("Retrieiving at : " + test);
+        pr.Date = test;
+        pr.RequestedDate = test;
+        ArrayList<AssetRequested> ALIST = new ArrayList<>();
+        AssetService assetService = new AssetService();
+        for (int i = 0; i < assets.length; i++) {
+            AssetRequested ar = new AssetRequested();
+            Asset as = new Asset();
+            as = assetService.GetAssetByName(assets[i]);
+            ar.AssetId = as.AssetId;
+            ar.PurchaseRequestId = pr.PurchaseRequestId;
+            ar.Quantity = Integer.parseInt(quantity[i]);
+            ar.UnitCost = Double.parseDouble(price[i]);
+            ALIST.add(ar);
+        }
+        AssetRequestedService ars = new AssetRequestedService();
         int result = purchaseRequestService.AddPurchaseRequest(pr);
         switch (result) {
             case 0:
                 return "/forms/login.jsp";
             case 1:
-                return "/forms/purchase-request/add.jsp";
+                int checker = ars.AddAssetRequest(ALIST);
+                if (checker != 0) {
+                    return "/forms/purchase-request/add.jsp";
+                }
+                return "/forms/purchase-request/balh.jsp";
             default:
                 return "/forms/login.jsp";
         }

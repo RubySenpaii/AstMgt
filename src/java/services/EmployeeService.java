@@ -30,7 +30,7 @@ public class EmployeeService {
     private String SelectOneByEmployeeId = "Select * FROM Employee WHERE " + Employee.COLUMN_EMPLOYEE_ID + " = ?";
     private String SelectAllEmployees = "Select * FROM Employee";
 
-    public ArrayList<Employee> Authenticate(String username, String password) {
+    public Employee Authenticate(String username, String password) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -40,7 +40,7 @@ public class EmployeeService {
             ps.setString(2, password);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }

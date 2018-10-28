@@ -24,8 +24,8 @@ public class PurchaseOrderService {
             + PurchaseOrder.COLUMN_ORDER_DATE + "," + PurchaseOrder.COLUMN_MODE_OF_PROCUREMENT + "," + PurchaseOrder.COLUMN_REMARKS + ","
             + PurchaseOrder.COLUMN_DELIVERY_ADDRESS + "," + PurchaseOrder.COLUMN_DELIVERY_DATE + "," + PurchaseOrder.COLUMN_DELIVERY_TERMS + ","
             + PurchaseOrder.COLUMN_PAYMENT_TERMS + "," + PurchaseOrder.COLUMN_CONFORME_SUPPLIER + "," + PurchaseOrder.COLUMN_CONFORME_DATE + ","
-            + PurchaseOrder.COLUMN_APPROVED_DATE + "," + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + ","
-            + PurchaseOrder.COLUMN_SUPPLIER_ID + "," + PurchaseOrder.COLUMN_APPROVED_BY + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + ","
+            + PurchaseOrder.COLUMN_SUPPLIER_ID + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private String FindPurchaseOrderIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
     private String FindAllPurchaseOrderQ = "SELECT * FROM PurchaseOrder ;";
@@ -46,12 +46,10 @@ public class PurchaseOrderService {
             ps.setString(9, po.PaymentTerm);
             ps.setString(10, po.ConformeSupplier);
             ps.setObject(11, po.ConformeDate);
-            ps.setObject(12, po.ApprovedDate);
-            ps.setString(13, po.ORSNumber);
-            ps.setObject(14, po.OrderDate);
-            ps.setInt(15, po.PurchaseRequestId);
-            ps.setInt(16, po.SupplierId);
-            ps.setInt(17, po.ApprovedBy);
+            ps.setString(12, po.ORSNumber);
+            ps.setObject(13, po.OrderDate);
+            ps.setInt(14, po.PurchaseRequestId);
+            ps.setInt(15, po.SupplierId);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();

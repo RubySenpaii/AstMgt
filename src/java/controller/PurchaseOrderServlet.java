@@ -20,7 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.PurchaseOrder;
+import objects.PurchaseRequest;
+import objects.Supplier;
 import services.PurchaseOrderService;
+import services.SupplierService;
 
 /**
  *
@@ -35,6 +38,11 @@ public class PurchaseOrderServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Add":
+                    SupplierService suppDB = new SupplierService();
+                    ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
+                    HttpSession session = request.getSession();
+                    System.out.println(supplierList.size() + "ahsidihsaihdsahoidsa");
+                    session.setAttribute("supplier", supplierList);
                     url = "/forms/purchase-order/add.jsp";
                     break;
                 case "Submit":
@@ -68,20 +76,22 @@ public class PurchaseOrderServlet extends BaseServlet {
         return "/forms/purchase-order/list.jsp";
     }
 
-    private String AddPurchaseOrder(HttpServletRequest request) throws ParseException {
+    private String AddPurchaseOrder(HttpServletRequest request) throws ParseException, SQLException {
         PurchaseOrder po = new PurchaseOrder();
+        HttpSession session = request.getSession();
         PurchaseOrderService poDB = new PurchaseOrderService();
+        SupplierService suppDB = new SupplierService();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        po.ApprovedDate = sdf.parse(request.getParameter("appdate"));
-        po.OrderDate = sdf.parse(request.getParameter("odate"));
+        po.OrderDate = new Date(System.currentTimeMillis());
         po.DeliveryDate = sdf.parse(request.getParameter("deldate"));
         po.ConformeDate = sdf.parse(request.getParameter("condate"));
         po.ORSDate = sdf.parse(request.getParameter("orsdate"));
-        po.ApprovedBy = Integer.parseInt(request.getParameter("appby"));
-        po.PurchaseOrderId = Integer.parseInt(request.getParameter("pro"));
-        po.PurchaseRequestId = Integer.parseInt(request.getParameter("pri"));
-        po.SupplierId = Integer.parseInt(request.getParameter("sid"));
-        po.PurchaseOrderNumber = request.getParameter("pono");
+        po.PurchaseOrderId = poDB.FindAllPurchaseOrder().size()+1;
+        PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
+        po.PurchaseRequestId = pr.PurchaseRequestId;
+        Supplier supp = suppDB.FindSupplierByName(request.getParameter("supplier"));
+        po.SupplierId = supp.SupplierId;
+        po.PurchaseOrderNumber = "PO"+"-"+po.PurchaseOrderId;
         po.ModeOfProcurement = request.getParameter("mop");
         po.Remarks = request.getParameter("remarks");
         po.DeliveryAddress = request.getParameter("deladd");
