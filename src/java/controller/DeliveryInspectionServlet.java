@@ -60,7 +60,7 @@ public class DeliveryInspectionServlet extends BaseServlet {
             purchaseOrderService = new PurchaseOrderService();
             FileModification file = new FileModification();
             RequestForDeliveryInspection requestInspection = new RequestForDeliveryInspection();
-            String orderNumber = purchaseOrderService.FindPurchaseOrderByNo(requestInspection.PurchaseOrderId).PurchaseOrderNumber;
+            String orderNumber = purchaseOrderService.FindPurchaseOrderById(requestInspection.PurchaseOrderId).PurchaseOrderNumber;
             
             requestInspection.DeliveryInspectionId = deliveryInspectionService.GetRequestsForDeliveryInspection().size() + 1;
             Part invoiceFile = request.getPart("invoice");

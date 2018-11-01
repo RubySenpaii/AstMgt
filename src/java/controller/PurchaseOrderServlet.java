@@ -52,6 +52,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                     url = EditPurchaseOrder();
                     break;
                 case "View":
+                    url = ViewPurchaseOrder()
                 case "Flag":
                 case "List":
                 default:
@@ -116,5 +117,11 @@ public class PurchaseOrderServlet extends BaseServlet {
             default:
                 return "";
         }
+    }
+    
+    private String ViewPurchaseOrder(HttpServletRequest request) {
+        PurchaseOrderService poService = new PurchaseOrderService();
+        HttpSession session = request.getSession();
+        PurchaseOrder purchaseOrder = poService.FindPurchaseOrderByNo((int) session.getAttribute("p"));
     }
 }

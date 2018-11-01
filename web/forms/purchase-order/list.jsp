@@ -39,8 +39,7 @@
                                             <th>Delivery Date</th>
                                             <th>Delivery Terms</th>
                                             <th>Payment Terms</th>
-                                            <th>Received By</th>
-                                            <th>Received Date</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,9 +55,8 @@
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryTerms%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
-                                            <td><c:out value="<%= po.ReceivedBy%>"></c:out></td>
-                                            <td><c:out value="<%= po.ReceivedDate%>"></c:out></td>
-                                            </tr>
+                                            <td></td>
+                                        </tr>
                                         <%
                                             }
                                         %>

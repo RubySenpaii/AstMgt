@@ -1,11 +1,10 @@
 <%-- 
-    Document   : add
-    Created on : Oct 7, 2018, 3:18:42 PM
-    Author     : RubySenpaii
+    Document   : view
+    Created on : 11 1, 18, 7:56:19 PM
+    Author     : rubysenpaii
 --%>
 
-<%@page import="java.util.ArrayList"%>
-<%@page import="objects.Supplier"%>
+<%@page import="objects.PurchaseOrder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,21 +26,13 @@
                         <div class="form-panel">
                             <h4>Create Purchase Order</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/PurchaseOrderServlet/Submit">
+                                <%
+                                    PurchaseOrder purchaseOrder = (PurchaseOrder) session.getAttribute("purchaseOrder");
+                                %>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Id</label>
                                     <div class="col-lg-10">
                                         <input list="supp" name="supplier" class="form-control">
-                                        <datalist id="supp">
-                                            <%
-                                                ArrayList<Supplier> slist = new ArrayList<Supplier>();
-                                                slist = (ArrayList<Supplier>) session.getAttribute("supplier");
-                                                for (Supplier supp : slist) {
-                                            %>
-                                            <option value="<%= supp.SupplierName %>">
-                                                <%
-                                                    }
-                                                %>
-                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -106,7 +97,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" type="submit">Submit</button>
+                                        <button class="btn btn-theme" type="submit">Acknowledge</button>
                                     </div>
                                 </div>
                             </form>

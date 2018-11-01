@@ -45,7 +45,7 @@ public class SupplierService {
         return 0;
     }
 
-    public ArrayList<Supplier> FindSupplierById(int suppno) {
+    public Supplier FindSupplierById(int suppno) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -54,7 +54,7 @@ public class SupplierService {
             ps.setInt(1, suppno);
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }

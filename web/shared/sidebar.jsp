@@ -46,7 +46,6 @@
                     <span>Purchase Order</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/PurchaseOrderServlet/Add">Create</a></li>
                     <li><a href="/AMS/PurchaseOrderServlet/List">List</a></li>
                 </ul>
             </li>

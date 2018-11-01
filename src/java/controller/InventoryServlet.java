@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import objects.Equipment;
 import objects.Supplies;
 import services.EquipmentService;
+import services.PurchaseOrderService;
 import services.SuppliesService;
 
 /**
@@ -25,9 +26,10 @@ import services.SuppliesService;
  * @author RubySenpaii
  */
 public class InventoryServlet extends BaseServlet {
-    
+
     private EquipmentService equipmentService;
     private SuppliesService suppliesService;
+    private PurchaseOrderService poService;
 
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,6 +39,8 @@ public class InventoryServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "AcknowledgementRequest":
+                    url = "inventory/acknowledgement.jsp";
+                    break;
                 case "Acknowledge":
                 case "SuppliesList":
                     url = ListSupplies(request);
@@ -55,11 +59,11 @@ public class InventoryServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-    
+
     private String Acknowledge(HttpServletRequest request) {
         return "";
     }
-    
+
     private String ListEquipment(HttpServletRequest request) {
         equipmentService = new EquipmentService();
         ArrayList<Equipment> equipments = equipmentService.GetListOfEquipments();
@@ -67,7 +71,7 @@ public class InventoryServlet extends BaseServlet {
         session.setAttribute("equipments", equipments);
         return "inventory/equipment-list.jsp";
     }
-    
+
     private String ListSupplies(HttpServletRequest request) {
         suppliesService = new SuppliesService();
         ArrayList<Supplies> supplies = suppliesService.FindAllSupplies();

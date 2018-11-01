@@ -60,13 +60,13 @@ public class PurchaseOrderService {
         return 0;
     }
 
-    public PurchaseOrder FindPurchaseOrderByNo(int prno) {
+    public PurchaseOrder FindPurchaseOrderById(int poId) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
         try {
             PreparedStatement ps = conn.prepareStatement(FindPurchaseOrderIdQuery);
-            ps.setInt(1, prno);
+            ps.setInt(1, poId);
             ArrayList<PurchaseOrder> elist = getResult(ps.executeQuery());
             ps.close();
             return elist.get(0);
@@ -111,6 +111,8 @@ public class PurchaseOrderService {
             e.ApprovedDate = rs.getDate(PurchaseOrder.COLUMN_APPROVED_DATE);
             e.ORSNumber = rs.getString(PurchaseOrder.COLUMN_ORS_NUMBER);
             e.ORSDate = rs.getDate(PurchaseOrder.COLUMN_ORS_DATE);
+            
+            e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
             purchaserequestList.add(e);
         }
         rs.close();
