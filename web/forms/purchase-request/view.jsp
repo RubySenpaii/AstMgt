@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="objects.PurchaseRequest"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -27,8 +26,7 @@
                     <div class="row">
                         <div class="form-panel">
                             <%
-                                ArrayList<PurchaseRequest> PR = (ArrayList<PurchaseRequest>) session.getAttribute("PR");
-                                for (PurchaseRequest pr : PR) {
+                                PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
                             %>
                             <h4>Viewing Purchase Request :  <c:out value="<%= pr.PurchaseRequestId%>"></c:out></h4><br/>
                                 <div class="form-horizontal style-form" action="#">
@@ -94,8 +92,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <%                                }
-                            %>
                         </div>
                     </div>
                     <!-- /row -->

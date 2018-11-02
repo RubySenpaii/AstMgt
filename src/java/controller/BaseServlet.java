@@ -26,6 +26,7 @@ public abstract class BaseServlet extends HttpServlet {
             HttpSession session = request.getSession();
             Employee user =  (Employee) session.getAttribute("user");
             if (user != null || true) {
+                System.out.println("user accessing " + request.getRequestURI());
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();

@@ -55,7 +55,11 @@
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryTerms%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
-                                            <td></td>
+                                            <td>
+                                                <form action="/AMS/PurchaseOrderServlet/View">
+                                                    <button type="submit" name="poId" value="<%=po.PurchaseOrderId%>">Submit</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         <%
                                             }

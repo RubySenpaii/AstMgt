@@ -41,7 +41,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                     SupplierService suppDB = new SupplierService();
                     ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
                     HttpSession session = request.getSession();
-                    System.out.println(supplierList.size() + "ahsidihsaihdsahoidsa");
+                    System.out.println("found a list of supplier: " + supplierList.size());
                     session.setAttribute("supplier", supplierList);
                     url = "/forms/purchase-order/add.jsp";
                     break;
@@ -52,7 +52,8 @@ public class PurchaseOrderServlet extends BaseServlet {
                     url = EditPurchaseOrder();
                     break;
                 case "View":
-                    url = ViewPurchaseOrder()
+                    url = ViewPurchaseOrder(request);
+                    break;
                 case "Flag":
                 case "List":
                 default:
@@ -71,7 +72,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         PurchaseOrderService poDB = new PurchaseOrderService();
         ArrayList<PurchaseOrder> poList = new ArrayList<>();
         poList = poDB.FindAllPurchaseOrder();
-        System.out.println("SIZE" + poList.size());
+        System.out.println("purchase order size: " + poList.size());
         HttpSession session = request.getSession();
         session.setAttribute("PO", poList);
         return "/forms/purchase-order/list.jsp";
@@ -122,6 +123,9 @@ public class PurchaseOrderServlet extends BaseServlet {
     private String ViewPurchaseOrder(HttpServletRequest request) {
         PurchaseOrderService poService = new PurchaseOrderService();
         HttpSession session = request.getSession();
-        PurchaseOrder purchaseOrder = poService.FindPurchaseOrderByNo((int) session.getAttribute("p"));
+        PurchaseOrder purchaseOrder = poService.FindPurchaseOrderById(Integer.parseInt(request.getParameter("poId")));
+        session.setAttribute("purchaseOrder", purchaseOrder);
+        System.out.println("viewing purchase order: " + purchaseOrder.PurchaseOrderId);
+        return "/forms/purchase-order/view.jsp";
     }
 }

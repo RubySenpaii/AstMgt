@@ -72,12 +72,11 @@ public class PurchaseRequestServlet extends BaseServlet {
 
     private String ViewPurchaseRequestById(HttpServletRequest request) {
         PurchaseRequestService prservice = new PurchaseRequestService();
-        ArrayList<PurchaseRequest> PRList = new ArrayList<>();
         HttpSession session = request.getSession();
         int id = (int) session.getAttribute("id");
         System.out.println("Getting the number : " + id);
-        PRList = prservice.FindPurhcaseRequesById(id);
-        session.setAttribute("PR", PRList);
+        PurchaseRequest purchaseRequest = prservice.FindPurhcaseRequesById(id);
+        session.setAttribute("purchaseRequest", purchaseRequest);
         return "/forms/purchase-request/view.jsp";
     }
 

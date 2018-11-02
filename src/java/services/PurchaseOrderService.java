@@ -113,6 +113,7 @@ public class PurchaseOrderService {
             e.ORSDate = rs.getDate(PurchaseOrder.COLUMN_ORS_DATE);
             
             e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
+            e.PurchaseRequest = new PurchaseRequestService().FindPurhcaseRequesById(e.PurchaseRequestId);
             purchaserequestList.add(e);
         }
         rs.close();

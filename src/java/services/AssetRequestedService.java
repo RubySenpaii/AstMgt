@@ -122,6 +122,8 @@ public class AssetRequestedService {
             assetRequested.PurchaseRequestId = rs.getInt(AssetRequested.COLUMN_PURCHASE_REQUEST_ID);
             assetRequested.Quantity = rs.getInt(AssetRequested.COLUMN_QUANTITY);
             assetRequested.UnitCost = rs.getDouble(AssetRequested.COLUMN_UNIT_COST);
+            
+            assetRequested.Asset = new AssetService().GetAsset(assetRequested.AssetId);
             assetsRequested.add(assetRequested);
         }
         rs.close();

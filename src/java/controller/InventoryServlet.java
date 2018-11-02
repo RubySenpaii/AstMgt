@@ -34,12 +34,11 @@ public class InventoryServlet extends BaseServlet {
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getRequestURI();
-        System.out.println("action used " + action);
         try {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "AcknowledgementRequest":
-                    url = "inventory/acknowledgement.jsp";
+                    url = "/inventory/acknowledgement.jsp";
                     break;
                 case "Acknowledge":
                 case "SuppliesList":

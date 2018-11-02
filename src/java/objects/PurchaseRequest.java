@@ -5,6 +5,7 @@
  */
 package objects;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -35,4 +36,5 @@ public class PurchaseRequest {
     
     public Employee Requester;
     public Employee Approver;
+    public ArrayList<AssetRequested> AssetsRequested;
 }

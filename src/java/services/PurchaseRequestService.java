@@ -80,7 +80,7 @@ public class PurchaseRequestService {
         }
     }
 
-    public ArrayList<PurchaseRequest> FindPurhcaseRequesById(int prid) {
+    public PurchaseRequest FindPurhcaseRequesById(int prid) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -89,7 +89,7 @@ public class PurchaseRequestService {
             ps.setInt(1, prid);
             ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }
@@ -140,6 +140,8 @@ public class PurchaseRequestService {
             e.RequestedBy = rs.getInt(PurchaseRequest.COLUMN_REQUESTED_BY);
             e.RequestedDate = rs.getDate(PurchaseRequest.COLUMN_REQUESTED_DATE);
             e.ResponsibilityCenterCode = rs.getString(PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE);
+            
+            e.AssetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(e.PurchaseRequestId);
             purchaserequestList.add(e);
         }
         rs.close();
