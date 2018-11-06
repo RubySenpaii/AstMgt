@@ -40,7 +40,11 @@ public class DeliveryInspectionServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Request":
+                    url = "/forms/delivery-inspection/request.jsp";
+                    break;
                 case "Submit":
+                    url = AddRequestForInspection(request);
+                    break;
                 case "List":
                 default:
                     url = ListRequestsForInspection(request);

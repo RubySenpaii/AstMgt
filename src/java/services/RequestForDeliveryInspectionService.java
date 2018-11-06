@@ -28,7 +28,8 @@ public class RequestForDeliveryInspectionService {
                     + RequestForDeliveryInspection.COLUMN_CREATED_DATE + " = ?, " + RequestForDeliveryInspection.COLUMN_DELIVERY_INSPECTION_ID + " = ?, "
                     + RequestForDeliveryInspection.COLUMN_DELIVERY_RECEIPT + " = ?, " + RequestForDeliveryInspection.COLUMN_FROM_BIDDING + " = ?, "
                     + RequestForDeliveryInspection.COLUMN_INVOICE + " = ?, " + RequestForDeliveryInspection.COLUMN_MANAGEMENT_REMARKS + " = ?, " 
-                    + RequestForDeliveryInspection.COLUMN_PURCHASE_ORDER_ID + " = ?, " + RequestForDeliveryInspection.COLUMN_REMARKS + " = ? "
+                    + RequestForDeliveryInspection.COLUMN_PURCHASE_ORDER_ID + " = ?, " + RequestForDeliveryInspection.COLUMN_REMARKS + " = ?, "
+                    + RequestForDeliveryInspection.COLUMN_ASSIGNED_TO + " = ?"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, deliveryRequest.CreatedBy);
@@ -40,6 +41,7 @@ public class RequestForDeliveryInspectionService {
             ps.setString(7, deliveryRequest.ManagementRemarks);
             ps.setInt(8, deliveryRequest.PurchaseOrderId);
             ps.setString(9, deliveryRequest.Remarks);
+            ps.setInt(10, deliveryRequest.AssignedTo);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -60,7 +62,8 @@ public class RequestForDeliveryInspectionService {
                     + RequestForDeliveryInspection.COLUMN_CREATED_DATE + " = ?, " + RequestForDeliveryInspection.COLUMN_DELIVERY_RECEIPT + " = ?, "
                     + RequestForDeliveryInspection.COLUMN_FROM_BIDDING + " = ?, " + RequestForDeliveryInspection.COLUMN_INVOICE + " = ?, "
                     + RequestForDeliveryInspection.COLUMN_MANAGEMENT_REMARKS + " = ?, " + RequestForDeliveryInspection.COLUMN_PURCHASE_ORDER_ID + " = ?, "
-                    + RequestForDeliveryInspection.COLUMN_REMARKS + " = ? "
+                    + RequestForDeliveryInspection.COLUMN_REMARKS + " = ?, " + RequestForDeliveryInspection.COLUMN_ASSIGNED_TO + " = ?, "
+                    + RequestForDeliveryInspection.COLUMN_APPROVED_BY + " = ? "
                     + "WHERE " + RequestForDeliveryInspection.COLUMN_DELIVERY_INSPECTION_ID + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, deliveryReceipt.CreatedBy);
@@ -72,6 +75,8 @@ public class RequestForDeliveryInspectionService {
             ps.setInt(7, deliveryReceipt.PurchaseOrderId);
             ps.setString(8, deliveryReceipt.Remarks);
             ps.setInt(9, deliveryReceipt.DeliveryInspectionId);
+            ps.setInt(10, deliveryReceipt.AssignedTo);
+            ps.setInt(11, deliveryReceipt.ApprovedBy);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -134,6 +139,8 @@ public class RequestForDeliveryInspectionService {
             deliveryRequest.ManagementRemarks = rs.getString(RequestForDeliveryInspection.COLUMN_MANAGEMENT_REMARKS);
             deliveryRequest.PurchaseOrderId = rs.getInt(RequestForDeliveryInspection.COLUMN_PURCHASE_ORDER_ID);
             deliveryRequest.Remarks = rs.getString(RequestForDeliveryInspection.COLUMN_REMARKS);
+            deliveryRequest.AssignedTo = rs.getInt(RequestForDeliveryInspection.COLUMN_ASSIGNED_TO);
+            deliveryRequest.ApprovedBy = rs.getInt(RequestForDeliveryInspection.COLUMN_APPROVED_BY);
             deliveryRequests.add(deliveryRequest);
         }
         rs.close();

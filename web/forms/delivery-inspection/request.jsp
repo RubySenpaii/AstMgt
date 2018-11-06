@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.AssetRequested"%>
+<%@page import="objects.PurchaseOrder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,18 +25,51 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
-                            <h4>Create Purchase Request</h4><br/>
+                            <%
+                                PurchaseOrder purchaseOrder = (PurchaseOrder) session.getAttribute("purchaseOrder");
+                            %>
+                            <h4>Request For Delivery Inspection</h4><br/>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Stock No</th>
+                                        <th>Asset Name</th>
+                                        <th>Asset Type</th>
+                                        <th>Quantity Ordered</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        for (AssetRequested asset : purchaseOrder.PurchaseRequest.AssetsRequested) {
+                                    %>
+                                    <tr>
+                                        <td><%=asset.Asset.StockNo%></td>
+                                        <td><%=asset.Asset.AssetName%></td>
+                                        <td><%=asset.Asset.AssetType%></td>
+                                        <td><%=asset.Quantity%></td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
                             <form class="form-horizontal style-form" action="/AMS/DeliveryInspectionServlet/Submit">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputEmail1">Invoice</label>
+                                    <label class="col-lg-2 control-label">Invoice</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="pr" name="pr" aria-describedby="emailHelp" placeholder="Enter Purchase Request No.">
+                                        <input type="file" class="default" name="invoice">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Receipt</label>
+                                    <label class="col-lg-2 control-label">Delivery Receipt</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="rcc" name="rcc" placeholder="Responsibility Center Code">
+                                        <input type="file" class="default" name="receipt">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Delivery Receipt</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="assign" name="assign" placeholder="Assign To">
                                     </div>
                                 </div>
                                 <div class="form-group">
