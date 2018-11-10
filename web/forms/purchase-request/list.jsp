@@ -36,6 +36,7 @@
                                             <th>Date</th>
                                             <th>Requested By</th>
                                             <th>Requested Date</th>
+                                            <th>Approved By</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -49,6 +50,7 @@
                                             <td><c:out value="<%= pr.Date %>"></c:out></td>
                                             <td><c:out value="<%= pr.RequestedBy %>"></c:out></td>
                                             <td><c:out value="<%= pr.RequestedDate %>"></c:out></td>
+                                            <td><c:out value="<%= pr.ApprovedBy %>"></c:out></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <%

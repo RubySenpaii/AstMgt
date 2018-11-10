@@ -72,10 +72,22 @@ public class PurchaseRequestServlet extends BaseServlet {
 
     private String ViewPurchaseRequestById(HttpServletRequest request) {
         PurchaseRequestService prservice = new PurchaseRequestService();
+        AssetRequestedService assetReqDB = new AssetRequestedService();
+        AssetService assetDB = new AssetService();
         HttpSession session = request.getSession();
         int id = (int) session.getAttribute("id");
         System.out.println("Getting the number : " + id);
         PurchaseRequest purchaseRequest = prservice.FindPurhcaseRequesById(id);
+        ArrayList<AssetRequested> assetReqList = assetReqDB.GetAssetsRequestedWithPurchaseRequest(purchaseRequest.PurchaseRequestId);
+        ArrayList<String> assetNameList = new ArrayList<>();
+        for (int i = 0; i < assetReqList.size(); i++) {
+            String name = assetDB.GetAsset(assetReqList.get(i).AssetId).AssetName;
+            System.out.println("NAMES are : " + name);
+            assetNameList.add(name);
+        }
+        
+        session.setAttribute("assetRequested", assetReqList);
+        session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseRequest", purchaseRequest);
         return "/forms/purchase-request/view.jsp";
     }
