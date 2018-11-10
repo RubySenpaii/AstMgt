@@ -28,7 +28,7 @@
                                 PurchaseOrder purchaseOrder = (PurchaseOrder) session.getAttribute("purchaseOrder");
                             %>
                             <h4>Purchase Order #<%=purchaseOrder.PurchaseOrderNumber%></h4><br/>
-                            <form class="form-horizontal style-form" action="/AMS/InventoryServlet/Submit">
+                            <form class="form-horizontal style-form">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Id</label>
                                     <div class="col-lg-10">
@@ -98,6 +98,7 @@
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" type="submit" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
+                                        <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
                                     </div>
                                 </div>
                             </form>

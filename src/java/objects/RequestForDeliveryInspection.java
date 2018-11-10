@@ -21,6 +21,8 @@ public class RequestForDeliveryInspection {
     public static final String COLUMN_REMARKS = "Remarks";
     public static final String COLUMN_MANAGEMENT_REMARKS = "ManagementRemarks";
     public static final String COLUMN_FROM_BIDDING = "FromBidding";
+    public static final String COLUMN_ASSIGNED_TO = "AssignedTo";
+    public static final String COLUMN_APPROVED_BY = "ApprovedBy";
     
     public int DeliveryInspectionId;
     public int PurchaseOrderId;
@@ -31,4 +33,11 @@ public class RequestForDeliveryInspection {
     public String Remarks;
     public String ManagementRemarks;
     public int FromBidding;
+    public int AssignedTo;
+    public int ApprovedBy;
+    
+    public PurchaseOrder PurchaseOrder;
+    public Employee Creator;
+    public Employee Assigned;
+    public Employee Approver;
 }
