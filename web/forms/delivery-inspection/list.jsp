@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.RequestForDeliveryInspection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,12 +33,46 @@
                                         <tr>
                                             <th>Purchase Order No</th>
                                             <th>Items Ordered</th>
+                                            <th>Status</th>
                                             <th>Created By</th>
                                             <th>Created Date</th>
+                                            <th>Assigned To</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <%
+                                            ArrayList<RequestForDeliveryInspection> requests = (ArrayList<RequestForDeliveryInspection>) session.getAttribute("requests");
+                                            for (RequestForDeliveryInspection requestInspection : requests) {
+                                                String status = "Approved";
+                                                if (requestInspection.ApprovedBy == 0) {
+                                                    status = "Pending";
+                                                }
+                                        %>
+                                        <tr>
+                                            <td><%=requestInspection.PurchaseOrder.PurchaseOrderNumber%></td>
+                                            <td><%=requestInspection.PurchaseOrder.PurchaseRequest.AssetsRequested.size()%></td>
+                                            <td><%=status%></td>
+                                            <td><%=requestInspection.Creator.FullName()%></td>
+                                            <td><%=requestInspection.CreatedDate%></td>
+                                            <td><%=requestInspection.Assigned.FullName()%></td>
+                                            <td>
+                                                <%
+                                                    if (status.equals("Pending")) {
+                                                %>
+                                                <button class="btn btn-success">Approve</button>
+                                                <%
+                                                    } else {
+                                                %>
+                                                <button class="btn">Acknowledge</button>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                             </div>

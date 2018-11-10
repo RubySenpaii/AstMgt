@@ -6,6 +6,7 @@
 package services;
 
 import db.DBConnectionFactory;
+import extra.SharedFormat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,16 +25,16 @@ public class RequestForDeliveryInspectionService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
             
-            String query = "INSERT INTO RequestForDeliveryInspection (" + RequestForDeliveryInspection.COLUMN_CREATED_BY + " = ?, "
-                    + RequestForDeliveryInspection.COLUMN_CREATED_DATE + " = ?, " + RequestForDeliveryInspection.COLUMN_DELIVERY_INSPECTION_ID + " = ?, "
-                    + RequestForDeliveryInspection.COLUMN_DELIVERY_RECEIPT + " = ?, " + RequestForDeliveryInspection.COLUMN_FROM_BIDDING + " = ?, "
-                    + RequestForDeliveryInspection.COLUMN_INVOICE + " = ?, " + RequestForDeliveryInspection.COLUMN_MANAGEMENT_REMARKS + " = ?, " 
-                    + RequestForDeliveryInspection.COLUMN_PURCHASE_ORDER_ID + " = ?, " + RequestForDeliveryInspection.COLUMN_REMARKS + " = ?, "
-                    + RequestForDeliveryInspection.COLUMN_ASSIGNED_TO + " = ?"
+            String query = "INSERT INTO RequestForDeliveryInspection (" + RequestForDeliveryInspection.COLUMN_CREATED_BY + ", "
+                    + RequestForDeliveryInspection.COLUMN_CREATED_DATE + ", " + RequestForDeliveryInspection.COLUMN_DELIVERY_INSPECTION_ID + ", "
+                    + RequestForDeliveryInspection.COLUMN_DELIVERY_RECEIPT + ", " + RequestForDeliveryInspection.COLUMN_FROM_BIDDING + ", "
+                    + RequestForDeliveryInspection.COLUMN_INVOICE + ", " + RequestForDeliveryInspection.COLUMN_MANAGEMENT_REMARKS + ", " 
+                    + RequestForDeliveryInspection.COLUMN_PURCHASE_ORDER_ID + ", " + RequestForDeliveryInspection.COLUMN_REMARKS + ", "
+                    + RequestForDeliveryInspection.COLUMN_ASSIGNED_TO + ") "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, deliveryRequest.CreatedBy);
-            ps.setObject(2, deliveryRequest.CreatedDate);
+            ps.setObject(2, SharedFormat.DB_DATE_ENTRY.format(deliveryRequest.CreatedDate));
             ps.setInt(3, deliveryRequest.DeliveryInspectionId);
             ps.setString(4, deliveryRequest.DeliveryReceipt);
             ps.setInt(5, deliveryRequest.FromBidding);
@@ -141,6 +142,13 @@ public class RequestForDeliveryInspectionService {
             deliveryRequest.Remarks = rs.getString(RequestForDeliveryInspection.COLUMN_REMARKS);
             deliveryRequest.AssignedTo = rs.getInt(RequestForDeliveryInspection.COLUMN_ASSIGNED_TO);
             deliveryRequest.ApprovedBy = rs.getInt(RequestForDeliveryInspection.COLUMN_APPROVED_BY);
+            
+            deliveryRequest.PurchaseOrder = new PurchaseOrderService().FindPurchaseOrderById(deliveryRequest.PurchaseOrderId);
+            deliveryRequest.Creator = new EmployeeService().FindEmployeeById(deliveryRequest.CreatedBy);
+            deliveryRequest.Assigned = new EmployeeService().FindEmployeeById(deliveryRequest.AssignedTo);
+            if (deliveryRequest.ApprovedBy > 0) {
+                deliveryRequest.Approver = new EmployeeService().FindEmployeeById(deliveryRequest.ApprovedBy);
+            }
             deliveryRequests.add(deliveryRequest);
         }
         rs.close();

@@ -26,8 +26,8 @@
                     <span>Asset</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/AssetServlet/Add">Add</a></li>
-                    <li><a href="/AMS/AssetServlet/List">List</a></li>
+                    <li><a href="/AMS/AssetServlet/Add">Add Asset</a></li>
+                    <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
                 </ul>
             </li>
             <li class="sub-menu">
@@ -36,8 +36,8 @@
                     <span>Purchase Request</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/PurchaseRequest/Add">Create</a></li>
-                    <li><a href="/AMS/PurchaseRequest/List">List</a></li>
+                    <li><a href="/AMS/PurchaseRequest/Add">Create Purchase Request</a></li>
+                    <li><a href="/AMS/PurchaseRequest/List">Purchase Request List</a></li>
                 </ul>
             </li>
             <li class="sub-menu">
@@ -46,7 +46,8 @@
                     <span>Purchase Order</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/PurchaseOrderServlet/List">List</a></li>
+                    <li><a href="/AMS/PurchaseOrderServlet/List">Purchase Order List</a></li>
+                    <li><a href="/AMS/DeliveryInspectionServlet/List">Inspection Requests</a></li>
                 </ul>
             </li>
         </ul>

@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.Employee"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="objects.AssetRequested"%>
 <%@page import="objects.PurchaseOrder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -53,7 +55,7 @@
                                     %>
                                 </tbody>
                             </table>
-                            <form class="form-horizontal style-form" action="/AMS/DeliveryInspectionServlet/Submit">
+                            <form class="form-horizontal style-form" action="/AMS/DeliveryInspectionServlet/Submit" enctype="multipart/form-data" method="POST">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Invoice</label>
                                     <div class="col-lg-10">
@@ -67,9 +69,25 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Delivery Receipt</label>
+                                    <label class="col-lg-2 control-label">Assign To</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="assign" name="assign" placeholder="Assign To">
+                                        <input type="text" class="form-control" id="assign" name="assign" placeholder="Assign To" list="employee" autocomplete="off">
+                                        <datalist id="employee">
+                                            <%
+                                                ArrayList<Employee> employees = (ArrayList<Employee>) session.getAttribute("employees");
+                                                for (Employee employee : employees) {
+                                            %>
+                                            <option value="<%=employee.FullName()%>">
+                                            <%
+                                                }
+                                            %>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Remarks</label>
+                                    <div class="col-lg-10">
+                                        <textarea class="form-control" name="remarks"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

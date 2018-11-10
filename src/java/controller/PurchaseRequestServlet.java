@@ -103,7 +103,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         pr.PurchaseRequestId = purchaseRequestService.FindAllPR().size() + 1;
         String prNoTemplate = "PR" + year + "-" + pr.PurchaseRequestId;
         HttpSession session = request.getSession();
-        Employee user = (Employee) session.getAttribute("employee");
+        Employee user = (Employee) session.getAttribute("user");
 
         pr.RequestedBy = user.EmployeeId;
         pr.PurchaseRequestNo = prNoTemplate;
