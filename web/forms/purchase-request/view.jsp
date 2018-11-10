@@ -81,9 +81,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Requested</label>
-                                        <div class="col-lg-10">
-                                            <table style="width:100%">
+                                        <div class="col-lg-12 control-label">
+                                            <h3>Assets Requested</h3>
+                                            <table style="width:100%" class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Asset</th>
@@ -110,10 +110,12 @@
                                         </table>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div class="col-lg-6" style="text-align: center">
                                         <form action="/AMS/PurchaseOrderServlet/Add">
-                                            <%                                                session.setAttribute("purchaseRequest", pr);
+                                            <%
+                                                session.setAttribute("purchaseRequest", pr);
                                             %>
                                             <button class="btn btn-info" type="submit">Approve</button> 
                                         </form>
