@@ -27,4 +27,5 @@ public class Equipment {
     public int EstimatedUsefulLife;
     
     public Asset Asset;
+    public Employee CurrentUser;
 }

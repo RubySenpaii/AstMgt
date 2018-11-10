@@ -44,7 +44,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                     PurchaseRequestService prDB = new PurchaseRequestService();
                     ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
                     HttpSession session = request.getSession();
-                    Employee e = (Employee) session.getAttribute("employee");
+                    Employee e = (Employee) session.getAttribute("user");
                     int prid = (int) session.getAttribute("id");
                     Date approved = new java.sql.Date(System.currentTimeMillis());
                     System.out.println("Approving purchase request");

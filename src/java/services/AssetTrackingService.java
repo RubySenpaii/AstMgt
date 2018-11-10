@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import objects.AssetTracking;
+import objects.Employee;
 
 /**
  *
@@ -113,6 +114,35 @@ public class AssetTrackingService {
             System.err.println(x);
             return new ArrayList<>();
         }
+    }
+    
+    public Employee GetCurrentuser(String assetTag) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT T1.* FROM AssetTracking T1 INNER JOIN "
+                    + "(SELECT T2.AssetTag, MAX(T2.TransferDate) AS 'Latest' FROM AssetTracking T2 WHERE T2.AssetTag = ? AND T2.ApprovedBy IS NOT NULL GROUP BY T2.AssetTag) T2 "
+                    + "ON T1.AssetTag = T2.AssetTag AND T1.TransferDate = T2.Latest";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetTag);
+            
+            int employeeId = 0;
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                employeeId = rs.getInt("ReleasedTo");
+            }
+            
+            ps.close();
+            rs.close();
+            con.close();
+            if (employeeId > 0) {
+                return new EmployeeService().FindEmployeeById(employeeId);
+            }
+        } catch(SQLException x) {
+            System.err.println(x);
+        }
+        return null;
     }
     
     private ArrayList<AssetTracking> getResult(ResultSet rs) throws SQLException {

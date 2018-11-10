@@ -1,5 +1,5 @@
 <%-- 
-    Document   : supplies-view
+    Document   : supplies-list
     Created on : Oct 28, 2018, 1:37:22 PM
     Author     : RubySenpaii
 --%>

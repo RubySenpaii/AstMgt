@@ -1,5 +1,5 @@
 <%-- 
-    Document   : view-equipment
+    Document   : equipment-view
     Created on : Oct 27, 2018, 11:39:41 AM
     Author     : RubySenpaii
 --%>
