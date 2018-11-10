@@ -25,19 +25,16 @@ public class AssetTrackingService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
             
-            String query = "INSERT INTO AssetTracking(" + AssetTracking.COLUMN_APPROVED_BY + ", "
-                    + AssetTracking.COLUMN_APPROVED_DATE + ", " + AssetTracking.COLUMN_ASSET_TAG + ", "
+            String query = "INSERT INTO AssetTracking(" + AssetTracking.COLUMN_ASSET_TAG + ", "
                     + AssetTracking.COLUMN_RELEASED_BY + ", " + AssetTracking.COLUMN_RELEASED_TO + ", "
                     + AssetTracking.COLUMN_TRANSFER_DATE + ", " + assetTracking.COLUMN_REMARKS + ") "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, assetTracking.ApprovedBy);
-            ps.setObject(2, assetTracking.ApprovedDate);
-            ps.setString(3, assetTracking.AssetTag);
-            ps.setInt(4, assetTracking.ReleasedBy);
-            ps.setInt(5, assetTracking.ReleasedTo);
-            ps.setObject(6, assetTracking.TransferDate);
-            ps.setString(7, assetTracking.Remarks);
+            ps.setString(1, assetTracking.AssetTag);
+            ps.setInt(2, assetTracking.ReleasedBy);
+            ps.setInt(3, assetTracking.ReleasedTo);
+            ps.setObject(4, assetTracking.TransferDate);
+            ps.setString(5, assetTracking.Remarks);
             
             int result = ps.executeUpdate();
             ps.close();
