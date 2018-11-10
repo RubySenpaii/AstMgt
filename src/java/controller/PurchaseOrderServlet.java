@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.Employee;
 import objects.PurchaseOrder;
 import objects.PurchaseRequest;
 import objects.Supplier;
 import services.PurchaseOrderService;
+import services.PurchaseRequestService;
 import services.SupplierService;
 
 /**
@@ -39,8 +41,19 @@ public class PurchaseOrderServlet extends BaseServlet {
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Add":
                     SupplierService suppDB = new SupplierService();
+                    PurchaseRequestService prDB = new PurchaseRequestService();
                     ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
                     HttpSession session = request.getSession();
+                    Employee e = (Employee) session.getAttribute("employee");
+                    int prid = (int) session.getAttribute("id");
+                    Date approved = new java.sql.Date(System.currentTimeMillis());
+                    System.out.println("Approving purchase request");
+                    int approval = prDB.ApprovePurchaseRequest(e.EmployeeId, approved, prid);
+                    if (approval == 0) {
+                        System.out.println("Number :  " + approval);
+                        url = "/forms/purchase-request/list.jsp";
+                        break;
+                    }
                     System.out.println("found a list of supplier: " + supplierList.size());
                     session.setAttribute("supplier", supplierList);
                     url = "/forms/purchase-order/add.jsp";
@@ -88,12 +101,12 @@ public class PurchaseOrderServlet extends BaseServlet {
         po.DeliveryDate = sdf.parse(request.getParameter("deldate"));
         po.ConformeDate = sdf.parse(request.getParameter("condate"));
         po.ORSDate = sdf.parse(request.getParameter("orsdate"));
-        po.PurchaseOrderId = poDB.FindAllPurchaseOrder().size()+1;
+        po.PurchaseOrderId = poDB.FindAllPurchaseOrder().size() + 1;
         PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
         po.PurchaseRequestId = pr.PurchaseRequestId;
         Supplier supp = suppDB.FindSupplierByName(request.getParameter("supplier"));
         po.SupplierId = supp.SupplierId;
-        po.PurchaseOrderNumber = "PO"+"-"+po.PurchaseOrderId;
+        po.PurchaseOrderNumber = "PO" + "-" + po.PurchaseOrderId;
         po.ModeOfProcurement = request.getParameter("mop");
         po.Remarks = request.getParameter("remarks");
         po.DeliveryAddress = request.getParameter("deladd");
@@ -119,7 +132,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                 return "";
         }
     }
-    
+
     private String ViewPurchaseOrder(HttpServletRequest request) {
         PurchaseOrderService poService = new PurchaseOrderService();
         HttpSession session = request.getSession();

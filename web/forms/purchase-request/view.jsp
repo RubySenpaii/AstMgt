@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="objects.AssetRequested"%>
 <%@page import="objects.PurchaseRequest"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -79,10 +81,39 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-lg-6" style="text-align: center">
-                                            <form action="/AMS/PurchaseOrderServlet/Add">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Requested</label>
+                                        <div class="col-lg-10">
+                                            <table style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Asset</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
                                             <%
-                                                session.setAttribute("purchaseRequest", pr);
+                                                ArrayList<AssetRequested> ar = (ArrayList<AssetRequested>) session.getAttribute("assetRequested");
+                                                ArrayList<String> assetNames = (ArrayList<String>) session.getAttribute("assetNames");
+                                                for (int i = 0; i < ar.size(); i++) {
+
+                                            %>
+                                            <tbody>
+                                                <tr>
+                                                    <td><c:out value="<%= assetNames.get(i)%>"></c:out></td>
+                                                    <td><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
+                                                    <td><c:out value="<%= ar.get(i).UnitCost%>"></c:out></td>
+                                                    </tr>
+                                                </tbody>
+
+                                            <%                                                }
+                                            %>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6" style="text-align: center">
+                                        <form action="/AMS/PurchaseOrderServlet/Add">
+                                            <%                                                session.setAttribute("purchaseRequest", pr);
                                             %>
                                             <button class="btn btn-info" type="submit">Approve</button> 
                                         </form>
