@@ -28,6 +28,8 @@
                 <ul class="sub">
                     <li><a href="/AMS/AssetServlet/Add">Add Asset</a></li>
                     <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
+                    <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
+                    <li><a href="/AMS/InventoryServlet/SuppliesList">Supplies List</a></li>
                 </ul>
             </li>
             <li class="sub-menu">

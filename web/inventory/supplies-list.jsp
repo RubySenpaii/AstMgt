@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content-panel">
-                                <h4>List of Assets</h4>
+                                <h4>List of Supplies</h4>
                                 <br/>
                                 <table class="table">
                                     <thead>

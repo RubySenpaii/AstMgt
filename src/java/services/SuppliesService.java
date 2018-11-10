@@ -118,6 +118,8 @@ public class SuppliesService {
             e.TotalQuantity = rs.getInt(Supplies.COLUMN_TOTALQUANTITY);
             e.AmountDisposed = rs.getInt(Supplies.COLUMN_AMOUNT_DISPOSED);
             e.AmountConsumed = rs.getInt(Supplies.COLUMN_AMOUNT_CONSUMED);
+            
+            e.Asset = new AssetService().GetAsset(e.AssetId);
             purchaserequestList.add(e);
         }
         rs.close();
