@@ -128,6 +128,10 @@ public class DeliveryInspectionServlet extends BaseServlet {
         HttpSession session = request.getSession();
         if (request.getParameter("action").equals("Approve")) {
             Employee user = (Employee) session.getAttribute("user");
+            RequestForDeliveryInspection requestInspection = deliveryInspectionService.GetRequestForDeliveryInspection(Integer.parseInt(request.getParameter("requestId")));
+            requestInspection.ApprovedBy = user.EmployeeId;
+            int update = deliveryInspectionService.UpdateRequestForDeliveryInspection(requestInspection);
+            System.out.println("update request for delivery inspection status: " + update);
         }
         return "/DeliveryInspectionServlet/List";
     }

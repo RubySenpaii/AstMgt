@@ -97,7 +97,6 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" type="submit" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
                                         <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
                                     </div>
                                 </div>

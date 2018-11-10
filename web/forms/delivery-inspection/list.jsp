@@ -57,17 +57,20 @@
                                             <td><%=requestInspection.CreatedDate%></td>
                                             <td><%=requestInspection.Assigned.FullName()%></td>
                                             <td>
-                                                <%
-                                                    if (status.equals("Pending")) {
-                                                %>
-                                                <button class="btn btn-success">Approve</button>
-                                                <%
+                                                <form>
+                                                    <input type="hidden" name="requestId" value="<%=requestInspection.DeliveryInspectionId%>">
+                                                    <%
+                                                        if (status.equals("Pending")) {
+                                                    %>
+                                                    <button class="btn btn-success" name="action" value="Approve" formaction="/AMS/DeliveryInspectionServlet/Review" type="submit">Approve</button>
+                                                    <%
                                                     } else {
-                                                %>
-                                                <button class="btn">Acknowledge</button>
-                                                <%
-                                                    }
-                                                %>
+                                                    %>
+                                                    <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </form>
                                             </td>
                                         </tr>
                                         <%

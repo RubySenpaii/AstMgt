@@ -16,9 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.Equipment;
+import objects.RequestForDeliveryInspection;
 import objects.Supplies;
 import services.EquipmentService;
 import services.PurchaseOrderService;
+import services.RequestForDeliveryInspectionService;
 import services.SuppliesService;
 
 /**
@@ -27,9 +29,10 @@ import services.SuppliesService;
  */
 public class InventoryServlet extends BaseServlet {
 
-    private EquipmentService equipmentService;
-    private SuppliesService suppliesService;
-    private PurchaseOrderService poService;
+    private EquipmentService equipmentService = new EquipmentService();
+    private SuppliesService suppliesService = new SuppliesService();
+    private PurchaseOrderService poService = new PurchaseOrderService();
+    private RequestForDeliveryInspectionService deliveryInspectionService = new RequestForDeliveryInspectionService();
 
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +41,7 @@ public class InventoryServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "AcknowledgementRequest":
-                    url = "/inventory/acknowledgement.jsp";
+                    url = AcknowledgeRequest(request);
                     break;
                 case "Acknowledge":
                 case "SuppliesList":
@@ -58,13 +61,20 @@ public class InventoryServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
+    
+    private String AcknowledgeRequest(HttpServletRequest request) {
+        int requestId = Integer.parseInt(request.getParameter("requestId"));
+        RequestForDeliveryInspection requestInspection = deliveryInspectionService.GetRequestForDeliveryInspection(requestId);
+        HttpSession session = request.getSession();
+        session.setAttribute("purchaseOrder", requestInspection.PurchaseOrder);
+        return "/inventory/acknowledgement.jsp";
+    }
 
     private String Acknowledge(HttpServletRequest request) {
         return "";
     }
 
     private String ListEquipment(HttpServletRequest request) {
-        equipmentService = new EquipmentService();
         ArrayList<Equipment> equipments = equipmentService.GetListOfEquipments();
         HttpSession session = request.getSession();
         session.setAttribute("equipments", equipments);
@@ -72,7 +82,6 @@ public class InventoryServlet extends BaseServlet {
     }
 
     private String ListSupplies(HttpServletRequest request) {
-        suppliesService = new SuppliesService();
         ArrayList<Supplies> supplies = suppliesService.FindAllSupplies();
         HttpSession session = request.getSession();
         session.setAttribute("supplies", supplies);
