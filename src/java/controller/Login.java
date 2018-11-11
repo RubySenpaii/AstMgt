@@ -46,7 +46,7 @@ public class Login extends HttpServlet {
             System.out.println("Returning with object : " + checker);
             if (checker != null) {
                 HttpSession session = request.getSession();
-                session.setAttribute("employee", checker);
+                session.setAttribute("user", checker);
                 ServletContext context = getServletContext();
                 RequestDispatcher rd = context.getRequestDispatcher("/template.jsp");
                 rd.forward(request, response);

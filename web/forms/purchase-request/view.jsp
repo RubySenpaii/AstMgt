@@ -34,56 +34,42 @@
                                 <div class="form-horizontal style-form" action="#">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputEmail1">Purchase Request No</label>
-                                        <div class="col-lg-10">
-                                            <label> <c:out value="<%= pr.PurchaseRequestNo%>"></c:out> </label>
-                                        </div>
+
+                                        <label class="col-lg-10 control-label" > <c:out value="<%= pr.PurchaseRequestNo%>"></c:out> </label>
+
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Responsibility Center Code</label>
-                                        <div class="col-lg-10">
-                                            <label> <c:out value="<%= pr.ResponsibilityCenterCode%>"></c:out> </label>
-                                        </div>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.ResponsibilityCenterCode%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Date</label>
-                                        <div class="col-lg-10">
-                                            <label>  <c:out value="<%= pr.Date%>"></c:out> </label>
-                                        </div>
+                                        <label class="col-lg-10 control-label">  <c:out value="<%= pr.Date%>"></c:out> </label>                                        
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Purpose</label>
-                                        <div class="col-lg-10">
-                                            <label> <c:out value="<%= pr.Purpose%>"></c:out> </label>
-                                        </div>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Purpose%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested By</label>
-                                        <div class="col-lg-10">
-                                            <label> <c:out value="<%= pr.RequestedBy%>"></c:out> </label>
-                                        </div>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.RequestedBy%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested Date</label>
-                                        <div class="col-lg-10">
-                                            <label> <c:out value="<%= pr.RequestedDate%>"></c:out> </label>
-                                        </div>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.RequestedDate%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved By</label>
-                                        <div class="col-lg-10">
-                                            <label> <c:out value="<%= pr.ApprovedBy%>"></c:out> </label>
-                                        </div>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.ApprovedBy%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved Date</label>
-                                        <div class="col-lg-10">
-                                            <label> <c:out value="<%= pr.ApprovedDate%>"></c:out> </label>
-                                        </div>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.ApprovedDate%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Requested</label>
-                                        <div class="col-lg-10">
-                                            <table style="width:100%">
+                                        <div class="col-lg-12 control-label">
+                                            <h3>Assets Requested</h3>
+                                            <table style="width:100%" class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Asset</th>
@@ -116,7 +102,8 @@
                                 <div class="form-group">
                                     <div class="col-lg-6" style="text-align: center">
                                         <form action="/AMS/PurchaseOrderServlet/Add">
-                                            <%                                                session.setAttribute("purchaseRequest", pr);
+                                            <%
+                                                session.setAttribute("purchaseRequest", pr);
                                             %>
                                             <button class="btn btn-info" type="submit">Approve</button> 
                                         </form>

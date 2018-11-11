@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="form-panel">
                             <h4>Property Acknowledgment</h4><br/>
-                            <form class="form-horizontal style-form" action="/AMS/DeliveryInspectionServlet/Submit">
+                            <form class="form-horizontal style-form" action="/AMS/InventoryServlet/Acknowledge">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -47,13 +47,14 @@
                                             <td><%=item.Asset.StockNo%></td>
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
+                                                <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
                                                 <input class="form-control" name="asset-tag" placeholder="Asset Tag">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="asset-tag" placeholder="Condition">
+                                                <input class="form-control" name="condition" placeholder="Condition">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="asset-tag" placeholder="Estimated Useful Life">
+                                                <input class="form-control" name="estimated-useful-life" placeholder="Estimated Useful Life">
                                             </td>
                                         </tr>
                                         <%

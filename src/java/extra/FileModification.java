@@ -31,11 +31,13 @@ public class FileModification {
             InputStream fileContent = file.getInputStream();
             int read = 0;
             final byte[] bytes = new byte[1024];
-            while ((read = fileContent.read(bytes)) != 1) {
+            while ((read = fileContent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
+            System.out.println("file successfully saved");
             out.flush();
             out.close();
+            fileContent.close();
             return 1;
         } catch (IOException x) {
             System.err.println(x);
