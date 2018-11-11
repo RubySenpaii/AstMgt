@@ -110,6 +110,9 @@
                                         </table>
                                     </div>
                                 </div>
+                                <%
+                                    if (pr.ApprovedBy == 0) {
+                                %>
                                 <div class="form-group">
                                     <div class="col-lg-6" style="text-align: center">
                                         <form action="/AMS/PurchaseOrderServlet/Add">
@@ -122,6 +125,10 @@
                                         <button class="btn btn-warning" type="submit">Reject</button> 
                                     </div>
                                 </div>
+                                <%
+                                    }
+                                %>
+
                             </div>
                         </div>
                     </div>

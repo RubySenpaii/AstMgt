@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="objects.PurchaseOrder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,84 +31,84 @@
                             <h4>Purchase Order #<%=purchaseOrder.PurchaseOrderNumber%></h4><br/>
                             <form class="form-horizontal style-form">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Id</label>
-                                    <div class="col-lg-10">
-                                        <input list="supp" name="supplier" class="form-control">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
+                                    <div class="col-lg-10">                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Mode Of Procurement</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.ModeOfProcurement %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Mode Of Procurement</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="mop" name="mop" placeholder="Mode Of Procurement">
+                                    <div class="form-group">
+
+                                        <c:out value="<%= purchaseOrder.Supplier %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Remarks</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Remarks">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Remarks</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.Remarks %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Address</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="deladd" name="deladd" placeholder="Delivery Address">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Address</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.DeliveryAddress %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="deldate" name="deldate" placeholder="Requested Date">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Date</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.DeliveryDate %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Terms</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="delterms" name="delterms" placeholder="Delivery Terms">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Terms</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.DeliveryTerms %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Payment Terms</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="payterms" name="payterms" placeholder="Payment Terms">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Payment Terms</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.PaymentTerm %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Supplier</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="consupp" name="consupp" placeholder="Conforme Supplier">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Supplier</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.ConformeSupplier %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="condate" name="condate" placeholder="Requested Date">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Date</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.ConformeDate %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Number</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="orsno" name="orsno" placeholder="ORS Number">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Number</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.ORSNumber %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="orsdate" name="orsdate" placeholder="ORS Date">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
+                                        <div class="col-lg-10">
+                                            <c:out value="<%= purchaseOrder.ORSDate %>" ></c:out>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" type="submit" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
-                                        <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
+                                    <div class="form-group">
+                                        <div class="col-lg-12" style="text-align: center">
+                                            <button class="btn btn-theme" type="submit" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
+                                            <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /row -->
+                        <!-- /row -->
+                    </section>
                 </section>
-            </section>
-            <!--main content end-->
+                <!--main content end-->
             <jsp:include page="../../shared/footer.jsp"/>
         </section>
     </body>
