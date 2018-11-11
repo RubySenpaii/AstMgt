@@ -42,9 +42,11 @@ public class Login extends HttpServlet {
             oneUser.Username = request.getParameter("username");
             oneUser.Password = request.getParameter("password");
             System.out.println("Authenticating user ......" + Calendar.getInstance().getTime());
-            ArrayList<Employee> checker = employeeDB.Authenticate(oneUser.Username, oneUser.Password);
-            System.out.println("Returning with object : " + checker.size());
-            if (checker.size() != 0) {
+            Employee checker = employeeDB.Authenticate(oneUser.Username, oneUser.Password);
+            System.out.println("Returning with object : " + checker);
+            if (checker != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", checker);
                 ServletContext context = getServletContext();
                 RequestDispatcher rd = context.getRequestDispatcher("/template.jsp");
                 rd.forward(request, response);

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import objects.AssetTracking;
 import objects.Equipment;
 
 /**
@@ -24,7 +25,7 @@ public class EquipmentService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
 
-            String query = "INSERT INTO Equipment(" + Equipment.COLUMN_ASSET_ID + ", " + Equipment.COLUMN_ASSET_TAG + ", "
+            String query = "INSERT INTO Equipment(" + Equipment.COLUMN_ASSET_ID + ", " + Equipment.COLUMN_ASSET_TAG + ", Equipment."
                     + Equipment.COLUMN_CONDITION + ", " + Equipment.COLUMN_DATE_ACQUIRED + ", " + Equipment.COLUMN_ESTIMATED_USEFUL_LIFE + ", "
                     + Equipment.COLUMN_FLAG + ") "
                     + "VALUES(?, ?, ?, ?, ?, ?)";
@@ -118,6 +119,9 @@ public class EquipmentService {
             equipment.DateAcquired = rs.getDate(Equipment.COLUMN_DATE_ACQUIRED);
             equipment.EstimatedUsefulLife = rs.getInt(Equipment.COLUMN_ESTIMATED_USEFUL_LIFE);
             equipment.Flag = rs.getInt(Equipment.COLUMN_FLAG);
+            
+            equipment.Asset = new AssetService().GetAsset(equipment.AssetId);
+            equipment.CurrentUser = new AssetTrackingService().GetCurrentuser(equipment.AssetTag);
             equipments.add(equipment);
         }
         rs.close();

@@ -23,7 +23,8 @@ public class SupplierService {
             + Supplier.COLUMN_SUPPLIER_ADDRESS + "," + Supplier.COLUMN_SUPPLIER_TIN + ")VALUES(?,?,?,?)";
 
     private String FindSupplierByIdQuery = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_ID + " = ?";
-    private String FindAllSupplierQuery = "SELECT * FROM Supplier;";
+    private String FindSupplierByNameQuery = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_NAME + " = ?";
+    private String FindAllSupplierQuery = "SELECT * FROM Supplier ;";
 
     public int AddNewSupplier(Supplier s) {
         try {
@@ -44,7 +45,7 @@ public class SupplierService {
         return 0;
     }
 
-    public ArrayList<Supplier> FindSupplierById(int suppno) {
+    public Supplier FindSupplierById(int suppno) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -53,13 +54,29 @@ public class SupplierService {
             ps.setInt(1, suppno);
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }
         return null;
     }
-    
+
+    public Supplier FindSupplierByName(String suppname) {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(FindSupplierByNameQuery);
+            ps.setString(1, suppname);
+            ArrayList<Supplier> elist = getResult(ps.executeQuery());
+            ps.close();
+            return elist.get(0);
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
     public ArrayList<Supplier> FindAllSupplier() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
@@ -76,16 +93,17 @@ public class SupplierService {
     }
 
     private ArrayList<Supplier> getResult(ResultSet rs) throws SQLException {
-        ArrayList<Supplier> purchaserequestList = new ArrayList<Supplier>();
+        ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
         while (rs.next()) {
             Supplier e = new Supplier();
             e.SupplierId = rs.getInt(Supplier.COLUMN_SUPPLIER_ID);
             e.SupplierName = rs.getString(Supplier.COLUMN_SUPPLIER_NAME);
             e.SupplierAddress = rs.getString(Supplier.COLUMN_SUPPLIER_ADDRESS);
             e.SupplierTIN = rs.getString(Supplier.COLUMN_SUPPLIER_TIN);
+            suppliers.add(e);
         }
         rs.close();
-        return purchaserequestList;
+        return suppliers;
     }
 
 }

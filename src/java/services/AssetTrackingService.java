@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import objects.AssetTracking;
+import objects.Employee;
 
 /**
  *
@@ -24,19 +25,16 @@ public class AssetTrackingService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
             
-            String query = "INSERT INTO AssetTracking(" + AssetTracking.COLUMN_APPROVED_BY + ", "
-                    + AssetTracking.COLUMN_APPROVED_DATE + ", " + AssetTracking.COLUMN_ASSET_TAG + ", "
+            String query = "INSERT INTO AssetTracking(" + AssetTracking.COLUMN_ASSET_TAG + ", "
                     + AssetTracking.COLUMN_RELEASED_BY + ", " + AssetTracking.COLUMN_RELEASED_TO + ", "
                     + AssetTracking.COLUMN_TRANSFER_DATE + ", " + assetTracking.COLUMN_REMARKS + ") "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, assetTracking.ApprovedBy);
-            ps.setObject(2, assetTracking.ApprovedDate);
-            ps.setString(3, assetTracking.AssetTag);
-            ps.setInt(4, assetTracking.ReleasedBy);
-            ps.setInt(5, assetTracking.ReleasedTo);
-            ps.setObject(6, assetTracking.TransferDate);
-            ps.setString(7, assetTracking.Remarks);
+            ps.setString(1, assetTracking.AssetTag);
+            ps.setInt(2, assetTracking.ReleasedBy);
+            ps.setInt(3, assetTracking.ReleasedTo);
+            ps.setObject(4, assetTracking.TransferDate);
+            ps.setString(5, assetTracking.Remarks);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -113,6 +111,35 @@ public class AssetTrackingService {
             System.err.println(x);
             return new ArrayList<>();
         }
+    }
+    
+    public Employee GetCurrentuser(String assetTag) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT T1.* FROM AssetTracking T1 INNER JOIN "
+                    + "(SELECT T2.AssetTag, MAX(T2.TransferDate) AS 'Latest' FROM AssetTracking T2 WHERE T2.AssetTag = ? AND T2.ApprovedBy IS NOT NULL GROUP BY T2.AssetTag) T2 "
+                    + "ON T1.AssetTag = T2.AssetTag AND T1.TransferDate = T2.Latest";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetTag);
+            
+            int employeeId = 0;
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                employeeId = rs.getInt("ReleasedTo");
+            }
+            
+            ps.close();
+            rs.close();
+            con.close();
+            if (employeeId > 0) {
+                return new EmployeeService().FindEmployeeById(employeeId);
+            }
+        } catch(SQLException x) {
+            System.err.println(x);
+        }
+        return null;
     }
     
     private ArrayList<AssetTracking> getResult(ResultSet rs) throws SQLException {

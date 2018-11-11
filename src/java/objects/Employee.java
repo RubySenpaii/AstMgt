@@ -47,4 +47,8 @@ public class Employee {
     public Date StartDate;
     public Date EndDate;
     public int Flag;
+    
+    public String FullName() {
+        return this.LastName + ", " + this.FirstName;
+    }
 }

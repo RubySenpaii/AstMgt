@@ -15,12 +15,16 @@ public class Supplies {
     public static final String COLUMN_ASSET_ID = "AssetId";
     public static final String COLUMN_AMOUNT_ACQUIRED = "AmountAcquired";
     public static final String COLUMN_AMOUNT_DISPOSED = "AmountDisposed";
+    public static final String COLUMN_AMOUNT_CONSUMED = "AmountConsumed";
     public static final String COLUMN_TIMESTAMP = "Timestamp";
     public static final String COLUMN_TOTALQUANTITY = "TotalQuantity";
     
     public int AssetId;
     public int AmountAcquired;
+    public int AmountConsumed;
     public int AmountDisposed;
     public Date Timestamp;
     public int TotalQuantity;
+    
+    public Asset Asset;
 }

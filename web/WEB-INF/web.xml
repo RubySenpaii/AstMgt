@@ -24,9 +24,21 @@
         <servlet-name>AssetServlet</servlet-name>
         <servlet-class>controller.AssetServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderServlet</servlet-name>
+        <servlet-class>controller.PurchaseOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeliveryInspectionServlet</servlet-name>
+        <servlet-class>controller.DeliveryInspectionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InventoryServlet</servlet-name>
+        <servlet-class>controller.InventoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseRequestServlet</servlet-name>
-        <url-pattern>/PurchaseRequestServlet/*</url-pattern>
+        <url-pattern>/PurchaseRequest/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -39,6 +51,18 @@
     <servlet-mapping>
         <servlet-name>AssetServlet</servlet-name>
         <url-pattern>/AssetServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderServlet</servlet-name>
+        <url-pattern>/PurchaseOrderServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeliveryInspectionServlet</servlet-name>
+        <url-pattern>/DeliveryInspectionServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InventoryServlet</servlet-name>
+        <url-pattern>/InventoryServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

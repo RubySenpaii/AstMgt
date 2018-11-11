@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import objects.PurchaseRequest;
 
 /**
@@ -19,13 +20,14 @@ import objects.PurchaseRequest;
  */
 public class PurchaseRequestService {
 
-    private final String AddQuery = "INSERT INTO PurchaseRequest(" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + "," + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + "," 
+    private final String AddQuery = "INSERT INTO PurchaseRequest(" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + "," + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + ","
             + PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE + "," + PurchaseRequest.COLUMN_DATE + "," + PurchaseRequest.COLUMN_PURPOSE + ","
-            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE + "," + PurchaseRequest.COLUMN_APPROVED_BY + "," + PurchaseRequest.COLUMN_APPROVED_DATE
-            + ")VALUES(?,?,?,?,?,?,?,?,?,?,?);";
-    private final String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ";
-    private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ";
+            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE
+            + ")VALUES(?,?,?,?,?,?,?);";
+    private final String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
+    private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ;";
     private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
+    private final String ApprovePurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
 
     public int AddPurchaseRequest(PurchaseRequest pr) {
         try {
@@ -39,8 +41,6 @@ public class PurchaseRequestService {
             ps.setString(5, pr.Purpose);
             ps.setInt(6, pr.RequestedBy);
             ps.setObject(7, pr.RequestedDate);
-            ps.setInt(8, pr.ApprovedBy);
-            ps.setObject(9, pr.ApprovedDate);
 
             int res = ps.executeUpdate();
             ps.close();
@@ -51,12 +51,31 @@ public class PurchaseRequestService {
         }
         return 0;
     }
-    
+
+    public int ApprovePurchaseRequest(int EmployeeId, Date AppovedDate, int purchaseRequestId) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection conn = db.getConnection();
+            System.out.println("Values " + EmployeeId + " ====== " + AppovedDate + " ====== " + purchaseRequestId);
+            PreparedStatement ps = conn.prepareStatement(ApprovePurchaseRequest);
+            ps.setInt(1, EmployeeId);
+            ps.setObject(2, AppovedDate);
+            ps.setInt(3, purchaseRequestId);
+            int res = ps.executeUpdate();
+            ps.close();
+            conn.close();
+            return res;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return 0;
+    }
+
     public int UpdatePurchaseRequest(PurchaseRequest purchaseRequest) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
-            
+
             String query = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ?, " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?, "
                     + PurchaseRequest.COLUMN_DATE + " = ?, " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ?, " + PurchaseRequest.COLUMN_PURPOSE + " = ?, "
                     + PurchaseRequest.COLUMN_REQUESTED_BY + " = ?, " + PurchaseRequest.COLUMN_REQUESTED_DATE + " = ?, "
@@ -71,7 +90,7 @@ public class PurchaseRequestService {
             ps.setObject(7, purchaseRequest.RequestedDate);
             ps.setString(8, purchaseRequest.ResponsibilityCenterCode);
             ps.setInt(9, purchaseRequest.PurchaseRequestId);
-            
+
             int result = ps.executeUpdate();
             ps.close();
             con.close();
@@ -82,7 +101,7 @@ public class PurchaseRequestService {
         }
     }
 
-    public ArrayList<PurchaseRequest> FindPurhcaseRequesById(int prid) {
+    public PurchaseRequest FindPurhcaseRequesById(int prid) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -91,14 +110,14 @@ public class PurchaseRequestService {
             ps.setInt(1, prid);
             ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }
         return null;
     }
-    
-    public ArrayList<PurchaseRequest> FindPurchaseRequestByNo(String prno) {
+
+    public PurchaseRequest FindPurchaseRequestByNo(String prno) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -107,14 +126,14 @@ public class PurchaseRequestService {
             ps.setString(1, prno);
             ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }
         return null;
     }
-    
-    public ArrayList<PurchaseRequest> FindAllPR(String prno) {
+
+    public ArrayList<PurchaseRequest> FindAllPR() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -142,6 +161,8 @@ public class PurchaseRequestService {
             e.RequestedBy = rs.getInt(PurchaseRequest.COLUMN_REQUESTED_BY);
             e.RequestedDate = rs.getDate(PurchaseRequest.COLUMN_REQUESTED_DATE);
             e.ResponsibilityCenterCode = rs.getString(PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE);
+
+            e.AssetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(e.PurchaseRequestId);
             purchaserequestList.add(e);
         }
         rs.close();

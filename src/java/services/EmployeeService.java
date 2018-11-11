@@ -30,7 +30,7 @@ public class EmployeeService {
     private String SelectOneByEmployeeId = "Select * FROM Employee WHERE " + Employee.COLUMN_EMPLOYEE_ID + " = ?";
     private String SelectAllEmployees = "Select * FROM Employee";
 
-    public ArrayList<Employee> Authenticate(String username, String password) {
+    public Employee Authenticate(String username, String password) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
 
@@ -40,14 +40,32 @@ public class EmployeeService {
             ps.setString(2, password);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }
         return null;
     }
+    
+    public Employee FindEmployeeByFullName(String fullName) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT * FROM Employee WHERE CONCAT(" + Employee.COLUMN_LAST_NAME + ", \", \", " + Employee.COLUMN_FIRST_NAME + ") = ?"; 
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, fullName);
+            
+            ArrayList<Employee> employees = getResult(ps.executeQuery());
+            ps.close();
+            return employees.get(0);
+        } catch (SQLException x) {
+            System.err.println(x);
+            return null;
+        }
+    }
 
-    public ArrayList<Employee> FindEmployeeById(int employeeId) {
+    public Employee FindEmployeeById(int employeeId) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
         try {
@@ -55,14 +73,14 @@ public class EmployeeService {
             ps.setInt(1, employeeId);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();
-            return elist;
+            return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
         }
         return null;
     }
 
-    public ArrayList<Employee> FindAllEmployee(int employeeId) {
+    public ArrayList<Employee> FindAllEmployee() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
         try {
