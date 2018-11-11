@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="form-panel">
                             <h4>Equipment List</h4><br/>
-                            <form class="form-horizontal style-form">
+                            <form class="form-horizontal style-form" action="/AMS/InventoryServlet/EquipmentView">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -34,6 +34,7 @@
                                             <th>Asset Tag</th>
                                             <th>Condition</th>
                                             <th>Current User</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -46,6 +47,9 @@
                                             <td><%=equipment.AssetTag%></td>
                                             <td><%=equipment.Condition%></td>
                                             <td><%=equipment.CurrentUser.FullName()%></td>
+                                            <td>
+                                                <button type="submit" name="asset-tag" value="<%=equipment.AssetTag%>">View</button>
+                                            </td>
                                         </tr>
                                         <%
                                             }

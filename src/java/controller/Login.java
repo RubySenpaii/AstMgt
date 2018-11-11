@@ -57,6 +57,9 @@ public class Login extends HttpServlet {
             }
         } catch (Exception e) {
             System.out.println("ERROR : " + e);
+            ServletContext context = getServletContext();
+            RequestDispatcher rd = context.getRequestDispatcher("/404.jsp");
+            rd.forward(request, response);
         } finally {
             out.close();
         }

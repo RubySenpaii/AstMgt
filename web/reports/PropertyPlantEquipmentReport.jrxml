@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Error" uuid="31381ce4-003d-4829-9ff5-4dc1cdc11fd4">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<field name="assetName" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="quantityDisposed" class="java.lang.Integer"/>
+	<field name="quantityOnStock" class="java.lang.Integer"/>
+	<field name="quantityUsed" class="java.lang.Integer"/>
+	<field name="unit" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="28" uuid="9e8c4f60-8519-4fdd-bbc9-dd126aa22bcb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Report on the Physical Count of Property Plant and Equipment]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="0" y="28" width="555" height="20" uuid="171783da-70e1-4ad0-be6b-ac5b50b3fd78"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["As Of " + new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="52" y="0" width="61" height="48" uuid="b0d82695-7633-44bc-bd6f-9c75c15a4ba7"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="3e9ca9ce-a7c2-45ab-b2fb-cda67ddd38f9"/>
+				<text><![CDATA[AssetName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="141" height="20" uuid="678b10f6-431b-4019-8c1c-29b7ab8c13d2"/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="0" width="100" height="20" uuid="dd3a2afe-6195-407c-b522-71abd8c02835"/>
+				<text><![CDATA[QuantityDisposed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="0" width="100" height="20" uuid="2d9fb35f-4c6d-4ea1-bdee-ff9e718c5fde"/>
+				<text><![CDATA[QuantityOnStock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="0" width="100" height="20" uuid="119371eb-6cfe-4ebb-af3a-f23c152e83b7"/>
+				<text><![CDATA[QuantityUsed]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="55be18f7-9969-4d75-8a12-56053f3b3c86"/>
+				<textFieldExpression><![CDATA[$F{assetName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="141" height="20" uuid="c1f9fc5b-0e71-467b-bb31-a6210da43bb5"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="241" y="0" width="100" height="20" uuid="40447ef4-f9be-4f3b-9a3e-c54d9d835b3f"/>
+				<textFieldExpression><![CDATA[$F{quantityDisposed} + " " + $F{unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="0" width="100" height="20" uuid="5742628f-c474-4999-8e18-1818b3e2b698"/>
+				<textFieldExpression><![CDATA[$F{quantityOnStock} + " " + $F{unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="0" width="100" height="20" uuid="23eb2fb6-5053-4d0d-b46d-329989c3c55a"/>
+				<textFieldExpression><![CDATA[$F{quantityUsed} + " " + $F{unit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="55" splitType="Stretch">
+			<line>
+				<reportElement x="17" y="31" width="142" height="1" uuid="b1e37250-f2d6-4d69-8fc5-20a745ef9c57"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="89" height="20" uuid="d31d7a43-b954-4639-9ed3-3323e6397a58"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Certified Correct By:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="31" width="142" height="18" uuid="05ad6c9f-f9f9-4724-8c59-989344f2830f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Signature over Printed Name of Inventory Committee Chair and Members]]></text>
+			</staticText>
+			<line>
+				<reportElement x="221" y="31" width="142" height="1" uuid="5d82b44f-90f3-4372-8113-4cbd20c13934"/>
+			</line>
+			<staticText>
+				<reportElement x="221" y="31" width="142" height="18" uuid="11157893-2845-47f8-b54f-b21bf60a4c6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Signature over Printed Name of Head of Agency/Entity or Authorized Representative]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="0" width="89" height="20" uuid="50361241-fd06-4140-91a2-a8a084b8fa96"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Approved By:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="404" y="31" width="142" height="1" uuid="9352173e-5762-4f33-99d5-7b8012d7dd45"/>
+			</line>
+			<staticText>
+				<reportElement x="404" y="31" width="142" height="18" uuid="eceb3cae-05e2-468a-9237-b0b7ff462e7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Signature over Printed Name of COA Representative]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="0" width="89" height="20" uuid="ce19f6d5-edf0-45c8-9d15-105a7682f3f1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Verified By:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="168" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="0" y="0" width="555" height="168" uuid="cf3ef73e-7546-41f4-b963-080e0cc9385f"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Quantity Disposed"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantityDisposed}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Quantity Stock"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantityOnStock}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Quantity Used"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantityUsed}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

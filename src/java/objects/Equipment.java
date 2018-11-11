@@ -5,6 +5,7 @@
  */
 package objects;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -28,4 +29,15 @@ public class Equipment {
     
     public Asset Asset;
     public Employee CurrentUser;
+    public ArrayList<AssetTracking> TrackingLogs;
+    public ArrayList<AssetIncident> IncidentLogs;
+    
+    public String Status() {
+        switch (this.Flag) {
+            case 0: return "Disposed";
+            case 1: return "Stocked";
+            case 2: return "Being Used";
+            default: return "N/A";
+        }
+    }
 }

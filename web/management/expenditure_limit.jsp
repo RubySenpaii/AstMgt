@@ -25,17 +25,29 @@
                         <div class="col-md-3"></div>
                         <div class="form-panel col-md-6 col-md-offset-3">
                         <h4>Set Limit of Expenditure for Asset</h4><br/>
-                            <form role="form" class="form-horizontal style-form" action="/AMS/ExpenditureServlet/Submit">
+                        <form role="form" class="form-horizontal style-form" action="/AMS/ExpenditureServlet/Submit" enctype="multipart/form-data" method="POST">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Supplies</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-4 control-label">Supplies</label>
+                                    <div class="col-lg-8">
                                         <input type="number" placeholder="" name="supplies" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Equipment</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-4 control-label">Equipment</label>
+                                    <div class="col-lg-8">
                                         <input type="number" placeholder="" name="equipment" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Work and Financial Plan</label>
+                                    <div class="col-lg-8">
+                                        <input type="file" placeholder="" name="financial-plan" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Annual Procurement Plan</label>
+                                    <div class="col-lg-8">
+                                        <input type="file" placeholder="" name="annual-plan" >
                                     </div>
                                 </div>
                                 <div style="text-align: center">

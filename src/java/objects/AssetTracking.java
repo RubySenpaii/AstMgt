@@ -29,4 +29,7 @@ public class AssetTracking {
     public String Remarks;
     
     public Asset Asset;
+    public Employee ReleaseBy;
+    public Employee ReleaseTo;
+    public Employee Approver;
 }
