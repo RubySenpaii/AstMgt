@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.AssetIncident;
 import objects.AssetRequested;
 import objects.AssetTracking;
 import objects.Employee;
@@ -23,6 +24,7 @@ import objects.Equipment;
 import objects.PurchaseOrder;
 import objects.RequestForDeliveryInspection;
 import objects.Supplies;
+import services.AssetIncidentService;
 import services.AssetTrackingService;
 import services.EquipmentService;
 import services.PurchaseOrderService;
@@ -40,6 +42,7 @@ public class InventoryServlet extends BaseServlet {
     private PurchaseOrderService poService = new PurchaseOrderService();
     private RequestForDeliveryInspectionService deliveryInspectionService = new RequestForDeliveryInspectionService();
     private AssetTrackingService assetTrackingService = new AssetTrackingService();
+    private AssetIncidentService assetIncidentService = new AssetIncidentService();
 
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,6 +61,8 @@ public class InventoryServlet extends BaseServlet {
                     break;
                 case "SuppliesView":
                 case "EquipmentView":
+                    url = ViewEquipment(request);
+                    break;
                 case "EquipmentList":
                 default:
                     url = ListEquipment(request);
@@ -107,6 +112,7 @@ public class InventoryServlet extends BaseServlet {
                 init.Remarks = "received asset";
                 init.TransferDate = Calendar.getInstance().getTime();
                 int trackResult = assetTrackingService.AddAssetTracking(init);
+                assetTrackingService.UpdateAssetTracking(init);
                 System.out.println(equipment.AssetTag + " is added: " + result + " tracking: " + trackResult);
                 if (qty != assetsRequested.get(i).Quantity) {
                     qty++;
@@ -142,5 +148,15 @@ public class InventoryServlet extends BaseServlet {
         HttpSession session = request.getSession();
         session.setAttribute("supplies", supplies);
         return "/inventory/supplies-list.jsp";
+    }
+    
+    private String ViewEquipment(HttpServletRequest request) {
+        String assetTag = request.getParameter("asset-tag");
+        Equipment equipment = equipmentService.GetEquipmentWithAssetTag(assetTag);
+        equipment.TrackingLogs = assetTrackingService.GetAssetHistory(assetTag);
+        equipment.IncidentLogs = assetIncidentService.GetIncidentsOfAsset(assetTag);
+        HttpSession session = request.getSession();
+        session.setAttribute("equipment", equipment);
+        return "/inventory/equipment-view.jsp";
     }
 }

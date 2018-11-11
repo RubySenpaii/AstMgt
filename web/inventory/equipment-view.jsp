@@ -4,6 +4,9 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.AssetTracking"%>
+<%@page import="objects.AssetIncident"%>
+<%@page import="objects.Equipment"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,50 +26,78 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
-                            <h4>Add an Asset</h4><br/>
+                            <%
+                                Equipment equipment = (Equipment) session.getAttribute("equipment");
+                            %>
+                            <h4><%=equipment.Asset.AssetName + " - " + equipment.AssetTag%></h4><br/>
                             <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/Submit">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Stock No</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="stock-no" placeholder="" class="form-control">
-                                    </div>
+                                    <label class="col-lg-2 control-label">Condition</label>
+                                    <label class="col-lg-10 control-label"><%=equipment.Condition%></label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Asset Name</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="asset-name" placeholder="" class="form-control">
-                                    </div>
+                                    <label class="col-lg-2 control-label">Status</label>
+                                    <label class="col-lg-10 control-label"><%=equipment.Status()%></label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Unit</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="unit" placeholder="" class="form-control">
-                                    </div>
+                                    <label class="col-lg-2 control-label">Date Acquired</label>
+                                    <label class="col-lg-10 control-label"><%=equipment.DateAcquired%></label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Description</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="description" placeholder="" class="form-control">
-                                    </div>
+                                    <label class="col-lg-2 control-label">Estimated Useful Life</label>
+                                    <label class="col-lg-10 control-label"><%=equipment.EstimatedUsefulLife%></label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Asset Type</label>
-                                    <div class="col-lg-10">
-                                        <select class="form-control" name="asset-type">
-                                            <option>Supplies</option>
-                                            <option>Equipment</option>
-                                        </select>
+                                    <div class="col-lg-4">
+                                        <h4>Incidents</h4>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 30%">Timestamp</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    for (AssetIncident incident : equipment.IncidentLogs) {
+                                                %>
+                                                <tr>
+                                                    <td><%=incident.Timestamp%></td>
+                                                    <td><%=incident.Remarks%></td>
+                                                </tr>
+                                                <%
+                                                    }
+                                                %>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Fund Cluster</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="fund-cluster" placeholder="" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" type="submit">Submit</button>
+
+                                    <div class="col-lg-8">
+                                        <h4>Tracking</h4>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20%">From</th>
+                                                    <th style="width: 15%">Transfer Date</th>
+                                                    <th style="width: 20%">To</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    for (AssetTracking log : equipment.TrackingLogs) {
+                                                %>
+                                                <tr>
+                                                    <td><%=log.ReleaseBy.FullName()%></td>
+                                                    <td><%=log.TransferDate%></td>
+                                                    <td><%=log.ReleaseTo.FullName()%></td>
+                                                    <td><%=log.Remarks%></td>
+                                                </tr>
+                                                <%
+                                                    }
+                                                %>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </form>
