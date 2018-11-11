@@ -26,7 +26,7 @@ public class PurchaseOrderService {
             + PurchaseOrder.COLUMN_PAYMENT_TERMS + "," + PurchaseOrder.COLUMN_CONFORME_SUPPLIER + "," + PurchaseOrder.COLUMN_CONFORME_DATE + ","
             + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + ","
             + PurchaseOrder.COLUMN_SUPPLIER_ID + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
+    private String CheckPurchaseOrderwithPurchaseRequestIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
     private String FindPurchaseOrderIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
     private String FindAllPurchaseOrderQ = "SELECT * FROM PurchaseOrder ;";
 
@@ -58,6 +58,22 @@ public class PurchaseOrderService {
             System.err.println(e);
         }
         return 0;
+    }
+
+    public PurchaseOrder FindPurchaseOrderByPurchaseRequestId(int prId) {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(CheckPurchaseOrderwithPurchaseRequestIdQuery);
+            ps.setInt(1, prId);
+            ArrayList<PurchaseOrder> elist = getResult(ps.executeQuery());
+            ps.close();
+            return elist.get(0);
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
     }
 
     public PurchaseOrder FindPurchaseOrderById(int poId) {
@@ -111,7 +127,7 @@ public class PurchaseOrderService {
             e.ApprovedDate = rs.getDate(PurchaseOrder.COLUMN_APPROVED_DATE);
             e.ORSNumber = rs.getString(PurchaseOrder.COLUMN_ORS_NUMBER);
             e.ORSDate = rs.getDate(PurchaseOrder.COLUMN_ORS_DATE);
-            
+
             e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
             e.PurchaseRequest = new PurchaseRequestService().FindPurhcaseRequesById(e.PurchaseRequestId);
             purchaserequestList.add(e);

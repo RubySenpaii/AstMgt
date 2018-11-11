@@ -40,22 +40,9 @@ public class PurchaseOrderServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Add":
-                    SupplierService suppDB = new SupplierService();
-                    PurchaseRequestService prDB = new PurchaseRequestService();
-                    ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
-                    HttpSession session = request.getSession();
-                    Employee e = (Employee) session.getAttribute("user");
-                    int prid = (int) session.getAttribute("id");
-                    Date approved = new java.sql.Date(System.currentTimeMillis());
-                    System.out.println("Approving purchase request");
-                    int approval = prDB.ApprovePurchaseRequest(e.EmployeeId, approved, prid);
-                    if (approval == 0) {
-                        System.out.println("Number :  " + approval);
-                        url = "/forms/purchase-request/list.jsp";
-                        break;
-                    }
-                    System.out.println("found a list of supplier: " + supplierList.size());
-                    session.setAttribute("supplier", supplierList);
+                    url = ApproveAndAddPurchaseOrder(request);
+                    break;
+                case "GoToPO":
                     url = "/forms/purchase-order/add.jsp";
                     break;
                 case "Submit":
@@ -81,6 +68,26 @@ public class PurchaseOrderServlet extends BaseServlet {
         }
     }
 
+    private String ApproveAndAddPurchaseOrder(HttpServletRequest request) {
+        SupplierService suppDB = new SupplierService();
+        PurchaseRequestService prDB = new PurchaseRequestService();
+        ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
+        HttpSession session = request.getSession();
+        Employee e = (Employee) session.getAttribute("employee");
+        int prid = (int) session.getAttribute("id");
+        Date approved = new java.sql.Date(System.currentTimeMillis());
+        System.out.println("Approving purchase request");
+        int approval = prDB.ApprovePurchaseRequest(e.EmployeeId, approved, prid);
+        if (approval == 0) {
+            System.out.println("Number :  " + approval);
+            return "/forms/purchase-request/list.jsp";
+        }
+        System.out.println("found a list of supplier: " + supplierList.size());
+        session.setAttribute("supplier", supplierList);
+        return "/forms/purchase-order/add.jsp";
+    }
+
+    ;
     private String ListPurchaseOrder(HttpServletRequest request) throws SQLException {
         PurchaseOrderService poDB = new PurchaseOrderService();
         ArrayList<PurchaseOrder> poList = new ArrayList<>();

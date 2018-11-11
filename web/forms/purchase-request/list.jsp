@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.Employee"%>
+<%@page import="services.EmployeeService"%>
 <%@page import="objects.PurchaseRequest"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,20 +39,25 @@
                                             <th>Requested By</th>
                                             <th>Requested Date</th>
                                             <th>Approved By</th>
+                                            <th>Division</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <%
                                             ArrayList<PurchaseRequest> PR = (ArrayList<PurchaseRequest>) session.getAttribute("PR");
+                                            EmployeeService eDB = new EmployeeService();
                                             for (PurchaseRequest pr : PR) {
+                                            Employee e  = eDB.FindEmployeeById(pr.ApprovedBy);
+                                            String name = e.LastName + ", " + e.FirstName;
                                         %>
                                         <tr>
                                             <td><c:out value="<%= pr.PurchaseRequestNo %>"></c:out></td>
                                             <td><c:out value="<%= pr.Date %>"></c:out></td>
                                             <td><c:out value="<%= pr.RequestedBy %>"></c:out></td>
                                             <td><c:out value="<%= pr.RequestedDate %>"></c:out></td>
-                                            <td><c:out value="<%= pr.ApprovedBy %>"></c:out></td>
+                                            <td><c:out value="<%= name%>"></c:out></td>
+                                            <td><c:out value="<%= e.Division %>"></c:out></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <%
