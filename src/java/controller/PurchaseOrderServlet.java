@@ -19,10 +19,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.AssetRequested;
 import objects.Employee;
 import objects.PurchaseOrder;
 import objects.PurchaseRequest;
 import objects.Supplier;
+import services.AssetRequestedService;
+import services.AssetService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
 import services.SupplierService;
@@ -144,6 +147,18 @@ public class PurchaseOrderServlet extends BaseServlet {
         PurchaseOrderService poService = new PurchaseOrderService();
         HttpSession session = request.getSession();
         PurchaseOrder purchaseOrder = poService.FindPurchaseOrderById(Integer.parseInt(request.getParameter("poId")));
+        AssetRequestedService assetReqDB = new AssetRequestedService();
+        AssetService assetDB = new AssetService();
+        ArrayList<AssetRequested> assetReqList = assetReqDB.GetAssetsRequestedWithPurchaseRequest(purchaseOrder.PurchaseRequestId);
+        ArrayList<String> assetNameList = new ArrayList<>();
+        for (int i = 0; i < assetReqList.size(); i++) {
+            String name = assetDB.GetAsset(assetReqList.get(i).AssetId).AssetName;
+            System.out.println("NAMES are : " + name);
+            assetNameList.add(name);
+        }
+
+        session.setAttribute("assetRequested", assetReqList);
+        session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseOrder", purchaseOrder);
         System.out.println("viewing purchase order: " + purchaseOrder.PurchaseOrderId);
         return "/forms/purchase-order/view.jsp";

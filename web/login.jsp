@@ -36,6 +36,8 @@
                         <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                         <br>
                         <button class="btn btn-theme btn-block" value="Sign In" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+                        <br>
+                        <a class="btn btn-theme btn-block" href="/AMS/forms/admin/register.jsp"><i class="fa fa-user-plus"></i> REGISTER</a>
                     </div>
                 </form>
             </div>
