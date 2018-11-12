@@ -98,6 +98,7 @@ public class EquipmentService {
             
             String query = "SELECT * FROM Equipment WHERE " + Equipment.COLUMN_ASSET_TAG + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetTag);
             
             ArrayList<Equipment> equipments = getResult(ps.executeQuery());
             ps.close();
