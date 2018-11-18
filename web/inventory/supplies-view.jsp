@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.Supplies"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,47 +28,34 @@
                             <h4>Add an Asset</h4><br/>
                             <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/Submit">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Stock No</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="stock-no" placeholder="" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Asset Name</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="asset-name" placeholder="" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Unit</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="unit" placeholder="" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Description</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="description" placeholder="" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Asset Type</label>
-                                    <div class="col-lg-10">
-                                        <select class="form-control" name="asset-type">
-                                            <option>Supplies</option>
-                                            <option>Equipment</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Fund Cluster</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="fund-cluster" placeholder="" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" type="submit">Submit</button>
+                                    <div class="col-lg-12">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Timestamp</th>
+                                                    <th>Amount Acquired</th>
+                                                    <th>Amount Consumed</th>
+                                                    <th>Division</th>
+                                                    <th>Total Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    ArrayList<Supplies> supplies = (ArrayList<Supplies>) session.getAttribute("supplies");
+                                                    for (Supplies supply : supplies) {
+                                                %>
+                                                <tr>
+                                                    <td><%=supply.Timestamp%></td>
+                                                    <td><%=supply.AmountAcquired%></td>
+                                                    <td><%=supply.AmountConsumed%></td>
+                                                    <td><%=supply.Division%></td>
+                                                    <td><%=supply.TotalQuantity%></td>
+                                                </tr>
+                                                <%
+                                                    }
+                                                %>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </form>

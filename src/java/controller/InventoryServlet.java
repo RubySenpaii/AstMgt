@@ -60,6 +60,14 @@ public class InventoryServlet extends BaseServlet {
                     url = ListSupplies(request);
                     break;
                 case "SuppliesView":
+                    url = ViewSupplies(request);
+                    break;
+                case "ReleaseSupplies":
+                    url = ReleaseSupplies(request);
+                    break;
+                case "SubmitRelease":
+                    url = SubmitRelease(request);
+                    break;
                 case "EquipmentView":
                     url = ViewEquipment(request);
                     break;
@@ -75,7 +83,7 @@ public class InventoryServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-    
+
     private String AcknowledgeRequest(HttpServletRequest request) {
         int requestId = Integer.parseInt(request.getParameter("requestId"));
         RequestForDeliveryInspection requestInspection = deliveryInspectionService.GetRequestForDeliveryInspection(requestId);
@@ -102,7 +110,7 @@ public class InventoryServlet extends BaseServlet {
                 equipment.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLives[counter]);
                 equipment.Flag = 1;
                 int result = equipmentService.AddEquipment(equipment);
-                
+
                 AssetTracking init = new AssetTracking();
                 init.AssetTag = equipment.AssetTag;
                 init.ApprovedBy = employee.EmployeeId;
@@ -125,7 +133,6 @@ public class InventoryServlet extends BaseServlet {
                 supplies.AssetId = assetsRequested.get(i).AssetId;
                 supplies.AmountAcquired = assetsRequested.get(i).Quantity;
                 supplies.AmountConsumed = 0;
-                supplies.AmountDisposed = 0;
                 supplies.Timestamp = Calendar.getInstance().getTime();
                 supplies.TotalQuantity = supplies.AmountAcquired + suppliesService.GetLatestCountOfSupplies(supplies.AssetId);
                 int result = suppliesService.AddNewSupply(supplies);
@@ -149,7 +156,7 @@ public class InventoryServlet extends BaseServlet {
         session.setAttribute("supplies", supplies);
         return "/inventory/supplies-list.jsp";
     }
-    
+
     private String ViewEquipment(HttpServletRequest request) {
         String assetTag = request.getParameter("asset-tag");
         Equipment equipment = equipmentService.GetEquipmentWithAssetTag(assetTag);
@@ -158,5 +165,49 @@ public class InventoryServlet extends BaseServlet {
         HttpSession session = request.getSession();
         session.setAttribute("equipment", equipment);
         return "/inventory/equipment-view.jsp";
+    }
+    
+    private String ViewSupplies(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int assetId = Integer.parseInt(request.getParameter("asset-id"));
+        ArrayList<Supplies> supplies = suppliesService.FindSuppliesByAssetId(assetId);
+        session.setAttribute("supplies", supplies);
+        return "/inventory/supplies-view.jsp";
+    }
+
+    private String ReleaseSupplies(HttpServletRequest request) {
+        int assetId = Integer.parseInt(request.getParameter("asset-id"));
+        HttpSession session = request.getSession();
+        int currentCount = suppliesService.GetLatestCountOfSupplies(assetId);
+        Supplies supply = new Supplies();
+        supply.AssetId = assetId;
+        supply.TotalQuantity = currentCount;
+        session.setAttribute("supply", supply);
+        return "/inventory/release-supplies.jsp";
+    }
+
+    private String SubmitRelease(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Supplies supply = (Supplies) session.getAttribute("supply");
+
+        String[] quantity = request.getParameterValues("quantity");
+        String[] division = request.getParameterValues("division");
+
+        int currentQty = supply.TotalQuantity;
+        for (int i = 0; i < quantity.length; i++) {
+            Supplies tempSupply = new Supplies();
+            tempSupply.AssetId = supply.AssetId;
+            tempSupply.AmountAcquired = 0;
+            tempSupply.AmountConsumed = Integer.parseInt(quantity[i]);
+            tempSupply.Division = division[i];
+            tempSupply.Timestamp = Calendar.getInstance().getTime();
+            tempSupply.TotalQuantity = currentQty - tempSupply.AmountConsumed;
+            int result = suppliesService.ConsumeSupply(tempSupply);
+            if (result == 1) {
+                currentQty = tempSupply.TotalQuantity;
+            }
+            System.out.println("update result: " + result);
+        }
+        return "/InventoryServlet/SuppliesList";
     }
 }

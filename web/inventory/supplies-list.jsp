@@ -35,6 +35,7 @@
                                             <th>Asset Name</th>
                                             <th>Quantity</th>
                                             <th>Last Updated</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -47,6 +48,12 @@
                                             <td><%=supply.Asset.AssetName%></td>
                                             <td><%=supply.TotalQuantity%></td>
                                             <td><%=supply.Timestamp%></td>
+                                            <td>
+                                                <form>
+                                                    <button formaction="/AMS/InventoryServlet/SuppliesView" name="asset-id" value="<%=supply.AssetId%>">View</button>
+                                                    <button formaction="/AMS/InventoryServlet/ReleaseSupplies" name="asset-id" value="<%=supply.AssetId%>">Release</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         <%
                                             }
