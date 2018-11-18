@@ -78,7 +78,7 @@ public class EquipmentService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
             
-            String query = "SELECT * FROM Equipment";
+            String query = "SELECT * FROM Equipment WHERE " + Equipment.COLUMN_ASSET_TAG + " IS NOT NULL";
             PreparedStatement ps = con.prepareStatement(query);
             
             ArrayList<Equipment> equipments = getResult(ps.executeQuery());

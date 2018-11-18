@@ -57,6 +57,10 @@ public class AssetServlet extends BaseServlet {
                 case "LogTracking":
                     url = LogTracking(request);
                     break;
+                case "LogRepair":
+                    url = "/forms/asset/log-repair.jsp";
+                    break;
+                case "SubmitRepair":
                 case "SubmitIncident":
                     url = SubmitIncident(request);
                     break;

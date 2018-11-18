@@ -15,4 +15,21 @@ footer {
     width: 100%;
     color: white;
     text-align: center;
+    height: 2vw;
+}
+
+.sidebar-footer {
+    text-align: center;
+    bottom: 2vw;
+    position: absolute;
+    width: inherit;
+    height: 30px;
+    background-color: #777;
+}
+
+.sidebar-footer>a {
+    text-align: center;
+    color: white;
+    font-size: x-large;
+    margin: 15px;
 }
