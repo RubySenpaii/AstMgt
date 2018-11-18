@@ -61,6 +61,7 @@ public class Register extends HttpServlet {
             oneUser.StartDate = new Date(System.currentTimeMillis());
             oneUser.EndDate = sf.stringToDate(request.getParameter("EndDate"));
             oneUser.Flag = Integer.parseInt(request.getParameter("Flag"));
+            oneUser.UserLevel = request.getParameter("UserLevel");
             System.out.println("Adding user ......" + Calendar.getInstance().getTime());
             int checker = employeeDB.AddEmployee(oneUser);
             System.out.println("Returning with object : " + checker);

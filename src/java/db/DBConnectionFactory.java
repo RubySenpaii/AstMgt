@@ -13,9 +13,9 @@ import java.sql.Connection;
  * @author Garfield
  */
 public abstract class DBConnectionFactory {
-        String url = "jdbc:mysql://localhost:3306/astmgt";
+        String url = "jdbc:mysql://localhost:3306/AstMgt";
         String username="root";
-        String password="delfin";
+        String password="password";
 
     public static DBConnectionFactory getInstance(){
         return new DBConnectionFactoryImpl();

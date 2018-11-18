@@ -23,8 +23,8 @@ public class EmployeeService {
             + Employee.COLUMN_FIRST_NAME + "," + Employee.COLUMN_EMAIL + "," + Employee.COLUMN_CONTACT_NUMBER + "," + Employee.COLUMN_DIVISION + ","
             + Employee.COLUMN_CIVIL_STATUS + "," + Employee.COLUMN_BIRTHDATE + "," + Employee.COLUMN_GENDER + "," + Employee.COLUMN_EMPLOYEE_STATUS + ","
             + Employee.COLUMN_USERNAME + "," + Employee.COLUMN_PASSWORD + "," + Employee.COLUMN_START_DATE + "," + Employee.COLUMN_END_DATE + "," 
-            + Employee.COLUMN_FLAG + ", " + Employee.COLUMN_ENTITY_NAME + ", " + Employee.COLUMN_OFFICE
-            + ")VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            + Employee.COLUMN_FLAG + ", " + Employee.COLUMN_ENTITY_NAME + ", " + Employee.COLUMN_OFFICE + "," + Employee.COLUMN_USER_LEVEL
+            + ")VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
     private String SelectOneQuery = "Select * FROM Employee WHERE " + Employee.COLUMN_USERNAME + " = ? AND " + Employee.COLUMN_PASSWORD + " = ? ;";
     private String SelectOneByEmployeeId = "Select * FROM Employee WHERE " + Employee.COLUMN_EMPLOYEE_ID + " = ?";
@@ -117,7 +117,7 @@ public class EmployeeService {
             ps.setInt(15, employee.Flag);
             ps.setString(16, employee.EntityName);
             ps.setString(17, employee.Office);
-
+            ps.setString(18, employee.UserLevel);
             int result = ps.executeUpdate();
             conn.close();
             ps.close();
@@ -149,6 +149,7 @@ public class EmployeeService {
             e.StartDate = rs.getDate(Employee.COLUMN_START_DATE);
             e.Username = rs.getString(Employee.COLUMN_USERNAME);
             e.EntityName = rs.getString(Employee.COLUMN_ENTITY_NAME);
+            e.UserLevel = rs.getString(Employee.COLUMN_USER_LEVEL);
             employees.add(e);
         }
         rs.close();

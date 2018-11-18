@@ -55,6 +55,8 @@
                         <br>
                         <input type="text" class="form-control" name="Username" id="Username" placeholder="Username">
                         <br>
+                        <input type="text" class="form-control" name="UserLevel" id="UserLevel" placeholder="UserLevel">
+                        <br>
                         <input type="password" class="form-control" name="Password" id="Password" placeholder="Password">
                         <br>
                         <input type="date" class="form-control" name="EndDate" id="EndDate" placeholder="EndDate">

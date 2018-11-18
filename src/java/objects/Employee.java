@@ -29,6 +29,7 @@ public class Employee {
     public static final String COLUMN_START_DATE = "StartDate";
     public static final String COLUMN_END_DATE = "EndDate";
     public static final String COLUMN_FLAG = "Flag";
+    public static final String COLUMN_USER_LEVEL = "UserLevel";
     
     public int EmployeeId;
     public String LastName;
@@ -46,6 +47,7 @@ public class Employee {
     public String Password;
     public Date StartDate;
     public Date EndDate;
+    public String UserLevel;
     public int Flag;
     
     public String FullName() {
