@@ -46,6 +46,8 @@ public class Login extends HttpServlet {
             System.out.println("Returning with object : " + checker);
             HttpSession session = request.getSession();
             if (checker != null) {
+                System.out.println("oaihdshidsahiodsaphdasp" +  checker.UserLevel);
+                session.setAttribute("UserLevel", checker.UserLevel);
                 session.setAttribute("user", checker);
                 boolean logged = true;
                 session.setAttribute("logged", logged);
@@ -60,7 +62,7 @@ public class Login extends HttpServlet {
                 rd.forward(request, response);
             }
         } catch (Exception e) {
-            System.out.println("ERROR : " + e);
+            System.out.println("ERROR : " + e.getMessage());
             boolean logged = false;
             HttpSession session = request.getSession();
             session.setAttribute("logged", logged);
