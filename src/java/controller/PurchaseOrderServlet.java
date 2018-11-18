@@ -19,10 +19,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.AssetRequested;
 import objects.Employee;
 import objects.PurchaseOrder;
 import objects.PurchaseRequest;
 import objects.Supplier;
+import services.AssetRequestedService;
+import services.AssetService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
 import services.SupplierService;
@@ -32,7 +35,7 @@ import services.SupplierService;
  * @author RubySenpaii
  */
 public class PurchaseOrderServlet extends BaseServlet {
-
+    
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getRequestURI();
@@ -67,16 +70,23 @@ public class PurchaseOrderServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-
-    private String ApproveAndAddPurchaseOrder(HttpServletRequest request) {
+    
+    private String ApproveAndAddPurchaseOrder(HttpServletRequest request) throws ServletException {
         SupplierService suppDB = new SupplierService();
         PurchaseRequestService prDB = new PurchaseRequestService();
         ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
         HttpSession session = request.getSession();
-        Employee e = (Employee) session.getAttribute("employee");
-        int prid = (int) session.getAttribute("id");
+        Employee e = (Employee) session.getAttribute("user");
+        int prid = Integer.parseInt(request.getParameter("prid"));
         Date approved = new java.sql.Date(System.currentTimeMillis());
-        System.out.println("Approving purchase request");
+        try {
+            System.out.println("Approving purchase request" + e);
+            System.out.println("Approving purchase request" + approved);
+            System.out.println("Approving purchase request" + prid);
+        } catch (Exception ex) {
+            throw new ServletException(ex);
+        }
+        
         int approval = prDB.ApprovePurchaseRequest(e.EmployeeId, approved, prid);
         if (approval == 0) {
             System.out.println("Number :  " + approval);
@@ -86,7 +96,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("supplier", supplierList);
         return "/forms/purchase-order/add.jsp";
     }
-
+    
     ;
     private String ListPurchaseOrder(HttpServletRequest request) throws SQLException {
         PurchaseOrderService poDB = new PurchaseOrderService();
@@ -97,7 +107,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("PO", poList);
         return "/forms/purchase-order/list.jsp";
     }
-
+    
     private String AddPurchaseOrder(HttpServletRequest request) throws ParseException, SQLException {
         PurchaseOrder po = new PurchaseOrder();
         HttpSession session = request.getSession();
@@ -131,7 +141,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                 return "/forms/login.jsp";
         }
     }
-
+    
     private String EditPurchaseOrder() {
         int result = 0;
         switch (result) {
@@ -139,11 +149,23 @@ public class PurchaseOrderServlet extends BaseServlet {
                 return "";
         }
     }
-
+    
     private String ViewPurchaseOrder(HttpServletRequest request) {
         PurchaseOrderService poService = new PurchaseOrderService();
         HttpSession session = request.getSession();
         PurchaseOrder purchaseOrder = poService.FindPurchaseOrderById(Integer.parseInt(request.getParameter("poId")));
+        AssetRequestedService assetReqDB = new AssetRequestedService();
+        AssetService assetDB = new AssetService();
+        ArrayList<AssetRequested> assetReqList = assetReqDB.GetAssetsRequestedWithPurchaseRequest(purchaseOrder.PurchaseRequestId);
+        ArrayList<String> assetNameList = new ArrayList<>();
+        for (int i = 0; i < assetReqList.size(); i++) {
+            String name = assetDB.GetAsset(assetReqList.get(i).AssetId).AssetName;
+            System.out.println("NAMES are : " + name);
+            assetNameList.add(name);
+        }
+        
+        session.setAttribute("assetRequested", assetReqList);
+        session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseOrder", purchaseOrder);
         System.out.println("viewing purchase order: " + purchaseOrder.PurchaseOrderId);
         return "/forms/purchase-order/view.jsp";

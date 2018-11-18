@@ -4,6 +4,9 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
+<%@page import="objects.AssetRequested"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="objects.PurchaseOrder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -74,18 +77,59 @@
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
                                         <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.ORSDate%>" ></c:out> </label>
                                     </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-12" style="text-align: center">
-                                    <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
+                                    <div class="form-group">
+                                        <div class="col-lg-12 control-label">
+                                            <h3>Assets Requested</h3>
+                                            <table style="width:100%" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Asset</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                            <%
+                                                ArrayList<AssetRequested> ar = (ArrayList<AssetRequested>) session.getAttribute("assetRequested");
+                                                ArrayList<String> assetNames = (ArrayList<String>) session.getAttribute("assetNames");
+                                                SharedFormat sf = new SharedFormat();
+                                                double sum = 0;
+                                                for (int i = 0; i < ar.size(); i++) {
+
+                                            %>
+                                            <tbody>
+                                                <tr>
+                                                    <td><c:out value="<%= assetNames.get(i)%>"></c:out></td>
+                                                    <td style="text-align: right"><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
+                                                    <td style="text-align: right"><c:out value="<%= sf.doubleToString(ar.get(i).UnitCost)%>"></c:out></td>
+                                                    </tr>
+                                                </tbody>
+
+                                            <%
+                                                    sum += ar.get(i).UnitCost;
+                                                }
+                                            %>
+                                            <tbody>
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <td></td>
+                                                    <th style="text-align: right"><%= sf.doubleToString(sum)%></th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                </form>
-                            </div>
                         </div>
-                        <!-- /row -->
-                    </section>
+                        <div class="form-group">
+                            <div class="col-lg-12" style="text-align: center">
+                                <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /row -->
                 </section>
-                <!--main content end-->
+            </section>
+            <!--main content end-->
             <jsp:include page="../../shared/footer.jsp"/>
         </section>
     </body>

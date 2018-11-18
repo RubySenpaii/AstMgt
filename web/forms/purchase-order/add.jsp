@@ -28,7 +28,7 @@
                             <h4>Create Purchase Order</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/PurchaseOrderServlet/Submit">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Id</label>
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
                                     <div class="col-lg-10">
                                         <input list="supp" name="supplier" class="form-control">
                                         <datalist id="supp">

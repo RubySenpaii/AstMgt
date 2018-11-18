@@ -29,7 +29,7 @@
                             <div class="content-panel">
                                 <h4>List of Purchase Order</h4>
                                 <br/>
-                                <table class="table">
+                                <table class="table" id="poList">
                                     <thead>
                                         <tr>
                                             <th>Purchase Order No</th>
@@ -55,9 +55,9 @@
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryTerms%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
-                                            <td>
-                                                <form action="/AMS/PurchaseOrderServlet/View">
-                                                    <button type="submit" name="poId" value="<%=po.PurchaseOrderId%>">View</button>
+                                                <td>
+                                                    <form action="/AMS/PurchaseOrderServlet/View">
+                                                        <button type="submit" name="poId" value="<%=po.PurchaseOrderId%>">View</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -77,4 +77,9 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            $('#poList').DataTable();
+        });
+    </script>
 </html>

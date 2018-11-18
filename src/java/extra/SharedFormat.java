@@ -6,7 +6,11 @@
 package extra;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,6 +28,14 @@ public class SharedFormat {
             return df.format(value);
         } else {
             return "0.00";
+        }
+    }
+    public static Date stringToDate(String date){
+        try {
+            return DB_DATE_ENTRY.parse(date);
+        } catch (ParseException ex) {
+            Logger.getLogger(SharedFormat.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 }

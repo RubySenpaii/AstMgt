@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested By</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.RequestedBy%>"></c:out> </label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.FullName() %>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested Date</label>
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved By</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.ApprovedBy%>"></c:out> </label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Approver.FullName() %>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved Date</label>
@@ -102,20 +102,23 @@
                                 <div class="form-group">
                                     <div class="col-lg-6" style="text-align: center">
                                         <form action="/AMS/PurchaseOrderServlet/Add">
-                                            <%
-                                                session.setAttribute("purchaseRequest", pr);
-                                            %>
-                                            <button class="btn btn-info" type="submit">Approve</button> 
+                                            <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Approve</button> 
                                         </form>
                                     </div>
                                     <div class="col-lg-6" style="text-align: center">
                                         <button class="btn btn-warning" type="submit">Reject</button> 
                                     </div>
-                                </div>
-                                <%
-                                    }
-                                %>
 
+                                    <%
+                                    } else {
+                                    %>
+                                    <form action="/AMS/PurchaseOrderServlet/GoToPO">
+                                        <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Purchase Order</button> 
+                                    </form>
+                                    <%
+                                        }
+                                    %>
+                                </div>
                             </div>
                         </div>
                     </div>

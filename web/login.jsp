@@ -31,11 +31,27 @@
                 <form class="form-login" action="Login" method="post">
                     <h2 class="form-login-heading">sign in now</h2>
                     <div class="login-wrap">
+                        <%
+                            boolean checker = true;
+                            try {
+                                checker = (boolean) session.getAttribute("logged");
+                            } catch (Exception e) {
+                            }
+                            if (!checker) {
+                        %>
+
+                        <br>
+                        <div class=" alert alert-danger"> <b> Invalid Username/Password ! </b> </div>
+
+                        <%                            }
+                        %>
                         <input type="text" class="form-control" name="username" id="username" placeholder="User ID" autofocus>
                         <br>
                         <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                         <br>
                         <button class="btn btn-theme btn-block" value="Sign In" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+                        <br>
+                        <a class="btn btn-theme btn-block" href="/AMS/forms/admin/register.jsp"><i class="fa fa-user-plus"></i> REGISTER</a>
                     </div>
                 </form>
             </div>

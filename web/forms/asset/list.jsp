@@ -28,7 +28,7 @@
                             <div class="content-panel">
                                 <h4>List of Assets</h4>
                                 <br/>
-                                <table class="table">
+                                <table class="table" id="assetList">
                                     <thead>
                                         <tr>
                                             <th>Asset Id</th>
@@ -64,4 +64,9 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            $('#assetList').DataTable();
+        });
+    </script>
 </html>

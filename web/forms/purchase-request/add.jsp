@@ -49,7 +49,7 @@
                                                 <th>Price</th>
                                                 <th></th>
                                             </tr>
-                                            <tr>
+                                            <tr class="fieldT">
                                                 <td><input list="ass" name="assets">
                                                     <datalist id="ass">
                                                         <%
@@ -62,25 +62,16 @@
                                                                 }
                                                             %>
                                                     </datalist></td>
-                                                <td><input type="number" name="quantity"></td> 
-                                                <td><input type="number" name="price"></td> 
-                                                <td><button class="btn btn-theme" onclick="addCell()" type="button"><i class="fa fa-plus"></i></button></td>
+                                                <td><input type="number" class="quantity" name="quantity"></td> 
+                                                <td><input type="number" class="price" name="price"></td> 
+                                                <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                             </tr>
                                         </table>
-                                                    <script>
-                                                        function  addCell(){
-                                                            var table = document.getElementById("assetTable");
-                                                            var row = table.insertRow(2);
-                                                            var cell1 = row.insertCell(0);
-                                                            var cell2 = row.insertCell(1);
-                                                            var cell3 = row.insertCell(2);
-                                                            var cell4 = row.insertCell(3);
-                                                            cell1.innerHTML = "<td><input list='ass' name='assets'>";
-                                                            cell2.innerHTML = "<input type='number' name='quantity'>";
-                                                            cell3.innerHTML = "<input type='number' name='price'>";
-                                                            cell4.innerHTML = "<button class='btn btn-danger' onclick='remCell()' type='button'><i class='fa fa-minus'></i></button>"
-                                                        }
-                                                    </script>
+
+                                    </div>
+                                    <div class="col-lg-10" style="align-self: auto">
+                                        <label>Total : </label>
+                                        <input name='totalPrice' id='totalPrice' disabled="true">  
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -99,6 +90,53 @@
             <!--main content end-->
             <jsp:include page="../../shared/footer.jsp"/>
         </section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
+
+        <script>
+            $(document).ready(function () {
+                var i = 1;
+                $("#addbutton").click(function () {
+                    $("table tr.fieldT:first").clone().find("input").each(function () {
+                        $(this).val('').attr({
+                            'id': function (_, id) {
+                                return id
+                            },
+                            'name': function (_, name) {
+                                return name
+                            },
+                            'value': ''
+                        });
+                    }).end().appendTo("table ");
+                    i++;
+                });
+
+                $(document.body).on('change', '.price', function () {
+                    console.log('change price pls');
+                    // initialize the sum (total price) to zero
+                    var sum = 0;
+                    
+                    var price = [], qty = [];
+                    // we use jQuery each() to loop through all the textbox with 'price' class
+                    // and compute the sum for each loop
+                    $('.price').each(function () {
+                        price.push($(this).val());
+                    });
+                    $('.quantity').each(function() {
+                        qty.push($(this).val());
+                    });
+                    
+                    for (var i = 0; i < price.length; i++) {
+                        sum += (price[i] * qty[i]);
+                    }
+
+                    // set the computed value to 'totalPrice' textbox
+                    $('#totalPrice').val(sum);
+
+                });
+            });
+        </script>
+
     </body>
     <jsp:include page="../../shared/js.jsp"/>
 </html>
