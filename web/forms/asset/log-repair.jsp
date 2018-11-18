@@ -39,14 +39,21 @@
                                                 <tr>
                                                     <th>Article</th>
                                                     <th>Cost</th>
+                                                    <th><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><input type="" name="article"></td>
-                                                    <td><input type="" name="cost"></td>
+                                                <tr class="fieldT">
+                                                    <td><input type="text" name="article"></td>
+                                                    <td><input type="number" class="cost" name="cost"></td>
                                                 </tr>
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="1">Total : </th>
+                                                    <th><input name='totalCost' id='totalCost' disabled="true"> </th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -66,4 +73,42 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            var i = 1;
+            $("#addbutton").click(function () {
+                $("table tr.fieldT:first").clone().find("input").each(function () {
+                    $(this).val('').attr({
+                        'id': function (_, id) {
+                            return id
+                        },
+                        'name': function (_, name) {
+                            return name
+                        },
+                        'value': ''
+                    });
+                }).end().appendTo("table ");
+                i++;
+            });
+        });
+        $(document.body).on('change', '.cost', function () {
+            // initialize the sum (total price) to zero
+            var sum = 0;
+
+            var cost = [];
+            // we use jQuery each() to loop through all the textbox with 'price' class
+            // and compute the sum for each loop
+            $('.cost').each(function () {
+                cost.push($(this).val());
+            });
+
+            for (var i = 0; i < cost.length; i++) {
+                sum += Number(cost[i]);
+            }
+
+            // set the computed value to 'totalPrice' textbox
+            $('#totalCost').val(sum);
+
+        });
+    </script>
 </html>
