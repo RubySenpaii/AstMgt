@@ -43,35 +43,40 @@
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Items</label>
                                     <div class="col-lg-10">
                                         <table style="width:100%" name="assetTable" id="assetTable">
-                                            <tr>
-                                                <th>Asset</th>
-                                                <th>Quantity</th> 
-                                                <th>Price</th>
-                                                <th></th>
-                                            </tr>
-                                            <tr class="fieldT">
-                                                <td><input list="ass" name="assets">
-                                                    <datalist id="ass">
-                                                        <%
-                                                            ArrayList<Asset> alist = new ArrayList<Asset>();
-                                                            alist = (ArrayList<Asset>) session.getAttribute("assets");
-                                                            for (Asset asset : alist) {
-                                                        %>
-                                                        <option value="<%= asset.AssetName%>">
+                                            <thead>
+                                                <tr>
+                                                    <th>Asset</th>
+                                                    <th>Quantity</th> 
+                                                    <th>Price</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="fieldT">
+                                                    <td><input list="ass" name="assets">
+                                                        <datalist id="ass">
                                                             <%
-                                                                }
+                                                                ArrayList<Asset> alist = new ArrayList<Asset>();
+                                                                alist = (ArrayList<Asset>) session.getAttribute("assets");
+                                                                for (Asset asset : alist) {
                                                             %>
-                                                    </datalist></td>
-                                                <td><input type="number" class="quantity" name="quantity"></td> 
-                                                <td><input type="number" class="price" name="price"></td> 
-                                                <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
-                                            </tr>
-                                        </table>
-
-                                    </div>
-                                    <div class="col-lg-10" style="align-self: auto">
-                                        <label>Total : </label>
-                                        <input name='totalPrice' id='totalPrice' disabled="true">  
+                                                            <option value="<%= asset.AssetName%>">
+                                                                <%
+                                                                    }
+                                                                %>
+                                                        </datalist></td>
+                                                    <td><input type="number" class="quantity" name="quantity"></td> 
+                                                    <td><input type="number" class="price" name="price"></td> 
+                                                    <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="2"> Total :</th>
+                                                    <th><input name='totalPrice' id='totalPrice' disabled="true">  </th>
+                                                </tr>
+                                            </tfoot>
+                                        </table
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -115,17 +120,17 @@
                     console.log('change price pls');
                     // initialize the sum (total price) to zero
                     var sum = 0;
-                    
+
                     var price = [], qty = [];
                     // we use jQuery each() to loop through all the textbox with 'price' class
                     // and compute the sum for each loop
                     $('.price').each(function () {
                         price.push($(this).val());
                     });
-                    $('.quantity').each(function() {
+                    $('.quantity').each(function () {
                         qty.push($(this).val());
                     });
-                    
+
                     for (var i = 0; i < price.length; i++) {
                         sum += (price[i] * qty[i]);
                     }
