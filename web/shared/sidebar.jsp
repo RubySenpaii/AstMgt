@@ -30,6 +30,7 @@
                     <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
                     <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
                     <li><a href="/AMS/InventoryServlet/SuppliesList">Supplies List</a></li>
+                    <li><a href="/AMS/AssetServlet/RepairRequests">Repair Requests</a></li>
                     <li><a href="/AMS/AssetServlet/LogTracking">Log Transfer</a></li>
                     <li><a href="/AMS/AssetServlet/LogIncident">Log Incident/Disposal</a></li>
                     <li><a href="/AMS/AssetServlet/LogRepair">Log Asset Repair</a></li>

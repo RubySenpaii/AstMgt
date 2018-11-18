@@ -27,4 +27,8 @@ public class RepairLog {
     public Date RequestedDate;
     public int ApprovedBy;
     public Date ApprovedDate;
+    
+    public Employee Requester;
+    public Employee Approver;
+    public double TotalCost;
 }

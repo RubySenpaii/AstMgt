@@ -24,12 +24,13 @@ public class ExpenditureLimitService {
             Connection con = db.getConnection();
 
             String query = "INSERT INTO ExpenditureLimit (" + ExpenditureLimit.COLUMN_EQUIPMENT + ", " + ExpenditureLimit.COLUMN_SUPPLIES
-                    + ", " + ExpenditureLimit.COLUMN_YEAR + ") "
-                    + "VALUES (?, ?, ?)";
+                    + ", " + ExpenditureLimit.COLUMN_YEAR + ", " + ExpenditureLimit.COLUMN_DIVISION + ") "
+                    + "VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setDouble(1, limit.Equipment);
             ps.setDouble(2, limit.Supplies);
             ps.setInt(3, limit.Year);
+            ps.setString(4, limit.Division);
 
             int result = ps.executeUpdate();
             ps.close();
@@ -56,6 +57,7 @@ public class ExpenditureLimitService {
                 limit.Equipment = rs.getDouble(ExpenditureLimit.COLUMN_EQUIPMENT);
                 limit.Supplies = rs.getDouble(ExpenditureLimit.COLUMN_SUPPLIES);
                 limit.Year = rs.getInt(ExpenditureLimit.COLUMN_YEAR);
+                limit.Division = rs.getString(ExpenditureLimit.COLUMN_DIVISION);
             }
             rs.close();
             ps.close();

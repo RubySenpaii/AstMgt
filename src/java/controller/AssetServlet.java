@@ -22,10 +22,12 @@ import objects.Asset;
 import objects.AssetIncident;
 import objects.AssetTracking;
 import objects.Employee;
+import objects.RepairLog;
 import services.AssetIncidentService;
 import services.AssetService;
 import services.AssetTrackingService;
 import services.EmployeeService;
+import services.RepairLogService;
 
 /**
  *
@@ -37,6 +39,7 @@ public class AssetServlet extends BaseServlet {
     private EmployeeService employeeService = new EmployeeService();
     private AssetIncidentService assetIncidentService = new AssetIncidentService();
     private AssetTrackingService assetTrackingService = new AssetTrackingService();
+    private RepairLogService repairLogService = new RepairLogService();
 
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,6 +64,17 @@ public class AssetServlet extends BaseServlet {
                     url = "/forms/asset/log-repair.jsp";
                     break;
                 case "SubmitRepair":
+                    url = SubmitRepair(request);
+                    break;
+                case "RepairRequests":
+                    url = RepairRequests(request);
+                    break;
+                case "RepairRequest":
+                    url = RepairRequest(request);
+                    break;
+                case "ApproveRepair":
+                    url = ApproveRepair(request);
+                    break;
                 case "SubmitIncident":
                     url = SubmitIncident(request);
                     break;
@@ -147,5 +161,53 @@ public class AssetServlet extends BaseServlet {
             System.err.println(x);
         }
         return "/AssetServlet/LogTracking";
+    }
+
+    private String SubmitRepair(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Employee employee = (Employee) session.getAttribute("user");
+
+        String assetTag = request.getParameter("asset-tag");
+        String[] articles = request.getParameterValues("article");
+        String[] costs = request.getParameterValues("cost");
+
+        for (int i = 0; i < articles.length; i++) {
+            RepairLog repairLog = new RepairLog();
+            repairLog.AssetTag = assetTag;
+            repairLog.RequestedBy = employee.EmployeeId;
+            repairLog.RequestedDate = Calendar.getInstance().getTime();
+            repairLog.Article = articles[i];
+            repairLog.Cost = Double.parseDouble(costs[i]);
+            int result = repairLogService.AddRepairLog(repairLog);
+            System.out.println("result: " + result);
+        }
+        
+        return "/InventoryServlet/EquipmentList";
+    }
+    
+    private String RepairRequests(HttpServletRequest request) {
+        ArrayList<RepairLog> repairRequests = repairLogService.GetRepairLogs();
+        HttpSession session = request.getSession();
+        session.setAttribute("repairRequests", repairRequests);
+        return "/forms/asset/repair-requests.jsp";
+    }
+    
+    private String RepairRequest(HttpServletRequest request) {
+        int idx = Integer.parseInt(request.getParameter("index"));
+        HttpSession session = request.getSession();
+        RepairLog log = ((ArrayList<RepairLog>) session.getAttribute("repairRequests")).get(idx);
+        session.setAttribute("repairRequest", log);
+        return "/forms/asset/repair-request.jsp";
+    }
+    
+    private String ApproveRepair(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Employee employee = (Employee) session.getAttribute("user");
+        RepairLog log = (RepairLog) session.getAttribute("repairRequest");
+        log.ApprovedBy = employee.EmployeeId;
+        log.ApprovedDate = Calendar.getInstance().getTime();
+        int result = repairLogService.UpdateRepairLog(log);
+        System.out.println("update result: " + result);
+        return "/AssetServlet/RepairRequests";
     }
 }

@@ -44,12 +44,6 @@
                                         <input type="file" placeholder="" name="financial-plan" >
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Annual Procurement Plan</label>
-                                    <div class="col-lg-8">
-                                        <input type="file" placeholder="" name="annual-plan" >
-                                    </div>
-                                </div>
                                 <div style="text-align: center">
                                     <button type="submit" class="btn btn-theme">Submit</button>
                                 </div>
