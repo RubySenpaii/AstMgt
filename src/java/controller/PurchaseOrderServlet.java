@@ -35,7 +35,7 @@ import services.SupplierService;
  * @author RubySenpaii
  */
 public class PurchaseOrderServlet extends BaseServlet {
-
+    
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getRequestURI();
@@ -70,16 +70,23 @@ public class PurchaseOrderServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-
-    private String ApproveAndAddPurchaseOrder(HttpServletRequest request) {
+    
+    private String ApproveAndAddPurchaseOrder(HttpServletRequest request) throws ServletException {
         SupplierService suppDB = new SupplierService();
         PurchaseRequestService prDB = new PurchaseRequestService();
         ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
         HttpSession session = request.getSession();
-        Employee e = (Employee) session.getAttribute("employee");
-        int prid = (int) session.getAttribute("id");
+        Employee e = (Employee) session.getAttribute("user");
+        int prid = Integer.parseInt(request.getParameter("prid"));
         Date approved = new java.sql.Date(System.currentTimeMillis());
-        System.out.println("Approving purchase request");
+        try {
+            System.out.println("Approving purchase request" + e);
+            System.out.println("Approving purchase request" + approved);
+            System.out.println("Approving purchase request" + prid);
+        } catch (Exception ex) {
+            throw new ServletException(ex);
+        }
+        
         int approval = prDB.ApprovePurchaseRequest(e.EmployeeId, approved, prid);
         if (approval == 0) {
             System.out.println("Number :  " + approval);
@@ -89,7 +96,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("supplier", supplierList);
         return "/forms/purchase-order/add.jsp";
     }
-
+    
     ;
     private String ListPurchaseOrder(HttpServletRequest request) throws SQLException {
         PurchaseOrderService poDB = new PurchaseOrderService();
@@ -100,7 +107,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("PO", poList);
         return "/forms/purchase-order/list.jsp";
     }
-
+    
     private String AddPurchaseOrder(HttpServletRequest request) throws ParseException, SQLException {
         PurchaseOrder po = new PurchaseOrder();
         HttpSession session = request.getSession();
@@ -134,7 +141,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                 return "/forms/login.jsp";
         }
     }
-
+    
     private String EditPurchaseOrder() {
         int result = 0;
         switch (result) {
@@ -142,7 +149,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                 return "";
         }
     }
-
+    
     private String ViewPurchaseOrder(HttpServletRequest request) {
         PurchaseOrderService poService = new PurchaseOrderService();
         HttpSession session = request.getSession();
@@ -156,7 +163,7 @@ public class PurchaseOrderServlet extends BaseServlet {
             System.out.println("NAMES are : " + name);
             assetNameList.add(name);
         }
-
+        
         session.setAttribute("assetRequested", assetReqList);
         session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseOrder", purchaseOrder);

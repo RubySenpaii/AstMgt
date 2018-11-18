@@ -28,7 +28,7 @@
                             <div class="content-panel">
                                 <h4>List of Requests For Delivery Inspection</h4>
                                 <br/>
-                                <table class="table">
+                                <table class="table" id="delList">
                                     <thead>
                                         <tr>
                                             <th>Purchase Order No</th>
@@ -89,4 +89,9 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            $('#delList').DataTable();
+        });
+    </script>
 </html>

@@ -44,21 +44,28 @@ public class Login extends HttpServlet {
             System.out.println("Authenticating user ......" + Calendar.getInstance().getTime());
             Employee checker = employeeDB.Authenticate(oneUser.Username, oneUser.Password);
             System.out.println("Returning with object : " + checker);
+            HttpSession session = request.getSession();
             if (checker != null) {
-                HttpSession session = request.getSession();
                 session.setAttribute("user", checker);
+                boolean logged = true;
+                session.setAttribute("logged", logged);
                 ServletContext context = getServletContext();
                 RequestDispatcher rd = context.getRequestDispatcher("/template.jsp");
                 rd.forward(request, response);
             } else {
+                boolean logged = false;
+                session.setAttribute("logged", logged);
                 ServletContext context = getServletContext();
-                RequestDispatcher rd = context.getRequestDispatcher("/404.jsp");
+                RequestDispatcher rd = context.getRequestDispatcher("/login.jsp");
                 rd.forward(request, response);
             }
         } catch (Exception e) {
             System.out.println("ERROR : " + e);
+            boolean logged = false;
+            HttpSession session = request.getSession();
+            session.setAttribute("logged", logged);
             ServletContext context = getServletContext();
-            RequestDispatcher rd = context.getRequestDispatcher("/404.jsp");
+            RequestDispatcher rd = context.getRequestDispatcher("/login.jsp");
             rd.forward(request, response);
         } finally {
             out.close();

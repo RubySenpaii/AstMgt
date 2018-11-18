@@ -14,3 +14,4 @@
 <script src="/AMS/lib/common-scripts.js"></script>
 <script type="text/javascript" src="/AMS/lib/gritter/js/jquery.gritter.js"></script>
 <script type="text/javascript" src="/AMS/lib/gritter-conf.js"></script>
+<script type="text/javascript" src="/AMS/lib/data-tables/datatables.min.js"></script>

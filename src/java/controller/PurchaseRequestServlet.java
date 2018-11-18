@@ -75,7 +75,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         AssetRequestedService assetReqDB = new AssetRequestedService();
         AssetService assetDB = new AssetService();
         HttpSession session = request.getSession();
-        int id = (int) session.getAttribute("id");
+        int id = Integer.parseInt(request.getParameter("prid"));
         System.out.println("Getting the number : " + id);
         PurchaseRequest purchaseRequest = prservice.FindPurhcaseRequesById(id);
         ArrayList<AssetRequested> assetReqList = assetReqDB.GetAssetsRequestedWithPurchaseRequest(purchaseRequest.PurchaseRequestId);
@@ -85,7 +85,7 @@ public class PurchaseRequestServlet extends BaseServlet {
             System.out.println("NAMES are : " + name);
             assetNameList.add(name);
         }
-        
+
         session.setAttribute("assetRequested", assetReqList);
         session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseRequest", purchaseRequest);

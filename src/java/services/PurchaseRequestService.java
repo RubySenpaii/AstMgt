@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import objects.Employee;
 import objects.PurchaseRequest;
 
 /**
@@ -161,7 +162,15 @@ public class PurchaseRequestService {
             e.RequestedBy = rs.getInt(PurchaseRequest.COLUMN_REQUESTED_BY);
             e.RequestedDate = rs.getDate(PurchaseRequest.COLUMN_REQUESTED_DATE);
             e.ResponsibilityCenterCode = rs.getString(PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE);
-
+            e.Requester = new EmployeeService().FindEmployeeById(e.RequestedBy);
+            if (e.ApprovedBy != 0) {
+                e.Approver = new EmployeeService().FindEmployeeById(e.ApprovedBy);
+            } else {
+                e.Approver = new Employee();
+                e.Approver.LastName = "-";
+                e.Approver.FirstName = "-";
+                e.Approver.Division = "-";
+            }
             e.AssetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(e.PurchaseRequestId);
             purchaserequestList.add(e);
         }

@@ -18,3 +18,4 @@
 <link href="/AMS/lib/dashio/css/style.css" rel="stylesheet">
 <link href="/AMS/lib/dashio/css/style-responsive.css" rel="stylesheet">
 <link href="/AMS/css/custom.css" rel="stylesheet">
+<link href="/AMS/lib/data-tables/datatables.min.css" rel="stylesheet" />

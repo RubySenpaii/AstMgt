@@ -31,7 +31,7 @@
                             <div class="content-panel">
                                 <h4>List of Purchase Request</h4>
                                 <br/>
-                                <table class="table">
+                                <table class="table" id="prList">
                                     <thead>
                                         <tr>
                                             <th>Purchase Request No</th>
@@ -46,24 +46,18 @@
                                     <tbody>
                                         <%
                                             ArrayList<PurchaseRequest> PR = (ArrayList<PurchaseRequest>) session.getAttribute("PR");
-                                            EmployeeService eDB = new EmployeeService();
                                             for (PurchaseRequest pr : PR) {
-                                            Employee e  = eDB.FindEmployeeById(pr.ApprovedBy);
-                                            String name = e.LastName + ", " + e.FirstName;
                                         %>
                                         <tr>
-                                            <td><c:out value="<%= pr.PurchaseRequestNo %>"></c:out></td>
-                                            <td><c:out value="<%= pr.Date %>"></c:out></td>
-                                            <td><c:out value="<%= pr.RequestedBy %>"></c:out></td>
-                                            <td><c:out value="<%= pr.RequestedDate %>"></c:out></td>
-                                            <td><c:out value="<%= name%>"></c:out></td>
-                                            <td><c:out value="<%= e.Division %>"></c:out></td>
-                                            <td>
-                                                <form action="/AMS/PurchaseRequest/View">
-                                                    <%
-                                                        session.setAttribute("id", pr.PurchaseRequestId);
-                                                    %>
-                                                <button type="submit" >View</button>
+                                            <td><c:out value="<%= pr.PurchaseRequestNo%>"></c:out></td>
+                                            <td><c:out value="<%= pr.Date%>"></c:out></td>
+                                            <td><c:out value="<%= pr.Requester.FullName()%>"></c:out></td>
+                                            <td><c:out value="<%= pr.RequestedDate%>"></c:out></td>
+                                            <td><c:out value="<%= pr.Approver.FullName()%>"></c:out></td>
+                                            <td><c:out value="<%= pr.Approver.Division%>"></c:out></td>
+                                                <td>
+                                                    <form action="/AMS/PurchaseRequest/View">
+                                                        <button type="submit" value="<%= pr.PurchaseRequestId%>" name="prid" >View</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -83,4 +77,9 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            $('#prList').DataTable();
+        });
+    </script>
 </html>
