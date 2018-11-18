@@ -118,13 +118,14 @@
                                         </table>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-12" style="text-align: center">
-                                <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
-                            </div>
+                                <div class="form-group">
+                                    <div class="col-lg-12" style="text-align: center">
+                                        <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
+                                    </div>
                             </form>
                         </div>
+                    </div>
+
                     </div>
                     <!-- /row -->
                 </section>
