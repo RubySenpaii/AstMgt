@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="form-panel">
                             <h4>Log Repair</h4><br/>
-                            <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitIncident">
+                            <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitRepair">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>
                                     <div class="col-lg-10">
