@@ -43,8 +43,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type=""></td>
-                                                    <td><input type=""></td>
+                                                    <td><input type="" name="article"></td>
+                                                    <td><input type="" name="cost"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
