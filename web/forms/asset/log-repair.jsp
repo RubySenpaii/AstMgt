@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="asset-tag" placeholder="" class="form-control">
+                                        <input type="text" name="asset-tag" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -44,8 +44,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="fieldT">
-                                                    <td><input type="text" name="article"></td>
-                                                    <td><input type="number" class="cost" name="cost"></td>
+                                                    <td><input type="text" name="article"  autocomplete="off"></td>
+                                                    <td><input type="number" class="cost" name="cost" autocomplete="off"></td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>

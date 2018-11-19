@@ -14,9 +14,11 @@ public class ExpenditureLimit {
     public static final String COLUMN_SUPPLIES = "Supplies";
     public static final String COLUMN_EQUIPMENT = "Equipment";
     public static final String COLUMN_DIVISION = "Division";
+    public static final String COLUMN_QUARTER = "Quarter";
     
     public int Year;
     public double Supplies;
     public double Equipment;
     public String Division;
+    public String Quarter;
 }

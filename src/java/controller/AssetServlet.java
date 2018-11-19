@@ -22,11 +22,13 @@ import objects.Asset;
 import objects.AssetIncident;
 import objects.AssetTracking;
 import objects.Employee;
+import objects.Equipment;
 import objects.RepairLog;
 import services.AssetIncidentService;
 import services.AssetService;
 import services.AssetTrackingService;
 import services.EmployeeService;
+import services.EquipmentService;
 import services.RepairLogService;
 
 /**
@@ -36,6 +38,7 @@ import services.RepairLogService;
 public class AssetServlet extends BaseServlet {
 
     private AssetService assetService = new AssetService();
+    private EquipmentService equipmentService = new EquipmentService();
     private EmployeeService employeeService = new EmployeeService();
     private AssetIncidentService assetIncidentService = new AssetIncidentService();
     private AssetTrackingService assetTrackingService = new AssetTrackingService();
@@ -136,6 +139,12 @@ public class AssetServlet extends BaseServlet {
         incident.ReportedBy = employee.EmployeeId;
         int result = assetIncidentService.AddAssetIncident(incident);
         if (result == 1) {
+            if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal")) {
+                Equipment equipment = equipmentService.GetEquipmentWithAssetTag(incident.AssetTag);
+                equipment.Flag = 0;
+                result = equipmentService.UpdateEquipment(equipment);
+                System.out.println("successfully update equipment flag: " + result);
+            }
             return "/InventoryServlet/EquipmentList";
         } else {
             return "/AssetServlet/LogIncident";

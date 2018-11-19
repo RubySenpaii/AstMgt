@@ -32,7 +32,7 @@ public class AssetService {
             ps.setInt(1, asset.AssetId);
             ps.setString(2, asset.AssetName);
             ps.setString(3, asset.Description);
-            ps.setString(4, asset.FundCluster);
+            ps.setString(4, "101");
             ps.setString(5, asset.StockNo);
             ps.setString(6, asset.Unit);
             ps.setString(7, asset.AssetType);

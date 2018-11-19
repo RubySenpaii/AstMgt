@@ -40,7 +40,7 @@
                                         <%
                                             ArrayList<AssetRequested> items = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
                                             for (AssetRequested item : items) {
-                                                if (item.Asset.AssetType.equals("Equipment")) {
+                                                if (item.Asset.AssetType.contains("Equipment")) {
                                                     for (int i = 0; i < item.Quantity; i++) {
                                         %>
                                         <tr>
@@ -48,13 +48,13 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Asset Tag">
+                                                <input class="form-control" name="asset-tag" placeholder="Asset Tag" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="condition" placeholder="Condition">
+                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="estimated-useful-life" placeholder="Estimated Useful Life">
+                                                <input class="form-control" name="estimated-useful-life" placeholder="Estimated Useful Life" autocomplete="off">
                                             </td>
                                         </tr>
                                         <%

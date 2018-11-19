@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.Employee;
+import objects.ExpenditureLimit;
 import services.EmployeeService;
+import services.ExpenditureLimitService;
 // THIS IS THE CODE TO GET TODAYS' DIFFERENT DETAILS (JUST COPY PASTE IT 
 //TO THE METHODS AND AVOID USING THIS IN SERVLETS AS TO LESSEN ERRORS
 //AND MAKE THINGS MORE READABLE)               
@@ -51,6 +53,9 @@ public class Login extends HttpServlet {
                 session.setAttribute("user", checker);
                 boolean logged = true;
                 session.setAttribute("logged", logged);
+                
+                ExpenditureLimit limit = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), checker.Division);
+                session.setAttribute("limit", limit);
                 ServletContext context = getServletContext();
                 RequestDispatcher rd = context.getRequestDispatcher("/template.jsp");
                 rd.forward(request, response);

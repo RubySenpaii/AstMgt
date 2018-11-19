@@ -116,7 +116,6 @@ public class PurchaseOrderServlet extends BaseServlet {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         po.OrderDate = new Date(System.currentTimeMillis());
         po.DeliveryDate = sdf.parse(request.getParameter("deldate"));
-        po.ConformeDate = sdf.parse(request.getParameter("condate"));
         po.ORSDate = sdf.parse(request.getParameter("orsdate"));
         po.PurchaseOrderId = poDB.FindAllPurchaseOrder().size() + 1;
         PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");

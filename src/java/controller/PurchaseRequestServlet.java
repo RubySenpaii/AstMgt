@@ -120,7 +120,6 @@ public class PurchaseRequestServlet extends BaseServlet {
         pr.RequestedBy = user.EmployeeId;
         pr.PurchaseRequestNo = prNoTemplate;
         pr.Purpose = request.getParameter("purpose");
-        pr.ResponsibilityCenterCode = request.getParameter("rcc");
         System.out.println("Retrieiving at : " + test);
         pr.Date = test;
         pr.RequestedDate = test;
@@ -139,8 +138,6 @@ public class PurchaseRequestServlet extends BaseServlet {
         AssetRequestedService ars = new AssetRequestedService();
         int result = purchaseRequestService.AddPurchaseRequest(pr);
         switch (result) {
-            case 0:
-                return "/forms/login.jsp";
             case 1:
                 int checker = ars.AddAssetRequest(ALIST);
                 if (checker != 0) {

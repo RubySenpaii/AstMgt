@@ -78,9 +78,9 @@ public class RequestForDeliveryInspectionService {
                 ps.setString(6, deliveryReceipt.ManagementRemarks);
                 ps.setInt(7, deliveryReceipt.PurchaseOrderId);
                 ps.setString(8, deliveryReceipt.Remarks);
-                ps.setInt(9, deliveryReceipt.DeliveryInspectionId);
-                ps.setInt(10, deliveryReceipt.AssignedTo);
-                ps.setInt(11, deliveryReceipt.ApprovedBy);
+                ps.setInt(9, deliveryReceipt.AssignedTo);
+                ps.setInt(10, deliveryReceipt.ApprovedBy);
+                ps.setInt(11, deliveryReceipt.DeliveryInspectionId);
             } else {
                 query = "UPDATE RequestForDeliveryInspection SET " + RequestForDeliveryInspection.COLUMN_CREATED_BY + " = ?, "
                         + RequestForDeliveryInspection.COLUMN_CREATED_DATE + " = ?, " + RequestForDeliveryInspection.COLUMN_DELIVERY_RECEIPT + " = ?, "
@@ -97,8 +97,8 @@ public class RequestForDeliveryInspectionService {
                 ps.setString(6, deliveryReceipt.ManagementRemarks);
                 ps.setInt(7, deliveryReceipt.PurchaseOrderId);
                 ps.setString(8, deliveryReceipt.Remarks);
-                ps.setInt(9, deliveryReceipt.DeliveryInspectionId);
-                ps.setInt(10, deliveryReceipt.AssignedTo);
+                ps.setInt(9, deliveryReceipt.AssignedTo);
+                ps.setInt(10, deliveryReceipt.DeliveryInspectionId);
             }
 
             int result = ps.executeUpdate();

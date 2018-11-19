@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
                                     <div class="col-lg-10">
-                                        <input list="supp" name="supplier" class="form-control">
+                                        <input list="supp" name="supplier" class="form-control" autocomplete="off">
                                         <datalist id="supp">
                                             <%
                                                 ArrayList<Supplier> slist = new ArrayList<Supplier>();
@@ -47,61 +47,49 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Mode Of Procurement</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="mop" name="mop" placeholder="Mode Of Procurement">
+                                        <input type="text" class="form-control" id="mop" name="mop" placeholder="Mode Of Procurement" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Remarks</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Remarks">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Address</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="deladd" name="deladd" placeholder="Delivery Address">
+                                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Remarks" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Date</label>
                                     <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="deldate" name="deldate" placeholder="Requested Date">
+                                        <input type="date" class="form-control" id="deldate" name="deldate" placeholder="Requested Date" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Terms</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="delterms" name="delterms" placeholder="Delivery Terms">
+                                        <input type="text" class="form-control" id="delterms" name="delterms" placeholder="Delivery Terms" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Payment Terms</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="payterms" name="payterms" placeholder="Payment Terms">
+                                        <input type="text" class="form-control" id="payterms" name="payterms" placeholder="Payment Terms" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Supplier</label>
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Point Person</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="consupp" name="consupp" placeholder="Conforme Supplier">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="condate" name="condate" placeholder="Requested Date">
+                                        <input type="text" class="form-control" id="consupp" name="consupp" placeholder="Conforme Supplier" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Number</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="orsno" name="orsno" placeholder="ORS Number">
+                                        <input type="text" class="form-control" id="orsno" name="orsno" placeholder="ORS Number" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
                                     <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="orsdate" name="orsdate" placeholder="ORS Date">
+                                        <input type="date" class="form-control" id="orsdate" name="orsdate" placeholder="ORS Date" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">

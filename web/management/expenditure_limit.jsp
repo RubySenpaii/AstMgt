@@ -27,21 +27,63 @@
                         <h4>Set Limit of Expenditure for Asset</h4><br/>
                         <form role="form" class="form-horizontal style-form" action="/AMS/ExpenditureServlet/Submit" enctype="multipart/form-data" method="POST">
                                 <div class="form-group">
-                                    <label class="col-lg-4 control-label">Supplies</label>
-                                    <div class="col-lg-8">
-                                        <input type="number" placeholder="" name="supplies" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Equipment</label>
-                                    <div class="col-lg-8">
-                                        <input type="number" placeholder="" name="equipment" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Work and Financial Plan</label>
-                                    <div class="col-lg-8">
-                                        <input type="file" placeholder="" name="financial-plan" >
+                                    <div class="col-lg-12">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Division</th>
+                                                    <th>Equipment</th>
+                                                    <th>Supplies</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Procurement Division</td>
+                                                    <td>
+                                                        <input type="number" name="procurement-equipment" autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="procurement-supplies" autocomplete="off">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Management Division</td>
+                                                    <td>
+                                                        <input type="number" name="management-equipment" autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="management-supplies" autocomplete="off">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Admin Services</td>
+                                                    <td>
+                                                        <input type="number" name="admin-equipment" autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="admin-supplies" autocomplete="off">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>General Services</td>
+                                                    <td>
+                                                        <input type="number" name="general-equipment" autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="general-supplies" autocomplete="off">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Finance Division</td>
+                                                    <td>
+                                                        <input type="number" name="finance-equipment" autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="finance-supplies" autocomplete="off">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <div style="text-align: center">

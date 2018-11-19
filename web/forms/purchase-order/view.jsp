@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Address</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.DeliveryAddress%>" ></c:out></label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.DeliveryAddress %>" ></c:out></label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Date</label>
@@ -62,12 +62,8 @@
                                         <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.PaymentTerm%>" ></c:out></label>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Supplier</label>
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Point Person</label>
                                         <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.ConformeSupplier%>" ></c:out></label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Conforme Date</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.ConformeDate%>" ></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Number</label>
@@ -108,13 +104,13 @@
                                                     sum += ar.get(i).UnitCost;
                                                 }
                                             %>
-                                            <tbody>
+                                            <tfoot>
                                                 <tr>
                                                     <th>Total</th>
                                                     <td></td>
                                                     <th style="text-align: right"><%= sf.doubleToString(sum)%></th>
                                                 </tr>
-                                            </tbody>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -122,10 +118,9 @@
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
                                     </div>
+                                </div>
                             </form>
                         </div>
-                    </div>
-
                     </div>
                     <!-- /row -->
                 </section>

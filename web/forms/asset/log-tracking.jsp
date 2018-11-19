@@ -28,19 +28,19 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="asset-tag" placeholder="" class="form-control">
+                                        <input type="text" name="asset-tag" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Release To</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="release-to" placeholder="" class="form-control">
+                                        <input type="text" name="release-to" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Transfer Date</label>
                                     <div class="col-lg-10">
-                                        <input type="date" name="transfer-date" placeholder="" class="form-control">
+                                        <input type="date" name="transfer-date" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">

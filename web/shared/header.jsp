@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
+<%@page import="objects.ExpenditureLimit"%>
 <header class="header black-bg">
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
@@ -59,6 +61,15 @@
                 </ul>
             </li>
             <!-- notification dropdown end -->
+            <%
+                ExpenditureLimit limit = (ExpenditureLimit) session.getAttribute("limit");
+            %>
+            <li class="header-limit">
+                Equipment Spending Limit: Php <%=SharedFormat.doubleToString(limit.Equipment)%>
+            </li>
+            <li class="header-limit">
+                Supplies Spending Limit: Php <%=SharedFormat.doubleToString(limit.Supplies)%>
+            </li>
         </ul>
         <!--  notification end -->
     </div>

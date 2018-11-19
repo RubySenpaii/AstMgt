@@ -34,13 +34,7 @@
                                 <div class="form-horizontal style-form" action="#">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputEmail1">Purchase Request No</label>
-
                                         <label class="col-lg-10 control-label" > <c:out value="<%= pr.PurchaseRequestNo%>"></c:out> </label>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Responsibility Center Code</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.ResponsibilityCenterCode%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Date</label>
@@ -53,6 +47,14 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested By</label>
                                         <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.FullName() %>"></c:out> </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Requester's Division</label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.Division %>"></c:out> </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Requester's Employee Status</label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.EmployeeStatus %>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested Date</label>

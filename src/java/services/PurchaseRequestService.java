@@ -37,7 +37,7 @@ public class PurchaseRequestService {
             PreparedStatement ps = conn.prepareStatement(AddQuery);
             ps.setInt(1, pr.PurchaseRequestId);
             ps.setString(2, pr.PurchaseRequestNo);
-            ps.setString(3, pr.ResponsibilityCenterCode);
+            ps.setString(3, "Department of Agrarian Reforms - Central Office");
             ps.setObject(4, pr.Date);
             ps.setString(5, pr.Purpose);
             ps.setInt(6, pr.RequestedBy);

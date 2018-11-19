@@ -24,13 +24,14 @@ public class ExpenditureLimitService {
             Connection con = db.getConnection();
 
             String query = "INSERT INTO ExpenditureLimit (" + ExpenditureLimit.COLUMN_EQUIPMENT + ", " + ExpenditureLimit.COLUMN_SUPPLIES
-                    + ", " + ExpenditureLimit.COLUMN_YEAR + ", " + ExpenditureLimit.COLUMN_DIVISION + ") "
-                    + "VALUES (?, ?, ?, ?)";
+                    + ", " + ExpenditureLimit.COLUMN_YEAR + ", " + ExpenditureLimit.COLUMN_DIVISION + ", " + ExpenditureLimit.COLUMN_QUARTER + ") "
+                    + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setDouble(1, limit.Equipment);
             ps.setDouble(2, limit.Supplies);
             ps.setInt(3, limit.Year);
             ps.setString(4, limit.Division);
+            ps.setString(5, limit.Quarter);
 
             int result = ps.executeUpdate();
             ps.close();
@@ -42,14 +43,15 @@ public class ExpenditureLimitService {
         }
     }
     
-    public ExpenditureLimit GetExpenditureLimitForYear(int year) {
+    public ExpenditureLimit GetExpenditureLimitForYear(int year, String division) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
             
-            String query = "SELECT * FROM ExpenditureList WHERE " + ExpenditureLimit.COLUMN_YEAR + " = ?";
+            String query = "SELECT * FROM ExpenditureLimit WHERE " + ExpenditureLimit.COLUMN_YEAR + " = ? AND " + ExpenditureLimit.COLUMN_DIVISION + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, year);
+            ps.setString(2, division);
             
             ResultSet rs = ps.executeQuery();
             ExpenditureLimit limit = new ExpenditureLimit();
@@ -58,6 +60,7 @@ public class ExpenditureLimitService {
                 limit.Supplies = rs.getDouble(ExpenditureLimit.COLUMN_SUPPLIES);
                 limit.Year = rs.getInt(ExpenditureLimit.COLUMN_YEAR);
                 limit.Division = rs.getString(ExpenditureLimit.COLUMN_DIVISION);
+                limit.Quarter = rs.getString(ExpenditureLimit.COLUMN_QUARTER);
             }
             rs.close();
             ps.close();

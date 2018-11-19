@@ -28,40 +28,44 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Stock No</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="stock-no" placeholder="" class="form-control">
+                                        <input type="text" name="stock-no" placeholder="" class="form-control"  autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Name</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="asset-name" placeholder="" class="form-control">
+                                        <input type="text" name="asset-name" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Unit</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="unit" placeholder="" class="form-control">
+                                        <input type="text" name="unit" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Description</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="description" placeholder="" class="form-control">
+                                        <input type="text" name="description" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Type</label>
                                     <div class="col-lg-10">
                                         <select class="form-control" name="asset-type">
-                                            <option>Supplies</option>
-                                            <option>Equipment</option>
+                                            <option>Supplies Office</option>
+                                            <option>Supplies General</option>
+                                            <option>Equipment Furniture</option>
+                                            <option>Equipment Appliance</option>
+                                            <option>Equipment Electronics</option>
+                                            <option>Equipment Vehicle</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Fund Cluster</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="fund-cluster" placeholder="" class="form-control">
+                                        <input type="text" name="fund-cluster" placeholder="" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">

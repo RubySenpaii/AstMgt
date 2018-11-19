@@ -23,9 +23,9 @@ public class PurchaseOrderService {
     private String AddPurchaseOrderQuery = "INSERT INTO PurchaseOrder(" + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + "," + PurchaseOrder.COLUMN_PURCHASE_ORDER_NO + ","
             + PurchaseOrder.COLUMN_ORDER_DATE + "," + PurchaseOrder.COLUMN_MODE_OF_PROCUREMENT + "," + PurchaseOrder.COLUMN_REMARKS + ","
             + PurchaseOrder.COLUMN_DELIVERY_ADDRESS + "," + PurchaseOrder.COLUMN_DELIVERY_DATE + "," + PurchaseOrder.COLUMN_DELIVERY_TERMS + ","
-            + PurchaseOrder.COLUMN_PAYMENT_TERMS + "," + PurchaseOrder.COLUMN_CONFORME_SUPPLIER + "," + PurchaseOrder.COLUMN_CONFORME_DATE + ","
+            + PurchaseOrder.COLUMN_PAYMENT_TERMS + "," + PurchaseOrder.COLUMN_CONFORME_SUPPLIER + ","
             + PurchaseOrder.COLUMN_ORS_NUMBER + "," + PurchaseOrder.COLUMN_ORS_DATE + "," + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + ","
-            + PurchaseOrder.COLUMN_SUPPLIER_ID + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + PurchaseOrder.COLUMN_SUPPLIER_ID + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private String CheckPurchaseOrderwithPurchaseRequestIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
     private String FindPurchaseOrderIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
     private String FindAllPurchaseOrderQ = "SELECT * FROM PurchaseOrder ;";
@@ -40,16 +40,15 @@ public class PurchaseOrderService {
             ps.setObject(3, po.OrderDate);
             ps.setString(4, po.ModeOfProcurement);
             ps.setString(5, po.Remarks);
-            ps.setString(6, po.DeliveryAddress);
+            ps.setString(6, "Department of Agrarian Reforms - Central Office");
             ps.setObject(7, po.DeliveryDate);
             ps.setString(8, po.DeliveryTerms);
             ps.setString(9, po.PaymentTerm);
             ps.setString(10, po.ConformeSupplier);
-            ps.setObject(11, po.ConformeDate);
-            ps.setString(12, po.ORSNumber);
-            ps.setObject(13, po.OrderDate);
-            ps.setInt(14, po.PurchaseRequestId);
-            ps.setInt(15, po.SupplierId);
+            ps.setString(11, po.ORSNumber);
+            ps.setObject(12, po.OrderDate);
+            ps.setInt(13, po.PurchaseRequestId);
+            ps.setInt(14, po.SupplierId);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();
@@ -122,7 +121,6 @@ public class PurchaseOrderService {
             e.DeliveryTerms = rs.getString(PurchaseOrder.COLUMN_DELIVERY_TERMS);
             e.PaymentTerm = rs.getString(PurchaseOrder.COLUMN_PAYMENT_TERMS);
             e.ConformeSupplier = rs.getString(PurchaseOrder.COLUMN_CONFORME_SUPPLIER);
-            e.ConformeDate = rs.getDate(PurchaseOrder.COLUMN_CONFORME_DATE);
             e.ApprovedBy = rs.getInt(PurchaseOrder.COLUMN_APPROVED_BY);
             e.ApprovedDate = rs.getDate(PurchaseOrder.COLUMN_APPROVED_DATE);
             e.ORSNumber = rs.getString(PurchaseOrder.COLUMN_ORS_NUMBER);

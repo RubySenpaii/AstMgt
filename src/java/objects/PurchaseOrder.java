@@ -24,7 +24,6 @@ public class PurchaseOrder {
     public static final String COLUMN_DELIVERY_TERMS = "DeliveryTerms";
     public static final String COLUMN_PAYMENT_TERMS = "PaymentTerms";
     public static final String COLUMN_CONFORME_SUPPLIER = "ConformeSupplier";
-    public static final String COLUMN_CONFORME_DATE = "ConformeDate";
     public static final String COLUMN_APPROVED_BY = "ApprovedBy";
     public static final String COLUMN_APPROVED_DATE = "ApprovedDate";
     public static final String COLUMN_ORS_NUMBER = "ORSNumber";
@@ -42,7 +41,6 @@ public class PurchaseOrder {
     public String DeliveryTerms;
     public String PaymentTerm;
     public String ConformeSupplier;
-    public Date ConformeDate;
     public int ApprovedBy;
     public Date ApprovedDate;
     public String ORSNumber;

@@ -28,15 +28,9 @@
                             <h4>Create Purchase Request</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Responsibility Center Code</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="rcc" name="rcc" placeholder="Responsibility Center Code">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Purpose</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Purpose">
+                                        <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Purpose" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -53,7 +47,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="fieldT">
-                                                    <td><input list="ass" name="assets">
+                                                    <td>
+                                                        <input list="ass" name="assets" autocomplete="off">
                                                         <datalist id="ass">
                                                             <%
                                                                 ArrayList<Asset> alist = new ArrayList<Asset>();
@@ -64,9 +59,10 @@
                                                                 <%
                                                                     }
                                                                 %>
-                                                        </datalist></td>
-                                                    <td><input type="number" class="quantity" name="quantity"></td> 
-                                                    <td><input type="number" class="price" name="price"></td> 
+                                                        </datalist>
+                                                    </td>
+                                                    <td><input type="number" class="quantity" name="quantity" autocomplete="off"></td> 
+                                                    <td><input type="number" class="price" name="price" autocomplete="off"></td> 
                                                     <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                                 </tr>
                                             </tbody>

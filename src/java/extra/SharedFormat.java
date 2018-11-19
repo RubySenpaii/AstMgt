@@ -8,6 +8,7 @@ package extra;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,25 @@ public class SharedFormat {
         } catch (ParseException ex) {
             Logger.getLogger(SharedFormat.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    
+    public static String getQuarter() {
+        int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        switch (month) {
+            case 1:
+            case 2:
+            case 3: return "Q1";
+            case 4: 
+            case 5:
+            case 6: return "Q2";
+            case 7:
+            case 8:
+            case 9: return "Q3";
+            case 10:
+            case 11:
+            case 12:
+            default: return "Q4";
         }
     }
 }
