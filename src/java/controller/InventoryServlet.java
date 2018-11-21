@@ -100,7 +100,7 @@ public class InventoryServlet extends BaseServlet {
         String[] estimatedUsefulLives = request.getParameterValues("estimated-useful-life");
         int qty = 1, counter = 0;
         for (int i = 0; i < assetsRequested.size(); i++) {
-            if (assetsRequested.get(i).Asset.AssetType.equals("Equipment")) {
+            if (assetsRequested.get(i).Asset.AssetType.contains("Equipment")) {
                 Employee employee = (Employee) session.getAttribute("user");
                 Equipment equipment = new Equipment();
                 equipment.AssetId = assetsRequested.get(i).AssetId;
