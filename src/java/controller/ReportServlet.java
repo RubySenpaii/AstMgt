@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -91,6 +92,7 @@ public class ReportServlet extends BaseServlet {
                 filtered.add(fileNames[i]);
             }
         }
+        Collections.sort(filtered);
         HttpSession session = request.getSession();
         session.setAttribute("fileList", filtered);
         return "/report/" + folder + ".jsp";
