@@ -39,10 +39,10 @@
                                                 <td><input type="number" name="quantity"></td>
                                                 <td>
                                                     <select name="division">
+                                                        <option>Admin Services</option>
                                                         <option>General Services</option>
                                                         <option>Procurement</option>
-                                                        <option>Personnel</option>
-                                                        <option>Records</option>
+                                                        <option>Finance</option>
                                                     </select>
                                                 </td>
                                             </tr>

@@ -7,26 +7,33 @@
         <ul class="sidebar-menu" id="nav-accordion">
             <li class="mt">
                 <a href="index.html">
-                    <i class="fa fa-dashboard"></i>
+                    <i class="fa"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="sub-menu">
                 <a href="/AMS/ExpenditureServlet">
-                    <i class="fa fa-dashboard"></i>
+                    <i class="fa"></i>
                     <span>Set Expenditure Limit</span>
                 </a>
             </li>
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-desktop"></i>
+                    <i class="fa"></i>
                     <span>Asset</span>
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/AssetServlet/Add">Add Asset</a></li>
                     <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa"></i>
+                    <span>Equipment</span>
+                </a>
+                <ul class="sub">
                     <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
-                    <li><a href="/AMS/InventoryServlet/SuppliesList">Supplies List</a></li>
                     <li><a href="/AMS/AssetServlet/RepairRequests">Repair Requests</a></li>
                     <li><a href="/AMS/AssetServlet/LogTracking">Log Transfer</a></li>
                     <li><a href="/AMS/AssetServlet/LogIncident">Log Incident/Disposal</a></li>
@@ -34,8 +41,14 @@
                 </ul>
             </li>
             <li class="sub-menu">
+                <a href="/AMS/InventoryServlet/SuppliesList">
+                    <i class="fa"></i>
+                    <span>Supplies</span>
+                </a>
+            </li>
+            <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-desktop"></i>
+                    <i class="fa"></i>
                     <span>Purchase Request</span>
                 </a>
                 <ul class="sub">
@@ -45,12 +58,23 @@
             </li>
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-desktop"></i>
+                    <i class="fa"></i>
                     <span>Purchase Order</span>
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/PurchaseOrderServlet/List">Purchase Order List</a></li>
                     <li><a href="/AMS/DeliveryInspectionServlet/List">Inspection Requests</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa"></i>
+                    <span>Report</span>
+                </a>
+                <ul class="sub">
+                    <li><a href="/AMS/ReportServlet/GeneralPPE">General Equipment</a></li>
+                    <li><a href="/AMS/ReportServlet/SpecificPPE">Specific Equipment</a></li>
+                    <li><a href="/AMS/ReportServlet/GeneralSupplies">General Supplies</a></li>
                 </ul>
             </li>
         </ul>

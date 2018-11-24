@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class ReportService {
 
-    public ArrayList<Asset> GetAssets() {
+    public ArrayList<Asset> GetGeneralPPEData() {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
@@ -37,7 +37,7 @@ public class ReportService {
             Asset temp = new Asset();
             while (rs.next()) {
                 if (count == 0) {
-                    temp = populateAsset(rs);
+                    temp = populateGeneralPPE(rs);
                     assets.add(temp);
                     count++;
                 } else {
@@ -55,7 +55,7 @@ public class ReportService {
                                 break;
                         }
                     } else {
-                        temp = populateAsset(rs);
+                        temp = populateGeneralPPE(rs);
                         assets.add(temp);
                         count++;
                     }
@@ -72,7 +72,97 @@ public class ReportService {
         }
     }
 
-    private Asset populateAsset(ResultSet rs) throws SQLException {
+    public ArrayList<Asset> GetGeneralSuppliesData() {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT A.*, T1.Division, T1.Consumed\n"
+                    + "FROM Asset A JOIN\n"
+                    + "(SELECT Supplies.AssetId, Supplies.Division, SUM(Supplies.AmountConsumed) AS 'Consumed'\n"
+                    + "FROM Supplies\n"
+                    + "WHERE Supplies.Division IS NOT NULL\n"
+                    + "GROUP BY Supplies.AssetId, Supplies.Division) T1 ON A.AssetId = T1.AssetId\n"
+                    + "ORDER BY A.AssetId";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Asset> assets = new ArrayList<>();
+            int count = 0;
+            Asset temp = new Asset();
+            while (rs.next()) {
+                if (count == 0) {
+                    temp = populateSupplies(rs);
+                    assets.add(temp);
+                    count++;
+                } else {
+                    if (temp.getAssetId() == rs.getInt(Asset.COLUMN_ASSET_ID)) {
+                        String division = rs.getString("Division");
+                        switch (division) {
+                            case "Admin Services":
+                                assets.get(assets.size() - 1).setAdminConsumed(rs.getInt("Consumed"));
+                                break;
+                            case "General Services":
+                                assets.get(assets.size() - 1).setGeneralConsumed(rs.getInt("Consumed"));
+                                break;
+                            case "Procurement":
+                                assets.get(assets.size() - 1).setProcurementConsumed(rs.getInt("Consumed"));
+                                break;
+                            case "Finance":
+                                assets.get(assets.size() - 1).setFinancialConsumed(rs.getInt("Consumed"));
+                                break;
+                        }
+                    } else {
+                        temp = populateSupplies(rs);
+                        assets.add(temp);
+                        count++;
+                    }
+                }
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+            return assets;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+
+    private Asset populateSupplies(ResultSet rs) throws SQLException {
+        Asset asset = new Asset();
+        asset.setAssetId(rs.getInt(Asset.COLUMN_ASSET_ID));
+        asset.setAssetName(rs.getString(Asset.COLUMN_ASSET_NAME));
+        asset.setDescription(rs.getString(Asset.COLUMN_DESCRIPTION));
+        asset.setFundCluster(rs.getString(Asset.COLUMN_FUND_CLUSTER));
+        asset.setStockNo(rs.getString(Asset.COLUMN_STOCK_NO));
+        asset.setUnit(rs.getString(Asset.COLUMN_UNIT));
+        asset.setAssetType(rs.getString(Asset.COLUMN_ASSET_TYPE));
+        asset.setAdminConsumed(0);
+        asset.setGeneralConsumed(0);
+        asset.setProcurementConsumed(0);
+        asset.setFinancialConsumed(0);
+
+        String division = rs.getString("Division");
+        switch (division) {
+            case "Admin Services":
+                asset.setAdminConsumed(rs.getInt("Consumed"));
+                break;
+            case "General Services":
+                asset.setGeneralConsumed(rs.getInt("Consumed"));
+                break;
+            case "Procurement":
+                asset.setProcurementConsumed(rs.getInt("Consumed"));
+                break;
+            case "Finance":
+                asset.setFinancialConsumed(rs.getInt("Consumed"));
+                break;
+        }
+        return asset;
+    }
+
+    private Asset populateGeneralPPE(ResultSet rs) throws SQLException {
         Asset asset = new Asset();
         asset.setAssetId(rs.getInt(Asset.COLUMN_ASSET_ID));
         asset.setAssetName(rs.getString(Asset.COLUMN_ASSET_NAME));

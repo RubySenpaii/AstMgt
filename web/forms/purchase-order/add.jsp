@@ -34,7 +34,7 @@
                                         <datalist id="supp">
                                             <%
                                                 ArrayList<Supplier> slist = new ArrayList<Supplier>();
-                                                slist = (ArrayList<Supplier>) session.getAttribute("supplier");
+                                                slist = (ArrayList<Supplier>) session.getAttribute("supplierList");
                                                 for (Supplier supp : slist) {
                                             %>
                                             <option value="<%= supp.SupplierName %>">

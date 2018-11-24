@@ -49,7 +49,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                     url = ApproveAndAddPurchaseOrder(request);
                     break;
                 case "GoToPO":
-                    url = "/forms/purchase-order/add.jsp";
+                    url = CreatePurchaseOrder(request);
                     break;
                 case "Submit":
                     url = AddPurchaseOrder(request);
@@ -116,11 +116,20 @@ public class PurchaseOrderServlet extends BaseServlet {
         System.out.println("found a list of supplier: " + supplierList.size());
         System.out.println("upadte tracking success: " + result);
         session.setAttribute("limit", expenditure);
-        session.setAttribute("supplier", supplierList);
+        session.setAttribute("supplierList", supplierList);
         return "/forms/purchase-order/add.jsp";
     }
     
-    ;
+    private String CreatePurchaseOrder(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int purchaseRequestId = Integer.parseInt(request.getParameter("prid"));
+        ArrayList<AssetRequested> assetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(purchaseRequestId);
+        ArrayList<Supplier> supplierList = new SupplierService().FindSupplierByType(assetsRequested.get(0).Asset.AssetType);
+        System.out.println("found a list of supplier: " + supplierList.size());
+        session.setAttribute("supplierList", supplierList);
+        return "/forms/purchase-order/add.jsp";
+    }
+    
     private String ListPurchaseOrder(HttpServletRequest request) throws SQLException {
         PurchaseOrderService poDB = new PurchaseOrderService();
         ArrayList<PurchaseOrder> poList = new ArrayList<>();

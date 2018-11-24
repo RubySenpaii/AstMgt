@@ -28,6 +28,12 @@ public class Asset {
     private int quantityOnStock;
     private int quantityDisposed;
     private int quantityUsed;
+    
+    private String division;
+    private int adminConsumed;
+    private int generalConsumed;
+    private int procurementConsumed;
+    private int financialConsumed;
 
     /**
      * @return the assetId
@@ -167,5 +173,75 @@ public class Asset {
      */
     public void setQuantityUsed(int quantityUsed) {
         this.quantityUsed = quantityUsed;
+    }
+
+    /**
+     * @return the division
+     */
+    public String getDivision() {
+        return division;
+    }
+
+    /**
+     * @param division the division to set
+     */
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    /**
+     * @return the adminConsumed
+     */
+    public int getAdminConsumed() {
+        return adminConsumed;
+    }
+
+    /**
+     * @param adminConsumed the adminConsumed to set
+     */
+    public void setAdminConsumed(int adminConsumed) {
+        this.adminConsumed = adminConsumed;
+    }
+
+    /**
+     * @return the generalConsumed
+     */
+    public int getGeneralConsumed() {
+        return generalConsumed;
+    }
+
+    /**
+     * @param generalConsumed the generalConsumed to set
+     */
+    public void setGeneralConsumed(int generalConsumed) {
+        this.generalConsumed = generalConsumed;
+    }
+
+    /**
+     * @return the procurementConsumed
+     */
+    public int getProcurementConsumed() {
+        return procurementConsumed;
+    }
+
+    /**
+     * @param procurementConsumed the procurementConsumed to set
+     */
+    public void setProcurementConsumed(int procurementConsumed) {
+        this.procurementConsumed = procurementConsumed;
+    }
+
+    /**
+     * @return the financialConsumed
+     */
+    public int getFinancialConsumed() {
+        return financialConsumed;
+    }
+
+    /**
+     * @param financialConsumed the financialConsumed to set
+     */
+    public void setFinancialConsumed(int financialConsumed) {
+        this.financialConsumed = financialConsumed;
     }
 }

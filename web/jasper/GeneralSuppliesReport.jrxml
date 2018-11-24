@@ -5,11 +5,12 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="logo" class="java.lang.String"/>
 	<field name="assetName" class="java.lang.String"/>
-	<field name="description" class="java.lang.String"/>
-	<field name="quantityDisposed" class="java.lang.Integer"/>
-	<field name="quantityOnStock" class="java.lang.Integer"/>
-	<field name="quantityUsed" class="java.lang.Integer"/>
+	<field name="adminConsumed" class="java.lang.Integer"/>
+	<field name="generalConsumed" class="java.lang.Integer"/>
+	<field name="financialConsumed" class="java.lang.Integer"/>
+	<field name="procurementConsumed" class="java.lang.Integer"/>
 	<field name="unit" class="java.lang.String"/>
+	<field name="assetType" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -18,7 +19,7 @@
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="28" uuid="9e8c4f60-8519-4fdd-bbc9-dd126aa22bcb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Report on the Physical Count of Property Plant and Equipment]]></text>
+				<text><![CDATA[Report on the Physical Count of Supplies Used Per Division]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="0" y="28" width="555" height="20" uuid="171783da-70e1-4ad0-be6b-ac5b50b3fd78"/>
@@ -34,48 +35,56 @@
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="3e9ca9ce-a7c2-45ab-b2fb-cda67ddd38f9"/>
-				<text><![CDATA[AssetName]]></text>
+				<reportElement x="0" y="0" width="89" height="20" uuid="3e9ca9ce-a7c2-45ab-b2fb-cda67ddd38f9"/>
+				<text><![CDATA[Asset Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="141" height="20" uuid="678b10f6-431b-4019-8c1c-29b7ab8c13d2"/>
-				<text><![CDATA[Description]]></text>
+				<reportElement x="171" y="0" width="119" height="20" uuid="678b10f6-431b-4019-8c1c-29b7ab8c13d2"/>
+				<text><![CDATA[Admin Consumption]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="241" y="0" width="100" height="20" uuid="dd3a2afe-6195-407c-b522-71abd8c02835"/>
-				<text><![CDATA[QuantityDisposed]]></text>
+				<reportElement x="290" y="0" width="93" height="20" uuid="dd3a2afe-6195-407c-b522-71abd8c02835"/>
+				<text><![CDATA[General Consumption]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="341" y="0" width="100" height="20" uuid="2d9fb35f-4c6d-4ea1-bdee-ff9e718c5fde"/>
-				<text><![CDATA[QuantityOnStock]]></text>
+				<reportElement x="383" y="0" width="93" height="20" uuid="2d9fb35f-4c6d-4ea1-bdee-ff9e718c5fde"/>
+				<text><![CDATA[Finance Consumption]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="441" y="0" width="100" height="20" uuid="119371eb-6cfe-4ebb-af3a-f23c152e83b7"/>
-				<text><![CDATA[QuantityUsed]]></text>
+				<reportElement x="476" y="0" width="79" height="20" uuid="119371eb-6cfe-4ebb-af3a-f23c152e83b7"/>
+				<text><![CDATA[Procurement Consummption]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="89" y="0" width="82" height="20" uuid="f64d81c9-8f07-4519-b715-7f14d5709154"/>
+				<text><![CDATA[Asset Type]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="55be18f7-9969-4d75-8a12-56053f3b3c86"/>
+				<reportElement x="0" y="0" width="89" height="20" uuid="55be18f7-9969-4d75-8a12-56053f3b3c86"/>
 				<textFieldExpression><![CDATA[$F{assetName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="0" width="141" height="20" uuid="c1f9fc5b-0e71-467b-bb31-a6210da43bb5"/>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<reportElement x="171" y="0" width="119" height="20" uuid="c1f9fc5b-0e71-467b-bb31-a6210da43bb5"/>
+				<textFieldExpression><![CDATA[$F{adminConsumed} + " " + $F{unit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="241" y="0" width="100" height="20" uuid="40447ef4-f9be-4f3b-9a3e-c54d9d835b3f"/>
-				<textFieldExpression><![CDATA[$F{quantityDisposed} + " " + $F{unit}]]></textFieldExpression>
+				<reportElement x="383" y="0" width="93" height="20" uuid="5742628f-c474-4999-8e18-1818b3e2b698"/>
+				<textFieldExpression><![CDATA[$F{financialConsumed} + " " + $F{unit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="341" y="0" width="100" height="20" uuid="5742628f-c474-4999-8e18-1818b3e2b698"/>
-				<textFieldExpression><![CDATA[$F{quantityOnStock} + " " + $F{unit}]]></textFieldExpression>
+				<reportElement x="476" y="0" width="79" height="20" uuid="23eb2fb6-5053-4d0d-b46d-329989c3c55a"/>
+				<textFieldExpression><![CDATA[$F{procurementConsumed} + " " + $F{unit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="441" y="0" width="100" height="20" uuid="23eb2fb6-5053-4d0d-b46d-329989c3c55a"/>
-				<textFieldExpression><![CDATA[$F{quantityUsed} + " " + $F{unit}]]></textFieldExpression>
+				<reportElement x="290" y="0" width="93" height="20" uuid="40447ef4-f9be-4f3b-9a3e-c54d9d835b3f"/>
+				<textFieldExpression><![CDATA[$F{generalConsumed} + " " + $F{unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="0" width="82" height="20" uuid="9c778157-b58f-4ac1-9389-e233188b8f44"/>
+				<textFieldExpression><![CDATA[$F{assetType}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -145,19 +154,24 @@
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Quantity Disposed"]]></seriesExpression>
+						<seriesExpression><![CDATA["Admin Consumption"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{quantityDisposed}]]></valueExpression>
+						<valueExpression><![CDATA[$F{adminConsumed}]]></valueExpression>
 					</categorySeries>
 					<categorySeries>
-						<seriesExpression><![CDATA["Quantity Stock"]]></seriesExpression>
+						<seriesExpression><![CDATA["General Consumption"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{quantityOnStock}]]></valueExpression>
+						<valueExpression><![CDATA[$F{generalConsumed}]]></valueExpression>
 					</categorySeries>
 					<categorySeries>
-						<seriesExpression><![CDATA["Quantity Used"]]></seriesExpression>
+						<seriesExpression><![CDATA["Finance Consumption"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{quantityUsed}]]></valueExpression>
+						<valueExpression><![CDATA[$F{financialConsumed}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Procurement Consumption"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{procurementConsumed}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
 				<barPlot>

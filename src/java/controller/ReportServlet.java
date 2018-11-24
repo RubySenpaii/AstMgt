@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import report.Asset;
 import report.ReportService;
@@ -31,35 +32,43 @@ import services.AssetService;
  *
  * @author rubysenpaii
  */
-public class ReportServlet extends HttpServlet {
-
+public class ReportServlet extends BaseServlet {
+    
     private ReportingModule reports = new ReportingModule();
     private String logo;
     private String jasperPath;
     private String pdfReportsPath;
-    
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+
+    @Override
+    public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getRequestURI();
         try {
             String url;
             logo = getServletContext().getRealPath("/img");
-            jasperPath = getServletContext().getRealPath("/reports");
+            jasperPath = getServletContext().getRealPath("/jasper");
             pdfReportsPath = getServletContext().getRealPath("/pdf");
             
             switch (action.split("/")[action.split("/").length - 1]) {
-                case "GeneratePropertyPlantEquipmentReport":
-                    url = generatePropertyPlantEquipmentReport(request);
+                case "GeneralPPE":
+                    url = DirectToPage(request, "general-ppe");
                     break;
+                case "GenerateGeneralPPE":
+                    url = GenerateGeneralPropertyPlantEquipmentReport(request);
+                    break;
+                case "SpecificPPE":
+                    url = DirectToPage(request, "specific-ppe");
+                    break;
+                case "GenerateSpecificPPE":
+                case "GeneralSupplies":
+                    url = DirectToPage(request, "general-supplies");
+                    break;
+                case "GenerateGeneralSupplies":
+                    url = GenerateSuppliesReport(request);
+                    break;
+                case "SpecificSupplies":
+                    url = DirectToPage(request, "specific-supplies");
+                    break;
+                case "GenerateSpecificSupplies":
                 default:
                     url = "";
                     break;
@@ -72,12 +81,27 @@ public class ReportServlet extends HttpServlet {
         }
     }
     
-    private String generatePropertyPlantEquipmentReport(HttpServletRequest request) {
+    private String DirectToPage(HttpServletRequest request, String folder) {
+        pdfReportsPath += File.separator + folder;
+        File file = new File(pdfReportsPath);
+        String fileNames[] = file.list();
+        ArrayList<String> filtered = new ArrayList<>();
+        for (int i = 0; i < fileNames.length; i++) {
+            if (!fileNames[i].equals("placeholder.md")) {
+                filtered.add(fileNames[i]);
+            }
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("fileList", filtered);
+        return "/report/" + folder + ".jsp";
+    }
+    
+    private String GenerateGeneralPropertyPlantEquipmentReport(HttpServletRequest request) {
         try {
-            ArrayList<Asset> assets = new ReportService().GetAssets();
+            ArrayList<Asset> assets = new ReportService().GetGeneralPPEData();
             logo += File.separator + "darlogo.jpg";
             String jasperFile = jasperPath + File.separator + "PropertyPlantEquipmentReport.jasper";
-            String fileName = pdfReportsPath + File.separator + "PropertyPlantEquipmentReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
+            String fileName = pdfReportsPath + File.separator + "general-ppe" + File.separator + "PropertyPlantEquipmentReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
             reports.createPropertyPlantEquipment(logo, jasperFile, fileName, assets);
         } catch (JRException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,46 +110,23 @@ public class ReportServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "";
+        return "/ReportServlet/GeneralPPE";
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    
+    private String GenerateSuppliesReport(HttpServletRequest request) {
+        try {
+            ArrayList<Asset> assets = new ReportService().GetGeneralSuppliesData();
+            logo += File.separator + "darlogo.jpg";
+            String jasperFile = jasperPath + File.separator + "GeneralSuppliesReport.jasper";
+            String fileName = pdfReportsPath + File.separator + "general-supplies" + File.separator + "SuppliesReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
+            reports.createPropertyPlantEquipment(logo, jasperFile, fileName, assets);
+        } catch (JRException ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/ReportServlet/GeneralSupplies";
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

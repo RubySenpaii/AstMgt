@@ -28,31 +28,33 @@
                             <div class="content-panel">
                                 <h4>List of Assets</h4>
                                 <br/>
-                                <table class="table" id="assetList">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset Id</th>
-                                            <th>Asset Name</th>
-                                            <th>Asset Type</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            ArrayList<Asset> assets = (ArrayList<Asset>) session.getAttribute("assets");
-                                            for (Asset asset : assets) {
-                                        %>
-                                        <tr>
-                                            <td><%=asset.AssetId%></td>
-                                            <td><%=asset.AssetName%></td>
-                                            <td><%=asset.AssetType%></td>
-                                            <td><%=asset.Description%></td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
+                                <div class="col-md-12 content-panel">
+                                    <table class="table" id="assetList">
+                                        <thead>
+                                            <tr>
+                                                <th>Asset Id</th>
+                                                <th>Asset Name</th>
+                                                <th>Asset Type</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                ArrayList<Asset> assets = (ArrayList<Asset>) session.getAttribute("assets");
+                                                for (Asset asset : assets) {
+                                            %>
+                                            <tr>
+                                                <td><%=asset.AssetId%></td>
+                                                <td><%=asset.AssetName%></td>
+                                                <td><%=asset.AssetType%></td>
+                                                <td><%=asset.Description%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
