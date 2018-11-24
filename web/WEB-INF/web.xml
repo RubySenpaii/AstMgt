@@ -44,6 +44,10 @@
         <servlet-name>Register</servlet-name>
         <servlet-class>controller.Register</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AjaxServlet</servlet-name>
+        <servlet-class>controller.AjaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseRequestServlet</servlet-name>
         <url-pattern>/PurchaseRequest/*</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjaxServlet</servlet-name>
+        <url-pattern>/AjaxServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

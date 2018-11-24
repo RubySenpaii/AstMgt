@@ -75,19 +75,20 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Asset</th>
+                                                        <th>Asset Type</th>
                                                         <th>Quantity</th>
                                                         <th>Price</th>
                                                     </tr>
                                                 </thead>
                                             <%
                                                 ArrayList<AssetRequested> ar = (ArrayList<AssetRequested>) session.getAttribute("assetRequested");
-                                                ArrayList<String> assetNames = (ArrayList<String>) session.getAttribute("assetNames");
                                                 for (int i = 0; i < ar.size(); i++) {
 
                                             %>
                                             <tbody>
                                                 <tr>
-                                                    <td><c:out value="<%= assetNames.get(i)%>"></c:out></td>
+                                                    <td><c:out value="<%= ar.get(i).Asset.AssetName %>"></c:out></td>
+                                                    <td><c:out value="<%= ar.get(i).Asset.AssetType %>"></c:out></td>
                                                     <td><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
                                                     <td><c:out value="<%= ar.get(i).UnitCost%>"></c:out></td>
                                                     </tr>

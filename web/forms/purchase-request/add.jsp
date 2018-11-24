@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.Employee"%>
 <%@page import="objects.Asset"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,6 +35,28 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="asset-type" name="asset-type">
+                                            <option selected disabled>-Select Asset Type-</option>
+                                            <option value="Supplies Office">Supplies Office</option>
+                                            <option value="Supplies General">Supplies General</option>
+                                            <%
+                                                Employee user = (Employee) session.getAttribute("user");
+                                                if (!user.EmployeeStatus.equals("Contractor")) {
+                                            %>
+                                            <option value="Equipment Furniture">Equipment Furniture</option>
+                                            <option value="Equipment Appliance">Equipment Appliance</option>
+                                            <option value="Equipment Electronics">Equipment Electronics</option>
+                                            <option value="Equipment Vehicle">Equipment Vehicle</option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
+                                        <datalist id="asset-list"></datalist>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Items</label>
                                     <div class="col-lg-10">
                                         <table style="width:100%" name="assetTable" id="assetTable">
@@ -48,18 +71,7 @@
                                             <tbody>
                                                 <tr class="fieldT">
                                                     <td>
-                                                        <input list="ass" name="assets" autocomplete="off">
-                                                        <datalist id="ass">
-                                                            <%
-                                                                ArrayList<Asset> alist = new ArrayList<Asset>();
-                                                                alist = (ArrayList<Asset>) session.getAttribute("assets");
-                                                                for (Asset asset : alist) {
-                                                            %>
-                                                            <option value="<%= asset.AssetName%>">
-                                                                <%
-                                                                    }
-                                                                %>
-                                                        </datalist>
+                                                        <input list="asset-list" name="assets" autocomplete="off">
                                                     </td>
                                                     <td><input type="number" class="quantity" name="quantity" autocomplete="off"></td> 
                                                     <td><input type="number" class="price" name="price" autocomplete="off"></td> 
@@ -80,8 +92,6 @@
                                         <button class="btn btn-theme" type="submit">Submit</button>
                                     </div>
                                 </div>
-
-
                             </form>
                         </div>
                     </div>
@@ -113,7 +123,6 @@
                 });
 
                 $(document.body).on('change', '.price', function () {
-                    console.log('change price pls');
                     // initialize the sum (total price) to zero
                     var sum = 0;
 
@@ -130,10 +139,25 @@
                     for (var i = 0; i < price.length; i++) {
                         sum += (price[i] * qty[i]);
                     }
-
                     // set the computed value to 'totalPrice' textbox
                     $('#totalPrice').val(sum);
-
+                });
+                
+                $('#asset-type').on('change', function() {
+                    var type = $(this).val();
+                    console.log('asset type' + type);
+                    $.ajax({
+                       url: '/AMS/AjaxServlet/AssetListWithType',
+                       dataType: 'json',
+                       data: {type: type},
+                       success: function(data) {
+                           $('#asset-list').html();
+                           for (var i = 0; i < data.Assets.length; i++) {
+                               console.log(data.Assets);
+                               $('#asset-list').append('<option>' + data.Assets[i].AssetName + '</option>')
+                           }
+                       }
+                    });
                 });
             });
         </script>

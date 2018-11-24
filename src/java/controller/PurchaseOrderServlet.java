@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -21,11 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.AssetRequested;
 import objects.Employee;
+import objects.ExpenditureTracking;
 import objects.PurchaseOrder;
 import objects.PurchaseRequest;
 import objects.Supplier;
 import services.AssetRequestedService;
 import services.AssetService;
+import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
 import services.SupplierService;
@@ -74,25 +77,45 @@ public class PurchaseOrderServlet extends BaseServlet {
     private String ApproveAndAddPurchaseOrder(HttpServletRequest request) throws ServletException {
         SupplierService suppDB = new SupplierService();
         PurchaseRequestService prDB = new PurchaseRequestService();
-        ArrayList<Supplier> supplierList = suppDB.FindAllSupplier();
         HttpSession session = request.getSession();
-        Employee e = (Employee) session.getAttribute("user");
+        Employee employee = (Employee) session.getAttribute("user");
         int prid = Integer.parseInt(request.getParameter("prid"));
         Date approved = new java.sql.Date(System.currentTimeMillis());
         try {
-            System.out.println("Approving purchase request" + e);
+            System.out.println("Approving purchase request" + employee.FullName());
             System.out.println("Approving purchase request" + approved);
             System.out.println("Approving purchase request" + prid);
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
         
-        int approval = prDB.ApprovePurchaseRequest(e.EmployeeId, approved, prid);
+        int approval = prDB.ApprovePurchaseRequest(employee.EmployeeId, approved, prid);
         if (approval == 0) {
             System.out.println("Number :  " + approval);
             return "/forms/purchase-request/list.jsp";
         }
+        
+        ArrayList<AssetRequested> assetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(prid);
+        double equipTotal = 0, suppliesTotal = 0;
+        for (AssetRequested assetRequested: assetsRequested) {
+            if (assetRequested.Asset.AssetType.contains("Equipment")) {
+                equipTotal += assetRequested.Quantity * assetRequested.UnitCost;
+            } else {
+                suppliesTotal += assetRequested.Quantity * assetRequested.UnitCost;
+            }
+        }
+        System.out.println("expenditure for pr supplies " + suppliesTotal + " equipment " + equipTotal);
+        
+        ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
+        ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
+        expenditure.Timestamp = Calendar.getInstance().getTime();
+        expenditure.Equipment -= equipTotal;
+        expenditure.Supplies -=  suppliesTotal;
+        int result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+        ArrayList<Supplier> supplierList = suppDB.FindSupplierByType(assetsRequested.get(0).Asset.AssetType);
         System.out.println("found a list of supplier: " + supplierList.size());
+        System.out.println("upadte tracking success: " + result);
+        session.setAttribute("limit", expenditure);
         session.setAttribute("supplier", supplierList);
         return "/forms/purchase-order/add.jsp";
     }

@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="extra.SharedFormat"%>
-<%@page import="objects.ExpenditureLimit"%>
+<%@page import="objects.ExpenditureTracking"%>
 <header class="header black-bg">
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
@@ -62,7 +62,7 @@
             </li>
             <!-- notification dropdown end -->
             <%
-                ExpenditureLimit limit = (ExpenditureLimit) session.getAttribute("limit");
+                ExpenditureTracking limit = (ExpenditureTracking) session.getAttribute("limit");
             %>
             <li class="header-limit">
                 Equipment Spending Limit: Php <%=SharedFormat.doubleToString(limit.Equipment)%>

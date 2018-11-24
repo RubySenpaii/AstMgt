@@ -36,6 +36,9 @@ public class ExpenditureLimitService {
             int result = ps.executeUpdate();
             ps.close();
             con.close();
+            if (result == 1) {
+                result = new ExpenditureTrackingService().AddEquipmentTracking(limit);
+            }
             return result;
         } catch (SQLException x) {
             System.err.println(x);

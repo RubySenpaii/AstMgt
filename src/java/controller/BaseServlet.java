@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.Employee;
+import objects.ExpenditureTracking;
+import services.ExpenditureTrackingService;
 
 @WebServlet(name = "BaseServlet", urlPatterns = {"/BaseServlet"})
 public abstract class BaseServlet extends HttpServlet {
@@ -25,8 +28,10 @@ public abstract class BaseServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Employee user =  (Employee) session.getAttribute("user");
-            if (user != null || true) {
+            if (user.EmployeeId > 0) {
                 System.out.println("user accessing " + request.getRequestURI());
+                ExpenditureTracking limit = new ExpenditureTrackingService().GetCurrentExpenditure(user.Division);
+                session.setAttribute("limit", limit);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();

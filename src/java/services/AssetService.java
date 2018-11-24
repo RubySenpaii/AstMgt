@@ -113,6 +113,26 @@ public class AssetService {
         }
     }
     
+    public ArrayList<Asset> GetAssetsWithType(String type) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT * FROM Asset WHERE " + Asset.COLUMN_ASSET_TYPE + " = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, type);
+            
+            ArrayList<Asset> assets = getResult(ps.executeQuery());
+            
+            ps.close();
+            con.close();
+            return assets;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+    
     public ArrayList<Asset> GetAssets() {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();

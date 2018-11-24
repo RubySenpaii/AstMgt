@@ -20,7 +20,7 @@ import objects.Supplier;
 public class SupplierService {
 
     private String AddSupplierQuery = "INSERT INTO Supplier(" + Supplier.COLUMN_SUPPLIER_ID + "," + Supplier.COLUMN_SUPPLIER_NAME + ","
-            + Supplier.COLUMN_SUPPLIER_ADDRESS + "," + Supplier.COLUMN_SUPPLIER_TIN + ")VALUES(?,?,?,?)";
+            + Supplier.COLUMN_SUPPLIER_ADDRESS + "," + Supplier.COLUMN_SUPPLIER_TIN + ", " + Supplier.COLUMN_SUPPLIER_TYPE + ")VALUES(?,?,?,?)";
 
     private String FindSupplierByIdQuery = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_ID + " = ?";
     private String FindSupplierByNameQuery = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_NAME + " = ?";
@@ -35,6 +35,7 @@ public class SupplierService {
             ps.setString(2, s.SupplierName);
             ps.setString(3, s.SupplierAddress);
             ps.setString(4, s.SupplierTIN);
+            ps.setString(5, s.SupplierType);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();
@@ -52,8 +53,10 @@ public class SupplierService {
         try {
             PreparedStatement ps = conn.prepareStatement(FindSupplierByIdQuery);
             ps.setInt(1, suppno);
+            
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
@@ -68,6 +71,7 @@ public class SupplierService {
         try {
             PreparedStatement ps = conn.prepareStatement(FindSupplierByNameQuery);
             ps.setString(1, suppname);
+            
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
             ps.close();
             return elist.get(0);
@@ -84,7 +88,28 @@ public class SupplierService {
         try {
             PreparedStatement ps = conn.prepareStatement(FindAllSupplierQuery);
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
+            
             ps.close();
+            conn.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    public ArrayList<Supplier> FindSupplierByType(String type) {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            String query = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_TYPE + " = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, type);
+            
+            ArrayList<Supplier> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
             return elist;
         } catch (SQLException e) {
             System.err.println(e);
@@ -100,6 +125,7 @@ public class SupplierService {
             e.SupplierName = rs.getString(Supplier.COLUMN_SUPPLIER_NAME);
             e.SupplierAddress = rs.getString(Supplier.COLUMN_SUPPLIER_ADDRESS);
             e.SupplierTIN = rs.getString(Supplier.COLUMN_SUPPLIER_TIN);
+            e.SupplierType = rs.getString(Supplier.COLUMN_SUPPLIER_TYPE);
             suppliers.add(e);
         }
         rs.close();
