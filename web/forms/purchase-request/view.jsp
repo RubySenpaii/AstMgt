@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.ExpenditureTracking"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="objects.AssetRequested"%>
 <%@page import="objects.PurchaseRequest"%>
@@ -46,15 +47,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested By</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.FullName() %>"></c:out> </label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.FullName()%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requester's Division</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.Division %>"></c:out> </label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.Division%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requester's Employee Status</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.EmployeeStatus %>"></c:out> </label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.EmployeeStatus%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested Date</label>
@@ -62,7 +63,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved By</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Approver.FullName() %>"></c:out> </label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= pr.Approver.FullName()%>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved Date</label>
@@ -81,21 +82,31 @@
                                                     </tr>
                                                 </thead>
                                             <%
+                                                ExpenditureTracking limit = (ExpenditureTracking) session.getAttribute("limit");
                                                 ArrayList<AssetRequested> ar = (ArrayList<AssetRequested>) session.getAttribute("assetRequested");
+                                                double sum = 0;
                                                 for (int i = 0; i < ar.size(); i++) {
 
                                             %>
                                             <tbody>
                                                 <tr>
-                                                    <td><c:out value="<%= ar.get(i).Asset.AssetName %>"></c:out></td>
-                                                    <td><c:out value="<%= ar.get(i).Asset.AssetType %>"></c:out></td>
+                                                    <td><c:out value="<%= ar.get(i).Asset.AssetName%>"></c:out></td>
+                                                    <td><c:out value="<%= ar.get(i).Asset.AssetType%>"></c:out></td>
                                                     <td><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
                                                     <td><c:out value="<%= ar.get(i).UnitCost%>"></c:out></td>
                                                     </tr>
                                                 </tbody>
 
-                                            <%                                                }
+                                            <%
+                                                    sum += ar.get(i).getTotalCost();
+                                                }
                                             %>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3">Total</th>
+                                                    <th id="sum" value="<%= sum%>"><%= sum%></th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -105,7 +116,10 @@
                                 <div class="form-group">
                                     <div class="col-lg-6" style="text-align: center">
                                         <form action="/AMS/PurchaseOrderServlet/Add">
-                                            <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Approve</button> 
+                                            <input type="hidden" id="asset-type" value="<%= ar.get(0).Asset.AssetType%>">
+                                            <input type="hidden" id="supplies-limit" value="<%= limit.Supplies%>">
+                                            <input type="hidden" id="equipment-limit" value="<%= limit.Equipment%>">
+                                            <button class="btn btn-info" id="prid" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Approve</button> 
                                         </form>
                                     </div>
                                     <div class="col-lg-6" style="text-align: center">
@@ -115,7 +129,8 @@
                                     </div>
 
                                     <%
-                                    } else {
+                                        }
+                                        if (pr.ApprovedBy != 0 && pr.ApprovedDate != null) {
                                     %>
                                     <form action="/AMS/PurchaseOrderServlet/GoToPO">
                                         <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit"><span class="fa fa-plus">  Purchase Order </span></button> 
@@ -135,4 +150,27 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script type='text/javascript'>
+        $(function () {
+            var equipLimit = document.getElementById('equipment-limit').value;
+            var suppLimit = document.getElementById('supplies-limit').value;
+            var sum = $('#sum').text();
+            var assetType = document.getElementById('asset-type').value;
+            console.log(equipLimit);
+            console.log(suppLimit);
+            console.log(sum);
+            console.log(assetType);
+            if (assetType.includes('Equipment')) {
+                if (sum > equipLimit) {
+                    $('#prid').prop("disabled", true);
+                }
+            }
+            if (assetType.includes('Supplies')) {
+                if (sum > suppLimit) {
+                    $('#prid').prop("disabled", true);
+                }
+            }
+
+        });
+    </script>
 </html>

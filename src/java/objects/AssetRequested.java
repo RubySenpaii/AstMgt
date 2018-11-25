@@ -20,6 +20,10 @@ public class AssetRequested {
     public int Quantity;
     public double UnitCost;
     
+    public double getTotalCost(){
+        return this.Quantity * this.UnitCost;
+    }
+    
     public Asset Asset;
     public PurchaseRequest PurchaseRequest;
 }

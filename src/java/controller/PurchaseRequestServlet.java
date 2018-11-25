@@ -61,6 +61,8 @@ public class PurchaseRequestServlet extends BaseServlet {
                     break;
                 case "Flag":
                 case "List":
+                    url = ListPurchaseRequest(request);
+                    break;
                 default:
                     url = ListPurchaseRequest(request);
                     break;
