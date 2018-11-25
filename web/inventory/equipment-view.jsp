@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Estimated Useful Life</label>
-                                    <label class="col-lg-10 control-label"><%=equipment.EstimatedUsefulLife%></label>
+                                    <label class="col-lg-10 control-label"><%=equipment.Asset.EstimatedUsefulLife%></label>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-4">

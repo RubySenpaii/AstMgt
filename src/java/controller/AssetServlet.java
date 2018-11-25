@@ -106,6 +106,7 @@ public class AssetServlet extends BaseServlet {
         asset.FundCluster = request.getParameter("fund-cluster");
         asset.StockNo = request.getParameter("stock-no");
         asset.Unit = request.getParameter("unit");
+        asset.EstimatedUsefulLife = Integer.parseInt(request.getParameter("estimated-useful-life"));
         int result = assetService.AddAsset(asset);
         if (result == 1) {
             return "/AssetServlet/List";

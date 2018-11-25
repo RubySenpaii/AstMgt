@@ -97,7 +97,6 @@ public class InventoryServlet extends BaseServlet {
         ArrayList<AssetRequested> assetsRequested = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
         String[] assetTags = request.getParameterValues("asset-tag");
         String[] condition = request.getParameterValues("condition");
-        String[] estimatedUsefulLives = request.getParameterValues("estimated-useful-life");
         int qty = 1, counter = 0;
         for (int i = 0; i < assetsRequested.size(); i++) {
             if (assetsRequested.get(i).Asset.AssetType.contains("Equipment")) {
@@ -107,7 +106,6 @@ public class InventoryServlet extends BaseServlet {
                 equipment.AssetTag = assetTags[counter];
                 equipment.Condition = condition[counter];
                 equipment.DateAcquired = Calendar.getInstance().getTime();
-                equipment.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLives[counter]);
                 equipment.Flag = 1;
                 int result = equipmentService.AddEquipment(equipment);
 

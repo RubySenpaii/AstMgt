@@ -9,6 +9,7 @@ import extra.FileModification;
 import extra.SharedFormat;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -85,6 +86,15 @@ public class DeliveryInspectionServlet extends BaseServlet {
             RequestForDeliveryInspection requestInspection = new RequestForDeliveryInspection();
             String orderNumber = purchaseOrderService.FindPurchaseOrderById(purchaseOrder.PurchaseOrderId).PurchaseOrderNumber;
 
+            try {
+                purchaseOrder.ORSNumber = request.getParameter("orsno");
+                purchaseOrder.ORSDate = SharedFormat.DB_DATE_ENTRY.parse(request.getParameter("orsdate"));
+                int result = purchaseOrderService.UpdatePurchaseOrder(purchaseOrder);
+                System.out.println("update result: " + result);
+            } catch (ParseException ex) {
+                Logger.getLogger(DeliveryInspectionServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             requestInspection.DeliveryInspectionId = deliveryInspectionService.GetRequestsForDeliveryInspection().size() + 1;
             Part invoiceFile = request.getPart("invoice");
             requestInspection.Invoice = orderNumber + "invoice";
@@ -123,7 +133,7 @@ public class DeliveryInspectionServlet extends BaseServlet {
         session.setAttribute("requests", requests);
         return "/forms/delivery-inspection/list.jsp";
     }
-    
+
     public String ReviewRequest(HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (request.getParameter("action").equals("Approve")) {

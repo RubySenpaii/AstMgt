@@ -81,18 +81,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Number</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="orsno" name="orsno" placeholder="ORS Number" autocomplete="off">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
-                                    <div class="col-lg-10">
-                                        <input type="date" class="form-control" id="orsdate" name="orsdate" placeholder="ORS Date" autocomplete="off">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" type="submit">Submit</button>
                                     </div>

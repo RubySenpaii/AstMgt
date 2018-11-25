@@ -63,6 +63,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-lg-2 control-label">Estimated Useful Life</label>
+                                    <div class="col-lg-10">
+                                        <input type="number" name="estimated-useful-life" placeholder="" class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label">Fund Cluster</label>
                                     <div class="col-lg-10">
                                         <input type="text" name="fund-cluster" placeholder="" class="form-control" autocomplete="off">

@@ -43,6 +43,7 @@
                                                         <option>General Services</option>
                                                         <option>Procurement</option>
                                                         <option>Finance</option>
+                                                        <option>Management</option>
                                                     </select>
                                                 </td>
                                             </tr>

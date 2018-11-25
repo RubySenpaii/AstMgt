@@ -71,7 +71,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.ORSDate%>" ></c:out> </label>
+                                        <label class="col-lg-10 control-label"> 
+                                            <%
+                                                if (!purchaseOrder.ORSNumber.equals("")) {
+                                            %>
+                                            <%=purchaseOrder.ORSDate%>
+                                            <%
+                                                }
+                                            %>
+                                        </label>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-lg-12 control-label">

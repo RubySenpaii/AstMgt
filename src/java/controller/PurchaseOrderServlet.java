@@ -148,7 +148,6 @@ public class PurchaseOrderServlet extends BaseServlet {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         po.OrderDate = new Date(System.currentTimeMillis());
         po.DeliveryDate = sdf.parse(request.getParameter("deldate"));
-        po.ORSDate = sdf.parse(request.getParameter("orsdate"));
         po.PurchaseOrderId = poDB.FindAllPurchaseOrder().size() + 1;
         PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
         po.PurchaseRequestId = pr.PurchaseRequestId;
@@ -159,7 +158,8 @@ public class PurchaseOrderServlet extends BaseServlet {
         po.Remarks = request.getParameter("remarks");
         po.DeliveryAddress = request.getParameter("deladd");
         po.DeliveryTerms = request.getParameter("delterms");
-        po.ORSNumber = request.getParameter("orsno");
+        po.ORSNumber = "";
+        po.ORSDate = sdf.parse("9999-12-31");
         po.PaymentTerm = request.getParameter("payterms");
         po.ConformeSupplier = request.getParameter("consupp");
         int result = poDB.AddNewPurchaseOrder(po);

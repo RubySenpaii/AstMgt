@@ -33,7 +33,7 @@
                                         <tr>
                                             <th>Stock No</th>
                                             <th>Asset Name</th>
-                                            <th colspan="3">Asset Details</th>
+                                            <th colspan="2">Asset Details</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,9 +52,6 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="estimated-useful-life" placeholder="Estimated Useful Life" autocomplete="off">
                                             </td>
                                         </tr>
                                         <%

@@ -26,16 +26,15 @@ public class EquipmentService {
             Connection con = db.getConnection();
 
             String query = "INSERT INTO Equipment(" + Equipment.COLUMN_ASSET_ID + ", " + Equipment.COLUMN_ASSET_TAG + ", Equipment."
-                    + Equipment.COLUMN_CONDITION + ", " + Equipment.COLUMN_DATE_ACQUIRED + ", " + Equipment.COLUMN_ESTIMATED_USEFUL_LIFE + ", "
+                    + Equipment.COLUMN_CONDITION + ", " + Equipment.COLUMN_DATE_ACQUIRED + ", "
                     + Equipment.COLUMN_FLAG + ") "
-                    + "VALUES(?, ?, ?, ?, ?, ?)";
+                    + "VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, equipment.AssetId);
             ps.setString(2, equipment.AssetTag);
             ps.setString(3, equipment.Condition);
             ps.setObject(4, equipment.DateAcquired);
-            ps.setInt(5, equipment.EstimatedUsefulLife);
-            ps.setInt(6, equipment.Flag);
+            ps.setInt(5, equipment.Flag);
 
             int result = ps.executeUpdate();
             ps.close();
@@ -53,15 +52,14 @@ public class EquipmentService {
             Connection con = db.getConnection();
             
             String query = "UPDATE Equipment SET " + Equipment.COLUMN_ASSET_ID + " = ?, " + Equipment.COLUMN_CONDITION + " = ?, "
-                    + Equipment.COLUMN_DATE_ACQUIRED + " = ?, " + Equipment.COLUMN_ESTIMATED_USEFUL_LIFE + " = ?, "
+                    + Equipment.COLUMN_DATE_ACQUIRED + " = ?, "
                     + Equipment.COLUMN_FLAG + " WHERE " + Equipment.COLUMN_ASSET_TAG + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, equipment.AssetId);
             ps.setString(2, equipment.Condition);
             ps.setObject(3, equipment.DateAcquired);
-            ps.setInt(4, equipment.EstimatedUsefulLife);
-            ps.setInt(5, equipment.Flag);
-            ps.setString(6, equipment.AssetTag);
+            ps.setInt(4, equipment.Flag);
+            ps.setString(5, equipment.AssetTag);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -118,7 +116,6 @@ public class EquipmentService {
             equipment.AssetTag = rs.getString(Equipment.COLUMN_ASSET_TAG);
             equipment.Condition = rs.getString(Equipment.COLUMN_CONDITION);
             equipment.DateAcquired = rs.getDate(Equipment.COLUMN_DATE_ACQUIRED);
-            equipment.EstimatedUsefulLife = rs.getInt(Equipment.COLUMN_ESTIMATED_USEFUL_LIFE);
             equipment.Flag = rs.getInt(Equipment.COLUMN_FLAG);
             
             equipment.Asset = new AssetService().GetAsset(equipment.AssetId);

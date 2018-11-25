@@ -19,6 +19,7 @@ public class RepairLog {
     public static final String COLUMN_REQUESTED_DATE = "RequestedDate";
     public static final String COLUMN_APPROVED_BY = "ApprovedBy";
     public static final String COLUMN_APPROVED_DATE = "ApprovedDate";
+    public static final String COLUMN_REMARKS = "Remarks";
     
     public String AssetTag;
     public String Article;
@@ -27,6 +28,7 @@ public class RepairLog {
     public Date RequestedDate;
     public int ApprovedBy;
     public Date ApprovedDate;
+    public String Remarks;
     
     public Employee Requester;
     public Employee Approver;

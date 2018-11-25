@@ -18,14 +18,12 @@ public class Equipment {
     public static final String COLUMN_CONDITION = "Condition";
     public static final String COLUMN_FLAG = "Flag";
     public static final String COLUMN_DATE_ACQUIRED = "DateAcquired";
-    public static final String COLUMN_ESTIMATED_USEFUL_LIFE = "EstimatedUsefulLife";
     
     public int AssetId;
     public String AssetTag;
     public String Condition;
     public int Flag;
     public Date DateAcquired;
-    public int EstimatedUsefulLife;
     
     public Asset Asset;
     public Employee CurrentUser;

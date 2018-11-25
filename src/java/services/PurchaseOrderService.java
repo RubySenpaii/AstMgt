@@ -58,6 +58,28 @@ public class PurchaseOrderService {
         }
         return 0;
     }
+    
+    public int UpdatePurchaseOrder(PurchaseOrder purchaseOrder) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "UPDATE PurchaseOrder SET " + PurchaseOrder.COLUMN_ORS_DATE + " = ?,  " + PurchaseOrder.COLUMN_ORS_NUMBER + " = ? "
+                    + "WHERE " + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setObject(1, purchaseOrder.ORSDate);
+            ps.setString(2, purchaseOrder.ORSNumber);
+            ps.setInt(3, purchaseOrder.PurchaseOrderId);
+            
+            int result = ps.executeUpdate();
+            ps.close();
+            con.close();
+            return result;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return -1;
+        }
+    }
 
     public PurchaseOrder FindPurchaseOrderByPurchaseRequestId(int prId) {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
