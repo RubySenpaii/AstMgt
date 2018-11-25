@@ -151,7 +151,7 @@
                        dataType: 'json',
                        data: {type: type},
                        success: function(data) {
-                           $('#asset-list').html();
+                           $('#asset-list').html("");
                            for (var i = 0; i < data.Assets.length; i++) {
                                console.log(data.Assets);
                                $('#asset-list').append('<option>' + data.Assets[i].AssetName + '</option>')

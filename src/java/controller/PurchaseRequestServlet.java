@@ -56,6 +56,9 @@ public class PurchaseRequestServlet extends BaseServlet {
                 case "View":
                     url = ViewPurchaseRequestById(request);
                     break;
+                case "Reject":
+                    url = RejectPurchaseRequest(request);
+                    break;
                 case "Flag":
                 case "List":
                 default:
@@ -67,6 +70,20 @@ public class PurchaseRequestServlet extends BaseServlet {
             rd.forward(request, response);
         } catch (Exception x) {
             throw new ServletException(x);
+        }
+    }
+
+    private String RejectPurchaseRequest(HttpServletRequest request) {
+        PurchaseRequestService prservice = new PurchaseRequestService();
+        int prid = Integer.parseInt(request.getParameter("prid"));
+        HttpSession session = request.getSession();
+        Employee employee = (Employee) session.getAttribute("user");
+        try {
+            prservice.RejectPurchaseRequest(employee.EmployeeId, prid);
+            return "/PurchaseRequest/List";
+        } catch (Exception e) {
+            System.out.println("Error in PR servlet" + e);
+            return "/forms/purchase-request/list.jsp";
         }
     }
 

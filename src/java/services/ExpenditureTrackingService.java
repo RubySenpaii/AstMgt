@@ -96,6 +96,11 @@ public class ExpenditureTrackingService {
         } catch (SQLException x) {
             System.err.println(x);
             return null;
+        } catch (IndexOutOfBoundsException x) {
+            ExpenditureTracking tracking = new ExpenditureTracking();
+            tracking.Equipment = 0;
+            tracking.Supplies = 0;
+            return tracking;
         }
     }
     

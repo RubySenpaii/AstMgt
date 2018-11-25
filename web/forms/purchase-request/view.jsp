@@ -109,14 +109,16 @@
                                         </form>
                                     </div>
                                     <div class="col-lg-6" style="text-align: center">
-                                        <button class="btn btn-warning" type="submit">Reject</button> 
+                                        <form action="/AMS/PurchaseRequest/Reject">
+                                            <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Reject</button> 
+                                        </form>
                                     </div>
 
                                     <%
                                     } else {
                                     %>
                                     <form action="/AMS/PurchaseOrderServlet/GoToPO">
-                                        <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Purchase Order</button> 
+                                        <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit"><span class="fa fa-plus">  Purchase Order </span></button> 
                                     </form>
                                     <%
                                         }
