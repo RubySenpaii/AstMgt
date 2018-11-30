@@ -80,8 +80,9 @@ public class PurchaseRequestServlet extends BaseServlet {
         int prid = Integer.parseInt(request.getParameter("prid"));
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
+        String remarks = request.getParameter("remarks");
         try {
-            prservice.RejectPurchaseRequest(employee.EmployeeId, prid);
+            prservice.RejectPurchaseRequest(employee.EmployeeId, prid, remarks);
             return "/PurchaseRequest/List";
         } catch (Exception e) {
             System.out.println("Error in PR servlet" + e);
