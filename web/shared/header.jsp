@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.Employee"%>
 <%@page import="extra.SharedFormat"%>
 <%@page import="objects.ExpenditureTracking"%>
 <header class="header black-bg">
@@ -63,12 +64,18 @@
             <!-- notification dropdown end -->
             <%
                 ExpenditureTracking limit = (ExpenditureTracking) session.getAttribute("limit");
+                Employee user = (Employee) session.getAttribute("user");
+                String display = user.FullName() + " - " + user.Division;
             %>
+            <li class="fill-header"></li>
             <li class="header-limit">
                 Equipment Spending Limit: Php <%=SharedFormat.doubleToString(limit.Equipment)%>
             </li>
             <li class="header-limit">
                 Supplies Spending Limit: Php <%=SharedFormat.doubleToString(limit.Supplies)%>
+            </li>
+            <li class="header-limit" style="text-align: right">
+                <%=display%>
             </li>
         </ul>
         <!--  notification end -->

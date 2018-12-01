@@ -57,7 +57,7 @@ public class Login extends HttpServlet {
                 session.setAttribute("limit", limit);
                 
                 ServletContext context = getServletContext();
-                RequestDispatcher rd = context.getRequestDispatcher("/template.jsp");
+                RequestDispatcher rd = context.getRequestDispatcher("/HomeServlet");
                 rd.forward(request, response);
             } else {
                 boolean logged = false;

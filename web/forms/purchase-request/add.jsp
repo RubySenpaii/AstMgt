@@ -43,7 +43,7 @@
                                             <option value="Supplies General">Supplies General</option>
                                             <%
                                                 Employee user = (Employee) session.getAttribute("user");
-                                                if (!user.EmployeeStatus.equals("Contractor")) {
+                                                if (!user.EmployeeStatus.equals("Contractual")) {
                                             %>
                                             <option value="Equipment Furniture">Equipment Furniture</option>
                                             <option value="Equipment Appliance">Equipment Appliance</option>

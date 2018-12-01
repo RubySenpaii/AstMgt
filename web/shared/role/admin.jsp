@@ -1,14 +1,11 @@
- 
-<aside>
-
-
+ <aside>
     <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
             <li class="mt">
-                <a href="index.html">
+                <a href="/AMS/HomeServlet">
                     <i class="fa"></i>
-                    <span>Dashboard</span>
+                    <span>Home Page</span>
                 </a>
             </li>
             <li class="sub-menu">

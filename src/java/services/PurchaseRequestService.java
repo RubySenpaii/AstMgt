@@ -38,7 +38,7 @@ public class PurchaseRequestService {
             PreparedStatement ps = conn.prepareStatement(AddQuery);
             ps.setInt(1, pr.PurchaseRequestId);
             ps.setString(2, pr.PurchaseRequestNo);
-            ps.setString(3, "Department of Agrarian Reforms - Central Office");
+            ps.setString(3, "Department of Agrarian Reform - Central Office");
             ps.setObject(4, pr.Date);
             ps.setString(5, pr.Purpose);
             ps.setInt(6, pr.RequestedBy);
@@ -129,7 +129,61 @@ public class PurchaseRequestService {
             ps.setInt(1, prid);
             ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    public ArrayList<PurchaseRequest> FindPendingPurchaseRequests() {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            String query = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_APPROVED_BY + " IS NULL ;";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    public ArrayList<PurchaseRequest> FindApprovedPurchaseRequest() {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            String query = "SELECT * FROM PurchaseRequest PR LEFT JOIN PurchaseOrder PO ON PR.PurchaseRequestId = PO.PurchaseRequestId "
+                    + "WHERE PO.PurchaseRequestId IS NULL AND PR.ApprovedBy IS NOT NULL AND PR.ApprovedDate IS NOT NULL";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    public ArrayList<PurchaseRequest> FindRejectedPurchaseRequest() {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            String query = "SELECT * FROM PurchaseRequest PR LEFT JOIN PurchaseOrder PO ON PR.PurchaseRequestId = PO.PurchaseRequestId "
+                    + "WHERE PO.PurchaseRequestId IS NULL AND PR.ApprovedBy IS NOT NULL AND PR.ApprovedDate IS NULL";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
+            return elist;
         } catch (SQLException e) {
             System.err.println(e);
         }
@@ -145,6 +199,7 @@ public class PurchaseRequestService {
             ps.setString(1, prno);
             ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
