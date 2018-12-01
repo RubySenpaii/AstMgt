@@ -5,12 +5,15 @@
  */
 package controller;
 
+import extra.SharedFormat;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -40,12 +43,7 @@ public class PurchaseRequestServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Add":
-                    AssetService assetDB = new AssetService();
-                    ArrayList<Asset> assetList = new ArrayList<Asset>();
-                    assetList = assetDB.GetAssets();
-                    HttpSession session = request.getSession();
-                    session.setAttribute("assets", assetList);
-                    url = "/forms/purchase-request/add.jsp";
+                    url = CreatePurchaseRequest(request);
                     break;
                 case "Submit":
                     url = AddPurchaseRequest(request);
@@ -73,6 +71,37 @@ public class PurchaseRequestServlet extends BaseServlet {
         } catch (Exception x) {
             throw new ServletException(x);
         }
+    }
+
+    private String CreatePurchaseRequest(HttpServletRequest request) {
+        AssetService assetDB = new AssetService();
+        ArrayList<Asset> assetList = new ArrayList<Asset>();
+        assetList = assetDB.GetAssets();
+        HttpSession session = request.getSession();
+        session.setAttribute("assets", assetList);
+        
+        File file = new File(getServletContext().getRealPath(SharedFormat.WFP_FILE_PATH));
+        String fileNames[] = file.list();
+        ArrayList<String> filtered = new ArrayList<>();
+        for (int i = 0; i < fileNames.length; i++) {
+            if (!fileNames[i].equals("placeholder.md")) {
+                filtered.add(fileNames[i]);
+            }
+        }
+        Collections.sort(filtered);
+        session.setAttribute("fileList", filtered);
+
+        try {
+            Asset asset = assetDB.GetAsset(Integer.parseInt(request.getParameter("asset-id")));
+            ArrayList<Asset> choices = assetDB.GetAssetsWithType(asset.AssetType);
+            session.setAttribute("choices", choices);
+            session.setAttribute("asset", asset);
+        } catch (NumberFormatException x) {
+            session.removeAttribute("choices");
+            session.removeAttribute("asset");
+            System.out.println("not re-acquiring");
+        }
+        return "/forms/purchase-request/add.jsp";
     }
 
     private String RejectPurchaseRequest(HttpServletRequest request) {

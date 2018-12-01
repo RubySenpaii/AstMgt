@@ -138,6 +138,24 @@ public class SuppliesService {
             return -1;
         }
     }
+    
+    public ArrayList<Supplies> GetLowSupplies() {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            String query = "SELECT * FROM Supplies WHERE " + Supplies.COLUMN_TOTALQUANTITY + " < 20";
+            PreparedStatement ps = conn.prepareStatement(query);
+            
+            ArrayList<Supplies> elist = getResult(ps.executeQuery());
+
+            ps.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
 
     private ArrayList<Supplies> getResult(ResultSet rs) throws SQLException {
         ArrayList<Supplies> purchaserequestList = new ArrayList<Supplies>();

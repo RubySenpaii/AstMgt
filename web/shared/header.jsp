@@ -4,6 +4,10 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.Equipment"%>
+<%@page import="objects.Supplies"%>
+<%@page import="objects.PurchaseRequest"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="objects.Employee"%>
 <%@page import="extra.SharedFormat"%>
 <%@page import="objects.ExpenditureTracking"%>
@@ -19,45 +23,41 @@
         <ul class="nav top-menu">
             <!-- notification dropdown start-->
             <li id="header_notification_bar" class="dropdown">
+                <%
+                    int pendingPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("pendingPurchaseRequests")).size();
+                    int approvedPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("approvedPurchaseRequests")).size();
+                    int lowSupplies = ((ArrayList<Supplies>) session.getAttribute("lowSupplies")).size();
+                    int expiringEquipment = ((ArrayList<Equipment>) session.getAttribute("expiringEquipments")).size();
+                %>
                 <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                     <i class="fa fa-bell-o"></i>
-                    <span class="badge bg-warning">7</span>
+                    <span class="badge bg-warning"><%=pendingPurchaseRequests + approvedPurchaseRequests + lowSupplies + expiringEquipment%></span>
                 </a>
                 <ul class="dropdown-menu extended notification">
                     <div class="notify-arrow notify-arrow-yellow"></div>
                     <li>
-                        <p class="yellow">You have 7 new notifications</p>
+                        <p class="yellow">You have <%=pendingPurchaseRequests + approvedPurchaseRequests + lowSupplies + expiringEquipment%> new notifications</p>
                     </li>
                     <li>
-                        <a href="index.html#">
-                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                            Server Overloaded.
-                            <span class="small italic">4 mins.</span>
+                        <a href="/AMS/HomeServlet">
+                            <%=pendingPurchaseRequests%> Pending Purchase Requests
                         </a>
                     </li>
                     <li>
-                        <a href="index.html#">
-                            <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                            Memory #2 Not Responding.
-                            <span class="small italic">30 mins.</span>
+                        <a href="/AMS/HomeServlet">
+                            <%=approvedPurchaseRequests%> Approved PR But No PO
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            <%=lowSupplies%> Low Supply Count
                         </a>
                     </li>
                     <li>
-                        <a href="index.html#">
-                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                            Disk Space Reached 85%.
-                            <span class="small italic">2 hrs.</span>
+                        <a href="/AMS/HomeServlet">
+                            <%=expiringEquipment%> Equipments Expiring
                         </a>
-                    </li>
-                    <li>
-                        <a href="index.html#">
-                            <span class="label label-success"><i class="fa fa-plus"></i></span>
-                            New User Registered.
-                            <span class="small italic">3 hrs.</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="index.html#">See all notifications</a>
                     </li>
                 </ul>
             </li>

@@ -6,11 +6,13 @@
 package controller;
 
 import extra.SharedFormat;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -52,7 +54,7 @@ public class AssetServlet extends BaseServlet {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "Add":
-                    url = "/forms/asset/add.jsp";
+                    url = AddAsset(request);
                     break;
                 case "Submit":
                     url = SubmitAsset(request);
@@ -115,6 +117,21 @@ public class AssetServlet extends BaseServlet {
         }
     }
 
+    private String AddAsset(HttpServletRequest request) {
+        File file = new File(getServletContext().getRealPath(SharedFormat.APP_FILE_PATH));
+        String fileNames[] = file.list();
+        ArrayList<String> filtered = new ArrayList<>();
+        for (int i = 0; i < fileNames.length; i++) {
+            if (!fileNames[i].equals("placeholder.md")) {
+                filtered.add(fileNames[i]);
+            }
+        }
+        Collections.sort(filtered);
+        HttpSession session = request.getSession();
+        session.setAttribute("fileList", filtered);
+        return "/forms/asset/add.jsp";
+    }
+
     private String ListAssets(HttpServletRequest request) {
         ArrayList<Asset> assets = assetService.GetAssets();
         HttpSession session = request.getSession();
@@ -161,7 +178,8 @@ public class AssetServlet extends BaseServlet {
             tracking.AssetTag = request.getParameter("asset-tag");
             tracking.ReleasedBy = employee.EmployeeId;
             tracking.ReleasedTo = employeeService.FindEmployeeByFullName(request.getParameter("release-to")).EmployeeId;
-            tracking.Remarks = request.getParameter("remarks");
+            int transferType = Integer.parseInt(request.getParameter("transfer-type"));
+            tracking.Remarks = transferType + request.getParameter("remarks");
             tracking.TransferDate = SharedFormat.DB_DATE_ENTRY.parse(request.getParameter("transfer-date"));
             int result = assetTrackingService.AddAssetTracking(tracking);
             if (result == 1) {
@@ -191,17 +209,17 @@ public class AssetServlet extends BaseServlet {
             int result = repairLogService.AddRepairLog(repairLog);
             System.out.println("result: " + result);
         }
-        
+
         return "/InventoryServlet/EquipmentList";
     }
-    
+
     private String RepairRequests(HttpServletRequest request) {
         ArrayList<RepairLog> repairRequests = repairLogService.GetRepairLogs();
         HttpSession session = request.getSession();
         session.setAttribute("repairRequests", repairRequests);
         return "/forms/asset/repair-requests.jsp";
     }
-    
+
     private String RepairRequest(HttpServletRequest request) {
         int idx = Integer.parseInt(request.getParameter("index"));
         HttpSession session = request.getSession();
@@ -209,7 +227,7 @@ public class AssetServlet extends BaseServlet {
         session.setAttribute("repairRequest", log);
         return "/forms/asset/repair-request.jsp";
     }
-    
+
     private String ApproveRepair(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");

@@ -55,7 +55,7 @@ public class AssetTrackingService {
                     + AssetTracking.COLUMN_APPROVED_DATE + " = ?, " + AssetTracking.COLUMN_RELEASED_BY + " = ?, "
                     + AssetTracking.COLUMN_RELEASED_TO + " = ?, " + AssetTracking.COLUMN_TRANSFER_DATE + " = ?, "
                     + AssetTracking.COLUMN_REMARKS + " = ? "
-                    + "WHERE " + AssetTracking.COLUMN_ASSET_TAG + " = ?";
+                    + "WHERE " + AssetTracking.COLUMN_ASSET_TAG + " = ? AND " + AssetTracking.COLUMN_RELEASED_BY + " = ? AND " + AssetTracking.COLUMN_TRANSFER_DATE + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, assetTracking.ApprovedBy);
             ps.setObject(2, assetTracking.ApprovedDate);
@@ -64,6 +64,8 @@ public class AssetTrackingService {
             ps.setObject(5, assetTracking.TransferDate);
             ps.setString(6, assetTracking.Remarks);
             ps.setString(7, assetTracking.AssetTag);
+            ps.setInt(8, assetTracking.ReleasedBy);
+            ps.setObject(9, assetTracking.ApprovedDate);
 
             int result = ps.executeUpdate();
             ps.close();
@@ -102,6 +104,24 @@ public class AssetTrackingService {
             String query = "SELECT * FROM AssetTracking WHERE " + AssetTracking.COLUMN_ASSET_TAG + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, assetTag);
+
+            ArrayList<AssetTracking> assetHistory = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return assetHistory;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+
+    public ArrayList<AssetTracking> GetPendingTracking() {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT * FROM AssetTracking WHERE " + AssetTracking.COLUMN_APPROVED_BY + " IS NULL";
+            PreparedStatement ps = con.prepareStatement(query);
 
             ArrayList<AssetTracking> assetHistory = getResult(ps.executeQuery());
             ps.close();

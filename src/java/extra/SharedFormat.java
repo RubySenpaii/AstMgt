@@ -18,6 +18,8 @@ import java.util.logging.Logger;
  * @author rubysenpaii
  */
 public class SharedFormat {
+    public static final String WFP_FILE_PATH = "/uploaded-files/wfp";
+    public static final String APP_FILE_PATH = "/uploaded-files/app";
     public static final SimpleDateFormat TIME_STAMP = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
     public static final SimpleDateFormat DB_DATE_ENTRY = new SimpleDateFormat("YYYY-MM-dd");
     

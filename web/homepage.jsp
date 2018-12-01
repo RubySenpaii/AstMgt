@@ -4,6 +4,8 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.Equipment"%>
+<%@page import="objects.Supplies"%>
 <%@page import="objects.PurchaseRequest"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -45,7 +47,11 @@
                                             <td><%=pendingRequest.PurchaseRequestNo%></td>
                                             <td><%=pendingRequest.Requester.FullName()%></td>
                                             <td>Php 21231</td>
-                                            <td></td>
+                                            <td>
+                                                <form action="/AMS/PurchaseRequest/View">
+                                                    <button type="submit" value="<%=pendingRequest.PurchaseRequestId%>" name="prid" >View</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         <%
                                             }
@@ -56,7 +62,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-panel">
-                                <h3>Approved Purchase Requests</h3>
+                                <h3>Approved Purchase Requests With No Purchase Order</h3>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -75,7 +81,82 @@
                                             <td><%=approvedRequest.PurchaseRequestNo%></td>
                                             <td><%=approvedRequest.Requester.FullName()%></td>
                                             <td>Php 21231</td>
-                                            <td></td>
+                                            <td>
+                                                <form action="/AMS/PurchaseRequest/View">
+                                                    <button type="submit" value="<%=approvedRequest.PurchaseRequestId%>" name="prid" >View</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h3>Low Supplies Count</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Name</th>
+                                            <th>Last Updated</th>
+                                            <th>Running Balance</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<Supplies> lowSupplies = (ArrayList<Supplies>) session.getAttribute("lowSupplies");
+                                            for (Supplies lowSupply : lowSupplies) {
+                                        %>
+                                        <tr>
+                                            <td><%=lowSupply.Asset.AssetName%></td>
+                                            <td><%=lowSupply.Timestamp%></td>
+                                            <td><%=lowSupply.TotalQuantity%></td>
+                                            <td>
+                                                
+                                                <form>
+                                                    <button formaction="/AMS/InventoryServlet/SuppliesView" name="asset-id" value="<%=lowSupply.AssetId%>">View</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h3>Expiring Equipments</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Name</th>
+                                            <th>Date Acquired</th>
+                                            <th>Estimated Useful Life</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<Equipment> equipments = (ArrayList<Equipment>) session.getAttribute("expiringEquipments");
+                                            for (Equipment equipment : equipments) {
+                                        %>
+                                        <tr>
+                                            <td><%=equipment.Asset.AssetName%></td>
+                                            <td><%=equipment.DateAcquired%></td>
+                                            <td><%=equipment.Asset.EstimatedUsefulLife%></td>
+                                            <td>
+                                                <form action="/AMS/InventoryServlet/EquipmentView">
+                                                    <button type="submit" name="asset-tag" value="<%=equipment.AssetTag%>">View</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         <%
                                             }

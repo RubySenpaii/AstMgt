@@ -25,10 +25,10 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
-                            <h4>Add an Asset</h4><br/>
-                            <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/Submit">
+                            <h4>Supplies Count</h4><br/>
+                            <form role="form" class="form-horizontal style-form" action="/AMS/PurchaseRequest/Add">
                                 <div class="form-group">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" style="text-align: center">
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -56,6 +56,7 @@
                                                 %>
                                             </tbody>
                                         </table>
+                                        <button type="submit" class="btn" name="asset-id" value="<%=supplies.get(0).Asset.AssetId%>">Re-acquire</button>
                                     </div>
                                 </div>
                             </form>

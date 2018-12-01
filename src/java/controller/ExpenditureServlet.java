@@ -7,9 +7,12 @@ package controller;
 
 import extra.FileModification;
 import extra.SharedFormat;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -37,11 +40,17 @@ public class ExpenditureServlet extends BaseServlet {
         try {
             String url;
             switch (action.split("/")[action.split("/").length - 1]) {
+                case "SubmitWFP":
+                    url = WFP(request);
+                    break;
+                case "SubmitAPP":
+                    url = APP(request);
+                    break;
                 case "Submit":
                     url = SubmitExpenditureLimit(request);
                     break;
                 default:
-                    url = "/management/expenditure_limit.jsp";
+                    url = ExpenditureLimit(request);
                     break;
             }
             ServletContext context = getServletContext();
@@ -50,6 +59,59 @@ public class ExpenditureServlet extends BaseServlet {
         } catch (Exception x) {
             throw new ServletException(x);
         }
+    }
+
+    private String ExpenditureLimit(HttpServletRequest request) {
+        File file = new File(getServletContext().getRealPath(SharedFormat.APP_FILE_PATH));
+        String fileNames[] = file.list();
+        ArrayList<String> filtered = new ArrayList<>();
+        for (int i = 0; i < fileNames.length; i++) {
+            if (!fileNames[i].equals("placeholder.md")) {
+                filtered.add(fileNames[i]);
+            }
+        }
+        Collections.sort(filtered);
+        HttpSession session = request.getSession();
+        session.setAttribute("fileList", filtered);
+        return "/management/expenditure_limit.jsp";
+    }
+
+    private String WFP(HttpServletRequest request) {
+        try {
+            HttpSession session = request.getSession();
+            Employee user = (Employee) session.getAttribute("user");
+            FileModification file = new FileModification();
+            Part wfpFile = request.getPart("wfp");
+            file.SaveFile(getServletContext().getRealPath("/uploaded-files/wfp"), wfpFile, "WFP" + user.Division + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()));
+
+            //Part appFile = request.getPart("annual-plan");
+            //file.SaveFile(getServletContext().getRealPath("/uploaded-files/app"), appFile, "AnnualProcurementPlan" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()));
+        } catch (IOException x) {
+            System.err.println("IO Exception in uploading wfp");
+            System.err.println(x);
+        } catch (ServletException x) {
+            System.err.println("Servlet Exception in uploading wfp");
+            System.err.println(x);
+        }
+        return "/HomeServlet";
+    }
+
+    private String APP(HttpServletRequest request) {
+        try {
+            HttpSession session = request.getSession();
+            Employee user = (Employee) session.getAttribute("user");
+            FileModification file = new FileModification();
+
+            Part appFile = request.getPart("app");
+            file.SaveFile(getServletContext().getRealPath("/uploaded-files/app"), appFile, "AnnualProcurementPlan" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()));
+        } catch (IOException x) {
+            System.err.println("IO Exception in uploading app");
+            System.err.println(x);
+        } catch (ServletException x) {
+            System.err.println("Servlet Exception in uploading app");
+            System.err.println(x);
+        }
+        return "/HomeServlet";
     }
 
     private String SubmitExpenditureLimit(HttpServletRequest request) {

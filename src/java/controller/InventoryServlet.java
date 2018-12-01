@@ -71,6 +71,12 @@ public class InventoryServlet extends BaseServlet {
                 case "EquipmentView":
                     url = ViewEquipment(request);
                     break;
+                case "ShowTrackingRequests":
+                    url = ShowTrackingRequests(request);
+                    break;
+                case "ReviewTracking":
+                    url = ReviewTracking(request);
+                    break;
                 case "EquipmentList":
                 default:
                     url = ListEquipment(request);
@@ -207,5 +213,31 @@ public class InventoryServlet extends BaseServlet {
             System.out.println("update result: " + result);
         }
         return "/InventoryServlet/SuppliesList";
+    }
+    
+    private String ShowTrackingRequests(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        ArrayList<AssetTracking> assetTrackings = assetTrackingService.GetPendingTracking();
+        session.setAttribute("assetTrackings", assetTrackings);
+        return "/forms/asset/tracking-requests.jsp";
+    }
+    
+    private String ReviewTracking(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        ArrayList<AssetTracking> trackings = (ArrayList<AssetTracking>) session.getAttribute("assetTrackings");
+        AssetTracking tracking = trackings.get(0);
+        String value = request.getParameter("review");
+        tracking.ApprovedBy = ((Employee) session.getAttribute("user")).EmployeeId;
+        if (value.equals("approve")) {
+            tracking.ApprovedDate = Calendar.getInstance().getTime();
+        }
+        int result = assetTrackingService.UpdateAssetTracking(tracking);
+        if (result == 1) {
+            int newStatus = Integer.parseInt(String.valueOf(tracking.Remarks.charAt(0)));
+            Equipment equipment = equipmentService.GetEquipmentWithAssetTag(tracking.AssetTag);
+            equipment.Flag = newStatus;
+            equipmentService.UpdateEquipment(equipment);
+        }
+        return "/InventoryServlet/ShowTrackingRequests";
     }
 }
