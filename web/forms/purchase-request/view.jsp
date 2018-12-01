@@ -123,9 +123,7 @@
                                         </form>
                                     </div>
                                     <div class="col-lg-6" style="text-align: center">
-                                        <form action="/AMS/PurchaseRequest/Reject">
-                                            <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Reject</button> 
-                                        </form>
+                                        <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" data-toggle="modal" data-target="#myModal" type="submit">Reject</button> 
                                     </div>
 
                                     <%
@@ -139,6 +137,29 @@
                                         }
                                     %>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Remarks</h4>
+                                    </div>
+                                    <form action="/AMS/PurchaseRequest/Reject">
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="remarks" placeholder="Remarks" id="remarks">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-info" id="prid" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Reject</button> 
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
