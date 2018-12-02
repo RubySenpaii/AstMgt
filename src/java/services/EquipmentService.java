@@ -89,6 +89,25 @@ public class EquipmentService {
         }
     }
     
+    public ArrayList<Equipment> GetListOfEquipmentsWithAssetName(String assetName) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT E.* FROM Equipment E JOIN Asset A ON E.AssetId = A.AssetId WHERE A.AssetName = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetName);
+            
+            ArrayList<Equipment> equipments = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return equipments;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+    
     public Equipment GetEquipmentWithAssetTag(String assetTag) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();

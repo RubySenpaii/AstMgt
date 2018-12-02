@@ -134,6 +134,29 @@ public class RepairLogService {
         }
     }
     
+    public double GetTotalRepairCost(String assetTag) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT AssetTag, SUM(COST) AS 'Cost' FROM RepairLog WHERE AssetTag = ? AND ApprovedBy IS NOT NULL AND ApprovedDate IS NOT NULL GROUP BY AssetTag";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetTag);
+            
+            double totalCost = 0;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                totalCost += rs.getDouble("Cost");
+            }
+            ps.close();
+            con.close();
+            return totalCost;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return 0;
+        }
+    }
+    
     private ArrayList<RepairLog> GetResults(ResultSet rs) throws SQLException {
         ArrayList<RepairLog> logs = new ArrayList<>();
         while (rs.next()) {

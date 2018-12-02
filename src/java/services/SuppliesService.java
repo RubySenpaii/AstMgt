@@ -101,10 +101,11 @@ public class SuppliesService {
                     + "(SELECT AssetId, MAX(S.Timestamp) AS 'Latest'  FROM Supplies S GROUP BY S.AssetId) T2 "
                     + "ON T1.AssetId = T2.AssetId AND T1.Timestamp = T2.Latest";
             PreparedStatement ps = conn.prepareStatement(query);
-            
+
             ArrayList<Supplies> elist = getResult(ps.executeQuery());
 
             ps.close();
+            conn.close();
             return elist;
         } catch (SQLException e) {
             System.err.println(e);
@@ -138,7 +139,7 @@ public class SuppliesService {
             return -1;
         }
     }
-    
+
     public ArrayList<Supplies> GetLowSupplies() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
@@ -146,7 +147,7 @@ public class SuppliesService {
         try {
             String query = "SELECT * FROM Supplies WHERE " + Supplies.COLUMN_TOTALQUANTITY + " < 20";
             PreparedStatement ps = conn.prepareStatement(query);
-            
+
             ArrayList<Supplies> elist = getResult(ps.executeQuery());
 
             ps.close();

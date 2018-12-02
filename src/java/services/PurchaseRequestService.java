@@ -216,6 +216,7 @@ public class PurchaseRequestService {
             PreparedStatement ps = conn.prepareStatement(FindAllPurchaseRequest);
             ArrayList<PurchaseRequest> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist;
         } catch (SQLException e) {
             System.err.println(e);

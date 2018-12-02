@@ -53,7 +53,7 @@ public class SupplierService {
         try {
             PreparedStatement ps = conn.prepareStatement(FindSupplierByIdQuery);
             ps.setInt(1, suppno);
-            
+
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
             ps.close();
             conn.close();
@@ -71,9 +71,10 @@ public class SupplierService {
         try {
             PreparedStatement ps = conn.prepareStatement(FindSupplierByNameQuery);
             ps.setString(1, suppname);
-            
+
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
@@ -88,7 +89,7 @@ public class SupplierService {
         try {
             PreparedStatement ps = conn.prepareStatement(FindAllSupplierQuery);
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
-            
+
             ps.close();
             conn.close();
             return elist;
@@ -106,7 +107,7 @@ public class SupplierService {
             String query = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_TYPE + " = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, type);
-            
+
             ArrayList<Supplier> elist = getResult(ps.executeQuery());
             ps.close();
             conn.close();

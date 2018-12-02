@@ -24,9 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
+import report.Equipment;
 import report.Asset;
 import report.ReportService;
 import report.ReportingModule;
+import report.RequestParameter;
+import report.SpecificEquipment;
 import services.AssetService;
 
 /**
@@ -60,6 +63,8 @@ public class ReportServlet extends BaseServlet {
                     url = DirectToPage(request, "specific-ppe");
                     break;
                 case "GenerateSpecificPPE":
+                    url = GenerateSpecificPropertyPlantEquipmentReport(request);
+                    break;
                 case "GeneralSupplies":
                     url = DirectToPage(request, "general-supplies");
                     break;
@@ -100,11 +105,16 @@ public class ReportServlet extends BaseServlet {
     
     private String GenerateGeneralPropertyPlantEquipmentReport(HttpServletRequest request) {
         try {
+            RequestParameter reqParameter = new RequestParameter();
             ArrayList<Asset> assets = new ReportService().GetGeneralPPEData();
             logo += File.separator + "darlogo.jpg";
+            reqParameter.Logo = logo;
+            reqParameter.CertifiedBy = request.getParameter("certified-by");
+            reqParameter.ApprovedBy = request.getParameter("approved-by");
+            reqParameter.VerifiedBy = request.getParameter("verified-by");
             String jasperFile = jasperPath + File.separator + "PropertyPlantEquipmentReport.jasper";
             String fileName = pdfReportsPath + File.separator + "general-ppe" + File.separator + "PropertyPlantEquipmentReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
-            reports.createPropertyPlantEquipment(logo, jasperFile, fileName, assets);
+            reports.createPropertyPlantEquipment(reqParameter, jasperFile, fileName, assets);
         } catch (JRException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -115,13 +125,40 @@ public class ReportServlet extends BaseServlet {
         return "/ReportServlet/GeneralPPE";
     }
     
+    private String GenerateSpecificPropertyPlantEquipmentReport(HttpServletRequest request) {
+        try {
+            SpecificEquipment equipment = new ReportService().GetSpecificEquipmentDetails(request.getParameter("asset-name"));
+            RequestParameter reqParameter = new RequestParameter();
+            logo += File.separator + "darlogo.jpg";
+            reqParameter.Logo = logo;
+            reqParameter.CertifiedBy = request.getParameter("certified-by");
+            reqParameter.ApprovedBy = request.getParameter("approved-by");
+            reqParameter.VerifiedBy = request.getParameter("verified-by");
+            String jasperFile = jasperPath + File.separator + "SpecificPropertyPlantEquipment.jasper";
+            String fileName = pdfReportsPath + File.separator + "specific-ppe" + File.separator + equipment.AssetName + "ReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
+            reports.createSpecificPropertyPlantEquipment(reqParameter, jasperFile, fileName, equipment);
+        } catch (JRException ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/ReportServlet/SpecificPPE";
+    }
+    
     private String GenerateSuppliesReport(HttpServletRequest request) {
         try {
+            RequestParameter reqParameter = new RequestParameter();
             ArrayList<Asset> assets = new ReportService().GetGeneralSuppliesData();
             logo += File.separator + "darlogo.jpg";
             String jasperFile = jasperPath + File.separator + "GeneralSuppliesReport.jasper";
+            reqParameter.Logo = logo;
+            reqParameter.CertifiedBy = request.getParameter("certified-by");
+            reqParameter.ApprovedBy = request.getParameter("approved-by");
+            reqParameter.VerifiedBy = request.getParameter("verified-by");
             String fileName = pdfReportsPath + File.separator + "general-supplies" + File.separator + "SuppliesReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
-            reports.createPropertyPlantEquipment(logo, jasperFile, fileName, assets);
+            reports.createPropertyPlantEquipment(reqParameter, jasperFile, fileName, assets);
         } catch (JRException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {

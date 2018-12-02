@@ -90,6 +90,7 @@ public class PurchaseOrderService {
             ps.setInt(1, prId);
             ArrayList<PurchaseOrder> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
@@ -106,6 +107,7 @@ public class PurchaseOrderService {
             ps.setInt(1, poId);
             ArrayList<PurchaseOrder> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
@@ -120,6 +122,7 @@ public class PurchaseOrderService {
             PreparedStatement ps = conn.prepareStatement(FindAllPurchaseOrderQ);
             ArrayList<PurchaseOrder> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist;
         } catch (SQLException e) {
             System.err.println(e);

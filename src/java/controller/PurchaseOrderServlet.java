@@ -90,6 +90,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         }
         
         int approval = prDB.ApprovePurchaseRequest(employee.EmployeeId, approved, prid);
+        PurchaseRequest purchaseRequest = prDB.FindPurhcaseRequesById(prid);
         if (approval == 0) {
             System.out.println("Number :  " + approval);
             return "/forms/purchase-request/list.jsp";
@@ -115,6 +116,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         ArrayList<Supplier> supplierList = suppDB.FindSupplierByType(assetsRequested.get(0).Asset.AssetType);
         System.out.println("found a list of supplier: " + supplierList.size());
         System.out.println("upadte tracking success: " + result);
+        session.setAttribute("purchaseRequest", purchaseRequest);
         session.setAttribute("limit", expenditure);
         session.setAttribute("supplierList", supplierList);
         return "/forms/purchase-order/add.jsp";
@@ -146,7 +148,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         PurchaseOrderService poDB = new PurchaseOrderService();
         SupplierService suppDB = new SupplierService();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        po.OrderDate = new Date(System.currentTimeMillis());
+        po.OrderDate = Calendar.getInstance().getTime();
         po.DeliveryDate = sdf.parse(request.getParameter("deldate"));
         po.PurchaseOrderId = poDB.FindAllPurchaseOrder().size() + 1;
         PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
@@ -164,8 +166,6 @@ public class PurchaseOrderServlet extends BaseServlet {
         po.ConformeSupplier = request.getParameter("consupp");
         int result = poDB.AddNewPurchaseOrder(po);
         switch (result) {
-            case 0:
-                return "/forms/login.jsp";
             case 1:
                 return "/forms/purchase-order/add.jsp";
             default:

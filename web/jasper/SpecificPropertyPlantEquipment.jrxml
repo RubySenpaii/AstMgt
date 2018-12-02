@@ -4,26 +4,32 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="logo" class="java.lang.String"/>
-	<parameter name="certifiedBy" class="java.lang.String"/>
+	<parameter name="assetName" class="java.lang.String"/>
+	<parameter name="disposed" class="java.lang.Integer"/>
+	<parameter name="used" class="java.lang.Integer"/>
+	<parameter name="expiring" class="java.lang.Integer"/>
+	<parameter name="extended" class="java.lang.Integer"/>
+	<parameter name="stocked" class="java.lang.Integer"/>
 	<parameter name="approvedBy" class="java.lang.String"/>
+	<parameter name="certifiedBy" class="java.lang.String"/>
 	<parameter name="verifiedBy" class="java.lang.String"/>
-	<field name="assetName" class="java.lang.String"/>
-	<field name="description" class="java.lang.String"/>
-	<field name="quantityDisposed" class="java.lang.Integer"/>
-	<field name="quantityOnStock" class="java.lang.Integer"/>
-	<field name="quantityUsed" class="java.lang.Integer"/>
-	<field name="unit" class="java.lang.String"/>
-	<field name="assetType" class="java.lang.String"/>
+	<field name="assetTag" class="java.lang.String"/>
+	<field name="dateAcquired" class="java.util.Date"/>
+	<field name="estimatedUsefulLife" class="java.lang.Integer"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="totalRepairs" class="java.lang.Double"/>
+	<field name="currentUser" class="java.lang.String"/>
+	<group name="STATUS_GROUP">
+		<groupExpression><![CDATA[$F{status}]]></groupExpression>
+	</group>
+	<group name="STATUS_HEADER">
+		<groupExpression><![CDATA[$F{status}]]></groupExpression>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
 		<band height="48" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="28" uuid="9e8c4f60-8519-4fdd-bbc9-dd126aa22bcb"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Report on the Physical Count of Property Plant and Equipment]]></text>
-			</staticText>
 			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="0" y="28" width="555" height="20" uuid="171783da-70e1-4ad0-be6b-ac5b50b3fd78"/>
 				<textElement textAlignment="Center"/>
@@ -33,61 +39,66 @@
 				<reportElement x="52" y="0" width="61" height="48" uuid="b0d82695-7633-44bc-bd6f-9c75c15a4ba7"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="28" uuid="48cdb875-77ac-4b74-ae33-92199ffb62b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Report on Statuses of " + $P{assetName}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="89" height="20" uuid="3e9ca9ce-a7c2-45ab-b2fb-cda67ddd38f9"/>
-				<text><![CDATA[Asset Name]]></text>
+				<reportElement x="0" y="0" width="94" height="20" uuid="df61a866-8650-4547-a9d5-06218c5a1e42"/>
+				<text><![CDATA[Asset Tag]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="171" y="0" width="119" height="20" uuid="678b10f6-431b-4019-8c1c-29b7ab8c13d2"/>
-				<text><![CDATA[Description]]></text>
+				<reportElement x="94" y="0" width="100" height="20" uuid="4f3ff6ae-8470-4973-b7da-2ba8011361c8"/>
+				<text><![CDATA[Date Acquired]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="290" y="0" width="93" height="20" uuid="dd3a2afe-6195-407c-b522-71abd8c02835"/>
-				<text><![CDATA[Quantity Disposed]]></text>
+				<reportElement x="194" y="0" width="109" height="20" uuid="2fc5a84f-415a-43d8-bd9c-a6ac208ccc3e"/>
+				<text><![CDATA[Estimated Useful Life]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="0" width="93" height="20" uuid="2d9fb35f-4c6d-4ea1-bdee-ff9e718c5fde"/>
-				<text><![CDATA[Quantity On Stock]]></text>
+				<reportElement x="303" y="0" width="67" height="20" uuid="1c0589be-b9a8-42cc-a93c-0c826d65b453"/>
+				<text><![CDATA[Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="476" y="0" width="79" height="20" uuid="119371eb-6cfe-4ebb-af3a-f23c152e83b7"/>
-				<text><![CDATA[Quantity Used]]></text>
+				<reportElement x="370" y="0" width="87" height="20" uuid="bb752d11-7508-4d38-9a6b-66c74b961b40"/>
+				<text><![CDATA[Total Repairs]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="89" y="0" width="82" height="20" uuid="f64d81c9-8f07-4519-b715-7f14d5709154"/>
-				<text><![CDATA[Asset Type]]></text>
+				<reportElement x="457" y="0" width="98" height="20" uuid="5cf7b7e7-41db-4357-a27a-383499b1c958"/>
+				<text><![CDATA[Current User]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="89" height="20" uuid="55be18f7-9969-4d75-8a12-56053f3b3c86"/>
-				<textFieldExpression><![CDATA[$F{assetName}]]></textFieldExpression>
+				<reportElement x="0" y="0" width="94" height="20" uuid="9931d935-a8c0-4958-bc04-fc40e46736bc"/>
+				<textFieldExpression><![CDATA[$F{assetTag}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="171" y="0" width="119" height="20" uuid="c1f9fc5b-0e71-467b-bb31-a6210da43bb5"/>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<reportElement x="94" y="0" width="100" height="20" uuid="b293cd44-23fc-4ae6-8b5e-af05eeecbcab"/>
+				<textFieldExpression><![CDATA[$F{dateAcquired}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="383" y="0" width="93" height="20" uuid="5742628f-c474-4999-8e18-1818b3e2b698"/>
-				<textFieldExpression><![CDATA[$F{quantityOnStock} + " " + $F{unit}]]></textFieldExpression>
+				<reportElement x="194" y="0" width="109" height="20" uuid="6b758545-5f30-4375-848a-6b456140d37e"/>
+				<textFieldExpression><![CDATA[$F{estimatedUsefulLife}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="476" y="0" width="79" height="20" uuid="23eb2fb6-5053-4d0d-b46d-329989c3c55a"/>
-				<textFieldExpression><![CDATA[$F{quantityUsed} + " " + $F{unit}]]></textFieldExpression>
+				<reportElement x="303" y="1" width="67" height="20" uuid="fb057fc0-a90a-4518-acef-b2a1537f0101"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="290" y="0" width="93" height="20" uuid="40447ef4-f9be-4f3b-9a3e-c54d9d835b3f"/>
-				<textFieldExpression><![CDATA[$F{quantityDisposed} + " " + $F{unit}]]></textFieldExpression>
+				<reportElement x="370" y="0" width="87" height="20" uuid="f6adf456-25c4-4301-bbaa-f8d249d56ad4"/>
+				<textFieldExpression><![CDATA[$F{totalRepairs}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="89" y="0" width="82" height="20" uuid="9c778157-b58f-4ac1-9389-e233188b8f44"/>
-				<textFieldExpression><![CDATA[$F{assetType}]]></textFieldExpression>
+				<reportElement x="457" y="0" width="98" height="20" uuid="b4849d2b-fbd3-41c1-9e62-7617f3d9f9fb"/>
+				<textFieldExpression><![CDATA[$F{currentUser}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -145,15 +156,18 @@
 				<text><![CDATA[Verified By:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="40" y="20" width="100" height="12" uuid="a63a141b-bf1d-405a-b357-cceaa66aa729"/>
-				<textFieldExpression><![CDATA[$P{certifiedBy}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="243" y="19" width="100" height="12" uuid="d3186327-d531-487d-91dd-7aca73714183"/>
+				<reportElement x="235" y="20" width="114" height="12" uuid="c17a6d76-63e6-4973-b4ac-b08240558f31"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{approvedBy}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="423" y="19" width="100" height="12" uuid="5ef54fb7-0b57-4e4a-aa91-a595743fb4c8"/>
+				<reportElement x="33" y="20" width="114" height="12" uuid="e4cdc9d8-341b-4bd9-af50-a241c8ddb6ab"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{certifiedBy}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="20" width="114" height="12" uuid="05938e35-ba59-4de0-9f6e-45b36f392c88"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{verifiedBy}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -162,26 +176,36 @@
 		<band height="168" splitType="Stretch">
 			<barChart>
 				<chart>
-					<reportElement x="0" y="0" width="555" height="168" uuid="cf3ef73e-7546-41f4-b963-080e0cc9385f"/>
+					<reportElement x="103" y="15" width="340" height="153" uuid="078ca6a2-ed6f-4994-9f76-e0d7decc5615"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Quantity Disposed"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{quantityDisposed}]]></valueExpression>
+						<seriesExpression><![CDATA["Used"]]></seriesExpression>
+						<categoryExpression><![CDATA[$P{assetName} + " Based on Status"]]></categoryExpression>
+						<valueExpression><![CDATA[$P{used}]]></valueExpression>
 					</categorySeries>
 					<categorySeries>
-						<seriesExpression><![CDATA["Quantity Stock"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{quantityOnStock}]]></valueExpression>
+						<seriesExpression><![CDATA["Stock"]]></seriesExpression>
+						<categoryExpression><![CDATA[$P{assetName} + " Based on Status"]]></categoryExpression>
+						<valueExpression><![CDATA[$P{stocked}]]></valueExpression>
 					</categorySeries>
 					<categorySeries>
-						<seriesExpression><![CDATA["Quantity Used"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{assetName}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{quantityUsed}]]></valueExpression>
+						<seriesExpression><![CDATA["Expiring"]]></seriesExpression>
+						<categoryExpression><![CDATA[$P{assetName} + " Based on Status"]]></categoryExpression>
+						<valueExpression><![CDATA[$P{expiring}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Disposed"]]></seriesExpression>
+						<categoryExpression><![CDATA[$P{assetName} + " Based on Status"]]></categoryExpression>
+						<valueExpression><![CDATA[$P{disposed}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Extended"]]></seriesExpression>
+						<categoryExpression><![CDATA[$P{assetName} + " Based on Status"]]></categoryExpression>
+						<valueExpression><![CDATA[$P{extended}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
 				<barPlot>

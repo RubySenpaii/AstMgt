@@ -25,11 +25,20 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content-panel">
-                                <h4>General Property Plan Equipment Reports</h4>
+                                <h4>Specific Property Plan Equipment Reports</h4>
                                 <br>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                    </div>
+                                <div class="row" style="border: 1px solid black; margin: 5px 30px">
+                                    <form action="/AMS/ReportServlet/GenerateSpecificPPE">
+                                        <h3 style="margin: 15px">Generate Reports</h3>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8" style="margin: 20px auto; text-align: center">
+                                            <input type="text" name="asset-name" placeholder="Asset Name" style="margin: 10px; width: 200px">
+                                            <input type="text" name="certified-by" placeholder="Certified By" style="margin: 10px; width: 200px">
+                                            <input type="text" name="approved-by" placeholder="Approved By" style="margin: 10px; width: 200px">
+                                            <input type="text" name="verified-by" placeholder="Verified By" style="margin: 10px; width: 200px">
+                                            <button class="btn" type="submit">Generate Report</button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">

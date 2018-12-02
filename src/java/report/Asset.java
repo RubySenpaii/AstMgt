@@ -34,6 +34,7 @@ public class Asset {
     private int generalConsumed;
     private int procurementConsumed;
     private int financialConsumed;
+    private int managementConsumed;
 
     /**
      * @return the assetId
@@ -243,5 +244,19 @@ public class Asset {
      */
     public void setFinancialConsumed(int financialConsumed) {
         this.financialConsumed = financialConsumed;
+    }
+
+    /**
+     * @return the managementConsumed
+     */
+    public int getManagementConsumed() {
+        return managementConsumed;
+    }
+
+    /**
+     * @param managementConsumed the managementConsumed to set
+     */
+    public void setManagementConsumed(int managementConsumed) {
+        this.managementConsumed = managementConsumed;
     }
 }

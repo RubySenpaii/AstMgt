@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import services.EquipmentService;
+import services.RepairLogService;
 
 /**
  *
@@ -111,6 +113,8 @@ public class ReportService {
                             case "Finance":
                                 assets.get(assets.size() - 1).setFinancialConsumed(rs.getInt("Consumed"));
                                 break;
+                            case "Management":
+                                assets.get(assets.size() - 1).setManagementConsumed(rs.getInt("Consumed"));
                         }
                     } else {
                         temp = populateSupplies(rs);
@@ -128,6 +132,38 @@ public class ReportService {
             System.err.println(x);
             return new ArrayList<>();
         }
+    }
+
+    public SpecificEquipment GetSpecificEquipmentDetails(String assetName) {
+        SpecificEquipment specificEquipment = new SpecificEquipment();
+        ArrayList<report.Equipment> reportEquipments = new ArrayList<>();
+        ArrayList<objects.Equipment> sqlEquipments = new EquipmentService().GetListOfEquipmentsWithAssetName(assetName);
+        int used = 0, stock = 0, disposed = 0, expiring = 0, extended = 0;
+        for (objects.Equipment sqlEquipment : sqlEquipments) {
+            report.Equipment reportEquipment = new report.Equipment();
+            reportEquipment.setAssetTag(sqlEquipment.AssetTag);
+            reportEquipment.setCurrentUser(sqlEquipment.CurrentUser.FullName());
+            reportEquipment.setDateAcquired(sqlEquipment.DateAcquired);
+            reportEquipment.setEstimatedUsefulLife(sqlEquipment.Asset.EstimatedUsefulLife);
+            reportEquipment.setStatus(sqlEquipment.Status());
+            reportEquipment.setTotalRepairs(new RepairLogService().GetTotalRepairCost(sqlEquipment.AssetTag));
+            reportEquipments.add(reportEquipment);
+            switch (sqlEquipment.Flag) {
+                case 0: disposed++; break;
+                case 1: stock++; break;
+                case 2: used++; break;
+                case 3: expiring++; break;
+                case 4: extended++; break;
+            }
+        }
+        specificEquipment.AssetName = assetName;
+        specificEquipment.Equipments = reportEquipments;
+        specificEquipment.BeingUsed = used;
+        specificEquipment.Disposed = disposed;
+        specificEquipment.Expiring = expiring;
+        specificEquipment.Extended = extended;
+        specificEquipment.Stocked = stock;
+        return specificEquipment;
     }
 
     private Asset populateSupplies(ResultSet rs) throws SQLException {
@@ -157,6 +193,9 @@ public class ReportService {
                 break;
             case "Finance":
                 asset.setFinancialConsumed(rs.getInt("Consumed"));
+                break;
+            case "Management":
+                asset.setManagementConsumed(rs.getInt("Consumed"));
                 break;
         }
         return asset;

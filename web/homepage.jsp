@@ -165,6 +165,41 @@
                                 </table>
                             </div>
                         </div>
+                                    
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h3>Pending Purchase Requests</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Purchase Request Number</th>
+                                            <th>Requested By</th>
+                                            <th>Total Cost</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<PurchaseRequest> rejectedRequests = (ArrayList<PurchaseRequest>) session.getAttribute("rejectedPurchaseRequests");
+                                            for (PurchaseRequest rejectedRequest : rejectedRequests) {
+                                        %>
+                                        <tr>
+                                            <td><%=rejectedRequest.PurchaseRequestNo%></td>
+                                            <td><%=rejectedRequest.Requester.FullName()%></td>
+                                            <td>Php 21231</td>
+                                            <td>
+                                                <form action="/AMS/PurchaseRequest/View">
+                                                    <button type="submit" value="<%=rejectedRequest.PurchaseRequestId%>" name="prid" >View</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <!-- /row -->
                 </section>

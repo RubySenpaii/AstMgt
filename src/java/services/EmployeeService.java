@@ -40,6 +40,7 @@ public class EmployeeService {
             ps.setString(2, password);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
@@ -58,6 +59,7 @@ public class EmployeeService {
             
             ArrayList<Employee> employees = getResult(ps.executeQuery());
             ps.close();
+            con.close();
             return employees.get(0);
         } catch (SQLException x) {
             System.err.println(x);
@@ -73,6 +75,7 @@ public class EmployeeService {
             ps.setInt(1, employeeId);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist.get(0);
         } catch (SQLException e) {
             System.err.println(e);
@@ -87,6 +90,7 @@ public class EmployeeService {
             PreparedStatement ps = conn.prepareStatement(SelectAllEmployees);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();
+            conn.close();
             return elist;
         } catch (SQLException e) {
             System.err.println(e);

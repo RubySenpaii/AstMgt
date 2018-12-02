@@ -65,7 +65,7 @@ public class AssetTrackingService {
             ps.setString(6, assetTracking.Remarks);
             ps.setString(7, assetTracking.AssetTag);
             ps.setInt(8, assetTracking.ReleasedBy);
-            ps.setObject(9, assetTracking.ApprovedDate);
+            ps.setObject(9, assetTracking.TransferDate);
 
             int result = ps.executeUpdate();
             ps.close();
