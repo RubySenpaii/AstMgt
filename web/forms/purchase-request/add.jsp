@@ -101,8 +101,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Items</label>
-                                        <div class="col-lg-10">
-                                            <table style="width:100%" name="assetTable" id="assetTable">
+                                        <div class="col-lg-12" style="margin-top: 15px">
+                                            <table style="width:100%" name="assetTable" id="assetTable" class="table-bordered table">
                                                 <thead>
                                                     <tr>
                                                         <th>Selected</th>
@@ -126,8 +126,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th><button type="button" class="delete-row  btn btn-danger"> Delete Selected</button></th>
-                                                        <th></th>
-                                                        <th> Total :</th>
+                                                        <th colspan="2" style="text-align: right">Total :</th>
                                                         <th><input name='totalPrice' id='totalPrice' disabled="true">  </th>
                                                     </tr>
                                                 </tfoot>
