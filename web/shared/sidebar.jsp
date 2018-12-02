@@ -6,7 +6,7 @@
 
 <aside>
     <%
-        String userRole = "admin";
+        String userRole = "";
         try {
             userRole = (String) session.getAttribute("UserLevel");
         }catch(Exception e){
@@ -22,6 +22,15 @@
                 break;
             case "divisionchief":
                 jspFile = "role/divisionchief.jsp";
+                break;
+            case "supplyofficer":
+                jspFile = "role/supply_officer.jsp";
+                break;
+            case "staff":
+                jspFile = "role/staff.jsp";
+                break;
+            case "finance":
+                jspFile = "role/finance.jsp";
                 break;
             default:
                 jspFile = "role/admin.jsp";

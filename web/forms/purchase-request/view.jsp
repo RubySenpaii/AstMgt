@@ -111,7 +111,9 @@
                                     </div>
                                 </div>
                                 <%
-                                    if (pr.ApprovedBy == 0) {
+                                    String userRole = "";
+                                    userRole = (String) session.getAttribute("UserLevel");
+                                    if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff"))) {
                                 %>
                                 <div class="form-group">
                                     <div class="col-lg-6" style="text-align: center">

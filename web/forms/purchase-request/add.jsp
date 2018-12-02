@@ -105,6 +105,7 @@
                                             <table style="width:100%" name="assetTable" id="assetTable">
                                                 <thead>
                                                     <tr>
+                                                        <th>Selected</th>
                                                         <th>Asset</th>
                                                         <th>Quantity</th> 
                                                         <th>Price</th>
@@ -113,6 +114,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr class="fieldT">
+                                                        <td><input type="checkbox" name="record"></td>
                                                         <td>
                                                             <input list="asset-list" name="assets" autocomplete="off" value="<%=assetName%>">
                                                         </td>
@@ -123,7 +125,9 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th colspan="2"> Total :</th>
+                                                        <th><button type="button" class="delete-row  btn btn-danger"> Delete Selected</button></th>
+                                                        <th></th>
+                                                        <th colspan="1"> Total :</th>
                                                         <th><input name='totalPrice' id='totalPrice' disabled="true">  </th>
                                                     </tr>
                                                 </tfoot>
@@ -149,61 +153,86 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
 
         <script>
-                                                $(document).ready(function () {
-                                                    var i = 1;
-                                                    $("#addbutton").click(function () {
-                                                        $("table tr.fieldT:first").clone().find("input").each(function () {
-                                                            $(this).val('').attr({
-                                                                'id': function (_, id) {
-                                                                    return id
-                                                                },
-                                                                'name': function (_, name) {
-                                                                    return name
-                                                                },
-                                                                'value': ''
-                                                            });
-                                                        }).end().appendTo("table ");
-                                                        i++;
-                                                    });
-
-                                                    $(document.body).on('change', '.price', function () {
-                                                        // initialize the sum (total price) to zero
-                                                        var sum = 0;
-
-                                                        var price = [], qty = [];
-                                                        // we use jQuery each() to loop through all the textbox with 'price' class
-                                                        // and compute the sum for each loop
-                                                        $('.price').each(function () {
-                                                            price.push($(this).val());
-                                                        });
-                                                        $('.quantity').each(function () {
-                                                            qty.push($(this).val());
-                                                        });
-
-                                                        for (var i = 0; i < price.length; i++) {
-                                                            sum += (price[i] * qty[i]);
-                                                        }
-                                                        // set the computed value to 'totalPrice' textbox
-                                                        $('#totalPrice').val(sum);
-                                                    });
-
-                                                    $('#asset-type').on('change', function () {
-                                                        var type = $(this).val();
-                                                        console.log('asset type' + type);
-                                                        $.ajax({
-                                                            url: '/AMS/AjaxServlet/AssetListWithType',
-                                                            dataType: 'json',
-                                                            data: {type: type},
-                                                            success: function (data) {
-                                                                $('#asset-list').html("");
-                                                                for (var i = 0; i < data.Assets.length; i++) {
-                                                                    console.log(data.Assets);
-                                                                    $('#asset-list').append('<option>' + data.Assets[i].AssetName + '</option>')
-                                                                }
-                                                            }
-                                                        });
-                                                    });
+                                    $(document).ready(function () {
+                                        var i = 1;
+                                        $("#addbutton").click(function () {
+                                            $("table tr.fieldT:first").clone().find("input").each(function () {
+                                                $(this).val('').attr({
+                                                    'id': function (_, id) {
+                                                        return id
+                                                    },
+                                                    'name': function (_, name) {
+                                                        return name
+                                                    },
+                                                    'value': ''
                                                 });
+                                            }).end().appendTo("table ");
+                                            i++;
+                                        });
+
+                                        $(document.body).on('change', '.price', function () {
+                                            // initialize the sum (total price) to zero
+                                            var sum = 0;
+
+                                            var price = [], qty = [];
+                                            // we use jQuery each() to loop through all the textbox with 'price' class
+                                            // and compute the sum for each loop
+                                            $('.price').each(function () {
+                                                price.push($(this).val());
+                                            });
+                                            $('.quantity').each(function () {
+                                                qty.push($(this).val());
+                                            });
+
+                                            for (var i = 0; i < price.length; i++) {
+                                                sum += (price[i] * qty[i]);
+                                            }
+                                            // set the computed value to 'totalPrice' textbox
+                                            $('#totalPrice').val(sum);
+                                        });
+
+                                        $('#asset-type').on('change', function () {
+                                            var type = $(this).val();
+                                            console.log('asset type' + type);
+                                            $.ajax({
+                                                url: '/AMS/AjaxServlet/AssetListWithType',
+                                                dataType: 'json',
+                                                data: {type: type},
+                                                success: function (data) {
+                                                    $('#asset-list').html("");
+                                                    for (var i = 0; i < data.Assets.length; i++) {
+                                                        console.log(data.Assets);
+                                                        $('#asset-list').append('<option>' + data.Assets[i].AssetName + '</option>')
+                                                    }
+                                                }
+                                            });
+                                        });
+
+                                        $(".delete-row").click(function () {
+                                            $("table tbody").find('input[name="record"]').each(function () {
+                                                if ($(this).is(":checked")) {
+                                                    $(this).parents("tr").remove();
+                                                }
+                                            });
+                                            var sum = 0;
+
+                                            var price = [], qty = [];
+                                            // we use jQuery each() to loop through all the textbox with 'price' class
+                                            // and compute the sum for each loop
+                                            $('.price').each(function () {
+                                                price.push($(this).val());
+                                            });
+                                            $('.quantity').each(function () {
+                                                qty.push($(this).val());
+                                            });
+
+                                            for (var i = 0; i < price.length; i++) {
+                                                sum += (price[i] * qty[i]);
+                                            }
+                                            // set the computed value to 'totalPrice' textbox
+                                            $('#totalPrice').val(sum);
+                                        });
+                                    });
         </script>
 
     </body>
