@@ -70,18 +70,11 @@
                                         %>
                                     </tbody>
                                 </table>
-                                    <%
-                                        Employee user = (Employee) session.getAttribute("user");
-                                        if (user.Division.equals("Chief") ||  user.UserLevel.equals("Director")) {
-                                    %>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" type="submit">Submit</button>
                                     </div>
                                 </div>
-                                <%
-                                    }
-                                %>
                             </form>
                         </div>
                     </div>
