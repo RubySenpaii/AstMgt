@@ -57,6 +57,11 @@
                                             <td><%=requestInspection.CreatedDate%></td>
                                             <td><%=requestInspection.Assigned.FullName()%></td>
                                             <td>
+                                                <%
+                                                    String userRole = "";
+                                                    userRole = (String) session.getAttribute("UserLevel");
+                                                    if ((!userRole.equalsIgnoreCase("staff"))) {
+                                                %>
                                                 <form>
                                                     <input type="hidden" name="requestId" value="<%=requestInspection.DeliveryInspectionId%>">
                                                     <%
@@ -71,6 +76,9 @@
                                                         }
                                                     %>
                                                 </form>
+                                                <%
+                                                    }
+                                                %>
                                             </td>
                                         </tr>
                                         <%

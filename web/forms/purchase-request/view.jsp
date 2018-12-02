@@ -112,7 +112,9 @@
                                 </div>
                                 <%
                                     String userRole = "";
+                                    String userName = "";
                                     userRole = (String) session.getAttribute("UserLevel");
+                                    userName = (String) session.getAttribute("UserName");
                                     if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff"))) {
                                 %>
                                 <div class="form-group">
@@ -130,7 +132,7 @@
 
                                     <%
                                         }
-                                        if (pr.ApprovedBy != 0 && pr.ApprovedDate != null) {
+                                        if (pr.ApprovedBy != 0 && pr.ApprovedDate != null && pr.Requester.FullName().equalsIgnoreCase(userName)) {
                                     %>
                                     <form action="/AMS/PurchaseOrderServlet/GoToPO">
                                         <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit"><span class="fa fa-plus">  Purchase Order </span></button> 

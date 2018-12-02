@@ -50,6 +50,7 @@ public class Login extends HttpServlet {
             if (checker != null) {
                 session.setAttribute("UserLevel", checker.UserLevel);
                 session.setAttribute("user", checker);
+                session.setAttribute("UserName", checker.FullName());
                 boolean logged = true;
                 session.setAttribute("logged", logged);
                 
