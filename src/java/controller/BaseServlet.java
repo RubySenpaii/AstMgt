@@ -57,7 +57,7 @@ public abstract class BaseServlet extends HttpServlet {
                     Calendar cal = Calendar.getInstance();
                     Date now = cal.getTime();
                     cal.setTime(equipment.DateAcquired);
-                    cal.add(Calendar.YEAR, 0);
+                    cal.add(Calendar.YEAR, equipment.Asset.EstimatedUsefulLife);
                     Date expiryDate = cal.getTime();
                     if (now.after(expiryDate)) {
                         expiringEquipments.add(equipment);
