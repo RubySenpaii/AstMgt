@@ -29,7 +29,7 @@ public class PurchaseRequestService {
     private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ;";
     private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
     private final String ApprovePurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
-    private final String RejectPurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
+    private final String RejectPurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " +PurchaseRequest.COLUMN_REMARKS + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
 
     public int AddPurchaseRequest(PurchaseRequest pr) {
         try {
@@ -73,13 +73,14 @@ public class PurchaseRequestService {
         return 0;
     }
 
-    public int RejectPurchaseRequest(int EmployeeId, int purchaseRequestId) {
+    public int RejectPurchaseRequest(int EmployeeId, int purchaseRequestId, String remarks) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection conn = db.getConnection();
             PreparedStatement ps = conn.prepareStatement(RejectPurchaseRequest);
             ps.setInt(1, EmployeeId);
-            ps.setInt(2, purchaseRequestId);
+            ps.setString(2, remarks);
+            ps.setInt(3, purchaseRequestId);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();
