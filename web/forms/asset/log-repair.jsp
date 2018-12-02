@@ -37,6 +37,7 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
+                                                    <th>Selected</th>
                                                     <th>Article</th>
                                                     <th>Cost</th>
                                                     <th><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></th>
@@ -44,12 +45,14 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="fieldT">
+                                                    <td><input type="checkbox" name="record" </td>
                                                     <td><input type="text" name="article"  autocomplete="off"></td>
                                                     <td><input type="number" class="cost" name="cost" autocomplete="off"></td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <th><button class="delete-row btn btn-danger" type="button">Delete Selected</button></th>
                                                     <th colspan="1">Total : </th>
                                                     <th><input name='totalCost' id='totalCost' disabled="true"> </th>
                                                 </tr>
@@ -90,6 +93,28 @@
                 }).end().appendTo("table ");
                 i++;
             });
+            $(".delete-row").click(function () {
+                $("table tbody").find('input[name="record"]').each(function () {
+                    if ($(this).is(":checked")) {
+                        $(this).parents("tr").remove();
+                    }
+                });
+                var sum = 0;
+
+                var cost = [];
+                // we use jQuery each() to loop through all the textbox with 'price' class
+                // and compute the sum for each loop
+                $('.cost').each(function () {
+                    cost.push($(this).val());
+                });
+
+                for (var i = 0; i < cost.length; i++) {
+                    sum += Number(cost[i]);
+                }
+
+                // set the computed value to 'totalPrice' textbox
+                $('#totalCost').val(sum);
+            });
         });
         $(document.body).on('change', '.cost', function () {
             // initialize the sum (total price) to zero
@@ -110,5 +135,7 @@
             $('#totalCost').val(sum);
 
         });
+
+
     </script>
 </html>
