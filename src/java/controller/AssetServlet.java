@@ -253,6 +253,10 @@ public class AssetServlet extends BaseServlet {
         } else if (action.equals("dispose")) {
             equip.Flag = 0;
             equipmentService.UpdateEquipment(equip);
+        } else if (action.equals("reacquire")) {
+            equip.Flag = 0;
+            equipmentService.UpdateEquipment(equip);
+            return "/PurchaseRequest/Add?asset-id=" + equip.AssetId;
         }
         return "/InventoryServlet/EquipmentList";
     }

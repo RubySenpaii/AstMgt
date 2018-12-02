@@ -127,7 +127,7 @@
                                                     <tr>
                                                         <th><button type="button" class="delete-row  btn btn-danger"> Delete Selected</button></th>
                                                         <th></th>
-                                                        <th colspan="1"> Total :</th>
+                                                        <th> Total :</th>
                                                         <th><input name='totalPrice' id='totalPrice' disabled="true">  </th>
                                                     </tr>
                                                 </tfoot>

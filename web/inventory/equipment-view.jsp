@@ -108,6 +108,7 @@
                                     <div class="col-lg-6" style="text-align: center">
                                         <input type="hidden" name="asset-tag" value="<%=equipment.AssetTag%>">
                                         <button class="btn btn-info" name="action" value="dispose" type="submit">Dispose</button> 
+                                        <button class="btn btn-info" name="action" value="reacquire" type="submit">Dispose and Reacquire</button> 
                                         <button class="btn btn-info" name="action" value="extend" type="submit">Extend</button> 
                                     </div>
                                 </div>
