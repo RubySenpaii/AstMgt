@@ -51,9 +51,9 @@ public class EquipmentService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
             
-            String query = "UPDATE Equipment SET " + Equipment.COLUMN_ASSET_ID + " = ?, " + Equipment.COLUMN_CONDITION + " = ?, "
+            String query = "UPDATE Equipment SET " + Equipment.COLUMN_ASSET_ID + " = ?, Equipment." + Equipment.COLUMN_CONDITION + " = ?, "
                     + Equipment.COLUMN_DATE_ACQUIRED + " = ?, "
-                    + Equipment.COLUMN_FLAG + " WHERE " + Equipment.COLUMN_ASSET_TAG + " = ?";
+                    + Equipment.COLUMN_FLAG + " = ? WHERE " + Equipment.COLUMN_ASSET_TAG + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, equipment.AssetId);
             ps.setString(2, equipment.Condition);

@@ -33,6 +33,7 @@
                                             <th>Asset Name</th>
                                             <th>Asset Tag</th>
                                             <th>Condition</th>
+                                            <th>Status</th>
                                             <th>Current User</th>
                                             <th></th>
                                         </tr>
@@ -46,6 +47,7 @@
                                             <td><%=equipment.Asset.AssetName%></td>
                                             <td><%=equipment.AssetTag%></td>
                                             <td><%=equipment.Condition%></td>
+                                            <td><%=equipment.Status()%></td>
                                             <td><%=equipment.CurrentUser.FullName()%></td>
                                             <td>
                                                 <button type="submit" name="asset-tag" value="<%=equipment.AssetTag%>">View</button>

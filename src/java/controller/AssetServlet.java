@@ -83,6 +83,9 @@ public class AssetServlet extends BaseServlet {
                 case "SubmitIncident":
                     url = SubmitIncident(request);
                     break;
+                case "EquipmentStatus":
+                    url = ChangeEquipStatus(request);
+                    break;
                 case "SubmitTracking":
                     url = SubmitTracking(request);
                     break;
@@ -237,5 +240,20 @@ public class AssetServlet extends BaseServlet {
         int result = repairLogService.UpdateRepairLog(log);
         System.out.println("update result: " + result);
         return "/AssetServlet/RepairRequests";
+    }
+    
+    private String ChangeEquipStatus(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String assetTag = request.getParameter("asset-tag");
+        String action = request.getParameter("action");
+        Equipment equip = equipmentService.GetEquipmentWithAssetTag(assetTag);
+        if (action.equals("extend")) {
+            equip.Flag = 4;
+            equipmentService.UpdateEquipment(equip);
+        } else if (action.equals("dispose")) {
+            equip.Flag = 0;
+            equipmentService.UpdateEquipment(equip);
+        }
+        return "/InventoryServlet/EquipmentList";
     }
 }

@@ -168,7 +168,7 @@
                                     
                         <div class="col-md-6">
                             <div class="form-panel">
-                                <h3>Pending Purchase Requests</h3>
+                                <h3>Rejected Purchase Requests</h3>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>

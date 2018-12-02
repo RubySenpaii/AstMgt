@@ -30,7 +30,7 @@
                                 Equipment equipment = (Equipment) session.getAttribute("equipment");
                             %>
                             <h4><%=equipment.Asset.AssetName + " - " + equipment.AssetTag%></h4><br/>
-                            <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/Submit">
+                            <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/EquipmentStatus">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Description</label>
                                     <label class="col-lg-10 control-label"><%=equipment.Asset.Description%></label>
@@ -102,6 +102,13 @@
                                                 %>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6" style="text-align: center">
+                                        <input type="hidden" name="asset-tag" value="<%=equipment.AssetTag%>">
+                                        <button class="btn btn-info" name="action" value="dispose" type="submit">Dispose</button> 
+                                        <button class="btn btn-info" name="action" value="extend" type="submit">Extend</button> 
                                     </div>
                                 </div>
                             </form>
