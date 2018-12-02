@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,8 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.Employee;
+import objects.Equipment;
 import objects.ExpenditureTracking;
+import objects.PurchaseRequest;
+import objects.Supplies;
+import services.EquipmentService;
 import services.ExpenditureTrackingService;
+import services.PurchaseOrderService;
+import services.PurchaseRequestService;
+import services.SuppliesService;
 
 @WebServlet(name = "BaseServlet", urlPatterns = {"/BaseServlet"})
 public abstract class BaseServlet extends HttpServlet {
@@ -27,11 +36,41 @@ public abstract class BaseServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession();
-            Employee user =  (Employee) session.getAttribute("user");
+            Employee user = (Employee) session.getAttribute("user");
             if (user.EmployeeId > 0) {
                 System.out.println("user accessing " + request.getRequestURI());
+                PurchaseRequestService purchaseRequestService = new PurchaseRequestService();
+                PurchaseOrderService purchaseOrderService = new PurchaseOrderService();
+                EquipmentService equipmentService = new EquipmentService();
+                SuppliesService suppliesService = new SuppliesService();
                 ExpenditureTracking limit = new ExpenditureTrackingService().GetCurrentExpenditure(user.Division);
+                ArrayList<PurchaseRequest> pendingPurchaseRequest = purchaseRequestService.FindPendingPurchaseRequests();
+                // list of approved request and pending order
+                ArrayList<PurchaseRequest> approvedPurchaseRequest = purchaseRequestService.FindApprovedPurchaseRequest();
+                // list of rejected purchase request
+                ArrayList<PurchaseRequest> rejectedPurchaseRequest = purchaseRequestService.FindRejectedPurchaseRequest();
+                // list of approved and rejected purchase order
+                // list of almost expiring equipment
+                ArrayList<Equipment> equipments = equipmentService.GetListOfEquipments();
+                ArrayList<Equipment> expiringEquipments = new ArrayList<>();
+                for (Equipment equipment : equipments) {
+                    Calendar cal = Calendar.getInstance();
+                    Date now = cal.getTime();
+                    cal.setTime(equipment.DateAcquired);
+                    cal.add(Calendar.YEAR, 0);
+                    Date expiryDate = cal.getTime();
+                    if (now.after(expiryDate)) {
+                        expiringEquipments.add(equipment);
+                    }
+                }
+                // list of low supplies
+                ArrayList<Supplies> lowSupplies = suppliesService.GetLowSupplies();
                 session.setAttribute("limit", limit);
+                session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
+                session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);
+                session.setAttribute("rejectedPurchaseRequests", rejectedPurchaseRequest);
+                session.setAttribute("lowSupplies", lowSupplies);
+                session.setAttribute("expiringEquipments", expiringEquipments);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();

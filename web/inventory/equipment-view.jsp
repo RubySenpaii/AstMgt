@@ -32,6 +32,10 @@
                             <h4><%=equipment.Asset.AssetName + " - " + equipment.AssetTag%></h4><br/>
                             <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/Submit">
                                 <div class="form-group">
+                                    <label class="col-lg-2 control-label">Description</label>
+                                    <label class="col-lg-10 control-label"><%=equipment.Asset.Description%></label>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label">Condition</label>
                                     <label class="col-lg-10 control-label"><%=equipment.Condition%></label>
                                 </div>

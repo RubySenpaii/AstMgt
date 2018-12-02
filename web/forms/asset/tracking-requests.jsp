@@ -1,21 +1,18 @@
 <%-- 
-    Document   : list
-    Created on : Oct 21, 2018, 6:31:23 PM
-    Author     : RubySenpaii
+    Document   : tracking-requests
+    Created on : 12 1, 18, 5:56:52 PM
+    Author     : rubysenpaii
 --%>
 
-<%@page import="objects.Employee"%>
-<%@page import="services.EmployeeService"%>
-<%@page import="objects.PurchaseRequest"%>
+<%@page import="objects.AssetTracking"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management - List Purchase Request</title>
+        <title>Asset Management - Add Purchase Request</title>
         <jsp:include page="../../shared/css.jsp"/>
     </head>
 
@@ -29,35 +26,35 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content-panel">
-                                <h4>List of Purchase Request</h4>
+                                <h4>List of Repair Requests</h4>
                                 <br/>
-                                <table class="table" id="prList">
+                                <table class="table" id="requestList">
                                     <thead>
                                         <tr>
-                                            <th>Purchase Request No</th>
-                                            <th>Date</th>
                                             <th>Requested By</th>
                                             <th>Requested Date</th>
-                                            <th>Reviewed By</th>
-                                            <th>Division</th>
+                                            <th>Transfer To</th>
+                                            <th>Remarks</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <%
-                                            ArrayList<PurchaseRequest> PR = (ArrayList<PurchaseRequest>) session.getAttribute("PR");
-                                            for (PurchaseRequest pr : PR) {
+                                            ArrayList<AssetTracking> trackings = (ArrayList<AssetTracking>) session.getAttribute("assetTrackings");
+                                            int i = 0;
+                                            for (AssetTracking tracking : trackings) {
+                                                i++;
                                         %>
                                         <tr>
-                                            <td><c:out value="<%= pr.PurchaseRequestNo%>"></c:out></td>
-                                            <td><c:out value="<%= pr.Date%>"></c:out></td>
-                                            <td><c:out value="<%= pr.Requester.FullName()%>"></c:out></td>
-                                            <td><c:out value="<%= pr.RequestedDate%>"></c:out></td>
-                                            <td><c:out value="<%= pr.Approver.FullName()%>"></c:out></td>
-                                            <td><c:out value="<%= pr.Approver.Division%>"></c:out></td>
-                                                <td>
-                                                    <form action="/AMS/PurchaseRequest/View">
-                                                        <button type="submit" value="<%= pr.PurchaseRequestId%>" name="prid" >View</button>
+                                            <td><%=tracking.ReleaseBy.FullName()%></td>
+                                            <td><%=tracking.TransferDate%></td>
+                                            <td><%=tracking.ReleaseTo.FullName()%></td>
+                                            <td><%=tracking.Remarks%></td>
+                                            <td>
+                                                <form action="/AMS/InventoryServlet/ReviewTracking">
+                                                    <input type="hidden" name="idx" value="<%=i%>">
+                                                    <button type="submit" class="btn btn-success" name="review" value="approve">Approve</button>
+                                                    <button type="submit" class="btn btn-danger" name="review" value="reject">Reject</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -79,7 +76,7 @@
     <jsp:include page="../../shared/js.jsp"/>
     <script>
         $(document).ready(function () {
-            $('#prList').DataTable();
+            $('#requestList').DataTable();
         });
     </script>
 </html>

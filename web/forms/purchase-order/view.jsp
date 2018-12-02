@@ -33,6 +33,10 @@
                             %>
                             <h4>Purchase Order #<%=purchaseOrder.PurchaseOrderNumber%></h4><br/>
                             <form class="form-horizontal style-form">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.PurchaseRequest.PurchaseRequestNo %>" ></c:out></label>
+                                    </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
                                     <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.Supplier.SupplierName%>" ></c:out></label>

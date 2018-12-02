@@ -40,7 +40,7 @@ public class PurchaseOrderService {
             ps.setObject(3, po.OrderDate);
             ps.setString(4, po.ModeOfProcurement);
             ps.setString(5, po.Remarks);
-            ps.setString(6, "Department of Agrarian Reforms - Central Office");
+            ps.setString(6, "Department of Agrarian Reform - Central Office");
             ps.setObject(7, po.DeliveryDate);
             ps.setString(8, po.DeliveryTerms);
             ps.setString(9, po.PaymentTerm);

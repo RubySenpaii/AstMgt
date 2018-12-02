@@ -38,7 +38,11 @@ footer {
     text-align: center;
     font-size: large;
     margin: 0 auto;
-    width: 35vw;
+    width: 25vw;
     color: white;
     font-weight: 300;
+}
+
+.fill-header {
+    width: available;
 }

@@ -35,6 +35,8 @@ public class Equipment {
             case 0: return "Disposed";
             case 1: return "Stocked";
             case 2: return "Being Used";
+            case 3: return "Expiring";
+            case 4: return "Extended";
             default: return "N/A";
         }
     }
