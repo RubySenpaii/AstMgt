@@ -64,7 +64,13 @@ public abstract class BaseServlet extends HttpServlet {
                     }
                 }
                 // list of low supplies
-                ArrayList<Supplies> lowSupplies = suppliesService.GetLowSupplies();
+                ArrayList<Supplies> lowSupplies = new ArrayList<>();
+                ArrayList<Supplies> suppliesList = suppliesService.FindAllSupplies();
+                for (Supplies supplies: suppliesList) {
+                    if (supplies.TotalQuantity < 20) {
+                        lowSupplies.add(supplies);
+                    }
+                }
                 session.setAttribute("limit", limit);
                 session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
                 session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);
