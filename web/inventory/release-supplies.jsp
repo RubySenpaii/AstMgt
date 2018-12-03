@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.Supplies"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +26,10 @@
                         <div class="form-panel">
                             <h4>Release Supplies</h4><br/>
                             <form role="form" class="form-horizontal style-form" action="/AMS/InventoryServlet/SubmitRelease">
+                                <%
+                                    Supplies supplies = (Supplies) session.getAttribute("supply");
+                                %>
+                                <input type="hidden" class="max" value="<%=supplies.TotalQuantity%>">
                                 <div class="form-group">
                                     <table class="table">
                                         <thead>
@@ -36,7 +41,7 @@
                                         </thead>
                                         <tbody>
                                             <tr class="fieldT">
-                                                <td><input type="number" name="quantity"></td>
+                                                <td><input type="number" name="quantity" class="qty-ordered"></td>
                                                 <td>
                                                     <select name="division">
                                                         <option>Admin Services</option>
@@ -52,7 +57,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" type="submit">Submit</button>
+                                        <button class="btn btn-theme submit-btn" type="submit">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -82,6 +87,18 @@
                     });
                 }).end().appendTo("table ");
                 i++;
+            });
+
+            $(document).on('change', '.qty-ordered', function () {
+                var total = 0;
+                $('.qty-ordered').each(function () {
+                    total += parseInt(this.value);
+                });
+                if (total > parseInt($('.max').val())) {
+                    $('.submit-btn').prop('disabled', true);
+                } else {
+                    $('.submit-btn').prop('disabled', false);
+                }
             });
         });
     </script>
