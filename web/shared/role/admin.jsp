@@ -31,10 +31,10 @@
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
-                    <li><a href="/AMS/InventoryServlet/ShowTrackingRequests">Tracking Requests</a></li>
+                    <li><a href="/AMS/InventoryServlet/ShowTrackingRequests">Transfer Requests</a></li>
                     <li><a href="/AMS/AssetServlet/RepairRequests">Repair Requests</a></li>
                     <li><a href="/AMS/AssetServlet/LogTracking">Log Transfer</a></li>
-                    <li><a href="/AMS/AssetServlet/LogIncident">Log Incident/Disposal</a></li>
+                    <li><a href="/AMS/AssetServlet/LogIncident">Log Incident</a></li>
                     <li><a href="/AMS/AssetServlet/LogRepair">Log Asset Repair</a></li>
                 </ul>
             </li>

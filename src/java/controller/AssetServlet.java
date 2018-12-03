@@ -26,12 +26,14 @@ import objects.AssetIncident;
 import objects.AssetTracking;
 import objects.Employee;
 import objects.Equipment;
+import objects.ExpenditureTracking;
 import objects.RepairLog;
 import services.AssetIncidentService;
 import services.AssetService;
 import services.AssetTrackingService;
 import services.EmployeeService;
 import services.EquipmentService;
+import services.ExpenditureTrackingService;
 import services.RepairLogService;
 
 /**
@@ -211,6 +213,13 @@ public class AssetServlet extends BaseServlet {
             repairLog.Article = articles[i];
             repairLog.Cost = Double.parseDouble(costs[i]);
             int result = repairLogService.AddRepairLog(repairLog);
+            if (result == 1) {
+                ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
+                ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
+                expenditure.Timestamp = Calendar.getInstance().getTime();
+                expenditure.Equipment -= repairLog.Cost;
+                result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+            }
             System.out.println("result: " + result);
         }
 
@@ -242,7 +251,7 @@ public class AssetServlet extends BaseServlet {
         System.out.println("update result: " + result);
         return "/AssetServlet/RepairRequests";
     }
-    
+
     private String ChangeEquipStatus(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String assetTag = request.getParameter("asset-tag");
