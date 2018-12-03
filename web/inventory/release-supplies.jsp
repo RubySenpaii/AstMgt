@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management - Add Asset</title>
+        <title>Asset Management - Release of Supplies</title>
         <jsp:include page="../shared/css.jsp"/>
     </head>
 

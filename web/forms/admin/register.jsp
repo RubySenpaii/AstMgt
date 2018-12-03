@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="Dashboard">
         <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-        <title>Dashio - Bootstrap Admin Template</title>
+        <title>Asset Management - Employee Registration</title>
 
         <!-- Favicons -->
         <link href="img/favicon.png" rel="icon">
@@ -23,9 +23,7 @@
     </head>
 
     <body>
-        <!-- **********************************************************************************************************************************************************
-            MAIN CONTENT
-            *********************************************************************************************************************************************************** -->
+        <!-- Main Content-->
         <div id="login-page">
             <div class="container">
                 <form class="form-login" action="/AMS/Register" method="post">

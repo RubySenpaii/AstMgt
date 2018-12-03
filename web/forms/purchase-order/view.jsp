@@ -15,7 +15,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management - Add Purchase Order</title>
+        <title>Asset Management - View Purchase Order</title>
         <jsp:include page="../../shared/css.jsp"/>
     </head>
 
