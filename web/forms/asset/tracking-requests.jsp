@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content-panel">
-                                <h4>List of Repair Requests</h4>
+                                <h4>List of Transfer Requests</h4>
                                 <br/>
                                 <table class="table" id="requestList">
                                     <thead>
