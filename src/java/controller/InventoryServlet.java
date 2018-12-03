@@ -225,7 +225,8 @@ public class InventoryServlet extends BaseServlet {
     private String ReviewTracking(HttpServletRequest request) {
         HttpSession session = request.getSession();
         ArrayList<AssetTracking> trackings = (ArrayList<AssetTracking>) session.getAttribute("assetTrackings");
-        AssetTracking tracking = trackings.get(0);
+        int idx = Integer.parseInt(request.getParameter("idx"));
+        AssetTracking tracking = trackings.get(idx);
         String value = request.getParameter("review");
         tracking.ApprovedBy = ((Employee) session.getAttribute("user")).EmployeeId;
         if (value.equals("approve")) {

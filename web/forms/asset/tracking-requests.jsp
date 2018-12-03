@@ -43,7 +43,6 @@
                                             ArrayList<AssetTracking> trackings = (ArrayList<AssetTracking>) session.getAttribute("assetTrackings");
                                             int i = 0;
                                             for (AssetTracking tracking : trackings) {
-                                                i++;
                                         %>
                                         <tr>
                                             <td><%=tracking.ReleaseBy.FullName()%></td>
@@ -59,6 +58,7 @@
                                             </td>
                                         </tr>
                                         <%
+                                                i++;
                                             }
                                         %>
                                     </tbody>

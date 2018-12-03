@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -183,7 +184,7 @@ public class AssetServlet extends BaseServlet {
             tracking.ReleasedTo = employeeService.FindEmployeeByFullName(request.getParameter("release-to")).EmployeeId;
             int transferType = Integer.parseInt(request.getParameter("transfer-type"));
             tracking.Remarks = transferType + request.getParameter("remarks");
-            tracking.TransferDate = SharedFormat.DB_DATE_ENTRY.parse(request.getParameter("transfer-date"));
+            tracking.TransferDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("transfer-date"));
             int result = assetTrackingService.AddAssetTracking(tracking);
             if (result == 1) {
                 return "/InventoryServlet/EquipmentList";
