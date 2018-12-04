@@ -13,7 +13,7 @@
             userRole = "admin";
         }
         String jspFile;
-        switch (userRole) {
+        switch (userRole.toLowerCase()) {
             case "admin":
                 jspFile = "role/admin.jsp";
                 break;
