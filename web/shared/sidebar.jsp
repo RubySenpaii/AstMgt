@@ -20,10 +20,10 @@
             case "inspector":
                 jspFile = "role/inspector.jsp";
                 break;
-            case "divisionchief":
+            case "division chief":
                 jspFile = "role/divisionchief.jsp";
                 break;
-            case "supplyofficer":
+            case "supply officer":
                 jspFile = "role/supply_officer.jsp";
                 break;
             case "staff":
