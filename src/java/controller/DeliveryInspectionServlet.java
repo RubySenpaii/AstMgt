@@ -72,7 +72,8 @@ public class DeliveryInspectionServlet extends BaseServlet {
     }
 
     public String RequestInspection(HttpServletRequest request) {
-        ArrayList<Employee> employees = employeeService.FindAllEmployee();
+        PurchaseOrder purchaseOrder = purchaseOrderService.FindPurchaseOrderById(Integer.parseInt(request.getParameter("purchaseOrder")));
+        ArrayList<Employee> employees = employeeService.FindInspectorSpecializing(purchaseOrder.PurchaseRequest.AssetsRequested.get(0).Asset.AssetType);
         HttpSession session = request.getSession();
         session.setAttribute("employees", employees);
         return "/forms/delivery-inspection/request.jsp";

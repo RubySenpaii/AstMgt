@@ -30,14 +30,14 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
                                     <div class="col-lg-10">
-                                        <input list="supp" name="supplier" class="form-control" autocomplete="off">
+                                        <input list="supp" name="supplier" id="supplier" class="form-control" autocomplete="off">
                                         <datalist id="supp">
                                             <%
                                                 ArrayList<Supplier> slist = new ArrayList<Supplier>();
                                                 slist = (ArrayList<Supplier>) session.getAttribute("supplierList");
                                                 for (Supplier supp : slist) {
                                             %>
-                                            <option value="<%= supp.SupplierName %>">
+                                            <option value="<%= supp.SupplierName%>">
                                                 <%
                                                     }
                                                 %>
@@ -96,4 +96,21 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            $('#supplier').on('change', function () {
+                var type = $(this).val();
+                console.log('supplier' + type);
+                $.ajax({
+                    url: '/AMS/AjaxServlet/RetrieveContactPerson',
+                    dataType: 'json',
+                    data: {supplier: type},
+                    success: function (data) {
+                        console.log(data);
+                        $('#consupp').val(data.ContactPerson);
+                    }
+                });
+            });
+        });
+    </script>
 </html>

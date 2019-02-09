@@ -100,9 +100,11 @@ public class InventoryServlet extends BaseServlet {
 
     private String Acknowledge(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        ArrayList<AssetRequested> assetsRequested = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
+        PurchaseOrder purchaseOrder = (PurchaseOrder) session.getAttribute("purchaseOrder");
+        ArrayList<AssetRequested> assetsRequested = purchaseOrder.PurchaseRequest.AssetsRequested;
         String[] assetTags = request.getParameterValues("asset-tag");
         String[] condition = request.getParameterValues("condition");
+        String[] serialNumber = request.getParameterValues("serial-number");
         int qty = 1, counter = 0;
         for (int i = 0; i < assetsRequested.size(); i++) {
             if (assetsRequested.get(i).Asset.AssetType.contains("Equipment")) {
@@ -111,6 +113,8 @@ public class InventoryServlet extends BaseServlet {
                 equipment.AssetId = assetsRequested.get(i).AssetId;
                 equipment.AssetTag = assetTags[counter];
                 equipment.Condition = condition[counter];
+                equipment.SerialNumber = serialNumber[counter];
+                equipment.AcquisitionCost = assetsRequested.get(i).UnitCost;
                 equipment.DateAcquired = Calendar.getInstance().getTime();
                 equipment.Flag = 1;
                 int result = equipmentService.AddEquipment(equipment);
@@ -118,11 +122,16 @@ public class InventoryServlet extends BaseServlet {
                 AssetTracking init = new AssetTracking();
                 init.AssetTag = equipment.AssetTag;
                 init.ApprovedBy = employee.EmployeeId;
-                init.ApprovedDate = Calendar.getInstance().getTime();
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                init.ApprovedDate = cal.getTime();
                 init.ReleasedBy = employee.EmployeeId;
-                init.ReleasedTo = employee.EmployeeId;
+                init.ReleasedTo = purchaseOrder.PurchaseRequest.RequestedBy;
                 init.Remarks = "received asset";
-                init.TransferDate = Calendar.getInstance().getTime();
+                init.TransferDate = cal.getTime();
                 int trackResult = assetTrackingService.AddAssetTracking(init);
                 assetTrackingService.UpdateAssetTracking(init);
                 System.out.println(equipment.AssetTag + " is added: " + result + " tracking: " + trackResult);
