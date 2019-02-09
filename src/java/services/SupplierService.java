@@ -20,7 +20,8 @@ import objects.Supplier;
 public class SupplierService {
 
     private String AddSupplierQuery = "INSERT INTO Supplier(" + Supplier.COLUMN_SUPPLIER_ID + "," + Supplier.COLUMN_SUPPLIER_NAME + ","
-            + Supplier.COLUMN_SUPPLIER_ADDRESS + "," + Supplier.COLUMN_SUPPLIER_TIN + ", " + Supplier.COLUMN_SUPPLIER_TYPE + ")VALUES(?,?,?,?)";
+            + Supplier.COLUMN_SUPPLIER_ADDRESS + "," + Supplier.COLUMN_SUPPLIER_TIN + ", " + Supplier.COLUMN_SUPPLIER_TYPE + ", " + Supplier.COLUMN_CONTACT_NUMBER + ", "
+            + Supplier.COLUMN_CONTACT_PERSON + ")VALUES(?,?,?,?,?,?,?)";
 
     private String FindSupplierByIdQuery = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_ID + " = ?";
     private String FindSupplierByNameQuery = "SELECT * FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_NAME + " = ?";
@@ -36,6 +37,8 @@ public class SupplierService {
             ps.setString(3, s.SupplierAddress);
             ps.setString(4, s.SupplierTIN);
             ps.setString(5, s.SupplierType);
+            ps.setString(6, s.ContactNumber);
+            ps.setString(7, s.ContactPerson);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();
@@ -127,6 +130,8 @@ public class SupplierService {
             e.SupplierAddress = rs.getString(Supplier.COLUMN_SUPPLIER_ADDRESS);
             e.SupplierTIN = rs.getString(Supplier.COLUMN_SUPPLIER_TIN);
             e.SupplierType = rs.getString(Supplier.COLUMN_SUPPLIER_TYPE);
+            e.ContactNumber = rs.getString(Supplier.COLUMN_CONTACT_NUMBER);
+            e.ContactPerson = rs.getString(Supplier.COLUMN_CONTACT_PERSON);
             suppliers.add(e);
         }
         rs.close();

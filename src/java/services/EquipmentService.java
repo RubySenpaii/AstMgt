@@ -27,7 +27,7 @@ public class EquipmentService {
 
             String query = "INSERT INTO Equipment(" + Equipment.COLUMN_ASSET_ID + ", " + Equipment.COLUMN_ASSET_TAG + ", Equipment."
                     + Equipment.COLUMN_CONDITION + ", " + Equipment.COLUMN_DATE_ACQUIRED + ", "
-                    + Equipment.COLUMN_FLAG + ") "
+                    + Equipment.COLUMN_FLAG + "," + Equipment.COLUMN_ACQUISITION_COST + "," + Equipment.COLUMN_SERIAL_NUMBER + ") "
                     + "VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, equipment.AssetId);
@@ -35,6 +35,8 @@ public class EquipmentService {
             ps.setString(3, equipment.Condition);
             ps.setObject(4, equipment.DateAcquired);
             ps.setInt(5, equipment.Flag);
+            ps.setDouble(6, equipment.AcquisitionCost);
+            ps.setString(7, equipment.SerialNumber);
 
             int result = ps.executeUpdate();
             ps.close();
@@ -136,6 +138,8 @@ public class EquipmentService {
             equipment.Condition = rs.getString(Equipment.COLUMN_CONDITION);
             equipment.DateAcquired = rs.getDate(Equipment.COLUMN_DATE_ACQUIRED);
             equipment.Flag = rs.getInt(Equipment.COLUMN_FLAG);
+            equipment.AcquisitionCost = rs.getDouble(Equipment.COLUMN_ACQUISITION_COST);
+            equipment.SerialNumber = rs.getString(Equipment.COLUMN_SERIAL_NUMBER);
             
             equipment.Asset = new AssetService().GetAsset(equipment.AssetId);
             equipment.CurrentUser = new AssetTrackingService().GetCurrentuser(equipment.AssetTag);

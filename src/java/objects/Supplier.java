@@ -15,10 +15,14 @@ public class Supplier {
     public static final String COLUMN_SUPPLIER_ADDRESS = "SupplierAddress";
     public static final String COLUMN_SUPPLIER_TIN = "SupplierTIN";
     public static final String COLUMN_SUPPLIER_TYPE = "SupplierType";
+    public static final String COLUMN_CONTACT_NUMBER = "ContactNumber";
+    public static final String COLUMN_CONTACT_PERSON = "ContactPerson";
     
     public int SupplierId;
     public String SupplierName;
     public String SupplierAddress;
     public String SupplierTIN;
     public String SupplierType;
+    public String ContactNumber;
+    public String ContactPerson;
 }

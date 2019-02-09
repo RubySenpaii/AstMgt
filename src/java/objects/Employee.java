@@ -30,6 +30,7 @@ public class Employee {
     public static final String COLUMN_END_DATE = "EndDate";
     public static final String COLUMN_FLAG = "Flag";
     public static final String COLUMN_USER_LEVEL = "UserLevel";
+    public static final String COLUMN_SPECIALTY = "Specialty";
     
     public int EmployeeId;
     public String LastName;
@@ -49,6 +50,7 @@ public class Employee {
     public Date EndDate;
     public String UserLevel;
     public int Flag;
+    public String Specialty;
     
     public String FullName() {
         return this.LastName + ", " + this.FirstName;

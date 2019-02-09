@@ -6,7 +6,9 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -18,12 +20,16 @@ public class Equipment {
     public static final String COLUMN_CONDITION = "Condition";
     public static final String COLUMN_FLAG = "Flag";
     public static final String COLUMN_DATE_ACQUIRED = "DateAcquired";
+    public static final String COLUMN_SERIAL_NUMBER = "SerialNumber";
+    public static final String COLUMN_ACQUISITION_COST = "AcquisitionCost";
     
     public int AssetId;
     public String AssetTag;
     public String Condition;
     public int Flag;
     public Date DateAcquired;
+    public String SerialNumber;
+    public double AcquisitionCost;
     
     public Asset Asset;
     public Employee CurrentUser;
@@ -39,5 +45,11 @@ public class Equipment {
             case 4: return "Extended";
             default: return "N/A";
         }
+    }
+    
+    public double getDepreciation() {
+        long diffInMillies = Calendar.getInstance().getTime().getTime() - this.DateAcquired.getTime();
+        long days = TimeUnit.MILLISECONDS.toDays(diffInMillies);
+        return this.AcquisitionCost / this.Asset.EstimatedUsefulLife * (days / 365.4);
     }
 }
