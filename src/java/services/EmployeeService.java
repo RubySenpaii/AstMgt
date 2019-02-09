@@ -82,6 +82,23 @@ public class EmployeeService {
         }
         return null;
     }
+    
+    public ArrayList<Employee> FindInspectorSpecializing(String specialty) {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            String query = "SELECT * FROM Employee WHERE " + Employee.COLUMN_SPECIALTY + " = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, specialty);
+            ArrayList<Employee> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
 
     public ArrayList<Employee> FindAllEmployee() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();

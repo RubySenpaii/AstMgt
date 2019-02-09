@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import objects.Asset;
 import services.AssetService;
+import services.SupplierService;
 
 /**
  *
@@ -40,6 +41,9 @@ public class AjaxServlet extends HttpServlet {
             case "AssetListWithType":
                 json = AssetListWithType(request);
                 break;
+            case "RetrieveContactPerson":
+                json = RetrieveContactPerson(request);
+                break;
             default:
                 break;
         }
@@ -53,6 +57,13 @@ public class AjaxServlet extends HttpServlet {
         Gson gson = new Gson();
         return "{\"Assets\":" + gson.toJson(assets) + "}";
     } 
+    
+    private String RetrieveContactPerson(HttpServletRequest request) {
+        String supplierName = request.getParameter("supplier");
+        String contactPerson = new SupplierService().GetSupplierContactPerson(supplierName);
+        Gson gson = new Gson();
+        return "{\"ContactPerson\":" + gson.toJson(contactPerson) + "}";
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

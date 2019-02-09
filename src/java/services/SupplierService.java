@@ -84,6 +84,29 @@ public class SupplierService {
         }
         return null;
     }
+    
+    public String GetSupplierContactPerson(String supplier) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT " + Supplier.COLUMN_CONTACT_PERSON + " FROM Supplier WHERE " + Supplier.COLUMN_SUPPLIER_NAME + " = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, supplier);
+            
+            String resultContactPerson = "";
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                resultContactPerson = rs.getString(Supplier.COLUMN_CONTACT_PERSON);
+            }
+            ps.close();
+            con.close();
+            return resultContactPerson;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return "";
+        }
+    }
 
     public ArrayList<Supplier> FindAllSupplier() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();

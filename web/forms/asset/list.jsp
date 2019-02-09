@@ -36,6 +36,7 @@
                                                 <th>Asset Name</th>
                                                 <th>Asset Type</th>
                                                 <th>Description</th>
+                                                <th>Estimated Useful Life</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -48,6 +49,7 @@
                                                 <td><%=asset.AssetName%></td>
                                                 <td><%=asset.AssetType%></td>
                                                 <td><%=asset.Description%></td>
+                                                <td><%=asset.EstimatedUsefulLife%> year(s)</td>
                                             </tr>
                                             <%
                                                 }
