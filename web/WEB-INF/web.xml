@@ -48,6 +48,10 @@
         <servlet-name>AjaxServlet</servlet-name>
         <servlet-class>controller.AjaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SupplierServlet</servlet-name>
+        <servlet-class>controller.SupplierServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseRequestServlet</servlet-name>
         <url-pattern>/PurchaseRequest/*</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>AjaxServlet</servlet-name>
         <url-pattern>/AjaxServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SupplierServlet</servlet-name>
+        <url-pattern>/SupplierServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

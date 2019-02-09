@@ -27,6 +27,16 @@
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa"></i>
+                    <span>Supplier</span>
+                </a>
+                <ul class="sub">
+                    <li><a href="/AMS/SupplierServlet/Add">Add Supplier</a></li>
+                    <li><a href="/AMS/SupplierServlet/List">Supplier List</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa"></i>
                     <span>Equipment</span>
                 </a>
                 <ul class="sub">
