@@ -120,15 +120,20 @@ public class ExpenditureServlet extends BaseServlet {
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
         String quarter = SharedFormat.getQuarter();
-        double adminSupplies = Double.parseDouble(request.getParameter("admin-supplies"));
+//        double adminSupplies = Double.parseDouble(request.getParameter("admin-supplies"));
+        double adminSupplies = 0.00;
         double adminEquipment = Double.parseDouble(request.getParameter("admin-equipment"));
-        double procurementSupplies = Double.parseDouble(request.getParameter("procurement-supplies"));
+//        double procurementSupplies = Double.parseDouble(request.getParameter("procurement-supplies"));
+        double procurementSupplies = 0.00;
         double procurementEquipment = Double.parseDouble(request.getParameter("procurement-equipment"));
-        double managementSupplies = Double.parseDouble(request.getParameter("management-supplies"));
+//        double managementSupplies = Double.parseDouble(request.getParameter("management-supplies"));
+        double managementSupplies = 0.00;
         double managementEquipment = Double.parseDouble(request.getParameter("management-equipment"));
-        double generalSupplies = Double.parseDouble(request.getParameter("general-supplies"));
+//        double generalSupplies = Double.parseDouble(request.getParameter("general-supplies"));
+        double generalSupplies = 0.00;
         double generalEquipment = Double.parseDouble(request.getParameter("general-equipment"));
-        double financeSupplies = Double.parseDouble(request.getParameter("finance-supplies"));
+//        double financeSupplies = Double.parseDouble(request.getParameter("finance-supplies"));
+        double financeSupplies = 0.00;
         double financeEquipment = Double.parseDouble(request.getParameter("finance-equipment"));
 
         ExpenditureLimit adminLimit = new ExpenditureLimit();

@@ -51,7 +51,7 @@
                                                     <tr>
                                                         <th>Division</th>
                                                         <th>Equipment</th>
-                                                        <th>Supplies</th>
+                                                        <!--<th>Supplies</th>-->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -60,45 +60,45 @@
                                                         <td>
                                                             <input type="number" name="procurement-equipment" autocomplete="off">
                                                         </td>
-                                                        <td>
+<!--                                                        <td>
                                                             <input type="number" name="procurement-supplies" autocomplete="off">
-                                                        </td>
+                                                        </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>Management Division</td>
                                                         <td>
                                                             <input type="number" name="management-equipment" autocomplete="off">
                                                         </td>
-                                                        <td>
+<!--                                                        <td>
                                                             <input type="number" name="management-supplies" autocomplete="off">
-                                                        </td>
+                                                        </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>Admin Services</td>
                                                         <td>
                                                             <input type="number" name="admin-equipment" autocomplete="off">
                                                         </td>
-                                                        <td>
+<!--                                                        <td>
                                                             <input type="number" name="admin-supplies" autocomplete="off">
-                                                        </td>
+                                                        </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>General Services</td>
                                                         <td>
                                                             <input type="number" name="general-equipment" autocomplete="off">
                                                         </td>
-                                                        <td>
+<!--                                                        <td>
                                                             <input type="number" name="general-supplies" autocomplete="off">
-                                                        </td>
+                                                        </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>Finance Division</td>
                                                         <td>
                                                             <input type="number" name="finance-equipment" autocomplete="off">
                                                         </td>
-                                                        <td>
+<!--                                                        <td>
                                                             <input type="number" name="finance-supplies" autocomplete="off">
-                                                        </td>
+                                                        </td>-->
                                                     </tr>
                                                 </tbody>
                                             </table>

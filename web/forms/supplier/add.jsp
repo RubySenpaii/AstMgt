@@ -64,8 +64,6 @@
                                         <label class="col-lg-2 control-label">Supplier Type</label>
                                         <div class="col-lg-10">
                                             <select class="form-control" name="supptype">
-                                                <option>Supplies Office</option>
-                                                <option>Supplies General</option>
                                                 <option>Equipment Furniture</option>
                                                 <option>Equipment Appliance</option>
                                                 <option>Equipment Electronics</option>

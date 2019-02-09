@@ -186,12 +186,13 @@
             console.log(sum);
             console.log(assetType);
             if (assetType.includes('Equipment')) {
-                if (sum > equipLimit) {
+                if (Number(sum) > Number(equipLimit)) {
                     $('#prid').prop("disabled", true);
                 }
             }
             if (assetType.includes('Supplies')) {
-                if (sum > suppLimit) {
+                if (Number(sum) > Number(suppLimit)) {
+                    console.log('went here');
                     $('#prid').prop("disabled", true);
                 }
             }

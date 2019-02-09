@@ -72,8 +72,6 @@
                                         <label class="col-lg-2 control-label">Asset Type</label>
                                         <div class="col-lg-10">
                                             <select class="form-control" name="asset-type">
-                                                <option>Supplies Office</option>
-                                                <option>Supplies General</option>
                                                 <option>Equipment Furniture</option>
                                                 <option>Equipment Appliance</option>
                                                 <option>Equipment Electronics</option>

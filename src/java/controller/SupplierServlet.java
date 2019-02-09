@@ -63,7 +63,6 @@ public class SupplierServlet extends BaseServlet {
         supplier.SupplierTIN = request.getParameter("supptin");
         int result = supplierService.AddNewSupplier(supplier);
         if (result == 1) {
-            System.out.println("Here i am");
             return "/SupplierServlet/List";
         } else {
             return "/SupplierServlet/Add";

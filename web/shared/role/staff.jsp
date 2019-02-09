@@ -32,12 +32,6 @@
                 </ul>
             </li>
             <li class="sub-menu">
-                <a href="/AMS/InventoryServlet/SuppliesList">
-                    <i class="fa"></i>
-                    <span>Supplies</span>
-                </a>
-            </li>
-            <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa"></i>
                     <span>Purchase Request</span>
