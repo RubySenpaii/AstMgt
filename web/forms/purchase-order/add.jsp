@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.PurchaseRequest"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="objects.Supplier"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -30,7 +31,10 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
                                     <div class="col-lg-10">
-                                        <input list="supp" name="supplier" id="supplier" class="form-control" autocomplete="off">
+                                        <%
+                                            PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
+                                        %>
+                                        <input list="supp" name="supplier" id="supplier" class="form-control" autocomplete="off" value="<%=pr.Supplier.SupplierName%>">
                                         <datalist id="supp">
                                             <%
                                                 ArrayList<Supplier> slist = new ArrayList<Supplier>();
@@ -98,6 +102,17 @@
     <jsp:include page="../../shared/js.jsp"/>
     <script>
         $(document).ready(function () {
+            var type = document.getElementById('supplier').value;
+            console.log('supplier' + type);
+            $.ajax({
+                url: '/AMS/AjaxServlet/RetrieveContactPerson',
+                dataType: 'json',
+                data: {supplier: type},
+                success: function (data) {
+                    console.log(data);
+                    $('#consupp').val(data.ContactPerson);
+                }
+            });
             $('#supplier').on('change', function () {
                 var type = $(this).val();
                 console.log('supplier' + type);

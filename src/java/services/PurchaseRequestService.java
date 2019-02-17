@@ -23,8 +23,8 @@ public class PurchaseRequestService {
 
     private final String AddQuery = "INSERT INTO PurchaseRequest(" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + "," + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + ","
             + PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE + "," + PurchaseRequest.COLUMN_DATE + "," + PurchaseRequest.COLUMN_PURPOSE + ","
-            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE
-            + ")VALUES(?,?,?,?,?,?,?);";
+            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE + ", " + PurchaseRequest.COLUMN_SUPPLIER_ID
+            + ")VALUES(?,?,?,?,?,?,?,?);";
     private final String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
     private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ;";
     private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
@@ -43,6 +43,7 @@ public class PurchaseRequestService {
             ps.setString(5, pr.Purpose);
             ps.setInt(6, pr.RequestedBy);
             ps.setObject(7, pr.RequestedDate);
+            ps.setInt(8, pr.SupplierId);
 
             int res = ps.executeUpdate();
             ps.close();
@@ -238,6 +239,7 @@ public class PurchaseRequestService {
             e.RequestedDate = rs.getDate(PurchaseRequest.COLUMN_REQUESTED_DATE);
             e.ResponsibilityCenterCode = rs.getString(PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE);
             e.Requester = new EmployeeService().FindEmployeeById(e.RequestedBy);
+            e.SupplierId = rs.getInt(PurchaseRequest.COLUMN_SUPPLIER_ID);
             if (e.ApprovedBy != 0) {
                 e.Approver = new EmployeeService().FindEmployeeById(e.ApprovedBy);
             } else {
@@ -246,6 +248,7 @@ public class PurchaseRequestService {
                 e.Approver.FirstName = "-";
                 e.Approver.Division = "-";
             }
+            e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
             e.AssetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(e.PurchaseRequestId);
             purchaserequestList.add(e);
         }

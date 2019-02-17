@@ -5,6 +5,7 @@
  */
 package objects;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -32,4 +33,7 @@ public class AssetTracking {
     public Employee ReleaseBy;
     public Employee ReleaseTo;
     public Employee Approver;
+    
+    public ArrayList<AssetIncident> Incidents;
+    public ArrayList<AssetTracking> Trackings;
 }

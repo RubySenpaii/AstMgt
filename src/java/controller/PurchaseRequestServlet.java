@@ -26,9 +26,11 @@ import objects.Asset;
 import objects.AssetRequested;
 import objects.Employee;
 import objects.PurchaseRequest;
+import objects.Supplier;
 import services.AssetRequestedService;
 import services.AssetService;
 import services.PurchaseRequestService;
+import services.SupplierService;
 
 /**
  *
@@ -172,6 +174,8 @@ public class PurchaseRequestServlet extends BaseServlet {
         System.out.println("Retrieiving at : " + test);
         pr.Date = test;
         pr.RequestedDate = test;
+        Supplier supplier = new SupplierService().FindSupplierByName(request.getParameter("supplier"));
+        pr.SupplierId = supplier.SupplierId;
         ArrayList<AssetRequested> ALIST = new ArrayList<>();
         AssetService assetService = new AssetService();
         for (int i = 0; i < assets.length; i++) {

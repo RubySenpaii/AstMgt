@@ -114,7 +114,7 @@
                                         </tr>
                                         <%
                                             }
-                                        } else if (item.Asset.AssetType.contains("EquipmentVehicle")) {
+                                        } else if (item.Asset.AssetType.toLowerCase().contains("vehicle")) {
                                             for (int i = 0; i < item.Quantity; i++) {
                                         %>
                                         <tr>

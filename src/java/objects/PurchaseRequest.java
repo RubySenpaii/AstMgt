@@ -24,6 +24,7 @@ public class PurchaseRequest {
     public static final String COLUMN_APPROVED_BY = "ApprovedBy";
     public static final String COLUMN_APPROVED_DATE = "ApprovedDate";
     public static final String COLUMN_REMARKS = "Remarks";
+    public static final String COLUMN_SUPPLIER_ID = "SupplierId";
     
     public int PurchaseRequestId;
     public String PurchaseRequestNo;
@@ -35,8 +36,10 @@ public class PurchaseRequest {
     public int ApprovedBy;
     public Date ApprovedDate;
     public String Remarks;
+    public int SupplierId;
     
     public Employee Requester;
     public Employee Approver;
     public ArrayList<AssetRequested> AssetsRequested;
+    public Supplier Supplier;
 }

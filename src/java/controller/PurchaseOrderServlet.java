@@ -125,10 +125,12 @@ public class PurchaseOrderServlet extends BaseServlet {
     private String CreatePurchaseOrder(HttpServletRequest request) {
         HttpSession session = request.getSession();
         int purchaseRequestId = Integer.parseInt(request.getParameter("prid"));
+        PurchaseRequest purchaseRequest = new PurchaseRequestService().FindPurhcaseRequesById(purchaseRequestId);
         ArrayList<AssetRequested> assetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(purchaseRequestId);
         ArrayList<Supplier> supplierList = new SupplierService().FindSupplierByType(assetsRequested.get(0).Asset.AssetType);
         System.out.println("found a list of supplier: " + supplierList.size());
         session.setAttribute("supplierList", supplierList);
+        session.setAttribute("purchaseRequest", purchaseRequest);
         return "/forms/purchase-order/add.jsp";
     }
     

@@ -58,49 +58,55 @@
                                                     <tr>
                                                         <td>Procurement Division</td>
                                                         <td>
-                                                            <input type="number" name="procurement-equipment" autocomplete="off">
+                                                            <input type="number" name="procurement-equipment" id="procurement" onchange="total()" autocomplete="off">
                                                         </td>
-<!--                                                        <td>
-                                                            <input type="number" name="procurement-supplies" autocomplete="off">
-                                                        </td>-->
+                                                        <!--                                                        <td>
+                                                                                                                    <input type="number" name="procurement-supplies" autocomplete="off">
+                                                                                                                </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>Management Division</td>
                                                         <td>
-                                                            <input type="number" name="management-equipment" autocomplete="off">
+                                                            <input type="number" name="management-equipment" id="management" onchange="total()" autocomplete="off">
                                                         </td>
-<!--                                                        <td>
-                                                            <input type="number" name="management-supplies" autocomplete="off">
-                                                        </td>-->
+                                                        <!--                                                        <td>
+                                                                                                                    <input type="number" name="management-supplies" autocomplete="off">
+                                                                                                                </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>Admin Services</td>
                                                         <td>
-                                                            <input type="number" name="admin-equipment" autocomplete="off">
+                                                            <input type="number" name="admin-equipment" id="admin" onchange="total()" autocomplete="off">
                                                         </td>
-<!--                                                        <td>
-                                                            <input type="number" name="admin-supplies" autocomplete="off">
-                                                        </td>-->
+                                                        <!--                                                        <td>
+                                                                                                                    <input type="number" name="admin-supplies" autocomplete="off">
+                                                                                                                </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>General Services</td>
                                                         <td>
-                                                            <input type="number" name="general-equipment" autocomplete="off">
+                                                            <input type="number" name="general-equipment" id="general" onchange="total()" autocomplete="off">
                                                         </td>
-<!--                                                        <td>
-                                                            <input type="number" name="general-supplies" autocomplete="off">
-                                                        </td>-->
+                                                        <!--                                                        <td>
+                                                                                                                    <input type="number" name="general-supplies" autocomplete="off">
+                                                                                                                </td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>Finance Division</td>
                                                         <td>
-                                                            <input type="number" name="finance-equipment" autocomplete="off">
+                                                            <input type="number" name="finance-equipment" id="finance" onchange="total()" autocomplete="off">
                                                         </td>
-<!--                                                        <td>
-                                                            <input type="number" name="finance-supplies" autocomplete="off">
-                                                        </td>-->
+                                                        <!--                                                        <td>
+                                                                                                                    <input type="number" name="finance-supplies" autocomplete="off">
+                                                                                                                </td>-->
                                                     </tr>
                                                 </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Total</th>
+                                                        <th><span id="totalValue"></span></th>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>
@@ -119,4 +125,15 @@
         </section>
     </body>
     <jsp:include page="../shared/js.jsp"/>
+    <script>
+        function total() {
+            var procurement = document.getElementById('procurement').value;
+            var management = document.getElementById('management').value;
+            var admin = document.getElementById('admin').value;
+            var general = document.getElementById('general').value;
+            var finance = document.getElementById('finance').value;
+            var total = Number(procurement) + Number(management) + Number(admin) + Number(general) + Number(finance);
+            document.getElementById('totalValue').textContent = total;
+        }
+    </script>
 </html>

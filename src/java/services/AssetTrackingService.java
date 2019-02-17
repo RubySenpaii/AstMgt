@@ -101,7 +101,7 @@ public class AssetTrackingService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
 
-            String query = "SELECT * FROM AssetTracking WHERE " + AssetTracking.COLUMN_ASSET_TAG + " = ?";
+            String query = "SELECT * FROM AssetTracking WHERE " + AssetTracking.COLUMN_ASSET_TAG + " = ? AND " + AssetTracking.COLUMN_APPROVED_BY + " IS NOT NULL";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, assetTag);
 

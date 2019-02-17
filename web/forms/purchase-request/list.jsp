@@ -40,6 +40,7 @@
                                             <th>Requested Date</th>
                                             <th>Reviewed By</th>
                                             <th>Division</th>
+                                            <th>User Type</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -55,6 +56,7 @@
                                             <td><c:out value="<%= pr.RequestedDate%>"></c:out></td>
                                             <td><c:out value="<%= pr.Approver.FullName()%>"></c:out></td>
                                             <td><c:out value="<%= pr.Approver.Division%>"></c:out></td>
+                                            <td><c:out value="<%= pr.Approver.UserLevel%>"></c:out></td>
                                                 <td>
                                                     <form action="/AMS/PurchaseRequest/View">
                                                         <button type="submit" value="<%= pr.PurchaseRequestId%>" name="prid" >View</button>
