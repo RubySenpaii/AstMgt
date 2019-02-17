@@ -104,18 +104,41 @@ public class InventoryServlet extends BaseServlet {
         ArrayList<AssetRequested> assetsRequested = purchaseOrder.PurchaseRequest.AssetsRequested;
         String[] assetTags = request.getParameterValues("asset-tag");
         String[] condition = request.getParameterValues("condition");
-        String[] serialNumber = request.getParameterValues("serial-number");
         int qty = 1, counter = 0;
         for (int i = 0; i < assetsRequested.size(); i++) {
             if (assetsRequested.get(i).Asset.AssetType.contains("Equipment")) {
+                String description = "";
+                // split description by \n and split details using //
+                if (assetsRequested.get(i).Asset.AssetType.contains("Furniture")) {
+                    description += "Color//" + request.getParameterValues("color")[counter] + "__";
+                    description += "Office Destination//" + request.getParameterValues("office-destination")[counter];
+                } else if (assetsRequested.get(i).Asset.AssetType.contains("Vehicle")) {
+                    description += "Enginer Number//" + request.getParameterValues("enginer-number")[counter] + "__";
+                    description += "Chassis Number//" + request.getParameterValues("chassis-number")[counter] + "__";
+                    description += "Make//" + request.getParameterValues("make")[counter] + "__";
+                    description += "Model//" + request.getParameterValues("model")[counter] + "__";
+                    description += "Year//" + request.getParameterValues("year")[counter] + "__";
+                    description += "Color//" + request.getParameterValues("color")[counter];
+                } else if (assetsRequested.get(i).Asset.AssetType.contains("Appliance")) {
+                    description += "Brand//" + request.getParameterValues("brand")[counter] + "__";
+                    description += "Model//" + request.getParameterValues("model")[counter] + "__";
+                    description += "Color//" + request.getParameterValues("color")[counter];
+                } else if (assetsRequested.get(i).Asset.AssetType.contains("Electronics")) {
+                    description += "Brand//" + request.getParameterValues("brand")[counter] + "__";
+                    description += "Model//" + request.getParameterValues("model")[counter] + "__";
+                    description += "Serial Number//" + request.getParameterValues("serial-number")[counter] + "__";
+                    description += "MAC Address//" + request.getParameterValues("mac-address")[counter] + "__";
+                    description += "Build Number//" + request.getParameterValues("build-number")[counter] + "__";
+                    description += "Color//" + request.getParameterValues("color")[counter];
+                }
                 Employee employee = (Employee) session.getAttribute("user");
                 Equipment equipment = new Equipment();
                 equipment.AssetId = assetsRequested.get(i).AssetId;
                 equipment.AssetTag = assetTags[counter];
                 equipment.Condition = condition[counter];
-                equipment.SerialNumber = serialNumber[counter];
                 equipment.AcquisitionCost = assetsRequested.get(i).UnitCost;
                 equipment.DateAcquired = Calendar.getInstance().getTime();
+                equipment.Description = description;
                 equipment.Flag = 1;
                 int result = equipmentService.AddEquipment(equipment);
 
@@ -179,7 +202,7 @@ public class InventoryServlet extends BaseServlet {
         session.setAttribute("equipment", equipment);
         return "/inventory/equipment-view.jsp";
     }
-    
+
     private String ViewSupplies(HttpServletRequest request) {
         HttpSession session = request.getSession();
         int assetId = Integer.parseInt(request.getParameter("asset-id"));
@@ -223,14 +246,14 @@ public class InventoryServlet extends BaseServlet {
         }
         return "/InventoryServlet/SuppliesList";
     }
-    
+
     private String ShowTrackingRequests(HttpServletRequest request) {
         HttpSession session = request.getSession();
         ArrayList<AssetTracking> assetTrackings = assetTrackingService.GetPendingTracking();
         session.setAttribute("assetTrackings", assetTrackings);
         return "/forms/asset/tracking-requests.jsp";
     }
-    
+
     private String ReviewTracking(HttpServletRequest request) {
         HttpSession session = request.getSession();
         ArrayList<AssetTracking> trackings = (ArrayList<AssetTracking>) session.getAttribute("assetTrackings");

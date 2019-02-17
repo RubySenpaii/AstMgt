@@ -52,7 +52,15 @@
                                     <label class="col-lg-10 control-label"><%=equipment.Asset.EstimatedUsefulLife%></label>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-lg-4">
+                                    <label class="col-lg-2 control-label">Description</label>
+                                    <label class="col-lg-10 control-label"><%=equipment.Description.replace("__", "<br>").replace("//", ": ")%></label>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button class="btn" type="button" onclick="document.getElementById('tracking').style.display = 'block'; document.getElementById('repairs').style.display = 'none';">Tracking</button>
+                                        <button class="btn" type="button" onclick="document.getElementById('repairs').style.display = 'block'; document.getElementById('tracking').style.display = 'none';">Repairs</button>
+                                    </div>
+                                    <div class="col-lg-12" id="repairs" style="display: none">
                                         <h4>Incidents</h4>
                                         <table class="table table-bordered">
                                             <thead>
@@ -76,7 +84,7 @@
                                         </table>
                                     </div>
 
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-12" id="tracking" style="display: none">
                                         <h4>Tracking</h4>
                                         <table class="table table-bordered">
                                             <thead>

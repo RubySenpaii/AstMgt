@@ -31,17 +31,68 @@
                             <form class="form-horizontal style-form" action="/AMS/InventoryServlet/Acknowledge">
                                 <table class="table table-bordered">
                                     <thead>
+                                        <%
+                                            ArrayList<AssetRequested> items = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
+                                            if (items.get(0).Asset.AssetType.toLowerCase().contains("furniture")) {
+                                        %>
                                         <tr>
                                             <th>Stock No</th>
                                             <th>Asset Name</th>
-                                            <th colspan="3">Asset Details</th>
+                                            <th>Property Tag</th>
+                                            <th>Condition</th>
+                                            <th>Color</th>
+                                            <th>Office Destination</th>
                                         </tr>
+                                        <%
+                                        } else if (items.get(0).Asset.AssetType.toLowerCase().contains("vehicle")) {
+                                        %>
+                                        <tr>
+                                            <th>Stock No</th>
+                                            <th>Asset Name</th>
+                                            <th>Property Tag</th>
+                                            <th>Condition</th>
+                                            <th>Engine Number</th>
+                                            <th>Chassis Number</th>
+                                            <th>Make</th>
+                                            <th>Model</th>
+                                            <th>Year</th>
+                                            <th>Color</th>
+                                        </tr>
+                                        <%
+                                        } else if (items.get(0).Asset.AssetType.toLowerCase().contains("appliance")) {
+                                        %>
+                                        <tr>
+                                            <th>Stock No</th>
+                                            <th>Asset Name</th>
+                                            <th>Property Tag</th>
+                                            <th>Condition</th>
+                                            <th>Brand</th>
+                                            <th>Model</th>
+                                            <th>Color</th>
+                                        </tr>
+                                        <%
+                                        } else if (items.get(0).Asset.AssetType.toLowerCase().contains("electronics")) {
+                                        %>
+                                        <tr>
+                                            <th>Stock No</th>
+                                            <th>Asset Name</th>
+                                            <th>Property Tag</th>
+                                            <th>Condition</th>
+                                            <th>Brand</th>
+                                            <th>Model</th>
+                                            <th>Serial Number</th>
+                                            <th>MAC Address</th>
+                                            <th>Build Number</th>
+                                            <th>Color</th>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
                                     </thead>
                                     <tbody>
                                         <%
-                                            ArrayList<AssetRequested> items = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
                                             for (AssetRequested item : items) {
-                                                if (item.Asset.AssetType.contains("Equipment")) {
+                                                if (item.Asset.AssetType.toLowerCase().contains("furniture")) {
                                                     for (int i = 0; i < item.Quantity; i++) {
                                         %>
                                         <tr>
@@ -49,25 +100,113 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Asset Tag" autocomplete="off">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
                                             </td>
                                             <td>
                                                 <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="serial-number" placeholder="Serial Number" autocomplete="off">
+                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="office-destination" placeholder="Office Destination" autocomplete="off">
                                             </td>
                                         </tr>
                                         <%
-                                                    }
-                                                } else {
+                                            }
+                                        } else if (item.Asset.AssetType.contains("EquipmentVehicle")) {
+                                            for (int i = 0; i < item.Quantity; i++) {
                                         %>
                                         <tr>
                                             <td><%=item.Asset.StockNo%></td>
                                             <td><%=item.Asset.AssetName%></td>
-                                            <td>Quantity Ordered: <%=item.Quantity%></td>
+                                            <td>
+                                                <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="engine-number" placeholder="Engine Number" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="chassis-number" placeholder="Chassis Number" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="make" placeholder="Make" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="model" placeholder="Model" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="year" placeholder="Year" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                            </td>
                                         </tr>
                                         <%
+                                            }
+                                        } else if (item.Asset.AssetType.toLowerCase().contains("appliance")) {
+                                            for (int i = 0; i < item.Quantity; i++) {
+                                        %>
+                                        <tr>
+                                            <td><%=item.Asset.StockNo%></td>
+                                            <td><%=item.Asset.AssetName%></td>
+                                            <td>
+                                                <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="brand" placeholder="Brand" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="model" placeholder="Model" autocomplete="off">
+                                            </td>=
+                                            <td>
+                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        } else if (item.Asset.AssetType.toLowerCase().contains("electronics")) {
+                                            for (int i = 0; i < item.Quantity; i++) {
+                                        %>
+                                        <tr>
+                                            <td><%=item.Asset.StockNo%></td>
+                                            <td><%=item.Asset.AssetName%></td>
+                                            <td>
+                                                <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="brand" placeholder="Brand" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="model" placeholder="Model" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="serial-number" placeholder="Serial Number" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="mac-address" placeholder="MAC Address" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="build-number" placeholder="Build Number" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                            </td>
+                                        </tr>
+                                        <%
+                                                    }
                                                 }
                                             }
                                         %>

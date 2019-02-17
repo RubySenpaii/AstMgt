@@ -20,16 +20,16 @@ public class Equipment {
     public static final String COLUMN_CONDITION = "Condition";
     public static final String COLUMN_FLAG = "Flag";
     public static final String COLUMN_DATE_ACQUIRED = "DateAcquired";
-    public static final String COLUMN_SERIAL_NUMBER = "SerialNumber";
     public static final String COLUMN_ACQUISITION_COST = "AcquisitionCost";
+    public static final String COLUMN_DESCRIPTION = "Description";
     
     public int AssetId;
     public String AssetTag;
     public String Condition;
     public int Flag;
     public Date DateAcquired;
-    public String SerialNumber;
     public double AcquisitionCost;
+    public String Description;
     
     public Asset Asset;
     public Employee CurrentUser;
