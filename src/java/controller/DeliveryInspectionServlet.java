@@ -87,14 +87,14 @@ public class DeliveryInspectionServlet extends BaseServlet {
             RequestForDeliveryInspection requestInspection = new RequestForDeliveryInspection();
             String orderNumber = purchaseOrderService.FindPurchaseOrderById(purchaseOrder.PurchaseOrderId).PurchaseOrderNumber;
 
-            try {
+            /*try {
                 purchaseOrder.ORSNumber = request.getParameter("orsno");
                 purchaseOrder.ORSDate = SharedFormat.DB_DATE_ENTRY.parse(request.getParameter("orsdate"));
                 int result = purchaseOrderService.UpdatePurchaseOrder(purchaseOrder);
                 System.out.println("update result: " + result);
             } catch (ParseException ex) {
                 Logger.getLogger(DeliveryInspectionServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
 
             requestInspection.DeliveryInspectionId = deliveryInspectionService.GetRequestsForDeliveryInspection().size() + 1;
             Part invoiceFile = request.getPart("invoice");

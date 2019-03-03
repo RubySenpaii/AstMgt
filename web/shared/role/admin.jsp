@@ -1,4 +1,4 @@
- <aside>
+<aside>
     <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
@@ -38,11 +38,24 @@
                 <a href="javascript:;">
                     <i class="fa"></i>
                     <span>Equipment</span>
+                    <%
+                        int tracking = (int) session.getAttribute("trackingSize");
+                        int repair = (int) session.getAttribute("repairSize");
+                    %>
+                    <span class="badge bg-warning"><%=tracking + repair%></span>
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
-                    <li><a href="/AMS/InventoryServlet/ShowTrackingRequests">Transfer Requests</a></li>
-                    <li><a href="/AMS/AssetServlet/RepairRequests">Repair Requests</a></li>
+                    <li>
+                        <a href="/AMS/InventoryServlet/ShowTrackingRequests">
+                            Transfer Requests <span class="badge bg-warning"><%=tracking%></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AMS/AssetServlet/RepairRequests">
+                            Repair Requests <span class="badge bg-warning"><%=repair%></span>
+                        </a>
+                    </li>
                     <li><a href="/AMS/AssetServlet/LogTracking">Log Transfer</a></li>
                     <li><a href="/AMS/AssetServlet/LogIncident">Log Incident</a></li>
                     <li><a href="/AMS/AssetServlet/LogRepair">Log Asset Repair</a></li>

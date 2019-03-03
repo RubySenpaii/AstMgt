@@ -42,6 +42,7 @@
                                             <th>Condition</th>
                                             <th>Color</th>
                                             <th>Office Destination</th>
+                                            <th>Warranty</th>
                                         </tr>
                                         <%
                                         } else if (items.get(0).Asset.AssetType.toLowerCase().contains("vehicle")) {
@@ -57,6 +58,7 @@
                                             <th>Model</th>
                                             <th>Year</th>
                                             <th>Color</th>
+                                            <th>Warranty</th>
                                         </tr>
                                         <%
                                         } else if (items.get(0).Asset.AssetType.toLowerCase().contains("appliance")) {
@@ -69,6 +71,7 @@
                                             <th>Brand</th>
                                             <th>Model</th>
                                             <th>Color</th>
+                                            <th>Warranty</th>
                                         </tr>
                                         <%
                                         } else if (items.get(0).Asset.AssetType.toLowerCase().contains("electronics")) {
@@ -81,7 +84,7 @@
                                             <th>Brand</th>
                                             <th>Model</th>
                                             <th>Serial Number</th>
-                                            <th>MAC Address</th>
+                                            <th>Warranty</th>
                                             <th>Build Number</th>
                                             <th>Color</th>
                                         </tr>
@@ -110,6 +113,9 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="office-destination" placeholder="Office Destination" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
                                             </td>
                                         </tr>
                                         <%
@@ -145,6 +151,9 @@
                                             <td>
                                                 <input class="form-control" name="color" placeholder="Color" autocomplete="off">
                                             </td>
+                                            <td>
+                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
+                                            </td>
                                         </tr>
                                         <%
                                             }
@@ -166,9 +175,12 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="model" placeholder="Model" autocomplete="off">
-                                            </td>=
+                                            </td>
                                             <td>
                                                 <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
                                             </td>
                                         </tr>
                                         <%
@@ -196,7 +208,7 @@
                                                 <input class="form-control" name="serial-number" placeholder="Serial Number" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="mac-address" placeholder="MAC Address" autocomplete="off">
+                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
                                             </td>
                                             <td>
                                                 <input class="form-control" name="build-number" placeholder="Build Number" autocomplete="off">

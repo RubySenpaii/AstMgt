@@ -35,6 +35,7 @@ public class Equipment {
     public Employee CurrentUser;
     public ArrayList<AssetTracking> TrackingLogs;
     public ArrayList<AssetIncident> IncidentLogs;
+    public ArrayList<RepairLog> RepairLogs;
     
     public String Status() {
         switch (this.Flag) {
@@ -43,6 +44,7 @@ public class Equipment {
             case 2: return "Being Used";
             case 3: return "Expiring";
             case 4: return "Extended";
+            case 5: return "Donated";
             default: return "N/A";
         }
     }
@@ -51,5 +53,12 @@ public class Equipment {
         long diffInMillies = Calendar.getInstance().getTime().getTime() - this.DateAcquired.getTime();
         long days = TimeUnit.MILLISECONDS.toDays(diffInMillies);
         return this.AcquisitionCost / this.Asset.EstimatedUsefulLife * (days / 365.4);
+    }
+    
+    public double getAge() {
+        long diffInMillies = Calendar.getInstance().getTime().getTime() - this.DateAcquired.getTime();
+        long days = TimeUnit.MILLISECONDS.toDays(diffInMillies);
+        double years = days / 365.4;
+        return Math.round(years  * 100.0) / 100.0;
     }
 }

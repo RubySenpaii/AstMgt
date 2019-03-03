@@ -27,11 +27,12 @@
                         <div class="form-panel">
                             <h4>Equipment List</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/InventoryServlet/EquipmentView">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="equip-list">
                                     <thead>
                                         <tr>
                                             <th>Asset Name</th>
                                             <th>Asset Tag</th>
+                                            <th>Date Acquired</th>
                                             <th>Condition</th>
                                             <th>Status</th>
                                             <th>Current User</th>
@@ -46,6 +47,7 @@
                                         <tr>
                                             <td><%=equipment.Asset.AssetName%></td>
                                             <td><%=equipment.AssetTag%></td>
+                                            <td><%=equipment.DateAcquired%></td>
                                             <td><%=equipment.Condition%></td>
                                             <td><%=equipment.Status()%></td>
                                             <td><%=equipment.CurrentUser.FullName()%></td>
@@ -69,4 +71,11 @@
         </section>
     </body>
     <jsp:include page="../shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            $('#equip-list').DataTable({
+                "order": [[2, "desc"]]
+            });
+        });
+    </script>
 </html>

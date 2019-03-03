@@ -26,17 +26,16 @@
                 <%
                     int pendingPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("pendingPurchaseRequests")).size();
                     int approvedPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("approvedPurchaseRequests")).size();
-                    int lowSupplies = ((ArrayList<Supplies>) session.getAttribute("lowSupplies")).size();
                     int expiringEquipment = ((ArrayList<Equipment>) session.getAttribute("expiringEquipments")).size();
                 %>
                 <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                     <i class="fa fa-bell-o"></i>
-                    <span class="badge bg-warning"><%=pendingPurchaseRequests + approvedPurchaseRequests + lowSupplies + expiringEquipment%></span>
+                    <span class="badge bg-warning"><%=pendingPurchaseRequests + approvedPurchaseRequests + expiringEquipment%></span>
                 </a>
                 <ul class="dropdown-menu extended notification">
                     <div class="notify-arrow notify-arrow-yellow"></div>
                     <li>
-                        <p class="yellow">You have <%=pendingPurchaseRequests + approvedPurchaseRequests + lowSupplies + expiringEquipment%> new notifications</p>
+                        <p class="yellow">You have <%=pendingPurchaseRequests + approvedPurchaseRequests + expiringEquipment%> new notifications</p>
                     </li>
                     <li>
                         <a href="/AMS/HomeServlet">
@@ -46,12 +45,6 @@
                     <li>
                         <a href="/AMS/HomeServlet">
                             <%=approvedPurchaseRequests%> Approved PR But No PO
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/AMS/HomeServlet">
-                            <%=lowSupplies%> Low Supply Count
                         </a>
                     </li>
                     <li>

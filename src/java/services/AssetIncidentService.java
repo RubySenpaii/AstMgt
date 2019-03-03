@@ -25,13 +25,14 @@ public class AssetIncidentService {
             Connection con = db.getConnection();
             
             String query = "INSERT INTO AssetIncident (" + AssetIncident.COLUMN_ASSET_TAG + ", " + AssetIncident.COLUMN_REMARKS + ", "
-                    + AssetIncident.COLUMN_REPORTED_BY + ", " + AssetIncident.COLUMN_TIMESTAMP + ") "
-                    + "VALUES(?, ?, ?, ?)";
+                    + AssetIncident.COLUMN_REPORTED_BY + ", " + AssetIncident.COLUMN_TIMESTAMP + ", " + AssetIncident.COLUMN_SEVERITY + ") "
+                    + "VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, incident.AssetTag);
             ps.setString(2, incident.Remarks);
             ps.setInt(3, incident.ReportedBy);
             ps.setObject(4, incident.Timestamp);
+            ps.setInt(5, incident.Severity);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -94,6 +95,7 @@ public class AssetIncidentService {
             incident.Remarks = rs.getString(AssetIncident.COLUMN_REMARKS);
             incident.ReportedBy = rs.getInt(AssetIncident.COLUMN_REPORTED_BY);
             incident.Timestamp = rs.getDate(AssetIncident.COLUMN_TIMESTAMP);
+            incident.Severity = rs.getInt(AssetIncident.COLUMN_SEVERITY);
             incidents.add(incident);
         }
         rs.close();

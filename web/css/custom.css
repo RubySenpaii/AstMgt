@@ -46,3 +46,11 @@ footer {
 .fill-header {
     width: available;
 }
+
+.quantity {
+    width: 90px;
+}
+
+.price {
+    width: 95%;
+}

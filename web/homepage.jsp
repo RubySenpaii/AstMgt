@@ -46,7 +46,7 @@
                                         <tr>
                                             <td><%=pendingRequest.PurchaseRequestNo%></td>
                                             <td><%=pendingRequest.Requester.FullName()%></td>
-                                            <td>Php 21231</td>
+                                            <td>Php <%=pendingRequest.TotalCost%></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <button type="submit" value="<%=pendingRequest.PurchaseRequestId%>" name="prid" >View</button>
@@ -80,7 +80,7 @@
                                         <tr>
                                             <td><%=approvedRequest.PurchaseRequestNo%></td>
                                             <td><%=approvedRequest.Requester.FullName()%></td>
-                                            <td>Php 21231</td>
+                                            <td>Php <%=approvedRequest.TotalCost%></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <button type="submit" value="<%=approvedRequest.PurchaseRequestId%>" name="prid" >View</button>
@@ -96,41 +96,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-panel">
-                                <h3>Low Supplies Count</h3>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset Name</th>
-                                            <th>Last Updated</th>
-                                            <th>Running Balance</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            ArrayList<Supplies> lowSupplies = (ArrayList<Supplies>) session.getAttribute("lowSupplies");
-                                            for (Supplies lowSupply : lowSupplies) {
-                                        %>
-                                        <tr>
-                                            <td><%=lowSupply.Asset.AssetName%></td>
-                                            <td><%=lowSupply.Timestamp%></td>
-                                            <td><%=lowSupply.TotalQuantity%></td>
-                                            <td>
-                                                
-                                                <form>
-                                                    <button formaction="/AMS/InventoryServlet/SuppliesView" name="asset-id" value="<%=lowSupply.AssetId%>">View</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="form-panel">
                                 <h3>Expiring Equipments</h3>
@@ -186,7 +151,7 @@
                                         <tr>
                                             <td><%=rejectedRequest.PurchaseRequestNo%></td>
                                             <td><%=rejectedRequest.Requester.FullName()%></td>
-                                            <td>Php 21231</td>
+                                            <td>Php <%=rejectedRequest.TotalCost%></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <button type="submit" value="<%=rejectedRequest.PurchaseRequestId%>" name="prid" >View</button>

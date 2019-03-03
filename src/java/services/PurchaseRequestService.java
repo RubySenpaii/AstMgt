@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import objects.AssetRequested;
 import objects.Employee;
 import objects.PurchaseRequest;
 
@@ -250,6 +251,11 @@ public class PurchaseRequestService {
             }
             e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
             e.AssetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(e.PurchaseRequestId);
+            double total = 0;
+            for (AssetRequested asset: e.AssetsRequested) {
+                total += asset.UnitCost * asset.Quantity;
+            }
+            e.TotalCost = total;
             purchaserequestList.add(e);
         }
         rs.close();

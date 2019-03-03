@@ -49,9 +49,55 @@
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Purpose</label>
                                         <label class="col-lg-10 control-label"> <c:out value="<%= log.ApprovedDate%>"></c:out> </label>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Repair Cost</label>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Article</th>
+                                                    <th>Cost</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <%
+                                                for (RepairLog tableLog : log.Logs) {
+                                            %>
+                                            <tr>
+                                                <td><%=tableLog.Article%></td>
+                                                <td><%=tableLog.Cost%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <%
                                 } else {
                                 %>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Repair Cost</label>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Article</th>
+                                                <th>Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                for (RepairLog tableLog : log.Logs) {
+                                            %>
+                                            <tr>
+                                                <td><%=tableLog.Article%></td>
+                                                <td><%=tableLog.Cost%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <form action="/AMS/AssetServlet/ApproveRepair">

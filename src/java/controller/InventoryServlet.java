@@ -28,6 +28,7 @@ import services.AssetIncidentService;
 import services.AssetTrackingService;
 import services.EquipmentService;
 import services.PurchaseOrderService;
+import services.RepairLogService;
 import services.RequestForDeliveryInspectionService;
 import services.SuppliesService;
 
@@ -43,6 +44,7 @@ public class InventoryServlet extends BaseServlet {
     private RequestForDeliveryInspectionService deliveryInspectionService = new RequestForDeliveryInspectionService();
     private AssetTrackingService assetTrackingService = new AssetTrackingService();
     private AssetIncidentService assetIncidentService = new AssetIncidentService();
+    private RepairLogService repairLogService = new RepairLogService();
 
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -111,26 +113,27 @@ public class InventoryServlet extends BaseServlet {
                 // split description by \n and split details using //
                 if (assetsRequested.get(i).Asset.AssetType.contains("Furniture")) {
                     description += "Color//" + request.getParameterValues("color")[counter] + "__";
-                    description += "Office Destination//" + request.getParameterValues("office-destination")[counter];
+                    description += "Office Destination//" + request.getParameterValues("office-destination")[counter] + "__";
                 } else if (assetsRequested.get(i).Asset.AssetType.contains("Vehicle")) {
-                    description += "Enginer Number//" + request.getParameterValues("enginer-number")[counter] + "__";
+                    description += "Engine Number//" + request.getParameterValues("engine-number")[counter] + "__";
                     description += "Chassis Number//" + request.getParameterValues("chassis-number")[counter] + "__";
                     description += "Make//" + request.getParameterValues("make")[counter] + "__";
                     description += "Model//" + request.getParameterValues("model")[counter] + "__";
                     description += "Year//" + request.getParameterValues("year")[counter] + "__";
-                    description += "Color//" + request.getParameterValues("color")[counter];
+                    description += "Color//" + request.getParameterValues("color")[counter] + "__";
                 } else if (assetsRequested.get(i).Asset.AssetType.contains("Appliance")) {
                     description += "Brand//" + request.getParameterValues("brand")[counter] + "__";
                     description += "Model//" + request.getParameterValues("model")[counter] + "__";
-                    description += "Color//" + request.getParameterValues("color")[counter];
+                    description += "Color//" + request.getParameterValues("color")[counter] + "__";
                 } else if (assetsRequested.get(i).Asset.AssetType.contains("Electronics")) {
                     description += "Brand//" + request.getParameterValues("brand")[counter] + "__";
                     description += "Model//" + request.getParameterValues("model")[counter] + "__";
                     description += "Serial Number//" + request.getParameterValues("serial-number")[counter] + "__";
                     description += "MAC Address//" + request.getParameterValues("mac-address")[counter] + "__";
                     description += "Build Number//" + request.getParameterValues("build-number")[counter] + "__";
-                    description += "Color//" + request.getParameterValues("color")[counter];
+                    description += "Color//" + request.getParameterValues("color")[counter] + "__";
                 }
+                description += "Warranty//" + request.getParameterValues("warranty")[counter];
                 Employee employee = (Employee) session.getAttribute("user");
                 Equipment equipment = new Equipment();
                 equipment.AssetId = assetsRequested.get(i).AssetId;
@@ -196,8 +199,12 @@ public class InventoryServlet extends BaseServlet {
     private String ViewEquipment(HttpServletRequest request) {
         String assetTag = request.getParameter("asset-tag");
         Equipment equipment = equipmentService.GetEquipmentWithAssetTag(assetTag);
+        if (equipment.Flag == 4) {
+            equipment.Asset.EstimatedUsefulLife += 1;
+        }
         equipment.TrackingLogs = assetTrackingService.GetAssetHistory(assetTag);
         equipment.IncidentLogs = assetIncidentService.GetIncidentsOfAsset(assetTag);
+        equipment.RepairLogs = repairLogService.GetApprovedRepairLogs(assetTag);
         HttpSession session = request.getSession();
         session.setAttribute("equipment", equipment);
         return "/inventory/equipment-view.jsp";

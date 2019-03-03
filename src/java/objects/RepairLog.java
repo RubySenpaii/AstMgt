@@ -5,6 +5,7 @@
  */
 package objects;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -33,4 +34,5 @@ public class RepairLog {
     public Employee Requester;
     public Employee Approver;
     public double TotalCost;
+    public ArrayList<RepairLog> Logs;
 }

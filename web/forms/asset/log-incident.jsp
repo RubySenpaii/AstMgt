@@ -32,6 +32,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-lg-2 control-label">Severity</label>
+                                    <div class="col-lg-10">
+                                        <select name="severity" placeholder="" class="form-control">
+                                            <option value="1">Low</option>
+                                            <option value="2">Medium</option>
+                                            <option value="3">High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-lg-2 control-label">Remarks</label>
                                     <div class="col-lg-10">
                                         <textarea type="text" name="remarks" placeholder="" class="form-control"></textarea>

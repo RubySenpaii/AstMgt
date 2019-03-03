@@ -51,7 +51,11 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Mode Of Procurement</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="mop" name="mop" placeholder="Mode Of Procurement" autocomplete="off">
+                                        <select class="form-control" id="mop" name="mop" placeholder="Mode Of Procurement" autocomplete="off">
+                                            <option>Shopping</option>
+                                            <option>Bidding</option>
+                                            <option>Donation</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">

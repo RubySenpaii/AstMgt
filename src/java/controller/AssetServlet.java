@@ -59,6 +59,9 @@ public class AssetServlet extends BaseServlet {
                 case "Add":
                     url = AddAsset(request);
                     break;
+                case "Donate":
+                    url = Donate(request);
+                    break;
                 case "Submit":
                     url = SubmitAsset(request);
                     break;
@@ -160,6 +163,7 @@ public class AssetServlet extends BaseServlet {
         incident.AssetTag = request.getParameter("asset-tag");
         incident.Timestamp = Calendar.getInstance().getTime();
         incident.Remarks = request.getParameter("remarks");
+        incident.Severity = Integer.parseInt(request.getParameter("severity"));
         incident.ReportedBy = employee.EmployeeId;
         int result = assetIncidentService.AddAssetIncident(incident);
         if (result == 1) {
@@ -268,6 +272,16 @@ public class AssetServlet extends BaseServlet {
             equipmentService.UpdateEquipment(equip);
             return "/PurchaseRequest/Add?asset-id=" + equip.AssetId;
         }
+        return "/InventoryServlet/EquipmentList";
+    }
+    
+    private String Donate(HttpServletRequest request) {
+        String assetTag = request.getParameter("asset-tag");
+        String receiver = request.getParameter("receiver");
+        Equipment equip = equipmentService.GetEquipmentWithAssetTag(assetTag);
+        equip.Flag = 5;
+        equip.Condition = receiver;
+        equipmentService.UpdateEquipment(equip);
         return "/InventoryServlet/EquipmentList";
     }
 }

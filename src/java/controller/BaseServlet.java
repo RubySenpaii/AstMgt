@@ -13,15 +13,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.AssetTracking;
 import objects.Employee;
 import objects.Equipment;
 import objects.ExpenditureTracking;
 import objects.PurchaseRequest;
+import objects.RepairLog;
 import objects.Supplies;
+import services.AssetTrackingService;
 import services.EquipmentService;
 import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
+import services.RepairLogService;
 import services.SuppliesService;
 
 @WebServlet(name = "BaseServlet", urlPatterns = {"/BaseServlet"})
@@ -42,7 +46,10 @@ public abstract class BaseServlet extends HttpServlet {
                 PurchaseRequestService purchaseRequestService = new PurchaseRequestService();
                 PurchaseOrderService purchaseOrderService = new PurchaseOrderService();
                 EquipmentService equipmentService = new EquipmentService();
-                SuppliesService suppliesService = new SuppliesService();
+                // additional requests  stuff
+                ArrayList<AssetTracking> assetTrackings = new AssetTrackingService().GetPendingTracking();
+                ArrayList<RepairLog> repairRequests = new RepairLogService().GetRepairLogs();
+                //SuppliesService suppliesService = new SuppliesService();
                 ExpenditureTracking limit = new ExpenditureTrackingService().GetCurrentExpenditure(user.Division);
                 ArrayList<PurchaseRequest> pendingPurchaseRequest = purchaseRequestService.FindPendingPurchaseRequests();
                 // list of approved request and pending order
@@ -59,24 +66,26 @@ public abstract class BaseServlet extends HttpServlet {
                     cal.setTime(equipment.DateAcquired);
                     cal.add(Calendar.YEAR, equipment.Asset.EstimatedUsefulLife);
                     Date expiryDate = cal.getTime();
-                    if (now.after(expiryDate)) {
+                    if (now.after(expiryDate) && (equipment.Flag == 1 || equipment.Flag == 2)) {
                         expiringEquipments.add(equipment);
                     }
                 }
                 // list of low supplies
-                ArrayList<Supplies> lowSupplies = new ArrayList<>();
+                /*ArrayList<Supplies> lowSupplies = new ArrayList<>();
                 ArrayList<Supplies> suppliesList = suppliesService.FindAllSupplies();
                 for (Supplies supplies: suppliesList) {
                     if (supplies.TotalQuantity < 20) {
                         lowSupplies.add(supplies);
                     }
-                }
+                }*/
                 session.setAttribute("limit", limit);
                 session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
                 session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);
                 session.setAttribute("rejectedPurchaseRequests", rejectedPurchaseRequest);
-                session.setAttribute("lowSupplies", lowSupplies);
+                //session.setAttribute("lowSupplies", lowSupplies);
                 session.setAttribute("expiringEquipments", expiringEquipments);
+                session.setAttribute("trackingSize", assetTrackings.size());
+                session.setAttribute("repairSize", repairRequests.size());
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();

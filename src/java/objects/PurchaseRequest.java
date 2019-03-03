@@ -42,4 +42,5 @@ public class PurchaseRequest {
     public Employee Approver;
     public ArrayList<AssetRequested> AssetsRequested;
     public Supplier Supplier;
+    public double TotalCost;
 }

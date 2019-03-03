@@ -50,12 +50,6 @@
                                         Asset asset = (Asset) session.getAttribute("asset");
                                     %>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Purpose</label>
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Purpose" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>
                                         <div class="col-lg-10">
                                             <select class="form-control" id="asset-type" name="asset-type">
@@ -69,8 +63,8 @@
                                                 } catch (NullPointerException x) {
                                                 %>
                                                 <option selected disabled>-Select Asset Type-</option>
-                                                <option value="Supplies Office">Supplies Office</option>
-                                                <option value="Supplies General">Supplies General</option>
+                                                <!--option value="Supplies Office">Supplies Office</option>
+                                                <option value="Supplies General">Supplies General</option-->
                                                 <%
                                                     Employee user = (Employee) session.getAttribute("user");
                                                     if (!user.EmployeeStatus.equals("Contractual")) {
@@ -110,7 +104,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Items</label>
                                         <div class="col-lg-12" style="margin-top: 15px">
-                                            <table style="width:100%" name="assetTable" id="assetTable" class="table-bordered table">
+                                            <table name="assetTable" id="assetTable" class="table-bordered table">
                                                 <thead>
                                                     <tr>
                                                         <th>Selected</th>
@@ -133,12 +127,18 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th><button type="button" class="delete-row  btn btn-danger"> Delete Selected</button></th>
+                                                        <th><button type="button" class="delete-row  btn btn-danger">Remove</button></th>
                                                         <th colspan="2" style="text-align: right">Total :</th>
                                                         <th><input name='totalPrice' id='totalPrice' disabled="true">  </th>
                                                     </tr>
                                                 </tfoot>
-                                            </table
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Purpose</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Purpose" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group">
