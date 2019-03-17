@@ -29,39 +29,37 @@
                             <div class="content-panel">
                                 <h4>List of Supplier</h4>
                                 <br/>
-                                <div class="col-md-12 content-panel">
-                                    <table class="table" id="suppList">
-                                        <thead>
-                                            <tr>
-                                                <th>Supplier Id</th>
-                                                <th>Supplier Name</th>
-                                                <th>Supplier Address</th>
-                                                <th>Supplier TIN</th>
-                                                <th>Supplier Type</th>
-                                                <th>Contact Number</th>
-                                                <th>Contact Person</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                                ArrayList<Supplier> suppList = (ArrayList<Supplier>) session.getAttribute("supplier");
-                                                for (Supplier supp : suppList) {
-                                            %>
-                                            <tr>
-                                                <td><%=supp.SupplierId %></td>
-                                                <td><%=supp.SupplierName %></td>
-                                                <td><%=supp.SupplierAddress %></td>
-                                                <td><%=supp.SupplierTIN %></td>
-                                                <td><%=supp.SupplierType %></td>
-                                                <td><%=supp.ContactNumber %></td>
-                                                <td><%=supp.ContactPerson %></td>
-                                            </tr>
-                                            <%
-                                                }
-                                            %>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <form action="/AMS/SupplierServlet/View">
+                                    <div class="col-md-12 content-panel">
+                                        <table class="table" id="suppList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Supplier Id</th>
+                                                    <th>Supplier Name</th>
+                                                    <th>Contact Number</th>
+                                                    <th>Contact Person</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    ArrayList<Supplier> suppList = (ArrayList<Supplier>) session.getAttribute("supplier");
+                                                    for (Supplier supp : suppList) {
+                                                %>
+                                                <tr>
+                                                    <td><%=supp.SupplierId%></td>
+                                                    <td><%=supp.SupplierName%></td>
+                                                    <td><%=supp.ContactNumber%></td>
+                                                    <td><%=supp.ContactPerson%></td>
+                                                    <td> <button class="btn btn-info" id="suppid" name="suppid" value="<%=supp.SupplierId%>" type="submit">View</button> </td>
+                                                </tr>
+                                                <%
+                                                    }
+                                                %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

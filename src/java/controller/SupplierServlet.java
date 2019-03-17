@@ -13,8 +13,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.Asset;
 import objects.Supplier;
+import objects.SupplierItem;
 import services.AssetService;
+import services.SupplierItemService;
 import services.SupplierService;
 
 /**
@@ -36,10 +39,14 @@ public class SupplierServlet extends BaseServlet {
                 case "Add":
                     url = AddSupplier(request);
                     break;
+                case "View":
+                    url = AddSupplierItem(request);
+                    break;
                 case "Submit":
                     url = SubmitSupplier(request);
                     break;
-                case "List":
+                case "AddSupplyItem":
+                    url = SubmitSupplierItem(request);
                 default:
                     url = ListSupplier(request);
                     break;
@@ -54,7 +61,7 @@ public class SupplierServlet extends BaseServlet {
 
     private String SubmitSupplier(HttpServletRequest request) {
         Supplier supplier = new Supplier();
-        supplier.SupplierId = supplierService.FindAllSupplier().size()+1;
+        supplier.SupplierId = supplierService.FindAllSupplier().size() + 1;
         supplier.SupplierName = request.getParameter("name");
         supplier.SupplierAddress = request.getParameter("address");
         supplier.ContactNumber = request.getParameter("contactno");
@@ -69,6 +76,48 @@ public class SupplierServlet extends BaseServlet {
         }
     }
 
+    private String AddSupplierItem(HttpServletRequest request) {
+        System.out.println("I am here");
+        AssetService assetDB = new AssetService();
+        ArrayList<Asset> assetList = new ArrayList<Asset>();
+        SupplierItemService sitemDB = new SupplierItemService();
+        Supplier supplier = supplierService.FindSupplierById(Integer.parseInt(request.getParameter("suppid")));
+        assetList = assetDB.GetAssetsWithType(supplier.SupplierType);
+        ArrayList<SupplierItem> sitem = sitemDB.FindSupplierItemById(supplier.SupplierId);
+        HttpSession session = request.getSession();
+        session.setAttribute("assets", assetList);
+        session.setAttribute("supplier", supplier);
+        session.setAttribute("supplier items", sitem);
+        return "/forms/supplier/addsupplyitem.jsp";
+    }
+    
+    private String SubmitSupplierItem(HttpServletRequest request){
+        
+        SupplierItemService sitemDB = new SupplierItemService();
+        String[] assets = request.getParameterValues("assets");
+        String[] prices = request.getParameterValues("price");
+        HttpSession session = request.getSession();
+        Supplier s = (Supplier) session.getAttribute("supplier");
+        int checker = 0;
+        System.out.println(s);
+        for (int i = 0; i < assets.length; i ++ ){
+           SupplierItem sitem = new SupplierItem();
+           Asset asset = new Asset();
+           asset = assetService.GetAssetByName(assets[i]);
+           sitem.AssetId = asset.AssetId;
+           sitem.SupplierId = s.SupplierId;
+           sitem.price = Integer.parseInt(prices[i]);
+           checker = sitemDB.AddNewSupplier(sitem);
+        }
+        if(checker != 0){
+            System.out.println("PASSED");
+            return "/forms/supplier/list.jsp";
+        }else{
+            System.out.println("FAILED");
+            return "/forms/supplier/list.jsp";
+        }
+    }
+    
     private String AddSupplier(HttpServletRequest request) {
         return "/forms/supplier/add.jsp";
     }
@@ -80,6 +129,5 @@ public class SupplierServlet extends BaseServlet {
         session.setAttribute("supplier", slist);
         return "/forms/supplier/list.jsp";
     }
-
 
 }
