@@ -167,7 +167,7 @@ public class AssetServlet extends BaseServlet {
         incident.ReportedBy = employee.EmployeeId;
         int result = assetIncidentService.AddAssetIncident(incident);
         if (result == 1) {
-            if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal")) {
+            if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal") || incident.Severity == 3) {
                 Equipment equipment = equipmentService.GetEquipmentWithAssetTag(incident.AssetTag);
                 equipment.Flag = 0;
                 result = equipmentService.UpdateEquipment(equipment);

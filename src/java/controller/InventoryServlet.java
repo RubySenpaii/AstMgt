@@ -21,12 +21,16 @@ import objects.AssetRequested;
 import objects.AssetTracking;
 import objects.Employee;
 import objects.Equipment;
+import objects.ExpenditureLimit;
+import objects.ExpenditureTracking;
 import objects.PurchaseOrder;
 import objects.RequestForDeliveryInspection;
 import objects.Supplies;
 import services.AssetIncidentService;
+import services.AssetRequestedService;
 import services.AssetTrackingService;
 import services.EquipmentService;
+import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
 import services.RepairLogService;
 import services.RequestForDeliveryInspectionService;
@@ -79,6 +83,9 @@ public class InventoryServlet extends BaseServlet {
                 case "ReviewTracking":
                     url = ReviewTracking(request);
                     break;
+                case "UpdateItem":
+                    url = UpdateItem(request);
+                    break;
                 case "EquipmentList":
                 default:
                     url = ListEquipment(request);
@@ -97,17 +104,23 @@ public class InventoryServlet extends BaseServlet {
         RequestForDeliveryInspection requestInspection = deliveryInspectionService.GetRequestForDeliveryInspection(requestId);
         HttpSession session = request.getSession();
         session.setAttribute("purchaseOrder", requestInspection.PurchaseOrder);
+        session.setAttribute("requestId", requestId);
         return "/inventory/acknowledgement.jsp";
     }
 
     private String Acknowledge(HttpServletRequest request) {
         HttpSession session = request.getSession();
         PurchaseOrder purchaseOrder = (PurchaseOrder) session.getAttribute("purchaseOrder");
+        ArrayList<Integer> originalAssetsRequested = (ArrayList<Integer>) session.getAttribute("ogAssetsReq");
         ArrayList<AssetRequested> assetsRequested = purchaseOrder.PurchaseRequest.AssetsRequested;
         String[] assetTags = request.getParameterValues("asset-tag");
         String[] condition = request.getParameterValues("condition");
         int qty = 1, counter = 0;
+        double total = 0;
         for (int i = 0; i < assetsRequested.size(); i++) {
+            if (assetsRequested.get(i).Quantity != originalAssetsRequested.get(i)) {
+                total += ((originalAssetsRequested.get(i) - assetsRequested.get(i).Quantity) * assetsRequested.get(i).UnitCost);
+            }
             if (assetsRequested.get(i).Asset.AssetType.contains("Equipment")) {
                 String description = "";
                 // split description by \n and split details using //
@@ -179,6 +192,11 @@ public class InventoryServlet extends BaseServlet {
             }
             counter++;
         }
+        ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
+        ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(purchaseOrder.PurchaseRequest.Requester.Division);
+        expenditure.Timestamp = Calendar.getInstance().getTime();
+        expenditure.Equipment += total;
+        int result = expenditureTrackingService.AddEquipmentTracking(expenditure);
         return "/InventoryServlet/EquipmentList";
     }
 
@@ -283,5 +301,19 @@ public class InventoryServlet extends BaseServlet {
             equipmentService.UpdateEquipment(equipment);
         }
         return "/InventoryServlet/ShowTrackingRequests";
+    }
+
+    private String UpdateItem(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        ArrayList<AssetRequested> assetsRequested = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
+        ArrayList<Integer> assetsQty = new ArrayList<>();
+        String[] newQtys = request.getParameterValues("newQuantity");
+        for (int i = 0; i < newQtys.length; i++) {
+            assetsQty.add(assetsRequested.get(i).Quantity);
+            assetsRequested.get(i).Quantity = Integer.parseInt(newQtys[i]);
+        }
+        session.setAttribute("ogAssetsReq", assetsQty);
+        new AssetRequestedService().UpdateAssetRequest(assetsRequested);
+        return "/InventoryServlet/AcknowledgementRequest?requestId=" + ((int) session.getAttribute("requestId"));
     }
 }

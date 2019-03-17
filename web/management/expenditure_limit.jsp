@@ -22,6 +22,7 @@
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
+                    <input type="file" onChange="readFile(event)">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-panel">
@@ -134,6 +135,39 @@
             var finance = document.getElementById('finance').value;
             var total = Number(procurement) + Number(management) + Number(admin) + Number(general) + Number(finance);
             document.getElementById('totalValue').textContent = total;
+        }
+
+        function readFile(event) {
+            var file = event.target.files[0];
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var csv = e.target.result;
+                var data = $.csv.toArrays(csv);
+                console.log(data);
+                
+                var filteredData = [], equipmentFlag = false;
+                for (var i = 30; i < data.length; i++) {
+                    if (data[i][0].toLowerCase().includes('equipment') || data[i][1].toLowerCase().includes('equipment') ||
+                            data[i][0].toLowerCase().includes('devices') || data[i][1].toLowerCase().includes('devices')) {
+                        filteredData.push(data[i]);
+                        equipmentFlag = true;
+                    } else if (equipmentFlag) {
+                        if (data[i][0] != "" && data[i][1] != "") {
+                            filteredData.push(data[i]);
+                        } else {
+                            equipmentFlag = false;
+                        }
+                    }
+                }
+                console.log('filtered data', filteredData);
+            };
+
+            reader.onerror = function (ex) {
+                console.log(ex);
+            };
+
+            reader.readAsText(file);
         }
     </script>
 </html>

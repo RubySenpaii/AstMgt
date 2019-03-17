@@ -101,9 +101,9 @@ public class DeliveryInspectionServlet extends BaseServlet {
             requestInspection.Invoice = orderNumber + "invoice";
             int invoiceSaved = file.SaveFile(getServletContext().getRealPath("/uploaded-files/invoice"), invoiceFile, requestInspection.Invoice);
             if (invoiceSaved == 1) {
-                Part receipt = request.getPart("receipt");
-                requestInspection.DeliveryReceipt = orderNumber + "receipt";
-                int receiptSaved = file.SaveFile(getServletContext().getRealPath("/uploaded-files/delivery-receipt"), receipt, requestInspection.DeliveryReceipt);
+                //Part receipt = request.getPart("receipt");
+                //requestInspection.DeliveryReceipt = orderNumber + "receipt";
+                int receiptSaved = 1; //file.SaveFile(getServletContext().getRealPath("/uploaded-files/delivery-receipt"), receipt, requestInspection.DeliveryReceipt);
                 if (receiptSaved == 1) {
                     requestInspection.PurchaseOrderId = purchaseOrder.PurchaseOrderId;
                     requestInspection.CreatedDate = Calendar.getInstance().getTime();

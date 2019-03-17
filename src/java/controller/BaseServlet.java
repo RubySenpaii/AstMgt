@@ -17,6 +17,7 @@ import objects.AssetTracking;
 import objects.Employee;
 import objects.Equipment;
 import objects.ExpenditureTracking;
+import objects.PurchaseOrder;
 import objects.PurchaseRequest;
 import objects.RepairLog;
 import objects.Supplies;
@@ -70,6 +71,7 @@ public abstract class BaseServlet extends HttpServlet {
                         expiringEquipments.add(equipment);
                     }
                 }
+                ArrayList<PurchaseOrder> deliveringPurchaseOrder = purchaseOrderService.getPurchaseOrderExpectingDelivery();
                 // list of low supplies
                 /*ArrayList<Supplies> lowSupplies = new ArrayList<>();
                 ArrayList<Supplies> suppliesList = suppliesService.FindAllSupplies();
@@ -86,6 +88,7 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("expiringEquipments", expiringEquipments);
                 session.setAttribute("trackingSize", assetTrackings.size());
                 session.setAttribute("repairSize", repairRequests.size());
+                session.setAttribute("purchaseOrderDelivering", deliveringPurchaseOrder);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();
