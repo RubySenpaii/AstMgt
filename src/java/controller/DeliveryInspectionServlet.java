@@ -103,6 +103,7 @@ public class DeliveryInspectionServlet extends BaseServlet {
             if (invoiceSaved == 1) {
                 //Part receipt = request.getPart("receipt");
                 //requestInspection.DeliveryReceipt = orderNumber + "receipt";
+                requestInspection.DeliveryReceipt = "placeholder";
                 int receiptSaved = 1; //file.SaveFile(getServletContext().getRealPath("/uploaded-files/delivery-receipt"), receipt, requestInspection.DeliveryReceipt);
                 if (receiptSaved == 1) {
                     requestInspection.PurchaseOrderId = purchaseOrder.PurchaseOrderId;
