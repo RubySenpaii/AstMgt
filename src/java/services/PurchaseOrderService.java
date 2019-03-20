@@ -129,6 +129,22 @@ public class PurchaseOrderService {
         }
         return null;
     }
+    
+    public ArrayList<PurchaseOrder> getPurchaseOrderExpectingDelivery() {
+        ArrayList<PurchaseOrder> purchaseOrders = new ArrayList<>();
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM PurchaseOrder WHERE DATEDIFF(NOW(), DeliveryDate) < 7");
+            purchaseOrders = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return purchaseOrders;
+    }
 
     private ArrayList<PurchaseOrder> getResult(ResultSet rs) throws SQLException {
         ArrayList<PurchaseOrder> purchaserequestList = new ArrayList<PurchaseOrder>();

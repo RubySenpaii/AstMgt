@@ -28,11 +28,37 @@
                     <div class="row">
                         <div class="form-panel">
                             <h4>Property Acknowledgment</h4><br/>
+                            <form class="form-horizontal style-form" action="/AMS/InventoryServlet/UpdateItem" style="padding-bottom: 50px;">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Name</th>
+                                            <th>Ordered Quantity</th>
+                                            <th>Quantity Delivered</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<AssetRequested> items = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
+                                            for (AssetRequested item : items) {
+                                        %>
+                                        <tr>
+                                            <td><%=item.Asset.AssetName%></td>
+                                            <td><%=item.Quantity%></td>
+                                            <td><input name="newQuantity"></td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-danger" type="submit">Reject</button>
+                                <button class="btn btn-success pull-right" type="submit">Update</button>
+                            </form>
                             <form class="form-horizontal style-form" action="/AMS/InventoryServlet/Acknowledge">
                                 <table class="table table-bordered">
                                     <thead>
                                         <%
-                                            ArrayList<AssetRequested> items = ((PurchaseOrder) session.getAttribute("purchaseOrder")).PurchaseRequest.AssetsRequested;
                                             if (items.get(0).Asset.AssetType.toLowerCase().contains("furniture")) {
                                         %>
                                         <tr>

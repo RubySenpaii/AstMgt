@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.PurchaseOrder"%>
 <%@page import="objects.Equipment"%>
 <%@page import="objects.Supplies"%>
 <%@page import="objects.PurchaseRequest"%>
@@ -130,7 +131,7 @@
                                 </table>
                             </div>
                         </div>
-                                    
+
                         <div class="col-md-6">
                             <div class="form-panel">
                                 <h3>Rejected Purchase Requests</h3>
@@ -167,6 +168,40 @@
                         </div>
                     </div>
                     <!-- /row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h3>Upcoming Expected Delivery</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Purchase Order Number</th>
+                                            <th>Expected Delivery Date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<PurchaseOrder> purchaseOrderDelivering = (ArrayList<PurchaseOrder>) session.getAttribute("purchaseOrderDelivering");
+                                            for (PurchaseOrder purchaseOrder : purchaseOrderDelivering) {
+                                        %>
+                                        <tr>
+                                            <td><%=purchaseOrder.PurchaseOrderNumber%></td>
+                                            <td><%=purchaseOrder.DeliveryDate%></td>
+                                            <td>
+                                                <form action="/AMS/PurchaseOrderServlet/View">
+                                                    <button type="submit" name="poId" value="<%=purchaseOrder.PurchaseOrderId%>">View</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </section>
             <!--main content end-->
