@@ -242,6 +242,14 @@ public class AssetServlet extends BaseServlet {
         HttpSession session = request.getSession();
         RepairLog log = ((ArrayList<RepairLog>) session.getAttribute("repairRequests")).get(idx);
         session.setAttribute("repairRequest", log);
+        Equipment equip = new Equipment();
+        equip = equipmentService.GetEquipmentWithAssetTag(log.AssetTag);
+        session.setAttribute("equipmentCost", equip.AcquisitionCost);
+        double total = 0.00;
+        for(RepairLog tlogs : log.Logs){
+            total += tlogs.Cost;
+        }
+        session.setAttribute("totalCost", total);
         return "/forms/asset/repair-request.jsp";
     }
 

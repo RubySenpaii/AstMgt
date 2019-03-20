@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-panel">
-                                <h4>Create Purchase Request</h4><br/>
+                                <h4>Supplier Items List</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/SupplierServlet/AddSupplyItem">
                                     <%
                                         Supplier supplier = (Supplier) session.getAttribute("supplier");

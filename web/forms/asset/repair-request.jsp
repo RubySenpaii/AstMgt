@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.Equipment"%>
 <%@page import="objects.RepairLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -27,6 +28,8 @@
                         <div class="form-panel">
                             <%
                                 RepairLog log = (RepairLog) session.getAttribute("repairRequest");
+                                double equipCost = (double) session.getAttribute("equipmentCost");
+                                double totalCost = (double) session.getAttribute("totalCost");
                             %>
                             <h4>Repair Request for Asset Tag :  <c:out value="<%= log.AssetTag%>"></c:out></h4><br/>
                                 <div class="form-horizontal style-form" action="#">
@@ -101,7 +104,9 @@
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <form action="/AMS/AssetServlet/ApproveRepair">
-                                            <button class="btn btn-info" type="submit">Approve</button> 
+                                            <input type="hidden" id="equipment-cost" value="<%= equipCost%>">
+                                            <input type="hidden" id="total-cost" value="<%= totalCost%>">
+                                            <button class="btn btn-info" id="prid" name="prid" type="submit">Approve</button> 
                                         </form>
                                     </div>
                                 </div>
@@ -121,4 +126,15 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script type='text/javascript'>
+        $(function () {
+            var eCost = document.getElementById('equipment-cost').value;
+            var tCost = document.getElementById('total-cost').value;
+            console.log(eCost);
+            console.log(tCost);
+            if (tCost >= eCost) {
+                $('#prid').prop("disabled", true);
+            }
+        });
+    </script>
 </html>
