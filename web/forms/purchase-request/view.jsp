@@ -115,6 +115,13 @@
                                     String userName = "";
                                     userRole = (String) session.getAttribute("UserLevel");
                                     userName = (String) session.getAttribute("UserName");
+                                    boolean editable = false;
+                                    try {
+                                        String test = pr.Remarks;
+                                        editable = true;
+                                    } catch (NullPointerException e) {
+                                        editable = false;
+                                    }
                                     if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff"))) {
                                 %>
                                 <div class="form-group">
@@ -131,6 +138,7 @@
                                     </div>
 
                                     <%
+
                                         }
                                         if (pr.ApprovedBy != 0 && pr.ApprovedDate != null && pr.Requester.FullName().equalsIgnoreCase(userName)) {
                                     %>
@@ -138,8 +146,18 @@
                                         <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit"><span class="fa fa-plus">  Purchase Order </span></button> 
                                     </form>
                                     <%
+                                    } else if (editable && pr.ApprovedBy != 0) {
+                                    %>
+
+
+                                    <form action="/AMS/PurchaseRequest/Redit">
+                                        <button class="btn btn-danger" name="edit" value="<%= pr.PurchaseRequestId%>" type="submit"><span class="fa fa-plus">  Edit </span></button> 
+                                    </form>
+
+                                    <%
                                         }
                                     %>
+
                                 </div>
                             </div>
                         </div>

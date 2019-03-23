@@ -30,7 +30,7 @@ public class PurchaseRequestService {
     private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ;";
     private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
     private final String ApprovePurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
-    private final String RejectPurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " +PurchaseRequest.COLUMN_REMARKS + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
+    private final String RejectPurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " + PurchaseRequest.COLUMN_REMARKS + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
 
     public int AddPurchaseRequest(PurchaseRequest pr) {
         try {
@@ -98,20 +98,19 @@ public class PurchaseRequestService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
 
-            String query = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ?, " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?, "
+            String query = "UPDATE PurchaseRequest SET "+ PurchaseRequest.COLUMN_REMARKS + "= null ," + PurchaseRequest.COLUMN_APPROVED_BY + " = null , " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?, "
                     + PurchaseRequest.COLUMN_DATE + " = ?, " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ?, " + PurchaseRequest.COLUMN_PURPOSE + " = ?, "
                     + PurchaseRequest.COLUMN_REQUESTED_BY + " = ?, " + PurchaseRequest.COLUMN_REQUESTED_DATE + " = ?, "
                     + PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE + " = ? WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, purchaseRequest.ApprovedBy);
-            ps.setObject(2, purchaseRequest.ApprovedDate);
-            ps.setObject(3, purchaseRequest.Date);
-            ps.setString(4, purchaseRequest.PurchaseRequestNo);
-            ps.setString(5, purchaseRequest.Purpose);
-            ps.setInt(6, purchaseRequest.RequestedBy);
-            ps.setObject(7, purchaseRequest.RequestedDate);
-            ps.setString(8, purchaseRequest.ResponsibilityCenterCode);
-            ps.setInt(9, purchaseRequest.PurchaseRequestId);
+            ps.setObject(1, purchaseRequest.ApprovedDate);
+            ps.setObject(2, purchaseRequest.Date);
+            ps.setString(3, purchaseRequest.PurchaseRequestNo);
+            ps.setString(4, purchaseRequest.Purpose);
+            ps.setInt(5, purchaseRequest.RequestedBy);
+            ps.setObject(6, purchaseRequest.RequestedDate);
+            ps.setString(7, purchaseRequest.ResponsibilityCenterCode);
+            ps.setInt(8, purchaseRequest.PurchaseRequestId);
 
             int result = ps.executeUpdate();
             ps.close();
@@ -252,7 +251,7 @@ public class PurchaseRequestService {
             e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
             e.AssetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(e.PurchaseRequestId);
             double total = 0;
-            for (AssetRequested asset: e.AssetsRequested) {
+            for (AssetRequested asset : e.AssetsRequested) {
                 total += asset.UnitCost * asset.Quantity;
             }
             e.TotalCost = total;

@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.AssetRequested"%>
+<%@page import="objects.PurchaseRequest"%>
 <%@page import="objects.Employee"%>
 <%@page import="objects.Asset"%>
 <%@page import="java.util.ArrayList"%>
@@ -31,6 +33,12 @@
                                     <option selected="true" disabled>- Select an Option -</option>
                                     <%
                                         ArrayList<String> files = (ArrayList<String>) session.getAttribute("fileList");
+                                        PurchaseRequest pr = new PurchaseRequest();
+                                        try {
+                                            pr = (PurchaseRequest) session.getAttribute("PR");
+                                        } catch (NullPointerException e) {
+                                            pr.PurchaseRequestId = 0;
+                                        }
                                         for (String file : files) {
                                     %>
                                     <option value="<%=file%>"><%=file%></option>
@@ -42,12 +50,142 @@
                                 </object>
                             </div>
                         </div>
+                        <%
+                            if (pr != null) {
+                        %>
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h4>Create Purchase Request</h4><br/>
+                                <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Update">
+                                    <%
+                                        Asset asset = (Asset) session.getAttribute("asset");
+                                    %>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>
+                                        <div class="col-lg-10">
+                                            <select class="form-control" id="asset-type" name="asset-type">
+                                                <%
+                                                    String assetName = "";
+                                                    try {
+                                                        assetName = asset.AssetName;
+                                                %>
+                                                <option value="<%=asset.AssetType%>"><%=asset.AssetType%></option>
+                                                <%
+                                                } catch (NullPointerException x) {
+                                                %>
+                                                <option selected disabled>-Select Asset Type-</option>
+                                                <!--option value="Supplies Office">Supplies Office</option>
+                                                <option value="Supplies General">Supplies General</option-->
+                                                <%
+                                                    Employee user = (Employee) session.getAttribute("user");
+                                                    if (!user.EmployeeStatus.equals("Contractual")) {
+                                                %>
+                                                <option value="Equipment Furniture">Equipment Furniture</option>
+                                                <option value="Equipment Appliance">Equipment Appliance</option>
+                                                <option value="Equipment Electronics">Equipment Electronics</option>
+                                                <option value="Equipment Vehicle">Equipment Vehicle</option>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+                                            </select>
+                                            <datalist id="asset-list">
+                                                <%
+                                                    try {
+                                                        ArrayList<Asset> choices = (ArrayList<Asset>) session.getAttribute("choices");
+                                                        for (Asset choice : choices) {
+                                                %>
+                                                <option><%=choice.AssetName%></option>
+                                                <%
+                                                        }
+                                                    } catch (NullPointerException x) {
+                                                    }
+                                                %>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Supplier</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" id="purpose" name="supplier" value="<%= pr.Supplier.SupplierName%>" placeholder="Supplier" list="supplier-list" autocomplete="off">
+                                            <datalist id="supplier-list">
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Items</label>
+                                        <div class="col-lg-12" style="margin-top: 15px">
+                                            <table name="assetTable" id="assetTable" class="table-bordered table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Selected</th>
+                                                        <th>Asset</th>
+                                                        <th>Quantity</th> 
+                                                        <th>Price</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+//                                                        session.setAttribute("oldPr", pr);
+                                                        ArrayList<AssetRequested> arList = (ArrayList<AssetRequested>) session.getAttribute("PRList");
+                                                        double total = 0;
+                                                        for (AssetRequested ar : arList) {
+                                                            String assetListed = ar.Asset.AssetName;
+                                                            total += ar.getTotalCost();
+                                                            if (assetListed.isEmpty()) {
+                                                                assetListed = assetName;
+                                                            }
+                                                    %>
+                                                    <tr class="fieldT">
+                                                        <td><input type="checkbox" name="record"></td>
+                                                        <td>
+                                                            <input list="asset-list" name="assets" autocomplete="off" value="<%=assetListed%>">
+                                                        </td>
+                                                        <td><input type="number" class="quantity" name="quantity" autocomplete="off" value="<%= ar.Quantity%>" ></td> 
+                                                        <td><input type="number" class="price" name="price" autocomplete="off" value="<%= ar.UnitCost%>"></td> 
+                                                        <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
+                                                    </tr>
+
+                                                    <%
+                                                        }
+                                                    %>
+
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th><button type="button" class="delete-row  btn btn-danger">Remove</button></th>
+                                                        <th colspan="2" style="text-align: right">Total :</th>
+                                                        <th><input name='totalPrice' id='totalPrice' disabled="true" value="<%= total%>">  </th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Purpose</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Purpose" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-12" style="text-align: center">
+                                            <button class="btn btn-theme" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <%
+                        } else {
+                        %>     
+
                         <div class="col-md-6">
                             <div class="form-panel">
                                 <h4>Create Purchase Request</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
-                                    <%
-                                        Asset asset = (Asset) session.getAttribute("asset");
+                                    <%                                        Asset asset = (Asset) session.getAttribute("asset");
                                     %>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>
@@ -149,6 +287,11 @@
                                 </form>
                             </div>
                         </div>
+
+                        <%
+                            }
+                        %>
+
                     </div>
                     <!-- /row -->
                 </section>

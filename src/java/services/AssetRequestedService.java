@@ -42,6 +42,8 @@ public class AssetRequestedService {
             con.commit();
             ps.close();
             con.close();
+            System.out.println("HELLO PO");
+            System.out.println(result.length);
             return result.length;
         } catch (SQLException x) {
             System.err.println(x);
