@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import objects.Asset;
 import objects.Supplier;
+import objects.SupplierItem;
 import services.AssetService;
+import services.SupplierItemService;
 import services.SupplierService;
 
 /**
@@ -48,6 +50,12 @@ public class AjaxServlet extends HttpServlet {
             case "RetrieveContactPerson":
                 json = RetrieveContactPerson(request);
                 break;
+            case "SupplierItem":
+                json = SupplierItem(request);
+                break;
+            case "SupplierItemPrice":
+                json = SupplierItemPrice(request);
+                break;
             default:
                 break;
         }
@@ -74,6 +82,24 @@ public class AjaxServlet extends HttpServlet {
         String contactPerson = new SupplierService().GetSupplierContactPerson(supplierName);
         Gson gson = new Gson();
         return "{\"ContactPerson\":" + gson.toJson(contactPerson) + "}";
+    }
+    
+    private String SupplierItem(HttpServletRequest request) {
+        String supplierName = request.getParameter("supplierName");
+        Supplier supplier = new SupplierService().FindSupplierByName(supplierName);
+        ArrayList<SupplierItem> supplierItems = new SupplierItemService().FindSupplierItemById(supplier.SupplierId);
+        Gson gson = new Gson();
+        return "{\"SupplierItems\":" + gson.toJson(supplierItems) + "}";
+    }
+    
+    private String SupplierItemPrice(HttpServletRequest request) {
+        String supplierName = request.getParameter("supplierName");
+        String assetName = request.getParameter("assetName");
+        Supplier supplier = new SupplierService().FindSupplierByName(supplierName);
+        Asset asset = new AssetService().GetAssetByName(assetName);
+        SupplierItem supplierItem = new SupplierItemService().GetSupplierItem(supplier.SupplierId, asset.AssetId);
+        Gson gson = new Gson();
+        return "{\"SupplierItem\":" + gson.toJson(supplierItem) + "}";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

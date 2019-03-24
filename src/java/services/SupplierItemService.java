@@ -77,6 +77,28 @@ public class SupplierItemService {
         }
         return null;
     }
+    
+    public SupplierItem GetSupplierItem(int supplierId, int assetId) {
+        SupplierItem supplierItem = new SupplierItem();
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection conn = db.getConnection();
+            
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM SupplierItem WHERE " + SupplierItem.COLUMN_SUPPLIER_ITEM_ASSET_ID + " = ? AND " + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + " = ?");
+            ps.setInt(1, assetId);
+            ps.setInt(2, supplierId);
+            
+            supplierItem = getResult(ps.executeQuery()).get(0);
+            ps.close();
+            conn.close();
+        } catch (SQLException x) {
+            System.err.println(x);
+        } catch (IndexOutOfBoundsException x) {
+            System.err.println(x);
+        }
+        return supplierItem;
+    }
+    
     private ArrayList<SupplierItem> getResult(ResultSet rs) throws SQLException {
         ArrayList<SupplierItem> suppliers = new ArrayList<SupplierItem>();
         while (rs.next()) {
@@ -84,6 +106,9 @@ public class SupplierItemService {
             e.SupplierId = rs.getInt(SupplierItem.COLUMN_SUPPLIER_ITEM_ID);
             e.AssetId = rs.getInt(SupplierItem.COLUMN_SUPPLIER_ITEM_ASSET_ID);
             e.price = rs.getDouble(SupplierItem.COLUMN_SUPPLIER_ITEM_PRICE);
+            
+            e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
+            e.Asset = new AssetService().GetAsset(e.AssetId);
             suppliers.add(e);
         }
         rs.close();

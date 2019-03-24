@@ -17,4 +17,7 @@ public class SupplierItem {
     public int SupplierId;
     public int AssetId;
     public double price;
+    
+    public Supplier Supplier;
+    public Asset Asset;
 }

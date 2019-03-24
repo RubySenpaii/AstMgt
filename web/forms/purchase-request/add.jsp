@@ -106,7 +106,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Supplier</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" id="purpose" name="supplier" placeholder="Supplier" list="supplier-list" autocomplete="off">
+                                            <input type="text" class="form-control" id="supplier-name" name="supplier" placeholder="Supplier" list="supplier-list" autocomplete="off">
                                             <datalist id="supplier-list">
                                             </datalist>
                                         </div>
@@ -128,7 +128,7 @@
                                                     <tr class="fieldT">
                                                         <td><input type="checkbox" name="record"></td>
                                                         <td>
-                                                            <input list="asset-list" name="assets" autocomplete="off" value="<%=assetName%>">
+                                                            <input list="asset-list" class="asset" name="assets" autocomplete="off" value="<%=assetName%>">
                                                         </td>
                                                         <td><input type="number" class="quantity" name="quantity" autocomplete="off"></td> 
                                                         <td><input type="number" class="price" name="price" autocomplete="off"></td> 
@@ -260,6 +260,36 @@
                             $('#asset-list').append('<option>' + data.Assets[i].AssetName + '</option>')
                         }
                     }
+                });
+            });
+            
+            $('#supplier-name').on('change', function() {
+               var supplierName = $(this).val();
+               console.log('supplier name', supplierName);
+               $.ajax({
+                  url: '/AMS/AjaxServlet/SupplierItem',
+                  dataType: 'json',
+                  data: {supplierName: supplierName},
+                  success: function(data) {
+                      console.log("supplier name ajax", data);
+                      $('#asset-list').html('');
+                      for (var i = 0; i < data.SupplierItems.length; i++) {
+                          $('#asset-list').append('<option>' + data.SupplierItems[i].Asset.AssetName + '</option>');
+                      }
+                  }
+               });
+            });
+            
+            $(document.body).on('change', '.asset', function() {
+                var assetName = $(this).val();
+                var supplierName = $('#supplier-name').val();
+                $.ajax({
+                   url: '/AMS/AjaxServlet/SupplierItemPrice',
+                   dataType: 'json',
+                   data: { assetName: assetName, supplierName: supplierName},
+                   success: function(data) {
+                       // cannot get child
+                   }
                 });
             });
 

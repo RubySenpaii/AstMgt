@@ -64,7 +64,8 @@
                                         %>
 
                                         <datalist id="asset-list">
-                                            <%                                                    try {
+                                            <%
+                                                try {
                                                     ArrayList<Asset> asset = (ArrayList<Asset>) session.getAttribute("assets");
                                                     for (Asset choice : asset) {
                                             %>
@@ -137,8 +138,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-
-                                        <%                                            }
+                                        <%}
                                         %>
                                     </div>
                                     <%
