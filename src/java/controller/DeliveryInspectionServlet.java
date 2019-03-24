@@ -115,6 +115,7 @@ public class DeliveryInspectionServlet extends BaseServlet {
                     requestInspection.Remarks = request.getParameter("remarks");
                     requestInspection.FromBidding = 0;
                     requestInspection.ManagementRemarks = "";
+                    requestInspection.IsCompleted = 0;
                     int added = deliveryInspectionService.AddRequestForDeliveryInspection(requestInspection);
                     if (added == 1) {
                         return "/DeliveryInspectionServlet/List";

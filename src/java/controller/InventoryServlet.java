@@ -115,6 +115,9 @@ public class InventoryServlet extends BaseServlet {
         ArrayList<AssetRequested> assetsRequested = purchaseOrder.PurchaseRequest.AssetsRequested;
         String[] assetTags = request.getParameterValues("asset-tag");
         String[] condition = request.getParameterValues("condition");
+        RequestForDeliveryInspection rfi = new RequestForDeliveryInspectionService().GetRequestForInspectionByPurchaseOrder(purchaseOrder.PurchaseOrderId);
+        rfi.IsCompleted = 1;
+        System.out.println("updated rfi: " + new RequestForDeliveryInspectionService().UpdateRequestForDeliveryInspection(rfi));
         int qty = 1, counter = 0;
         double total = 0;
         for (int i = 0; i < assetsRequested.size(); i++) {

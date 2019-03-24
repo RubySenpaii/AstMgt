@@ -72,7 +72,7 @@ public class AssetServlet extends BaseServlet {
                     url = LogTracking(request);
                     break;
                 case "LogRepair":
-                    url = "/forms/asset/log-repair.jsp";
+                    url = LogRepair(request);
                     break;
                 case "SubmitRepair":
                     url = SubmitRepair(request);
@@ -106,6 +106,14 @@ public class AssetServlet extends BaseServlet {
         } catch (Exception x) {
             throw new ServletException(x);
         }
+    }
+
+    private String LogRepair(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Employee employee = (Employee) session.getAttribute("user");
+        ArrayList<AssetTracking> userAssets = new AssetTrackingService().GetArrayListOfEmployee(employee.EmployeeId);
+        session.setAttribute("userAssets", userAssets);
+        return "/forms/asset/log-repair.jsp";
     }
 
     private String SubmitAsset(HttpServletRequest request) {
@@ -211,7 +219,7 @@ public class AssetServlet extends BaseServlet {
 
         for (int i = 0; i < articles.length; i++) {
             RepairLog repairLog = new RepairLog();
-            repairLog.AssetTag = assetTag;
+            repairLog.AssetTag = assetTag.split("\\*")[0];
             repairLog.RequestedBy = employee.EmployeeId;
             repairLog.RequestedDate = Calendar.getInstance().getTime();
             repairLog.Article = articles[i];
@@ -241,12 +249,14 @@ public class AssetServlet extends BaseServlet {
         int idx = Integer.parseInt(request.getParameter("index"));
         HttpSession session = request.getSession();
         RepairLog log = ((ArrayList<RepairLog>) session.getAttribute("repairRequests")).get(idx);
+        ArrayList<AssetIncident> incidents = new AssetIncidentService().GetIncidentsOfAsset(log.AssetTag);
         session.setAttribute("repairRequest", log);
         Equipment equip = new Equipment();
         equip = equipmentService.GetEquipmentWithAssetTag(log.AssetTag);
+        session.setAttribute("incidents", incidents);
         session.setAttribute("equipmentCost", equip.AcquisitionCost);
         double total = 0.00;
-        for(RepairLog tlogs : log.Logs){
+        for (RepairLog tlogs : log.Logs) {
             total += tlogs.Cost;
         }
         session.setAttribute("totalCost", total);
@@ -282,7 +292,7 @@ public class AssetServlet extends BaseServlet {
         }
         return "/InventoryServlet/EquipmentList";
     }
-    
+
     private String Donate(HttpServletRequest request) {
         String assetTag = request.getParameter("asset-tag");
         String receiver = request.getParameter("receiver");

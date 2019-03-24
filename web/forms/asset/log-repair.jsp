@@ -4,6 +4,8 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.AssetTracking"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,9 +30,20 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="asset-tag" placeholder="" class="form-control" autocomplete="off">
+                                        <select name="asset-tag" placeholder="" id="asset-tag" class="form-control" autocomplete="off" >
+                                            <option disabled selected>- Select an Option -</option>
+                                            <%
+                                                ArrayList<AssetTracking> userAssets = (ArrayList<AssetTracking>) session.getAttribute("userAssets");
+                                                for (AssetTracking userAsset : userAssets) {
+                                            %>
+                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost%>"><%=userAsset.AssetTag%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
                                     </div>
                                 </div>
+                                <input type="hidden" id="acquisition-cost">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Repair Costs</label>
                                     <div class="col-lg-10">
@@ -62,7 +75,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" type="submit">Submit</button>
+                                        <button class="btn btn-theme" id="submit" type="submit">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -116,6 +129,12 @@
                 $('#totalCost').val(sum);
             });
         });
+        
+        $(document.body).on('change', '#asset-tag', function() {
+            var acquisitionCost = Number($(this).val().split('*')[1]);
+            $('#acquisition-cost').val(acquisitionCost);
+        });
+        
         $(document.body).on('change', '.cost', function () {
             // initialize the sum (total price) to zero
             var sum = 0;
@@ -133,7 +152,14 @@
 
             // set the computed value to 'totalPrice' textbox
             $('#totalCost').val(sum);
-
+            
+            if (Number($('#acquisition-cost').val()) * 0.3 <= Number($('#totalCost').val())) {
+                console.log(true);
+                $('#submit').prop('disabled', true);
+            } else {
+                console.log(false);
+                $('#submit').prop('disabled', false);
+            }
         });
 
 

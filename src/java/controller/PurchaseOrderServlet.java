@@ -117,7 +117,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         System.out.println("found a list of supplier: " + supplierList.size());
         System.out.println("upadte tracking success: " + result);
         session.setAttribute("purchaseRequest", purchaseRequest);
-        session.setAttribute("limit", expenditure);
+        session.setAttribute("limit", expenditureTrackingService.GetCurrentExpenditure(employee.Division));
         session.setAttribute("supplierList", supplierList);
         return "/forms/purchase-order/add.jsp";
     }

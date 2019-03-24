@@ -23,6 +23,7 @@ public class RequestForDeliveryInspection {
     public static final String COLUMN_FROM_BIDDING = "FromBidding";
     public static final String COLUMN_ASSIGNED_TO = "AssignedTo";
     public static final String COLUMN_APPROVED_BY = "ApprovedBy";
+    public static final String COLUMN_IS_COMPLETED = "IsCompleted";
     
     public int DeliveryInspectionId;
     public int PurchaseOrderId;
@@ -35,6 +36,7 @@ public class RequestForDeliveryInspection {
     public int FromBidding;
     public int AssignedTo;
     public int ApprovedBy;
+    public int IsCompleted;
     
     public PurchaseOrder PurchaseOrder;
     public Employee Creator;

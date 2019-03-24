@@ -20,6 +20,7 @@ import objects.ExpenditureTracking;
 import objects.PurchaseOrder;
 import objects.PurchaseRequest;
 import objects.RepairLog;
+import objects.RequestForDeliveryInspection;
 import objects.Supplies;
 import services.AssetTrackingService;
 import services.EquipmentService;
@@ -27,6 +28,7 @@ import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
 import services.RepairLogService;
+import services.RequestForDeliveryInspectionService;
 import services.SuppliesService;
 
 @WebServlet(name = "BaseServlet", urlPatterns = {"/BaseServlet"})
@@ -72,6 +74,13 @@ public abstract class BaseServlet extends HttpServlet {
                     }
                 }
                 ArrayList<PurchaseOrder> deliveringPurchaseOrder = purchaseOrderService.getPurchaseOrderExpectingDelivery();
+                for (int i = 0; i < deliveringPurchaseOrder.size(); i++) {
+                    RequestForDeliveryInspection rfi = new RequestForDeliveryInspectionService().GetRequestForInspectionByPurchaseOrder(deliveringPurchaseOrder.get(i).PurchaseOrderId);
+                    if (rfi.IsCompleted == 1) {
+                        deliveringPurchaseOrder.remove(i);
+                        i--;
+                    }
+                }
                 // list of low supplies
                 /*ArrayList<Supplies> lowSupplies = new ArrayList<>();
                 ArrayList<Supplies> suppliesList = suppliesService.FindAllSupplies();

@@ -24,13 +24,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
+import objects.ExpenditureLimit;
+import objects.ExpenditureTracking;
 import report.Equipment;
 import report.Asset;
+import report.Expenditure;
 import report.ReportService;
 import report.ReportingModule;
 import report.RequestParameter;
 import report.SpecificEquipment;
 import services.AssetService;
+import services.ExpenditureLimitService;
+import services.ExpenditureTrackingService;
 
 /**
  *
@@ -73,6 +78,12 @@ public class ReportServlet extends BaseServlet {
                     break;
                 case "SpecificSupplies":
                     url = DirectToPage(request, "specific-supplies");
+                    break;
+                case "GenerateExpenditure":
+                    url = GenerateExpenditureReport(request);
+                    break;
+                case "Expenditure":
+                    url = DirectToPage(request, "expenditure");
                     break;
                 case "GenerateSpecificSupplies":
                 default:
@@ -167,5 +178,66 @@ public class ReportServlet extends BaseServlet {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "/ReportServlet/GeneralSupplies";
+    }
+    
+    private String GenerateExpenditureReport(HttpServletRequest request) {
+        try {
+            ExpenditureLimit procurement = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), "Procurement");
+            ExpenditureLimit personnel = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), "Personnel");
+            ExpenditureLimit general = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), "General");
+            ExpenditureLimit records = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), "Records");
+            ExpenditureLimit admin = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), "Admin");
+            ExpenditureTracking procurementTracking = new ExpenditureTrackingService().GetCurrentExpenditure("Procurement");
+            ExpenditureTracking personnelTracking = new ExpenditureTrackingService().GetCurrentExpenditure("Personnel");
+            ExpenditureTracking generalTracking = new ExpenditureTrackingService().GetCurrentExpenditure("General");
+            ExpenditureTracking recordsTracking = new ExpenditureTrackingService().GetCurrentExpenditure("Records");
+            ExpenditureTracking adminTracking = new ExpenditureTrackingService().GetCurrentExpenditure("Admin");
+            
+            ArrayList<Expenditure> expenditures = new ArrayList<>();
+            Expenditure procurementExpenditure = new Expenditure();
+            procurementExpenditure.setName("Procurement");
+            procurementExpenditure.setAllocated(procurement.Equipment);
+            procurementExpenditure.setCurrent(procurement.Equipment - procurementTracking.Equipment);
+            expenditures.add(procurementExpenditure);
+            
+            Expenditure personnelExpenditure = new Expenditure();
+            personnelExpenditure.setName("Personnel");
+            personnelExpenditure.setAllocated(personnel.Equipment);
+            personnelExpenditure.setCurrent(personnel.Equipment - personnelTracking.Equipment);
+            expenditures.add(personnelExpenditure);
+            
+            Expenditure generalExpenditure = new Expenditure();
+            generalExpenditure.setName("General");
+            generalExpenditure.setAllocated(general.Equipment);
+            generalExpenditure.setCurrent(general.Equipment - generalTracking.Equipment);
+            expenditures.add(generalExpenditure);
+            
+            Expenditure recordsExpenditure = new Expenditure();
+            recordsExpenditure.setName("Records");
+            recordsExpenditure.setAllocated(records.Equipment);
+            recordsExpenditure.setCurrent(records.Equipment - recordsTracking.Equipment);
+            expenditures.add(recordsExpenditure);
+            
+            Expenditure adminExpenditure = new Expenditure();
+            adminExpenditure.setName("Admin");
+            adminExpenditure.setAllocated(admin.Equipment);
+            adminExpenditure.setCurrent(admin.Equipment - adminTracking.Equipment);
+            expenditures.add(adminExpenditure);
+            
+            RequestParameter reqParameter = new RequestParameter();
+            logo += File.separator + "darlogo.jpg";
+            String jasperFile = jasperPath + File.separator + "ExpenditureReport.jasper";
+            reqParameter.Logo = logo;
+            reqParameter.CertifiedBy = request.getParameter("certified-by");
+            reqParameter.ApprovedBy = request.getParameter("approved-by");
+            reqParameter.VerifiedBy = request.getParameter("verified-by");
+            String fileName = pdfReportsPath + File.separator + "expenditure" + File.separator + "ExpenditureReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
+            System.out.println("reportservlet 235");
+            reports.createExpenditureReport(reqParameter, jasperFile, fileName, expenditures);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/ReportServlet/Expenditure";
     }
 }

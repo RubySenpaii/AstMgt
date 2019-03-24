@@ -151,7 +151,7 @@ public class ExpenditureServlet extends BaseServlet {
         procurementLimit.Year = year;
 
         ExpenditureLimit managementLimit = new ExpenditureLimit();
-        managementLimit.Division = "Management";
+        managementLimit.Division = "Personnel";
         managementLimit.Equipment = managementEquipment;
         managementLimit.Quarter = quarter;
         managementLimit.Supplies = managementSupplies;
@@ -165,7 +165,7 @@ public class ExpenditureServlet extends BaseServlet {
         generalLimit.Year = year;
 
         ExpenditureLimit financeLimit = new ExpenditureLimit();
-        financeLimit.Division = "Finance";
+        financeLimit.Division = "Records";
         financeLimit.Equipment = financeEquipment;
         financeLimit.Quarter = quarter;
         financeLimit.Supplies = financeSupplies;

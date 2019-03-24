@@ -66,7 +66,7 @@
                                                                                                                 </td>-->
                                                     </tr>
                                                     <tr>
-                                                        <td>Management Division</td>
+                                                        <td>Personnel</td>
                                                         <td>
                                                             <input type="number" name="management-equipment" id="management" onchange="total()" autocomplete="off">
                                                         </td>
@@ -93,7 +93,7 @@
                                                                                                                 </td>-->
                                                     </tr>
                                                     <tr>
-                                                        <td>Finance Division</td>
+                                                        <td>Records</td>
                                                         <td>
                                                             <input type="number" name="finance-equipment" id="finance" onchange="total()" autocomplete="off">
                                                         </td>

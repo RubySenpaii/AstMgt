@@ -89,6 +89,7 @@
                 <ul class="sub">
                     <li><a href="/AMS/ReportServlet/GeneralPPE">General Equipment</a></li>
                     <li><a href="/AMS/ReportServlet/SpecificPPE">Specific Equipment</a></li>
+                    <li><a href="/AMS/ReportServlet/Expenditure">Expenditure</a></li>
                     <!--<li><a href="/AMS/ReportServlet/GeneralSupplies">General Supplies</a></li> -->
                 </ul>
             </li>

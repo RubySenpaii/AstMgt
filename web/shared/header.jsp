@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.PurchaseOrder"%>
 <%@page import="objects.Equipment"%>
 <%@page import="objects.Supplies"%>
 <%@page import="objects.PurchaseRequest"%>
@@ -27,10 +28,12 @@
                     int pendingPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("pendingPurchaseRequests")).size();
                     int approvedPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("approvedPurchaseRequests")).size();
                     int expiringEquipment = ((ArrayList<Equipment>) session.getAttribute("expiringEquipments")).size();
+                    int rejectedPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("rejectedPurchaseRequests")).size();
+                    int expectedDelivery = ((ArrayList<PurchaseOrder>) session.getAttribute("purchaseOrderDelivering")).size();
                 %>
                 <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                     <i class="fa fa-bell-o"></i>
-                    <span class="badge bg-warning"><%=pendingPurchaseRequests + approvedPurchaseRequests + expiringEquipment%></span>
+                    <span class="badge bg-warning"><%=pendingPurchaseRequests + approvedPurchaseRequests + expiringEquipment + expectedDelivery + rejectedPurchaseRequests%></span>
                 </a>
                 <ul class="dropdown-menu extended notification">
                     <div class="notify-arrow notify-arrow-yellow"></div>
@@ -50,6 +53,16 @@
                     <li>
                         <a href="/AMS/HomeServlet">
                             <%=expiringEquipment%> Equipments Expiring
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            <%=rejectedPurchaseRequests%> Rejected Purchase Requests
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            <%=expectedDelivery%> Upcoming Equipment Deliveries
                         </a>
                     </li>
                 </ul>

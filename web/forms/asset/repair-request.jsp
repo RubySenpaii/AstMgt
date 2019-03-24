@@ -4,6 +4,8 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.AssetIncident"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="objects.Equipment"%>
 <%@page import="objects.RepairLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -41,6 +43,32 @@
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Requested Date</label>
                                         <label class="col-lg-10 control-label"> <c:out value="<%= log.RequestedDate%>"></c:out> </label>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Previous Incidents</label>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Timestamp</th>
+                                                    <th>Severity</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <%
+                                                ArrayList<AssetIncident> incidents = (ArrayList<AssetIncident>) session.getAttribute("incidents");
+                                                for (AssetIncident incident : incidents) {
+                                            %>
+                                            <tr>
+                                                <td><%=incident.Timestamp%></td>
+                                                <td><%=incident.Severity%></td>
+                                                <td><%=incident.Remarks%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <%
                                     if (log.ApprovedBy > 0) {
                                 %>
@@ -132,7 +160,7 @@
             var tCost = document.getElementById('total-cost').value;
             console.log(eCost);
             console.log(tCost);
-            if (tCost >= eCost) {
+            if (Number(tCost) >= Number(eCost)) {
                 $('#prid').prop("disabled", true);
             }
         });

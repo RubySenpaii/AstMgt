@@ -60,6 +60,10 @@
                                 <label class="col-lg-10 control-label"><%=equipment.Asset.EstimatedUsefulLife%></label>
                             </div>
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">Acquisition Cost</label>
+                                <label class="col-lg-10 control-label"><%=equipment.AcquisitionCost%></label>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-lg-2 control-label">Description</label>
                                 <label class="col-lg-10 control-label"><%=equipment.Description.replace("__", "<br>").replace("//", ": ")%></label>
                             </div>

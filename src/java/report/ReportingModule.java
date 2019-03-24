@@ -64,4 +64,21 @@ public class ReportingModule {
         jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
         JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
     }
+    
+    public void createExpenditureReport(RequestParameter reqParameter, String jasperFile, String fileName, ArrayList<Expenditure> expenditures) 
+            throws JRException, FileNotFoundException, SQLException {
+        File file = new File(jasperFile);
+        Map parameters = new HashMap();
+        parameters.put("logo", reqParameter.Logo);
+        parameters.put("approvedBy", reqParameter.ApprovedBy);
+        parameters.put("certifiedBy", reqParameter.CertifiedBy);
+        parameters.put("verifiedBy", reqParameter.VerifiedBy);
+        JasperPrint jasperPrint;
+        
+        System.out.println("module 78");
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(expenditures, false);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file);
+        jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
+    }
 }

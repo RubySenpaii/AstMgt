@@ -118,6 +118,7 @@
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <input type="hidden" name="purchaseOrder" value="<%=purchaseOrder.PurchaseOrderId%>">
+                                        <button class="btn" type="button" onclick="window.print()">Print</button>
                                         <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
                                     </div>
                                 </div>
