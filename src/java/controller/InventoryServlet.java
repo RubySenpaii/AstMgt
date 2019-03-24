@@ -118,8 +118,17 @@ public class InventoryServlet extends BaseServlet {
         int qty = 1, counter = 0;
         double total = 0;
         for (int i = 0; i < assetsRequested.size(); i++) {
-            if (assetsRequested.get(i).Quantity != originalAssetsRequested.get(i)) {
-                total += ((originalAssetsRequested.get(i) - assetsRequested.get(i).Quantity) * assetsRequested.get(i).UnitCost);
+            try {
+                if (assetsRequested.get(i).Quantity != originalAssetsRequested.get(i)) {
+                    total += ((originalAssetsRequested.get(i) - assetsRequested.get(i).Quantity) * assetsRequested.get(i).UnitCost);
+                }
+                ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
+                ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(purchaseOrder.PurchaseRequest.Requester.Division);
+                expenditure.Timestamp = Calendar.getInstance().getTime();
+                expenditure.Equipment += total;
+                int result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+            } catch (NullPointerException x) {
+                System.out.println("full purchase received");
             }
             if (assetsRequested.get(i).Asset.AssetType.contains("Equipment")) {
                 String description = "";
@@ -142,7 +151,7 @@ public class InventoryServlet extends BaseServlet {
                     description += "Brand//" + request.getParameterValues("brand")[counter] + "__";
                     description += "Model//" + request.getParameterValues("model")[counter] + "__";
                     description += "Serial Number//" + request.getParameterValues("serial-number")[counter] + "__";
-                    description += "MAC Address//" + request.getParameterValues("mac-address")[counter] + "__";
+                    //description += "MAC Address//" + request.getParameterValues("mac-address")[counter] + "__";
                     description += "Build Number//" + request.getParameterValues("build-number")[counter] + "__";
                     description += "Color//" + request.getParameterValues("color")[counter] + "__";
                 }
@@ -192,11 +201,6 @@ public class InventoryServlet extends BaseServlet {
             }
             counter++;
         }
-        ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
-        ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(purchaseOrder.PurchaseRequest.Requester.Division);
-        expenditure.Timestamp = Calendar.getInstance().getTime();
-        expenditure.Equipment += total;
-        int result = expenditureTrackingService.AddEquipmentTracking(expenditure);
         return "/InventoryServlet/EquipmentList";
     }
 

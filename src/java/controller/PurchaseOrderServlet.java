@@ -108,7 +108,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         System.out.println("expenditure for pr supplies " + suppliesTotal + " equipment " + equipTotal);
         
         ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
-        ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
+        ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(purchaseRequest.Requester.Division);
         expenditure.Timestamp = Calendar.getInstance().getTime();
         expenditure.Equipment -= equipTotal;
         expenditure.Supplies -=  suppliesTotal;

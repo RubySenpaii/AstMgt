@@ -121,6 +121,11 @@
                                     <tbody>
                                         <%
                                             for (AssetRequested item : items) {
+                                                String assetName = item.Asset.AssetName;
+                                                String autofill = assetName.replace("a", "").replace("e", "").replace("i", "").replace("o", "").replace("u", "").toUpperCase().replace(" ","");
+                                                String propertyTag = String.valueOf(item.Asset.AssetType.split(" ")[0].charAt(0));
+                                                propertyTag += String.valueOf(item.Asset.AssetType.split(" ")[1].charAt(0));
+                                                propertyTag += "-" + autofill + "-" + item.PurchaseRequestId + "00";
                                                 if (item.Asset.AssetType.toLowerCase().contains("furniture")) {
                                                     for (int i = 0; i < item.Quantity; i++) {
                                         %>
@@ -129,7 +134,7 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
                                                 <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
@@ -154,7 +159,7 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
                                                 <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
@@ -191,7 +196,7 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
                                                 <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
@@ -219,7 +224,7 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off">
+                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
                                                 <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
