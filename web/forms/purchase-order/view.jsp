@@ -33,17 +33,13 @@
                             %>
                             <h4>Purchase Order #<%=purchaseOrder.PurchaseOrderNumber%></h4><br/>
                             <form class="form-horizontal style-form">
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.PurchaseRequest.PurchaseRequestNo %>" ></c:out></label>
-                                    </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
-                                    <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.Supplier.SupplierName%>" ></c:out></label>
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
+                                    <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.PurchaseRequest.PurchaseRequestNo%>" ></c:out></label>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Mode Of Procurement</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.ModeOfProcurement%>" ></c:out></label>
+                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.Supplier.SupplierName%>" ></c:out></label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Remarks</label>
@@ -51,7 +47,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Address</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.DeliveryAddress %>" ></c:out></label>
+                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.DeliveryAddress%>" ></c:out></label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Date</label>
@@ -69,22 +65,15 @@
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Point Person</label>
                                         <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.ConformeSupplier%>" ></c:out></label>
                                     </div>
-                                    <div class="form-group">
+                                    <!--div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Number</label>
-                                        <label class="col-lg-10 control-label"> <c:out value="<%= purchaseOrder.ORSNumber%>" ></c:out> </label>
+                                        <label class="col-lg-10 control-label"> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">ORS Date</label>
                                         <label class="col-lg-10 control-label"> 
-                                            <%
-                                                if (!purchaseOrder.ORSNumber.equals("")) {
-                                            %>
-                                            <%=purchaseOrder.ORSDate%>
-                                            <%
-                                                }
-                                            %>
                                         </label>
-                                    </div>
+                                    </div-->
                                     <div class="form-group">
                                         <div class="col-lg-12 control-label">
                                             <h3>Assets Requested</h3>
@@ -113,7 +102,7 @@
                                                 </tbody>
 
                                             <%
-                                                    sum += ar.get(i).UnitCost;
+                                                    sum += ar.get(i).getTotalCost();
                                                 }
                                             %>
                                             <tfoot>

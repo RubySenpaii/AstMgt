@@ -17,7 +17,6 @@ public class PurchaseOrder {
     public static final String COLUMN_PURCHASE_ORDER_NO = "PurchaseOrderNo";
     public static final String COLUMN_SUPPLIER_ID = "SupplierId";
     public static final String COLUMN_ORDER_DATE = "OrderDate";
-    public static final String COLUMN_MODE_OF_PROCUREMENT = "ModeOfProcurement";
     public static final String COLUMN_REMARKS = "Remarks";
     public static final String COLUMN_DELIVERY_ADDRESS = "DeliveryAddress";
     public static final String COLUMN_DELIVERY_DATE = "DeliveryDate";
@@ -34,7 +33,6 @@ public class PurchaseOrder {
     public String PurchaseOrderNumber;
     public int SupplierId;
     public Date OrderDate;
-    public String ModeOfProcurement;
     public String Remarks;
     public String DeliveryAddress;
     public Date DeliveryDate;

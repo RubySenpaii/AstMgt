@@ -24,11 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.Asset;
 import objects.AssetRequested;
+import objects.AssetTracking;
 import objects.Employee;
 import objects.PurchaseRequest;
 import objects.Supplier;
 import services.AssetRequestedService;
 import services.AssetService;
+import services.AssetTrackingService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
 import services.SupplierService;
@@ -143,10 +145,12 @@ public class PurchaseRequestServlet extends BaseServlet {
             System.out.println("NAMES are : " + name);
             assetNameList.add(name);
         }
-
+        ArrayList<AssetTracking> requesterAssets = new AssetTrackingService().GetArrayListOfEmployee(purchaseRequest.RequestedBy);
+        System.out.println("requester asset size " + requesterAssets.size());
         session.setAttribute("assetRequested", assetReqList);
         session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseRequest", purchaseRequest);
+        session.setAttribute("requesterAssets", requesterAssets);
         return "/forms/purchase-request/view.jsp";
     }
 
@@ -181,6 +185,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         System.out.println("Retrieiving at : " + test);
         pr.Date = test;
         pr.RequestedDate = test;
+        pr.ModeOfProcurement = request.getParameter("mode-of-procurement");
         Supplier supplier = new SupplierService().FindSupplierByName(request.getParameter("supplier"));
         pr.SupplierId = supplier.SupplierId;
         ArrayList<AssetRequested> ALIST = new ArrayList<>();
@@ -275,7 +280,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         HttpSession session = request.getSession();
         session.setAttribute("PR", pr);
         session.setAttribute("PRList", arList);
-        return "/forms/purchase-request/add.jsp";
+        return "/forms/purchase-request/edit.jsp";
     }
 
     private String EditPurchaseRequest() {

@@ -133,6 +133,28 @@ public class AssetTrackingService {
         }
     }
 
+    public ArrayList<AssetTracking> GetArrayListOfEmployee(int employeeId) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT T1.* FROM AssetTracking T1 INNER JOIN \n"
+                    + "(SELECT T2.AssetTag, MAX(T2.TransferDate) AS 'Latest' FROM AssetTracking T2 WHERE T2.ApprovedBy IS NOT NULL GROUP BY T2.AssetTag) T2 \n"
+                    + "ON T1.AssetTag = T2.AssetTag AND T1.TransferDate = T2.Latest\n"
+                    + "WHERE ReleasedTo = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, employeeId);
+
+            ArrayList<AssetTracking> assetHistory = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return assetHistory;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+
     public Employee GetCurrentuser(String assetTag) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
@@ -180,6 +202,7 @@ public class AssetTrackingService {
             }
             assetStatus.ReleaseBy = employeeService.FindEmployeeById(assetStatus.ReleasedBy);
             assetStatus.ReleaseTo = employeeService.FindEmployeeById(assetStatus.ReleasedTo);
+            assetStatus.Equipment = new EquipmentService().GetEquipmentWithAssetTag(assetStatus.AssetTag);
             assetHistory.add(assetStatus);
         }
         rs.close();

@@ -30,10 +30,12 @@ public class AssetTracking {
     public String Remarks;
     
     public Asset Asset;
+    public Equipment Equipment;
     public Employee ReleaseBy;
     public Employee ReleaseTo;
     public Employee Approver;
     
     public ArrayList<AssetIncident> Incidents;
     public ArrayList<AssetTracking> Trackings;
+    public ArrayList<AssetTracking> EmployeeAssets;
 }

@@ -158,10 +158,9 @@ public class PurchaseOrderServlet extends BaseServlet {
         Supplier supp = suppDB.FindSupplierByName(request.getParameter("supplier"));
         po.SupplierId = supp.SupplierId;
         po.PurchaseOrderNumber = "PO" + "-" + po.PurchaseOrderId;
-        po.ModeOfProcurement = request.getParameter("mop");
         po.Remarks = request.getParameter("remarks");
         po.DeliveryAddress = request.getParameter("deladd");
-        po.DeliveryTerms = request.getParameter("delterms");
+        po.DeliveryTerms = ""; //request.getParameter("delterms");
         po.ORSNumber = "";
         po.ORSDate = sdf.parse("9999-12-31");
         po.PaymentTerm = request.getParameter("payterms");

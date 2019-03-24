@@ -48,6 +48,10 @@
                                 <label class="col-lg-10 control-label"><%=equipment.DateAcquired%></label>
                             </div>
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">Mode of Procurement</label>
+                                <label class="col-lg-10 control-label"><%=equipment.ModeOfProcurement%></label>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-lg-2 control-label">Age of Asset</label>
                                 <label class="col-lg-10 control-label"><%=equipment.getAge() + " year(s)"%></label>
                             </div>

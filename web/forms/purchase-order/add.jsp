@@ -49,16 +49,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Mode Of Procurement</label>
-                                    <div class="col-lg-10">
-                                        <select class="form-control" id="mop" name="mop" placeholder="Mode Of Procurement" autocomplete="off">
-                                            <option>Shopping</option>
-                                            <option>Bidding</option>
-                                            <option>Donation</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Remarks</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Remarks" autocomplete="off">
@@ -70,16 +60,25 @@
                                         <input type="date" class="form-control" id="deldate" name="deldate" placeholder="Requested Date" autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Delivery Terms</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="delterms" name="delterms" placeholder="Delivery Terms" autocomplete="off">
+                                        <select class="form-control" id="delterms" name="delterms" autocomplete="off">
+                                            <option></option>
+                                        </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Payment Terms</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="payterms" name="payterms" placeholder="Payment Terms" autocomplete="off">
+                                        <select class="form-control" id="payterms" name="payterms">
+                                            <option>15 days</option>
+                                            <option>30 days</option>
+                                            <option>45 days</option>
+                                            <option>60 days</option>
+                                            <option>90 days</option>
+                                            <option>120 days</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -27,9 +27,9 @@ public class EquipmentService {
 
             String query = "INSERT INTO Equipment(" + Equipment.COLUMN_ASSET_ID + ", " + Equipment.COLUMN_ASSET_TAG + ", Equipment."
                     + Equipment.COLUMN_CONDITION + ", " + Equipment.COLUMN_DATE_ACQUIRED + ", "
-                    + Equipment.COLUMN_FLAG + "," + Equipment.COLUMN_ACQUISITION_COST + ","
+                    + Equipment.COLUMN_FLAG + "," + Equipment.COLUMN_ACQUISITION_COST + "," + Equipment.COLUMN_MODE_OF_PROCUREMENT + ", "
                     + Equipment.COLUMN_DESCRIPTION + ") "
-                    + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, equipment.AssetId);
             ps.setString(2, equipment.AssetTag);
@@ -37,7 +37,8 @@ public class EquipmentService {
             ps.setObject(4, equipment.DateAcquired);
             ps.setInt(5, equipment.Flag);
             ps.setDouble(6, equipment.AcquisitionCost);
-            ps.setString(7, equipment.Description);
+            ps.setString(7, equipment.ModeOfProcurement);
+            ps.setString(8, equipment.Description);
 
             int result = ps.executeUpdate();
             ps.close();
@@ -141,6 +142,7 @@ public class EquipmentService {
             equipment.Flag = rs.getInt(Equipment.COLUMN_FLAG);
             equipment.AcquisitionCost = rs.getDouble(Equipment.COLUMN_ACQUISITION_COST);
             equipment.Description = rs.getString(Equipment.COLUMN_DESCRIPTION);
+            equipment.ModeOfProcurement = rs.getString(Equipment.COLUMN_MODE_OF_PROCUREMENT);
             
             equipment.Asset = new AssetService().GetAsset(equipment.AssetId);
             equipment.CurrentUser = new AssetTrackingService().GetCurrentuser(equipment.AssetTag);

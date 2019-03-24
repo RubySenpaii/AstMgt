@@ -111,6 +111,31 @@
                                                                         %>
                                                                     </tbody>
                                                                 </table>
+
+                                                                <h3>Receiver's Asset(s)</h3>
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Asset Name</th>
+                                                                            <th>Asset Tag</th>
+                                                                            <th>Asset Type</th>
+                                                                        </tr
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <%
+                                                                            ArrayList<AssetTracking> assets = tracking.EmployeeAssets;
+                                                                            for (int j = 0; j < assets.size(); j++) {
+                                                                        %>
+                                                                        <tr>
+                                                                            <td><%=assets.get(j).Equipment.Asset.AssetName%></td>
+                                                                            <td><%=assets.get(j).AssetTag%></td>
+                                                                            <td><%=assets.get(j).Equipment.Asset.AssetType%></td>
+                                                                        </tr>
+                                                                        <%
+                                                                            }
+                                                                        %>
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <form action="/AMS/InventoryServlet/ReviewTracking">

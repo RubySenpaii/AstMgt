@@ -58,7 +58,7 @@
             <%
                 ExpenditureTracking limit = (ExpenditureTracking) session.getAttribute("limit");
                 Employee user = (Employee) session.getAttribute("user");
-                String display = user.FullName() + " - " + user.Division;
+                String display = user.FullName() + " - " + user.Division + ": " + user.UserLevel;
             %>
             <li class="fill-header"></li>
             <li class="header-limit">

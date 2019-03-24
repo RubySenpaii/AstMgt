@@ -7,11 +7,11 @@
         <meta name="description" content="">
         <meta name="author" content="Dashboard">
         <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-        <title>Dashio - Bootstrap Admin Template</title>
+        <title>DAR-AMIS - Asset Management Information System</title>
 
         <!-- Favicons -->
-        <link href="img/favicon.png" rel="icon">
-        <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="img/darlogo.jpg" rel="icon">
+        <link href="img/darlogo.jpg" rel="apple-touch-icon">
 
         <!-- Bootstrap core CSS -->
         <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,9 +25,11 @@
     <body>
         <!-- Main Content -->
         <div id="login-page">
+            <h1 class="text center text-bold">Department of Agrarian Reform</h1>
+            <h2 class="text-center text-bold">Asset Management Information System</h2>
             <div class="container">
                 <form class="form-login" action="Login" method="post">
-                    <h2 class="form-login-heading">sign in now</h2>
+                    <h2 class="form-login-heading">Log In to Start your Session</h2>
                     <div class="login-wrap">
                         <%
                             boolean checker = true;
@@ -49,7 +51,7 @@
                         <br>
                         <button class="btn btn-theme btn-block" value="Sign In" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
                         <br>
-                        <a class="btn btn-theme btn-block" href="/AMS/forms/admin/register.jsp"><i class="fa fa-user-plus"></i> REGISTER</a>
+                        <!--<a class="btn btn-theme btn-block" href="/AMS/forms/admin/register.jsp"><i class="fa fa-user-plus"></i> REGISTER</a> -->
                     </div>
                 </form>
             </div>

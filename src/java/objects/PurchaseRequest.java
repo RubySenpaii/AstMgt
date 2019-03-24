@@ -25,6 +25,7 @@ public class PurchaseRequest {
     public static final String COLUMN_APPROVED_DATE = "ApprovedDate";
     public static final String COLUMN_REMARKS = "Remarks";
     public static final String COLUMN_SUPPLIER_ID = "SupplierId";
+    public static final String COLUMN_MODE_OF_PROCUREMENT = "ModeOfProcurement";
     
     public int PurchaseRequestId;
     public String PurchaseRequestNo;
@@ -37,6 +38,7 @@ public class PurchaseRequest {
     public Date ApprovedDate;
     public String Remarks;
     public int SupplierId;
+    public String ModeOfProcurement;
     
     public Employee Requester;
     public Employee Approver;

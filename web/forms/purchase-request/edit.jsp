@@ -1,7 +1,7 @@
 <%-- 
-    Document   : add
-    Created on : Oct 7, 2018, 3:18:42 PM
-    Author     : RubySenpaii
+    Document   : edit
+    Created on : 03 24, 19, 2:54:59 PM
+    Author     : rubysenpaii
 --%>
 
 <%@page import="objects.AssetRequested"%>
@@ -27,28 +27,24 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div class="col-md-6">
+                        <!--div class="col-md-6">
                             <div class="form-panel">
                                 <select onchange="document.getElementById('pdfViewer').setAttribute('data', '/AMS/uploaded-files/wfp/' + document.getElementById('select-file').value)" id="select-file">
                                     <option selected="true" disabled>- Select an Option -</option>
-                                    <%
-                                        ArrayList<String> files = (ArrayList<String>) session.getAttribute("fileList");
-                                        for (String file : files) {
-                                    %>
-                                    <option value="<%=file%>"><%=file%></option>
-                                    <%
-                                        }
-                                    %>
                                 </select>
                                 <object id="pdfViewer" data="" type="application/pdf" width="100%" height="800px" style="padding: 20px">
                                 </object>
                             </div>
-                        </div>
+                        </div-->
+                        <%
+                            PurchaseRequest pr = (PurchaseRequest) session.getAttribute("PR");
+                        %>
                         <div class="col-md-6">
                             <div class="form-panel">
                                 <h4>Create Purchase Request</h4><br/>
-                                <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
-                                    <%                                        Asset asset = (Asset) session.getAttribute("asset");
+                                <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Update">
+                                    <%
+                                        Asset asset = (Asset) session.getAttribute("asset");
                                     %>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>
@@ -95,18 +91,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label" for="exampleInputPassword1">Mode Of Procurement</label>
-                                        <div class="col-lg-10">
-                                            <select class="form-control" name="mode-of-procurement" placeholder="Mode Of Procurement" autocomplete="off">
-                                                <option>Shopping</option>
-                                                <option>Donation</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-lg-2 control-label">Supplier</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" id="purpose" name="supplier" placeholder="Supplier" list="supplier-list" autocomplete="off">
+                                            <input type="text" class="form-control" id="purpose" name="supplier" value="<%= pr.Supplier.SupplierName%>" placeholder="Supplier" list="supplier-list" autocomplete="off">
                                             <datalist id="supplier-list">
                                             </datalist>
                                         </div>
@@ -125,21 +112,37 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <%
+//                                                        session.setAttribute("oldPr", pr);
+                                                        ArrayList<AssetRequested> arList = (ArrayList<AssetRequested>) session.getAttribute("PRList");
+                                                        double total = 0;
+                                                        for (AssetRequested ar : arList) {
+                                                            String assetListed = ar.Asset.AssetName;
+                                                            total += ar.getTotalCost();
+                                                            if (assetListed.isEmpty()) {
+                                                                assetListed = assetName;
+                                                            }
+                                                    %>
                                                     <tr class="fieldT">
                                                         <td><input type="checkbox" name="record"></td>
                                                         <td>
-                                                            <input list="asset-list" name="assets" autocomplete="off" value="<%=assetName%>">
+                                                            <input list="asset-list" name="assets" autocomplete="off" value="<%=assetListed%>">
                                                         </td>
-                                                        <td><input type="number" class="quantity" name="quantity" autocomplete="off"></td> 
-                                                        <td><input type="number" class="price" name="price" autocomplete="off"></td> 
+                                                        <td><input type="number" class="quantity" name="quantity" autocomplete="off" value="<%= ar.Quantity%>" ></td> 
+                                                        <td><input type="number" class="price" name="price" autocomplete="off" value="<%= ar.UnitCost%>"></td> 
                                                         <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                                     </tr>
+
+                                                    <%
+                                                        }
+                                                    %>
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th><button type="button" class="delete-row  btn btn-danger">Remove</button></th>
                                                         <th colspan="2" style="text-align: right">Total :</th>
-                                                        <th><input name='totalPrice' id='totalPrice' disabled="true">  </th>
+                                                        <th><input name='totalPrice' id='totalPrice' disabled="true" value="<%= total%>">  </th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -188,27 +191,6 @@
             });
 
             $(document.body).on('change', '.price', function () {
-                // initialize the sum (total price) to zero
-                var sum = 0;
-
-                var price = [], qty = [];
-                // we use jQuery each() to loop through all the textbox with 'price' class
-                // and compute the sum for each loop
-                $('.price').each(function () {
-                    price.push($(this).val());
-                });
-                $('.quantity').each(function () {
-                    qty.push($(this).val());
-                });
-
-                for (var i = 0; i < price.length; i++) {
-                    sum += (price[i] * qty[i]);
-                }
-                // set the computed value to 'totalPrice' textbox
-                $('#totalPrice').val(sum);
-            });
-            
-            $(document.body).on('change', '.quantity', function () {
                 // initialize the sum (total price) to zero
                 var sum = 0;
 

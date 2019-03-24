@@ -22,6 +22,7 @@ public class Equipment {
     public static final String COLUMN_DATE_ACQUIRED = "DateAcquired";
     public static final String COLUMN_ACQUISITION_COST = "AcquisitionCost";
     public static final String COLUMN_DESCRIPTION = "Description";
+    public static final String COLUMN_MODE_OF_PROCUREMENT = "ModeOfProcurement";
     
     public int AssetId;
     public String AssetTag;
@@ -30,6 +31,7 @@ public class Equipment {
     public Date DateAcquired;
     public double AcquisitionCost;
     public String Description;
+    public String ModeOfProcurement;
     
     public Asset Asset;
     public Employee CurrentUser;

@@ -5,8 +5,8 @@
 --%>
 
 <!-- Favicons -->
-<link href="/AMS/img/favicon.png" rel="icon">
-<link href="/AMS/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="/AMS/img/darlogo.jpg" rel="icon">
+<link href="/AMS/img/darlogo.jpg" rel="apple-touch-icon">
 
 <!-- Bootstrap core CSS -->
 <link href="/AMS/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">

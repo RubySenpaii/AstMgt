@@ -81,7 +81,7 @@
                                     </div>
                                 </div-->
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Assign To</label>
+                                    <label class="col-lg-2 control-label">Assign Inspector</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" id="assign" name="assign" placeholder="Assign To" list="employee" autocomplete="off">
                                         <datalist id="employee">

@@ -164,6 +164,7 @@ public class InventoryServlet extends BaseServlet {
                 equipment.AcquisitionCost = assetsRequested.get(i).UnitCost;
                 equipment.DateAcquired = Calendar.getInstance().getTime();
                 equipment.Description = description;
+                equipment.ModeOfProcurement = purchaseOrder.PurchaseRequest.ModeOfProcurement;
                 equipment.Flag = 1;
                 int result = equipmentService.AddEquipment(equipment);
 
@@ -282,6 +283,7 @@ public class InventoryServlet extends BaseServlet {
         for (AssetTracking assetTracking : assetTrackings) {
             assetTracking.Trackings = assetTrackingService.GetAssetHistory(assetTracking.AssetTag);
             assetTracking.Incidents = assetIncidentService.GetIncidentsOfAsset(assetTracking.AssetTag);
+            assetTracking.EmployeeAssets = assetTrackingService.GetArrayListOfEmployee(assetTracking.ReleasedTo);
         }
         session.setAttribute("assetTrackings", assetTrackings);
         return "/forms/asset/tracking-requests.jsp";

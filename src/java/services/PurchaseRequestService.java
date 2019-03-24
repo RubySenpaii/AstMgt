@@ -24,8 +24,8 @@ public class PurchaseRequestService {
 
     private final String AddQuery = "INSERT INTO PurchaseRequest(" + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + "," + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + ","
             + PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE + "," + PurchaseRequest.COLUMN_DATE + "," + PurchaseRequest.COLUMN_PURPOSE + ","
-            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE + ", " + PurchaseRequest.COLUMN_SUPPLIER_ID
-            + ")VALUES(?,?,?,?,?,?,?,?);";
+            + PurchaseRequest.COLUMN_REQUESTED_BY + "," + PurchaseRequest.COLUMN_REQUESTED_DATE + ", " + PurchaseRequest.COLUMN_SUPPLIER_ID + ", " + PurchaseRequest.COLUMN_MODE_OF_PROCUREMENT
+            + ")VALUES(?,?,?,?,?,?,?,?,?);";
     private final String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
     private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ;";
     private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
@@ -45,6 +45,7 @@ public class PurchaseRequestService {
             ps.setInt(6, pr.RequestedBy);
             ps.setObject(7, pr.RequestedDate);
             ps.setInt(8, pr.SupplierId);
+            ps.setString(9, pr.ModeOfProcurement);
 
             int res = ps.executeUpdate();
             ps.close();
@@ -60,7 +61,6 @@ public class PurchaseRequestService {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection conn = db.getConnection();
-            System.out.println("Values " + EmployeeId + " ====== " + AppovedDate + " ====== " + purchaseRequestId);
             PreparedStatement ps = conn.prepareStatement(ApprovePurchaseRequest);
             ps.setInt(1, EmployeeId);
             ps.setObject(2, AppovedDate);
@@ -240,6 +240,7 @@ public class PurchaseRequestService {
             e.ResponsibilityCenterCode = rs.getString(PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE);
             e.Requester = new EmployeeService().FindEmployeeById(e.RequestedBy);
             e.SupplierId = rs.getInt(PurchaseRequest.COLUMN_SUPPLIER_ID);
+            e.ModeOfProcurement = rs.getString(PurchaseRequest.COLUMN_MODE_OF_PROCUREMENT);
             if (e.ApprovedBy != 0) {
                 e.Approver = new EmployeeService().FindEmployeeById(e.ApprovedBy);
             } else {
