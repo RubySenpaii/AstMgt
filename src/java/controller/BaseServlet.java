@@ -75,10 +75,14 @@ public abstract class BaseServlet extends HttpServlet {
                 }
                 ArrayList<PurchaseOrder> deliveringPurchaseOrder = purchaseOrderService.getPurchaseOrderExpectingDelivery();
                 for (int i = 0; i < deliveringPurchaseOrder.size(); i++) {
-                    RequestForDeliveryInspection rfi = new RequestForDeliveryInspectionService().GetRequestForInspectionByPurchaseOrder(deliveringPurchaseOrder.get(i).PurchaseOrderId);
-                    if (rfi.IsCompleted == 1) {
-                        deliveringPurchaseOrder.remove(i);
-                        i--;
+                    try {
+                        RequestForDeliveryInspection rfi = new RequestForDeliveryInspectionService().GetRequestForInspectionByPurchaseOrder(deliveringPurchaseOrder.get(i).PurchaseOrderId);
+                        if (rfi.IsCompleted == 1) {
+                            deliveringPurchaseOrder.remove(i);
+                            i--;
+                        }
+                    } catch (IndexOutOfBoundsException ex) {
+                        System.out.println("no rfi yet");
                     }
                 }
                 // list of low supplies
