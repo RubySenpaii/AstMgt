@@ -59,7 +59,7 @@
                                                     <tr>
                                                         <td>Procurement Division</td>
                                                         <td>
-                                                            <input type="number" name="procurement-equipment" id="procurement" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="procurement-equipment" id="procurement" onchange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="procurement-supplies" autocomplete="off">
@@ -68,7 +68,7 @@
                                                     <tr>
                                                         <td>Personnel</td>
                                                         <td>
-                                                            <input type="number" name="management-equipment" id="management" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="management-equipment" id="management" onchange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="management-supplies" autocomplete="off">
@@ -77,7 +77,7 @@
                                                     <tr>
                                                         <td>Admin Services</td>
                                                         <td>
-                                                            <input type="number" name="admin-equipment" id="admin" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="admin-equipment" id="admin" onchange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="admin-supplies" autocomplete="off">
@@ -86,7 +86,7 @@
                                                     <tr>
                                                         <td>General Services</td>
                                                         <td>
-                                                            <input type="number" name="general-equipment" id="general" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="general-equipment" id="general" onchange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="general-supplies" autocomplete="off">
@@ -95,7 +95,7 @@
                                                     <tr>
                                                         <td>Records</td>
                                                         <td>
-                                                            <input type="number" name="finance-equipment" id="finance" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="finance-equipment" id="finance" onchange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="finance-supplies" autocomplete="off">
@@ -145,21 +145,50 @@
                 var csv = e.target.result;
                 var data = $.csv.toArrays(csv);
                 console.log(data);
-                
-                var filteredData = [], equipmentFlag = false;
-                for (var i = 30; i < data.length; i++) {
-                    if (data[i][0].toLowerCase().includes('equipment') || data[i][1].toLowerCase().includes('equipment') ||
-                            data[i][0].toLowerCase().includes('devices') || data[i][1].toLowerCase().includes('devices')) {
-                        filteredData.push(data[i]);
-                        equipmentFlag = true;
-                    } else if (equipmentFlag) {
-                        if (data[i][0] != "" && data[i][1] != "") {
+
+                var qtrIdx = -1;
+                var priceIdx = -1;
+                var qtr = getQuarter();
+                for (var i = 0; i < data[0].length; i++) {
+                    if (data[0][i] == qtr) {
+                        qtrIdx = i;
+                    } else if (data[0][i].toLowerCase().includes('price')) {
+                        priceIdx = i;
+                    }
+                }
+                console.log('quarter idx', qtrIdx);
+                console.log('price idx', priceIdx);
+                var totalAmount = 0;
+                if (qtrIdx == -1 || priceIdx == -1) {
+                    alert('CSV Parsing Error. Quantity and/or Price Not Available');
+                } else {
+                    var filteredData = [], equipmentFlag = false;
+                    for (var i = 30; i < data.length; i++) {
+                        if (data[i][0].toLowerCase().includes('equipment') || data[i][1].toLowerCase().includes('equipment') ||
+                                data[i][0].toLowerCase().includes('devices') || data[i][1].toLowerCase().includes('devices')) {
                             filteredData.push(data[i]);
-                        } else {
-                            equipmentFlag = false;
+                            equipmentFlag = true;
+                        } else if (equipmentFlag) {
+                            if (data[i][0] != "" && data[i][1] != "") {
+                                filteredData.push(data[i]);
+                                totalAmount += (Number(data[i][qtrIdx].replace(/ /g,'').replace(/,/g, '')) * Number(data[i][priceIdx].replace(/ /g,'').replace(/,/g, '')));
+                                console.log('row total', totalAmount);
+                            } else {
+                                equipmentFlag = false;
+                            }
                         }
                     }
                 }
+                totalAmount = Math.round(totalAmount * 100) / 100;
+                var amountPerDivision = Math.round((totalAmount / 5) * 100) / 100;
+                console.log('allocation amount', totalAmount);
+                console.log('amount per division', amountPerDivision);
+                document.getElementById('admin').value = amountPerDivision;
+                document.getElementById('procurement').value = amountPerDivision;
+                document.getElementById('management').value = amountPerDivision;
+                document.getElementById('general').value = amountPerDivision;
+                document.getElementById('finance').value = amountPerDivision;
+
                 console.log('filtered data', filteredData);
             };
 
@@ -168,6 +197,29 @@
             };
 
             reader.readAsText(file);
+        }
+
+        function getQuarter() {
+            var date = new Date();
+            var month = date.getMonth();
+            switch (month) {
+                case 0:
+                case 1:
+                case 2:
+                    return "Q1";
+                case 3:
+                case 4:
+                case 5:
+                    return "Q2";
+                case 6:
+                case 7:
+                case 8:
+                    return "Q3";
+                case 9:
+                case 10:
+                case 11:
+                    return "Q4";
+            }
         }
     </script>
 </html>

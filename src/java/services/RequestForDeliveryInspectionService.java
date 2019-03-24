@@ -118,7 +118,7 @@ public class RequestForDeliveryInspectionService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
 
-            String query = "SELECT * FROM RequestForDeliveryInspection WHERE " + RequestForDeliveryInspection.COLUMN_IS_COMPLETED + " = 0";
+            String query = "SELECT * FROM RequestForDeliveryInspection WHERE " + RequestForDeliveryInspection.COLUMN_IS_COMPLETED + " = 0 OR " + RequestForDeliveryInspection.COLUMN_APPROVED_BY + " IS NULL";
             PreparedStatement ps = con.prepareStatement(query);
 
             ArrayList<RequestForDeliveryInspection> deliveryRequests = getResult(ps.executeQuery());
