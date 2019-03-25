@@ -98,6 +98,12 @@
                                             </datalist>
                                         </div>
                                     </div>
+                                            <div class="form-group">
+                                        <label class="col-lg-2 control-label">Remarks</label>
+                                        <div class="col-lg-10">
+                                            <label><%= pr.Remarks %> </label>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Items</label>
                                         <div class="col-lg-12" style="margin-top: 15px">

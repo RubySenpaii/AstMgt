@@ -96,7 +96,8 @@ public class DeliveryInspectionServlet extends BaseServlet {
                 Logger.getLogger(DeliveryInspectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }*/
 
-            requestInspection.DeliveryInspectionId = deliveryInspectionService.GetRequestsForDeliveryInspection().size() + 1;
+            requestInspection.DeliveryInspectionId = deliveryInspectionService.GetTotalDeliveryInspection().size() + 1;
+            System.out.println("LAMAN IS" + requestInspection.DeliveryInspectionId);
             Part invoiceFile = request.getPart("invoice");
             requestInspection.Invoice = orderNumber + "invoice";
             int invoiceSaved = file.SaveFile(getServletContext().getRealPath("/uploaded-files/invoice"), invoiceFile, requestInspection.Invoice);

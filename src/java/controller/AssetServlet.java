@@ -226,11 +226,7 @@ public class AssetServlet extends BaseServlet {
             repairLog.Cost = Double.parseDouble(costs[i]);
             int result = repairLogService.AddRepairLog(repairLog);
             if (result == 1) {
-                ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
-                ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
-                expenditure.Timestamp = Calendar.getInstance().getTime();
-                expenditure.Equipment -= repairLog.Cost;
-                result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+
             }
             System.out.println("result: " + result);
         }
@@ -255,10 +251,11 @@ public class AssetServlet extends BaseServlet {
         equip = equipmentService.GetEquipmentWithAssetTag(log.AssetTag);
         session.setAttribute("incidents", incidents);
         session.setAttribute("equipmentCost", equip.AcquisitionCost);
+        RepairLogService rlogService = new RepairLogService();
+        ArrayList<RepairLog> rlist = rlogService.GetApprovedRepairLogs(log.AssetTag);
         double total = 0.00;
-        for (RepairLog tlogs : log.Logs) {
-            total += tlogs.Cost;
-        }
+        System.out.println("RLSIT" + rlist.get(0).TotalCost);
+        total = rlist.get(0).TotalCost;
         session.setAttribute("totalCost", total);
         return "/forms/asset/repair-request.jsp";
     }
@@ -270,7 +267,15 @@ public class AssetServlet extends BaseServlet {
         log.ApprovedBy = employee.EmployeeId;
         log.ApprovedDate = Calendar.getInstance().getTime();
         int result = repairLogService.UpdateRepairLog(log);
+        double totalCost = Double.parseDouble(request.getParameter("total-cost"));
         System.out.println("update result: " + result);
+        if (result != 0) {
+            ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
+            ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
+            expenditure.Timestamp = Calendar.getInstance().getTime();
+            expenditure.Equipment -= totalCost;
+            result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+        }
         return "/AssetServlet/RepairRequests";
     }
 

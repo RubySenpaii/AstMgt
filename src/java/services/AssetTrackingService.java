@@ -115,14 +115,16 @@ public class AssetTrackingService {
         }
     }
 
-    public ArrayList<AssetTracking> GetPendingTracking() {
+    public ArrayList<AssetTracking> GetPendingTracking(int empid, String userlevel) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
 
-            String query = "SELECT * FROM AssetTracking WHERE " + AssetTracking.COLUMN_APPROVED_BY + " IS NULL";
+            String query = "Select * FROM assettracking at join employee e on at." + AssetTracking.COLUMN_RELEASED_BY + " = e." + Employee.COLUMN_EMPLOYEE_ID + " where " + AssetTracking.COLUMN_APPROVED_BY
+                    + " IS NULL and (at." + AssetTracking.COLUMN_APPROVED_BY + " = ? or e." + Employee.COLUMN_USER_LEVEL + " = ?);";
             PreparedStatement ps = con.prepareStatement(query);
-
+            ps.setInt(1, empid);
+            ps.setString(2, userlevel);
             ArrayList<AssetTracking> assetHistory = getResult(ps.executeQuery());
             ps.close();
             con.close();
