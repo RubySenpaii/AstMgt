@@ -130,6 +130,24 @@ public class RequestForDeliveryInspectionService {
             return new ArrayList<>();
         }
     }
+    
+    public ArrayList<RequestForDeliveryInspection> GetTotalDeliveryInspection() {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT * FROM RequestForDeliveryInspection";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ArrayList<RequestForDeliveryInspection> deliveryRequests = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return deliveryRequests;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
 
     public RequestForDeliveryInspection GetRequestForDeliveryInspection(int deliveryInspectionId) {
         try {
