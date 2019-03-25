@@ -28,14 +28,17 @@ import objects.ExpenditureLimit;
 import objects.ExpenditureTracking;
 import report.Equipment;
 import report.Asset;
+import report.AssetRepair;
 import report.Expenditure;
 import report.ReportService;
 import report.ReportingModule;
 import report.RequestParameter;
 import report.SpecificEquipment;
 import services.AssetService;
+import services.EquipmentService;
 import services.ExpenditureLimitService;
 import services.ExpenditureTrackingService;
+import services.RepairLogService;
 
 /**
  *
@@ -84,6 +87,12 @@ public class ReportServlet extends BaseServlet {
                     break;
                 case "Expenditure":
                     url = DirectToPage(request, "expenditure");
+                    break;
+                case "GenerateAssetRepair":
+                    url = GenerateAssetRepairReport(request);
+                    break;
+                case "AssetRepair":
+                    url = DirectToPage(request, "asset-repair");
                     break;
                 case "GenerateSpecificSupplies":
                 default:
@@ -239,5 +248,45 @@ public class ReportServlet extends BaseServlet {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "/ReportServlet/Expenditure";
+    }
+    
+    private String GenerateAssetRepairReport(HttpServletRequest request) {
+        try {
+            ArrayList<AssetRepair> assetRepairs = new ArrayList<>();
+            ArrayList<objects.Asset> assets = new AssetService().GetAssets();
+            for (objects.Asset asset: assets) {
+                ArrayList<objects.Equipment> equipments = new EquipmentService().GetListOfEquipmentsWithAssetName(asset.AssetName);
+                int totalCount = 0;
+                double totalAmount = 0;
+                for (objects.Equipment equipment: equipments) {
+                    ArrayList<objects.RepairLog> repairs = new RepairLogService().GetApprovedRepairLogs(equipment.AssetTag);
+                    totalCount += repairs.size();
+                    for (objects.RepairLog repair: repairs) {
+                        totalAmount += repair.TotalCost;
+                    }
+                }
+                AssetRepair assetRepair = new AssetRepair();
+                assetRepair.setName(asset.AssetName);
+                assetRepair.setType(asset.AssetType);
+                assetRepair.setRepairCount(totalCount);
+                assetRepair.setTotalRepair(totalAmount);
+                assetRepairs.add(assetRepair);
+            }
+            
+            RequestParameter reqParameter = new RequestParameter();
+            logo += File.separator + "darlogo.jpg";
+            String jasperFile = jasperPath + File.separator + "RepairReport.jasper";
+            reqParameter.Logo = logo;
+            reqParameter.CertifiedBy = request.getParameter("certified-by");
+            reqParameter.ApprovedBy = request.getParameter("approved-by");
+            reqParameter.VerifiedBy = request.getParameter("verified-by");
+            String fileName = pdfReportsPath + File.separator + "asset-repair" + File.separator + "RepairReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
+            System.out.println("reportservlet 250 method");
+            reports.createRepairReport(reqParameter, jasperFile, fileName, assetRepairs);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/ReportServlet/AssetRepair";
     }
 }

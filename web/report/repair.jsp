@@ -1,6 +1,6 @@
 <%-- 
-    Document   : expenditure
-    Created on : 03 24, 19, 8:14:19 PM
+    Document   : repair
+    Created on : 03 25, 19, 11:32:08 AM
     Author     : rubysenpaii
 --%>
 
@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management - Expenditure Report</title>
+        <title>Asset Management - Repair Report</title>
         <jsp:include page="../shared/css.jsp"/>
     </head>
 
@@ -25,10 +25,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content-panel">
-                                <h4>Expenditure Reports</h4>
+                                <h4>Repair Reports</h4>
                                 <br>
                                 <div class="row" style="border: 1px solid black; margin: 5px 30px">
-                                    <form action="/AMS/ReportServlet/GenerateExpenditure">
+                                    <form action="/AMS/ReportServlet/GenerateAssetRepair">
                                         <h3 style="margin: 15px">Generate Reports</h3>
                                         <div class="col-md-2"></div>
                                         <div class="col-md-8" style="margin: 20px auto; text-align: center">
@@ -54,7 +54,7 @@
                                                 %>
                                                 <tr>
                                                     <td>
-                                                        <button onclick="document.getElementById('pdfViewer').setAttribute('data', '/AMS/pdf/expenditure/<%=file%>')"><%=file%></button>
+                                                        <button onclick="document.getElementById('pdfViewer').setAttribute('data', '/AMS/pdf/asset-repair/<%=file%>')"><%=file%></button>
                                                     </td>
                                                 </tr>
                                                 <%
