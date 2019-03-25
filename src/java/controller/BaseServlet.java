@@ -50,7 +50,7 @@ public abstract class BaseServlet extends HttpServlet {
                 PurchaseOrderService purchaseOrderService = new PurchaseOrderService();
                 EquipmentService equipmentService = new EquipmentService();
                 // additional requests  stuff
-                ArrayList<AssetTracking> assetTrackings = new AssetTrackingService().GetPendingTracking();
+                ArrayList<AssetTracking> assetTrackings = new AssetTrackingService().GetPendingTracking(user.EmployeeId, user.UserLevel);
                 ArrayList<RepairLog> repairRequests = new RepairLogService().GetRepairLogs();
                 //SuppliesService suppliesService = new SuppliesService();
                 ExpenditureTracking limit = new ExpenditureTrackingService().GetCurrentExpenditure(user.Division);
