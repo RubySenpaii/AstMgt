@@ -282,6 +282,7 @@ public class InventoryServlet extends BaseServlet {
 
     private String ShowTrackingRequests(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        Employee user = (Employee) session.getAttribute("user");
         ArrayList<AssetTracking> assetTrackings = assetTrackingService.GetPendingTracking();
         
         for (AssetTracking assetTracking : assetTrackings) {

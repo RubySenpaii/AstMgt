@@ -226,11 +226,7 @@ public class AssetServlet extends BaseServlet {
             repairLog.Cost = Double.parseDouble(costs[i]);
             int result = repairLogService.AddRepairLog(repairLog);
             if (result == 1) {
-                ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
-                ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
-                expenditure.Timestamp = Calendar.getInstance().getTime();
-                expenditure.Equipment -= repairLog.Cost;
-                result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+
             }
             System.out.println("result: " + result);
         }
@@ -270,7 +266,15 @@ public class AssetServlet extends BaseServlet {
         log.ApprovedBy = employee.EmployeeId;
         log.ApprovedDate = Calendar.getInstance().getTime();
         int result = repairLogService.UpdateRepairLog(log);
+        double totalCost = Double.parseDouble(request.getParameter("total-cost")) ;
         System.out.println("update result: " + result);
+        if (result != 0) {
+            ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
+            ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
+            expenditure.Timestamp = Calendar.getInstance().getTime();
+            expenditure.Equipment -= totalCost;
+            result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+        }
         return "/AssetServlet/RepairRequests";
     }
 
