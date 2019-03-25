@@ -240,6 +240,7 @@ public class PurchaseRequestService {
             e.ResponsibilityCenterCode = rs.getString(PurchaseRequest.COLUMN_RESPONSIBILITY_CENTER_CODE);
             e.Requester = new EmployeeService().FindEmployeeById(e.RequestedBy);
             e.SupplierId = rs.getInt(PurchaseRequest.COLUMN_SUPPLIER_ID);
+            e.Remarks = rs.getString(PurchaseRequest.COLUMN_REMARKS);
             e.ModeOfProcurement = rs.getString(PurchaseRequest.COLUMN_MODE_OF_PROCUREMENT);
             if (e.ApprovedBy != 0) {
                 e.Approver = new EmployeeService().FindEmployeeById(e.ApprovedBy);
