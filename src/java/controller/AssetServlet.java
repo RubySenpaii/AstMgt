@@ -254,7 +254,7 @@ public class AssetServlet extends BaseServlet {
         RepairLogService rlogService = new RepairLogService();
         ArrayList<RepairLog> rlist = rlogService.GetApprovedRepairLogs(log.AssetTag);
         double total = 0.00;
-        if (rlist.size() > 0 {
+        if (rlist.size() > 0) {
             System.out.println("RLSIT" + rlist.get(0).TotalCost);
             total = rlist.get(0).TotalCost;
         }
