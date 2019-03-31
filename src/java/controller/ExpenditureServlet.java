@@ -22,8 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import objects.Asset;
 import objects.Employee;
+import objects.ExpenditureItem;
 import objects.ExpenditureLimit;
+import services.AssetService;
+import services.ExpenditureItemService;
 import services.ExpenditureLimitService;
 
 /**
@@ -48,6 +52,9 @@ public class ExpenditureServlet extends BaseServlet {
                     break;
                 case "Submit":
                     url = SubmitExpenditureLimit(request);
+                    break;
+                case "Submitv2":
+                    url = SubmitExpenditureLimitv2(request);
                     break;
                 default:
                     url = ExpenditureLimit(request);
@@ -110,6 +117,85 @@ public class ExpenditureServlet extends BaseServlet {
         } catch (ServletException x) {
             System.err.println("Servlet Exception in uploading app");
             System.err.println(x);
+        }
+        return "/HomeServlet";
+    }
+
+    private String SubmitExpenditureLimitv2(HttpServletRequest request) {
+        String[] names = request.getParameterValues("name");
+        String[] types = request.getParameterValues("type");
+        String[] price = request.getParameterValues("price");
+        String[] admin = request.getParameterValues("admin");
+        String[] general = request.getParameterValues("general");
+        String[] procurement = request.getParameterValues("procurement");
+        String[] personnel = request.getParameterValues("personnel");
+        String[] records = request.getParameterValues("records");
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+
+        for (int i = 0; i < names.length; i++) {
+            AssetService assetService = new AssetService();
+            int assetId;
+            try {
+                assetId = assetService.GetAssetByName(names[i]).AssetId;
+            } catch (IndexOutOfBoundsException x) {
+                assetId = assetService.GetAssets().size() + 1;
+                Asset asset = new Asset();
+                asset.AssetId = assetId;
+                asset.AssetName = names[i];
+                asset.AssetType = types[i];
+                asset.Description = price[i];
+                asset.FundCluster = "N/A";
+                asset.StockNo = assetId + "";
+                asset.Unit = "pc";
+                asset.EstimatedUsefulLife = 3;
+                assetService.AddAsset(asset);
+            }
+            ExpenditureItem procurementExpItem = new ExpenditureItem();
+            procurementExpItem.AssetId = assetId;
+            procurementExpItem.QuantityOrdered = 0;
+            procurementExpItem.Year = year;
+            procurementExpItem.Quarter = SharedFormat.getQuarter();
+            procurementExpItem.Division = "Procurement";
+            procurementExpItem.QuantityLimit = Integer.parseInt(procurement[i]);
+            
+            ExpenditureItem adminExpItem = new ExpenditureItem();
+            adminExpItem.AssetId = assetId;
+            adminExpItem.QuantityOrdered = 0;
+            adminExpItem.Year = year;
+            adminExpItem.Quarter = SharedFormat.getQuarter();
+            adminExpItem.Division = "Admin";
+            adminExpItem.QuantityLimit = Integer.parseInt(admin[i]);
+            
+            ExpenditureItem generalExpItem = new ExpenditureItem();
+            generalExpItem.AssetId = assetId;
+            generalExpItem.QuantityOrdered = 0;
+            generalExpItem.Year = year;
+            generalExpItem.Quarter = SharedFormat.getQuarter();
+            generalExpItem.Division = "General";
+            generalExpItem.QuantityLimit = Integer.parseInt(general[i]);
+            
+            ExpenditureItem personnelExpItem = new ExpenditureItem();
+            personnelExpItem.AssetId = assetId;
+            personnelExpItem.QuantityOrdered = 0;
+            personnelExpItem.Year = year;
+            personnelExpItem.Quarter = SharedFormat.getQuarter();
+            personnelExpItem.Division = "Personnel";
+            personnelExpItem.QuantityLimit = Integer.parseInt(personnel[i]);
+            
+            ExpenditureItem recordsExpItem = new ExpenditureItem();
+            recordsExpItem.AssetId = assetId;
+            recordsExpItem.QuantityOrdered = 0;
+            recordsExpItem.Year = year;
+            recordsExpItem.Quarter = SharedFormat.getQuarter();
+            recordsExpItem.Division = "Records";
+            recordsExpItem.QuantityLimit = Integer.parseInt(records[i]);
+            
+            ExpenditureItemService eis = new ExpenditureItemService();
+            System.out.println("admin result: " + eis.AddExpenditureItem(adminExpItem));
+            System.out.println("general result: " + eis.AddExpenditureItem(generalExpItem));
+            System.out.println("personnel result: " + eis.AddExpenditureItem(personnelExpItem));
+            System.out.println("records result: " + eis.AddExpenditureItem(recordsExpItem));
+            System.out.println("procurement result: " + eis.AddExpenditureItem(procurementExpItem));
         }
         return "/HomeServlet";
     }
