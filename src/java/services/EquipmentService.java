@@ -93,6 +93,25 @@ public class EquipmentService {
         }
     }
     
+    public ArrayList<Equipment> GetListOfEquipmentsForTheQuarter(int quarter) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT * FROM Equipment WHERE Quarter(" + Equipment.COLUMN_DATE_ACQUIRED + ") = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, quarter);
+            
+            ArrayList<Equipment> equipments = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return equipments;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+    
     public ArrayList<Equipment> GetListOfEquipmentsWithAssetName(String assetName) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
