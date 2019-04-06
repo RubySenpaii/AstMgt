@@ -46,6 +46,38 @@ public class ExpenditureItemService {
         }
     }
     
+    public int AddExpenditureItems(ArrayList<ExpenditureItem> expenditureItems) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            con.setAutoCommit(false);
+            
+            String query = "INSERT INTO ExpenditureItem (" + ExpenditureItem.COLUMN_ASSET_ID + ", " + ExpenditureItem.COLUMN_DIVISION
+                    + ", " + ExpenditureItem.COLUMN_QUANTITY_LIMIT + ", " + ExpenditureItem.COLUMN_QUANTITY_ORDERED
+                    + ", " + ExpenditureItem.COLUMN_QUARTER + ", " + ExpenditureItem.COLUMN_YEAR + ") "
+                    + "VALUES(?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            for (ExpenditureItem expenditureItem : expenditureItems) {
+                ps.setInt(1, expenditureItem.AssetId);
+                ps.setString(2, expenditureItem.Division);
+                ps.setInt(3, expenditureItem.QuantityLimit);
+                ps.setInt(4, expenditureItem.QuantityOrdered);
+                ps.setString(5, expenditureItem.Quarter);
+                ps.setInt(6, expenditureItem.Year);
+                ps.addBatch();
+            }
+            
+            int[] result = ps.executeBatch();
+            con.commit();
+            ps.close();
+            con.close();
+            return result.length;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return -1;
+        }
+    }
+    
     public int UpdateExpenditureItem(ExpenditureItem expenditureItem) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();

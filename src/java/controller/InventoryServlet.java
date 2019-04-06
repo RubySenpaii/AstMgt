@@ -5,6 +5,7 @@
  */
 package controller;
 
+import extra.SharedFormat;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -86,6 +87,9 @@ public class InventoryServlet extends BaseServlet {
                 case "UpdateItem":
                     url = UpdateItem(request);
                     break;
+                case "EquipmentHistory":
+                    url = EquipmentHistory(request);
+                    break;
                 case "EquipmentList":
                 default:
                     url = ListEquipment(request);
@@ -97,6 +101,14 @@ public class InventoryServlet extends BaseServlet {
         } catch (Exception x) {
             throw new ServletException(x);
         }
+    }
+    
+    private String EquipmentHistory(HttpServletRequest request) {
+        int quarter = Integer.parseInt(SharedFormat.getQuarter().charAt(1) + "");
+        ArrayList<Equipment> equipments = equipmentService.GetListOfEquipmentsForTheQuarter(quarter);
+        HttpSession session = request.getSession();
+        session.setAttribute("equipments", equipments);
+        return "/inventory/equipment-history.jsp";
     }
 
     private String AcknowledgeRequest(HttpServletRequest request) {

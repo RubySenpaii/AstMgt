@@ -49,6 +49,7 @@
                     <span class="badge bg-warning"><%=tracking + repair%></span>
                 </a>
                 <ul class="sub">
+                    <li><a href="/AMS/InventoryServlet/EquipmentHistory">Equipment History</a></li>
                     <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
                     <li>
                         <a href="/AMS/InventoryServlet/ShowTrackingRequests">

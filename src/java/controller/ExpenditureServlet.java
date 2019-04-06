@@ -132,13 +132,15 @@ public class ExpenditureServlet extends BaseServlet {
         String[] records = request.getParameterValues("records");
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
+        ArrayList<ExpenditureItem> expenditureItems = new ArrayList<>();
+        ArrayList<Asset> assets = new ArrayList<>();
+        AssetService assetService = new AssetService();
         for (int i = 0; i < names.length; i++) {
-            AssetService assetService = new AssetService();
             int assetId;
             try {
                 assetId = assetService.GetAssetByName(names[i]).AssetId;
             } catch (IndexOutOfBoundsException x) {
-                assetId = assetService.GetAssets().size() + 1;
+                assetId = assetService.GetAssets().size() + 1 + i;
                 Asset asset = new Asset();
                 asset.AssetId = assetId;
                 asset.AssetName = names[i];
@@ -148,7 +150,7 @@ public class ExpenditureServlet extends BaseServlet {
                 asset.StockNo = assetId + "";
                 asset.Unit = "pc";
                 asset.EstimatedUsefulLife = 3;
-                assetService.AddAsset(asset);
+                assets.add(asset);
             }
             ExpenditureItem procurementExpItem = new ExpenditureItem();
             procurementExpItem.AssetId = assetId;
@@ -157,7 +159,7 @@ public class ExpenditureServlet extends BaseServlet {
             procurementExpItem.Quarter = SharedFormat.getQuarter();
             procurementExpItem.Division = "Procurement";
             procurementExpItem.QuantityLimit = Integer.parseInt(procurement[i]);
-            
+
             ExpenditureItem adminExpItem = new ExpenditureItem();
             adminExpItem.AssetId = assetId;
             adminExpItem.QuantityOrdered = 0;
@@ -165,7 +167,7 @@ public class ExpenditureServlet extends BaseServlet {
             adminExpItem.Quarter = SharedFormat.getQuarter();
             adminExpItem.Division = "Admin";
             adminExpItem.QuantityLimit = Integer.parseInt(admin[i]);
-            
+
             ExpenditureItem generalExpItem = new ExpenditureItem();
             generalExpItem.AssetId = assetId;
             generalExpItem.QuantityOrdered = 0;
@@ -173,7 +175,7 @@ public class ExpenditureServlet extends BaseServlet {
             generalExpItem.Quarter = SharedFormat.getQuarter();
             generalExpItem.Division = "General";
             generalExpItem.QuantityLimit = Integer.parseInt(general[i]);
-            
+
             ExpenditureItem personnelExpItem = new ExpenditureItem();
             personnelExpItem.AssetId = assetId;
             personnelExpItem.QuantityOrdered = 0;
@@ -181,7 +183,7 @@ public class ExpenditureServlet extends BaseServlet {
             personnelExpItem.Quarter = SharedFormat.getQuarter();
             personnelExpItem.Division = "Personnel";
             personnelExpItem.QuantityLimit = Integer.parseInt(personnel[i]);
-            
+
             ExpenditureItem recordsExpItem = new ExpenditureItem();
             recordsExpItem.AssetId = assetId;
             recordsExpItem.QuantityOrdered = 0;
@@ -189,14 +191,59 @@ public class ExpenditureServlet extends BaseServlet {
             recordsExpItem.Quarter = SharedFormat.getQuarter();
             recordsExpItem.Division = "Records";
             recordsExpItem.QuantityLimit = Integer.parseInt(records[i]);
-            
-            ExpenditureItemService eis = new ExpenditureItemService();
-            System.out.println("admin result: " + eis.AddExpenditureItem(adminExpItem));
-            System.out.println("general result: " + eis.AddExpenditureItem(generalExpItem));
-            System.out.println("personnel result: " + eis.AddExpenditureItem(personnelExpItem));
-            System.out.println("records result: " + eis.AddExpenditureItem(recordsExpItem));
-            System.out.println("procurement result: " + eis.AddExpenditureItem(procurementExpItem));
+
+            expenditureItems.add(procurementExpItem);
+            expenditureItems.add(adminExpItem);
+            expenditureItems.add(generalExpItem);
+            expenditureItems.add(personnelExpItem);
+            expenditureItems.add(recordsExpItem);
         }
+        assetService.AddAssets(assets);
+        ExpenditureItemService eis = new ExpenditureItemService();
+        eis.AddExpenditureItems(expenditureItems);
+        ExpenditureLimitService els = new ExpenditureLimitService();
+        
+        ExpenditureLimit adminLimit = new ExpenditureLimit();
+        adminLimit.Division = "Admin";
+        adminLimit.Equipment = Double.parseDouble(request.getParameter("adminTotal"));
+        adminLimit.Quarter = SharedFormat.getQuarter();
+        adminLimit.Supplies = 0;
+        adminLimit.Year = year;
+
+        ExpenditureLimit procurementLimit = new ExpenditureLimit();
+        procurementLimit.Division = "Procurement";
+        procurementLimit.Equipment = Double.parseDouble(request.getParameter("procurementTotal"));
+        procurementLimit.Quarter = SharedFormat.getQuarter();
+        procurementLimit.Supplies = 0;
+        procurementLimit.Year = year;
+
+        ExpenditureLimit managementLimit = new ExpenditureLimit();
+        managementLimit.Division = "Personnel";
+        managementLimit.Equipment = Double.parseDouble(request.getParameter("personnelTotal"));
+        managementLimit.Quarter = SharedFormat.getQuarter();
+        managementLimit.Supplies = 0;
+        managementLimit.Year = year;    
+
+        ExpenditureLimit generalLimit = new ExpenditureLimit();
+        generalLimit.Division = "General";
+        generalLimit.Equipment = Double.parseDouble(request.getParameter("generalTotal"));
+        generalLimit.Quarter = SharedFormat.getQuarter();
+        generalLimit.Supplies = 0;
+        generalLimit.Year = year;
+
+        ExpenditureLimit financeLimit = new ExpenditureLimit();
+        financeLimit.Division = "Records";
+        financeLimit.Equipment = Double.parseDouble(request.getParameter("recordsTotal"));
+        financeLimit.Quarter = SharedFormat.getQuarter();
+        financeLimit.Supplies = 0;
+        financeLimit.Year = year;
+        
+        els.AddExpenditureLimit(adminLimit);
+        els.AddExpenditureLimit(procurementLimit);
+        els.AddExpenditureLimit(managementLimit);
+        els.AddExpenditureLimit(generalLimit);
+        els.AddExpenditureLimit(financeLimit);
+        
         return "/HomeServlet";
     }
 
@@ -241,7 +288,7 @@ public class ExpenditureServlet extends BaseServlet {
         managementLimit.Equipment = managementEquipment;
         managementLimit.Quarter = quarter;
         managementLimit.Supplies = managementSupplies;
-        managementLimit.Year = year;
+        managementLimit.Year = year;    
 
         ExpenditureLimit generalLimit = new ExpenditureLimit();
         generalLimit.Division = "General";
