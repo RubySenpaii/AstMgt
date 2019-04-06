@@ -31,6 +31,8 @@
                             <%
                                 RepairLog log = (RepairLog) session.getAttribute("repairRequest");
                                 double equipCost = (double) session.getAttribute("equipmentCost");
+
+                                String userRole = (String) session.getAttribute("UserLevel");
                                 double totalCost = (double) session.getAttribute("totalCost");
                             %>
                             <h4>Repair Request for Asset Tag :  <c:out value="<%= log.AssetTag%>"></c:out></h4><br/>
@@ -129,6 +131,9 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <%
+//                                    if (userRole.equalsIgnoreCase("Director")){
+%>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <form action="/AMS/AssetServlet/ApproveRepair">
@@ -139,6 +144,7 @@
                                     </div>
                                 </div>
                                 <%
+//                                    }
                                     }
                                 %>
                             </div>

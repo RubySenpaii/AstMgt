@@ -7,12 +7,15 @@
 <aside>
     <%
         String userRole = "";
+        String userDivision = "";
         try {
             userRole = (String) session.getAttribute("UserLevel");
-        }catch(Exception e){
+            userDivision = (String) session.getAttribute("UserDivision");
+        } catch (Exception e) {
             userRole = "admin";
+            userDivision = "general";
         }
-        String jspFile;
+        String jspFile = "";
         switch (userRole.toLowerCase()) {
             case "admin":
                 jspFile = "role/admin.jsp";
@@ -21,7 +24,13 @@
                 jspFile = "role/inspector.jsp";
                 break;
             case "division chief":
-                jspFile = "role/divisionchief.jsp";
+                if(userDivision.toLowerCase().equalsIgnoreCase("general")){
+                    jspFile = "role/gsdchief.jsp";
+                }else if (userDivision.toLowerCase().equalsIgnoreCase("management")){
+                    jspFile = "role/mgtchief.jsp";
+                }else{
+                    jspFile = "role/divisionchief.jsp";
+                }
                 break;
             case "supply officer":
                 jspFile = "role/supply_officer.jsp";
@@ -32,6 +41,9 @@
             case "finance":
                 jspFile = "role/finance.jsp";
                 break;
+            case "storekeeper":
+                jspFile = "role/storekeeper.jsp";
+                break;
             default:
                 jspFile = "role/admin.jsp";
                 break;
@@ -39,3 +51,7 @@
     %>
     <jsp:include page="<%=jspFile%>"></jsp:include>
 </aside>
+
+<script>
+    console.log()
+</script>

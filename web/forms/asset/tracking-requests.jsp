@@ -137,6 +137,11 @@
                                                                     </tbody>
                                                                 </table>
                                                             </div>
+                                                            <%
+                                                                String userRole = "";
+                                                                userRole = (String) session.getAttribute("UserLevel");
+                                                                if (userRole.equalsIgnoreCase("Director")) {
+                                                            %>
                                                             <div class="modal-footer">
                                                                 <form action="/AMS/InventoryServlet/ReviewTracking">
                                                                     <input type="hidden" name="idx" value="<%=i%>">
@@ -144,6 +149,9 @@
                                                                     <button type="submit" class="btn btn-danger" name="review" value="reject">Reject</button>
                                                                 </form>
                                                             </div>
+                                                            <%
+                                                                        }
+                                                             %>
                                                         </div>
                                                     </div>
                                                 </div>
