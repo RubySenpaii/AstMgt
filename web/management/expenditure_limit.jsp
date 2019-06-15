@@ -22,9 +22,17 @@
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
-                    <input type="file" onChange="readFile(event)">
                     <div class="row">
                         <div class="col-md-6">
+                            <div class="form-panel">
+                                <h4>Annual Procurement Plan</h4>
+                                <input type="file" onChange="readFile(event)">
+                                <br><br>
+                                <h4>Work and Financial Plan</h4>
+                                <input type="file" onChange="readWfp(event)">
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="display: none">
                             <div class="form-panel">
                                 <select onchange="document.getElementById('pdfViewer').setAttribute('data', '/AMS/uploaded-files/app/' + document.getElementById('select-file').value)" id="select-file">
                                     <option selected="true" disabled>- Select an Option -</option>
@@ -77,7 +85,7 @@
                                                     <tr>
                                                         <td>Admin Services</td>
                                                         <td>
-                                                            <input type="text" name="admin-equipment" id="admin" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="admin-equipment" id="admin" onChange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="admin-supplies" autocomplete="off">
@@ -86,7 +94,7 @@
                                                     <tr>
                                                         <td>General Services</td>
                                                         <td>
-                                                            <input type="text" name="general-equipment" id="general" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="general-equipment" id="general" onChange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="general-supplies" autocomplete="off">
@@ -95,11 +103,17 @@
                                                     <tr>
                                                         <td>Records</td>
                                                         <td>
-                                                            <input type="text" name="finance-equipment" id="finance" onchange="total()" autocomplete="off">
+                                                            <input type="text" name="finance-equipment" id="finance" onChange="total()" autocomplete="off">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="finance-supplies" autocomplete="off">
                                                                                                                 </td>-->
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Repair and Maintenance</td>
+                                                        <td>
+                                                            <input type="text" name="repair-maintenance" id="repair" onChange="total()" autocomplete="off">
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
@@ -128,12 +142,13 @@
     <jsp:include page="../shared/js.jsp"/>
     <script>
         function total() {
-            var procurement = document.getElementById('procurement').value;
-            var management = document.getElementById('management').value;
-            var admin = document.getElementById('admin').value;
-            var general = document.getElementById('general').value;
-            var finance = document.getElementById('finance').value;
-            var total = Number(procurement) + Number(management) + Number(admin) + Number(general) + Number(finance);
+            var procurement = document.getElementById('procurement').value ? document.getElementById('procurement').value : 0;
+            var management = document.getElementById('management').value ? document.getElementById('management').value : 0;
+            var admin = document.getElementById('admin').value ? document.getElementById('admin').value : 0;
+            var general = document.getElementById('general').value ? document.getElementById('general').value : 0;
+            var finance = document.getElementById('finance').value ? document.getElementById('finance').value : 0;
+            var repair = document.getElementById('repair').value ? document.getElementById('repair').value : 0;
+            var total = Number(procurement) + Number(management) + Number(admin) + Number(general) + Number(finance) + Number(repair);
             document.getElementById('totalValue').textContent = total;
         }
 
@@ -171,7 +186,7 @@
                         } else if (equipmentFlag) {
                             if (data[i][0] != "" && data[i][1] != "") {
                                 filteredData.push(data[i]);
-                                totalAmount += (Number(data[i][qtrIdx].replace(/ /g,'').replace(/,/g, '')) * Number(data[i][priceIdx].replace(/ /g,'').replace(/,/g, '')));
+                                totalAmount += (Number(data[i][qtrIdx].replace(/ /g, '').replace(/,/g, '')) * Number(data[i][priceIdx].replace(/ /g, '').replace(/,/g, '')));
                                 console.log('row total', totalAmount);
                             } else {
                                 equipmentFlag = false;
@@ -190,8 +205,53 @@
                 document.getElementById('finance').value = amountPerDivision;
 
                 console.log('filtered data', filteredData);
+                total();
             };
 
+            reader.onerror = function (ex) {
+                console.log(ex);
+            };
+
+            reader.readAsText(file);
+        }
+        
+        function readWfp(event) {
+            console.log('read wfp');
+            var file = event.target.files[0];
+            
+            var index = {
+                "repair": 4,
+                "q1": 14,
+                "q2": 15,
+                "q3": 16,
+                "q4": 17,
+                "total": 18
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var csv = e.target.result;
+                var data = $.csv.toArrays(csv);
+                console.log(data);
+                
+                var flag = false;
+                var repairs = 0;
+                for (var i = 0; i < data.length; i++) {
+                    if ((data[i][index.repair] != null || data[i][index.repair] != '') && data[i][index.repair].toLowerCase().includes('repair')) {
+                        flag = true;
+                        continue;
+                    }
+                    
+                    if (flag && data[i][index.repair] != '') {
+                        repairs += parseFloat(data[i][index.total].replace(/,/g, ''));
+                    } else if (flag) {
+                        break;
+                    }
+                }
+                document.getElementById('repair').value = repairs;
+                total();
+            };
+            
             reader.onerror = function (ex) {
                 console.log(ex);
             };

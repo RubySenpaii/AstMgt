@@ -170,6 +170,7 @@
     </body>
     <jsp:include page="../../shared/js.jsp"/>
     <script>
+        var items = [];
         $(document).ready(function () {
             var i = 1;
             $("#addbutton").click(function () {
@@ -273,24 +274,28 @@
                   success: function(data) {
                       console.log("supplier name ajax", data);
                       $('#asset-list').html('');
+                      items = [];
                       for (var i = 0; i < data.SupplierItems.length; i++) {
                           $('#asset-list').append('<option>' + data.SupplierItems[i].Asset.AssetName + '</option>');
+                          items.push({
+                             'name': data.SupplierItems[i].Asset.AssetName,
+                             'price': data.SupplierItems[i].price
+                          });
                       }
                   }
                });
             });
             
             $(document.body).on('change', '.asset', function() {
-                var assetName = $(this).val();
-                var supplierName = $('#supplier-name').val();
-                $.ajax({
-                   url: '/AMS/AjaxServlet/SupplierItemPrice',
-                   dataType: 'json',
-                   data: { assetName: assetName, supplierName: supplierName},
-                   success: function(data) {
-                       // cannot get child
-                   }
-                });
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].name == $(this).val()) {
+                        console.log('value', items[i].price);
+                        $(this).find('td').each(function() {
+                            
+                        });
+                        $(this).closest('tr').find('td:nth-child(4)').find('.price').val(items[i].price);
+                    }
+                }
             });
 
             $(".delete-row").click(function () {

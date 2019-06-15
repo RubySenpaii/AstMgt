@@ -71,6 +71,10 @@
                                             <label class="col-lg-2 control-label" for="exampleInputPassword1">Approved Date</label>
                                             <label class="col-lg-10 control-label"> <c:out value="<%= pr.ApprovedDate%>"></c:out> </label>
                                         </div>
+                                        <div class="form-group" style="width: 100%">
+                                            <label class="col-lg-2 control-label" for="exampleInputPassword1">Remarks</label>
+                                            <label class="col-lg-10 control-label"> <c:out value="<%= pr.Remarks%>"></c:out> </label>
+                                        </div>
                                         <div class="form-group">
                                             <div class="col-lg-12 control-label">
                                                 <h3>Assets Requested</h3>

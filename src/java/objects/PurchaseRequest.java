@@ -45,4 +45,12 @@ public class PurchaseRequest {
     public ArrayList<AssetRequested> AssetsRequested;
     public Supplier Supplier;
     public double TotalCost;
+    
+    public double getTotalCost() {
+        double total = 0;
+        for (AssetRequested assetRequested : AssetsRequested) {
+            total += (assetRequested.Quantity * assetRequested.UnitCost);
+        }
+        return total;
+    }
 }
