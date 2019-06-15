@@ -48,6 +48,8 @@ public class Login extends HttpServlet {
             System.out.println("Returning with object : " + checker);
             HttpSession session = request.getSession();
             if (checker != null) {
+                System.out.println("AHHHHHHHHHHHHHHHHHHHHH " + checker.Division );
+                session.setAttribute("UserDivision", checker.Division);
                 session.setAttribute("UserLevel", checker.UserLevel);
                 session.setAttribute("user", checker);
                 session.setAttribute("UserName", checker.FullName());

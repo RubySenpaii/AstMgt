@@ -59,17 +59,24 @@
                                             <td>
                                                 <%
                                                     String userRole = "";
+                                                    String userDivision = "";
                                                     userRole = (String) session.getAttribute("UserLevel");
+                                                    userDivision = (String) session.getAttribute("UserDivision");
                                                     if ((!userRole.equalsIgnoreCase("staff"))) {
                                                 %>
                                                 <form>
                                                     <input type="hidden" name="requestId" value="<%=requestInspection.DeliveryInspectionId%>">
                                                     <%
                                                         if (status.equals("Pending")) {
+                                                            if (userRole.equalsIgnoreCase("Division Chief")) {
+                                                                if (userDivision.toLowerCase().equalsIgnoreCase("management")) {
+
+
                                                     %>
                                                     <button class="btn btn-success" name="action" value="Approve" formaction="/AMS/DeliveryInspectionServlet/Review" type="submit">Approve</button>
-                                                    <%
-                                                    } else {
+                                                    <%                                                            }
+                                                        }
+                                                    } else if (userRole.equalsIgnoreCase("Inspector")) {
                                                     %>
                                                     <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
                                                     <%

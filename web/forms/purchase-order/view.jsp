@@ -88,6 +88,7 @@
                                             <%
                                                 ArrayList<AssetRequested> ar = (ArrayList<AssetRequested>) session.getAttribute("assetRequested");
                                                 ArrayList<String> assetNames = (ArrayList<String>) session.getAttribute("assetNames");
+                                                String userLevel = (String) session.getAttribute("UserLevel");
                                                 SharedFormat sf = new SharedFormat();
                                                 double sum = 0;
                                                 for (int i = 0; i < ar.size(); i++) {
@@ -115,6 +116,9 @@
                                         </table>
                                     </div>
                                 </div>
+                                <%
+                                    if (userLevel.toLowerCase().equalsIgnoreCase("chief inspector")) {
+                                %>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <input type="hidden" name="purchaseOrder" value="<%=purchaseOrder.PurchaseOrderId%>">
@@ -122,6 +126,9 @@
                                         <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
                                     </div>
                                 </div>
+                                <%
+                                    }
+                                %>
                             </form>
                         </div>
                     </div>
