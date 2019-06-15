@@ -26,6 +26,7 @@ import objects.Asset;
 import objects.Employee;
 import objects.ExpenditureItem;
 import objects.ExpenditureLimit;
+import report.ReportService;
 import services.AssetService;
 import services.ExpenditureItemService;
 import services.ExpenditureLimitService;
@@ -55,6 +56,9 @@ public class ExpenditureServlet extends BaseServlet {
                     break;
                 case "Submitv2":
                     url = SubmitExpenditureLimitv2(request);
+                    break;
+                case "BudgetHistory":
+                    url = BudgetHistory(request);
                     break;
                 default:
                     url = ExpenditureLimit(request);
@@ -268,6 +272,7 @@ public class ExpenditureServlet extends BaseServlet {
 //        double financeSupplies = Double.parseDouble(request.getParameter("finance-supplies"));
         double financeSupplies = 0.00;
         double financeEquipment = Double.parseDouble(request.getParameter("finance-equipment"));
+        double repairs = Double.parseDouble(request.getParameter("repair-maintenance"));
 
         ExpenditureLimit adminLimit = new ExpenditureLimit();
         adminLimit.Division = "Admin";
@@ -303,6 +308,13 @@ public class ExpenditureServlet extends BaseServlet {
         financeLimit.Quarter = quarter;
         financeLimit.Supplies = financeSupplies;
         financeLimit.Year = year;
+        
+        ExpenditureLimit repair = new ExpenditureLimit();
+        repair.Division = "Repair";
+        repair.Equipment = repairs;
+        repair.Quarter = quarter;
+        repair.Supplies = 0;
+        repair.Year = year;
 
         /*try {
             FileModification file = new FileModification();
@@ -324,10 +336,18 @@ public class ExpenditureServlet extends BaseServlet {
         result = expenditureService.AddExpenditureLimit(generalLimit);
         result = expenditureService.AddExpenditureLimit(managementLimit);
         result = expenditureService.AddExpenditureLimit(procurementLimit);
+        result = expenditureService.AddExpenditureLimit(repair);
         if (result == 1) {
             return "/template.jsp";
         } else {
             return "/AMS/ExpenditureServlet";
         }
+    }
+    
+    private String BudgetHistory(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        ReportService reportService = new ReportService();
+        session.setAttribute("budgetHistory", reportService.getBudgetHistory());
+        return "/management/budget_history.jsp";
     }
 }

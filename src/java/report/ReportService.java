@@ -149,11 +149,21 @@ public class ReportService {
             reportEquipment.setTotalRepairs(new RepairLogService().GetTotalRepairCost(sqlEquipment.AssetTag));
             reportEquipments.add(reportEquipment);
             switch (sqlEquipment.Flag) {
-                case 0: disposed++; break;
-                case 1: stock++; break;
-                case 2: used++; break;
-                case 3: expiring++; break;
-                case 4: extended++; break;
+                case 0:
+                    disposed++;
+                    break;
+                case 1:
+                    stock++;
+                    break;
+                case 2:
+                    used++;
+                    break;
+                case 3:
+                    expiring++;
+                    break;
+                case 4:
+                    extended++;
+                    break;
             }
         }
         specificEquipment.AssetName = assetName;
@@ -224,5 +234,43 @@ public class ReportService {
                 break;
         }
         return asset;
+    }
+
+    public ArrayList<BudgetHistory> getBudgetHistory() {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT CE.*, EL.Equipment AS 'EquipmentLimit', (EL.Equipment - CE.Equipment) AS 'EquipmentSpent'\n"
+                    + "FROM ExpenditureLimit EL JOIN\n"
+                    + "(SELECT T1.* \n"
+                    + "FROM ExpenditureTracking T1 INNER JOIN\n"
+                    + "	(SELECT T2.Year, T2.Quarter, T2.Division, MAX(T2.Timestamp) AS 'Latest' \n"
+                    + "	FROM ExpenditureTracking T2\n"
+                    + "    GROUP BY T2.Year, T2.Quarter, T2.Division) T2\n"
+                    + "	ON T1.Year = T2.Year AND T1.Quarter = T2.Quarter AND T1.Division = T2.Division AND T1.Timestamp = T2.Latest) CE\n"
+                    + "    ON EL.Year = CE.Year AND EL.Quarter = CE.Quarter AND EL.Division = CE.Division";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<BudgetHistory> budgetHistory = new ArrayList<>();
+            while (rs.next()) {
+                BudgetHistory budget = new BudgetHistory();
+                budget.setDivision(rs.getString("Division"));
+                budget.setLimit(rs.getDouble("EquipmentLimit"));
+                budget.setQuarter(rs.getString("Quarter"));
+                budget.setSpent(rs.getDouble("EquipmentSpent"));
+                budget.setYear(rs.getInt("Year"));
+                budgetHistory.add(budget);
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+            return budgetHistory;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
     }
 }

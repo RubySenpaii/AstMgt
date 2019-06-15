@@ -273,7 +273,7 @@ public class AssetServlet extends BaseServlet {
         System.out.println("update result: " + result);
         if (result != 0) {
             ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
-            ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(employee.Division);
+            ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure("Repair");
             expenditure.Timestamp = Calendar.getInstance().getTime();
             expenditure.Equipment -= totalCost;
             result = expenditureTrackingService.AddEquipmentTracking(expenditure);

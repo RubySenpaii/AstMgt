@@ -39,6 +39,7 @@
                                             <th>Delivery Date</th>
                                             <th>Delivery Terms</th>
                                             <th>Payment Terms</th>
+                                            <th>Total Cost</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -55,6 +56,7 @@
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryTerms%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
+                                            <td><c:out value="<%= po.PurchaseRequest.getTotalCost()%>"></c:out></td>
                                                 <td>
                                                     <form action="/AMS/PurchaseOrderServlet/View">
                                                         <button type="submit" name="poId" value="<%=po.PurchaseOrderId%>">View</button>

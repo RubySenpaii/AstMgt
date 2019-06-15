@@ -9,7 +9,7 @@
                 </a>
             </li>
             <li class="sub-menu">
-                <a href="/AMS/ExpenditureServlet">
+                <a href="javascript:;">
                     <i class="fa fa-money"></i>
                     <span>Set Expenditure Limit</span>
                     <span>Expenditure Limit</span>
