@@ -4,6 +4,10 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="extra.SharedFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="objects.Employee"%>
 <%@page import="objects.PurchaseOrder"%>
 <%@page import="objects.AssetRequested"%>
@@ -124,7 +128,9 @@
                                                 String assetName = item.Asset.AssetName;
                                                 String autofill = assetName.replace("a", "").replace("e", "").replace("i", "").replace("o", "").replace("u", "").toUpperCase().replace(" ","");
                                                 String propertyTag = String.valueOf(item.Asset.AssetType.split(" ")[0].charAt(0));
+                                                SharedFormat sf = new SharedFormat();
                                                 propertyTag += String.valueOf(item.Asset.AssetType.split(" ")[1].charAt(0));
+                                                propertyTag += "-" + new java.sql.Date(System.currentTimeMillis());
                                                 propertyTag += "-" + autofill + "-" + item.PurchaseRequestId + "00";
                                                 if (item.Asset.AssetType.toLowerCase().contains("furniture")) {
                                                     for (int i = 0; i < item.Quantity; i++) {

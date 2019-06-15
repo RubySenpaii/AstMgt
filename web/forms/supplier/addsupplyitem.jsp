@@ -150,13 +150,20 @@
                                             <button class="btn btn-theme" type="submit">Add Supplier Items</button>
                                         </div>
                                     </div>
-
-                                    <%
-                                        }
-                                    %>
-
+                                </form>
+                                <%
+                                } else {
+                                %>
+                                <form class="form-horizontal style-form" action="/AMS/SupplierServlet/UpdateItem">
+                                    <button class="btn btn-info" name="upsupid" formaction="/AMS/SupplierServlet/UpdateItem" value="<%= supplier.SupplierId%>" type="submit"><span class="fa fa-plus">Update Supplier Items</span></button>
                                 </form>
                             </div>
+                            <%
+                                }
+                            %>
+
+
+
                         </div>
                     </div>
                     <!-- /row -->

@@ -25,11 +25,12 @@
     <body>
         <!-- Main Content -->
         <div id="login-page">
-            <h1 class="text center text-bold">Department of Agrarian Reform</h1>
-            <h2 class="text-center text-bold">Asset Management Information System</h2>
-            <div class="container">
-                <form class="form-login" action="Login" method="post">
-                    <h2 class="form-login-heading">Log In to Start your Session</h2>
+              <h1 class="text-center text-bold">Department of Agrarian Reform</h1>
+              <h2 class="text-center text-bold">Asset Management Information System</h2>
+	  	<div class="container">
+	  	
+		      <form class="form-login" action="Login" method="post">
+		        <h2 class="form-login-heading">Log In to Start your Session</h2>
                     <div class="login-wrap">
                         <%
                             boolean checker = true;

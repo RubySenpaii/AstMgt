@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import objects.SupplierItem;
 
@@ -24,6 +25,7 @@ public class SupplierItemService {
 
     private String FindSupplierItemByIdQuery = "SELECT * FROM SupplierItem WHERE " + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + " = ?";
     private String FindAllSupplierQuery = "SELECT * FROM SupplierItem ;";
+    private String UpdateSupplier = "Update SupplierItem SET " + SupplierItem.COLUMN_SUPPLIER_ITEM_PRICE + " = ? WHERE " + SupplierItem.COLUMN_SUPPLIER_ITEM_ASSET_ID + " = ? AND " + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + " = ?";
 
     public int AddNewSupplier(SupplierItem s) {
         try {
@@ -41,6 +43,30 @@ public class SupplierItemService {
             System.err.println(e);
         }
         return 0;
+    }
+
+    public int[] UpdateSupplierItems(int s, String[] assetidlist, String[] price) {
+        try {
+            int[] result;
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection conn = db.getConnection();
+            Statement stmt = conn.createStatement();
+            PreparedStatement ps = conn.prepareStatement(UpdateSupplier);
+            for (int i = 0; i < assetidlist.length; i++) {
+                int prize = Integer.parseInt(price[i]);
+                ps.setDouble(1, prize);
+                ps.setInt(2, Integer.parseInt(assetidlist[i]));
+                ps.setInt(3, s);
+                ps.addBatch();
+            }
+            result = ps.executeBatch();
+            ps.close();
+            conn.close();
+            return result;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
     }
 
     public ArrayList<SupplierItem> FindSupplierItemById(int suppno) {
@@ -77,17 +103,17 @@ public class SupplierItemService {
         }
         return null;
     }
-    
+
     public SupplierItem GetSupplierItem(int supplierId, int assetId) {
         SupplierItem supplierItem = new SupplierItem();
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection conn = db.getConnection();
-            
+
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM SupplierItem WHERE " + SupplierItem.COLUMN_SUPPLIER_ITEM_ASSET_ID + " = ? AND " + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + " = ?");
             ps.setInt(1, assetId);
             ps.setInt(2, supplierId);
-            
+
             supplierItem = getResult(ps.executeQuery()).get(0);
             ps.close();
             conn.close();
@@ -98,7 +124,7 @@ public class SupplierItemService {
         }
         return supplierItem;
     }
-    
+
     private ArrayList<SupplierItem> getResult(ResultSet rs) throws SQLException {
         ArrayList<SupplierItem> suppliers = new ArrayList<SupplierItem>();
         while (rs.next()) {
@@ -106,7 +132,7 @@ public class SupplierItemService {
             e.SupplierId = rs.getInt(SupplierItem.COLUMN_SUPPLIER_ITEM_ID);
             e.AssetId = rs.getInt(SupplierItem.COLUMN_SUPPLIER_ITEM_ASSET_ID);
             e.price = rs.getDouble(SupplierItem.COLUMN_SUPPLIER_ITEM_PRICE);
-            
+
             e.Supplier = new SupplierService().FindSupplierById(e.SupplierId);
             e.Asset = new AssetService().GetAsset(e.AssetId);
             suppliers.add(e);
