@@ -3,3 +3,5 @@
 /nbproject/private/
 /src/java/db/
 /src/java/db/*
+
+*.mwb.bak
