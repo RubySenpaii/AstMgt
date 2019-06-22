@@ -22,7 +22,7 @@ public class SupplierItemService {
 
     private String AddSupplierItemQuery = "INSERT INTO SupplierItem(" + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + "," + SupplierItem.COLUMN_SUPPLIER_ITEM_ASSET_ID + ","
             + SupplierItem.COLUMN_SUPPLIER_ITEM_PRICE + ")VALUES(?,?,?)";
-
+    private String DeleteSupplierItemByIdQuery = "Delete  FROM SupplierItem Where " + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + " = ?";
     private String FindSupplierItemByIdQuery = "SELECT * FROM SupplierItem WHERE " + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + " = ?";
     private String FindAllSupplierQuery = "SELECT * FROM SupplierItem ;";
     private String UpdateSupplier = "Update SupplierItem SET " + SupplierItem.COLUMN_SUPPLIER_ITEM_PRICE + " = ? WHERE " + SupplierItem.COLUMN_SUPPLIER_ITEM_ASSET_ID + " = ? AND " + SupplierItem.COLUMN_SUPPLIER_ITEM_ID + " = ?";
@@ -35,6 +35,22 @@ public class SupplierItemService {
             ps.setInt(1, s.SupplierId);
             ps.setInt(2, s.AssetId);
             ps.setDouble(3, s.price);
+            int res = ps.executeUpdate();
+            ps.close();
+            conn.close();
+            return res;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return 0;
+    }
+    
+    public int DeleteSupplierItems(int SupplierId) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection conn = db.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DeleteSupplierItemByIdQuery);
+            ps.setInt(1, SupplierId);
             int res = ps.executeUpdate();
             ps.close();
             conn.close();

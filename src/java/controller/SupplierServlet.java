@@ -26,10 +26,10 @@ import services.SupplierService;
  * @author RubySenpaii
  */
 public class SupplierServlet extends BaseServlet {
-    
+
     private SupplierService supplierService = new SupplierService();
     private AssetService assetService = new AssetService();
-    
+
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getRequestURI();
@@ -65,7 +65,7 @@ public class SupplierServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-    
+
     private String SubmitSupplier(HttpServletRequest request) {
         Supplier supplier = new Supplier();
         supplier.SupplierId = supplierService.FindAllSupplier().size() + 1;
@@ -82,7 +82,7 @@ public class SupplierServlet extends BaseServlet {
             return "/SupplierServlet/Add";
         }
     }
-    
+
     private String UpdateSupplierItem(HttpServletRequest request) {
         AssetService assetDB = new AssetService();
         ArrayList<Asset> assetList = new ArrayList<Asset>();
@@ -96,32 +96,40 @@ public class SupplierServlet extends BaseServlet {
         session.setAttribute("supplier items", sitem);
         return "/forms/supplier/updatesupplyitem.jsp";
     }
-    
+
     private String UpdateSupplierItems(HttpServletRequest request) {
-//        AssetService assetDB = new AssetService();
-        ArrayList<Asset> assetList = new ArrayList<Asset>();
-        String[] price = request.getParameterValues("newprice");
-        String[] assetid = request.getParameterValues("assetid");
-        String[] oldprice = request.getParameterValues("oldprice");
-        String suppid = request.getParameter("suppid");
-        SharedFormat sf = new SharedFormat();
-        for (int i = 0; i < assetid.length; i++) {
-            if (price[i].isEmpty()) {
-                price[i] = oldprice[i];
-                System.out.println("tetetetetet" + price[i]);
+        SupplierItemService sitemDB = new SupplierItemService();
+        String[] assets = request.getParameterValues("assets");
+        String[] prices = request.getParameterValues("price");
+        for (String s : assets) {
+            System.out.println(s);
+        }
+        for (String s : prices) {
+            System.out.println(s);
+        }
+        HttpSession session = request.getSession();
+        Supplier s = (Supplier) session.getAttribute("supplier");
+        int checker = sitemDB.DeleteSupplierItems(s.SupplierId);
+        if (checker != 0) {
+            for (int i = 0; i < assets.length; i++) {
+                SupplierItem sitem = new SupplierItem();
+                Asset asset = new Asset();
+                asset = assetService.GetAssetByName(assets[i]);
+                sitem.AssetId = asset.AssetId;
+                sitem.SupplierId = s.SupplierId;
+                sitem.price = (int) Math.round(Double.parseDouble(prices[i]));
+                checker = sitemDB.AddNewSupplier(sitem);
             }
         }
-        SupplierItemService sitemDB = new SupplierItemService();
-        sitemDB.UpdateSupplierItems(Integer.parseInt(suppid), assetid, price);
-//        assetList = assetDB.GetAssetsWithType(supplier.SupplierType);
-//        ArrayList<SupplierItem> sitem = sitemDB.FindSupplierItemById(supplier.SupplierId);
-        HttpSession session = request.getSession();
-//        session.setAttribute("assets", assetList);
-//        session.setAttribute("supplier", supplier);
-//        session.setAttribute("supplier items", sitem);
-        return "/forms/supplier/updatesupplyitem.jsp";
+        if (checker != 0) {
+            System.out.println("PASSED");
+            return "/forms/supplier/list.jsp";
+        } else {
+            System.out.println("FAILED");
+            return "/forms/supplier/list.jsp";
+        }
     }
-    
+
     private String AddSupplierItem(HttpServletRequest request) {
         AssetService assetDB = new AssetService();
         ArrayList<Asset> assetList = new ArrayList<Asset>();
@@ -135,9 +143,9 @@ public class SupplierServlet extends BaseServlet {
         session.setAttribute("supplier items", sitem);
         return "/forms/supplier/addsupplyitem.jsp";
     }
-    
+
     private String SubmitSupplierItem(HttpServletRequest request) {
-        
+
         SupplierItemService sitemDB = new SupplierItemService();
         String[] assets = request.getParameterValues("assets");
         String[] prices = request.getParameterValues("price");
@@ -162,11 +170,11 @@ public class SupplierServlet extends BaseServlet {
             return "/forms/supplier/list.jsp";
         }
     }
-    
+
     private String AddSupplier(HttpServletRequest request) {
         return "/forms/supplier/add.jsp";
     }
-    
+
     private String ListSupplier(HttpServletRequest request) {
         ArrayList<Supplier> slist = new ArrayList<>();
         slist = supplierService.FindAllSupplier();
@@ -174,5 +182,5 @@ public class SupplierServlet extends BaseServlet {
         session.setAttribute("supplier", slist);
         return "/forms/supplier/list.jsp";
     }
-    
+
 }
