@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-panel">
-                                <h4>Update Supplier Items</h4><br/>
+                                <h4>Supplier Items List</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/SupplierServlet/UpdateItems">
                                     <%
                                         Supplier supplier = (Supplier) session.getAttribute("supplier");
@@ -59,55 +59,70 @@
                                         <%
                                             boolean checker = false;
                                             ArrayList<SupplierItem> sitem = (ArrayList<SupplierItem>) session.getAttribute("supplier items");
+                                            checker = true;
                                         %>
-                                        <input type="number" class="suppid" name="suppid" autocomplete="off" value="<%= supplier.SupplierId%>" hidden="true"> 
+
+                                        <datalist id="asset-list">
+                                            <%
+                                                try {
+                                                    ArrayList<Asset> asset = (ArrayList<Asset>) session.getAttribute("assets");
+                                                    for (Asset choice : asset) {
+                                            %>
+                                            <option><%=choice.AssetName%></option>
+                                            <%
+                                                    }
+                                                } catch (NullPointerException x) {
+                                                }
+                                            %>
+                                        </datalist>
                                         <div class="col-lg-12" style="margin-top: 15px">
-                                            <table style="width:100%"  class="table-bordered table">
+                                            <table style="width:100%" name="assetTable" id="assetTable" class="table-bordered table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Asset Id</th>
-                                                        <th>Asset Name</th>
-                                                        <th>Asset Description</th>
+                                                        <th>Selected</th>
+                                                        <th>Asset</th>
                                                         <th>Price</th>
-                                                        <th>New Price</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <%
-                                                        AssetService assetServ = new AssetService();
-                                                        for (int i = 0; i < sitem.size(); i++) {
+                                                        for (SupplierItem s : sitem) {
                                                     %>
-                                                    <tr>
-                                                <input type="number" class="assetid" name="assetid" autocomplete="off" value="<%= sitem.get(i).AssetId%>" hidden="true"> 
-                                                <input type="number" class="oldprice" name="oldprice" autocomplete="off" value="<%= (int) Math.round(sitem.get(i).price)%>" hidden="true">
-                                                        <td><%= sitem.get(i).AssetId%></td>
-                                                        <td><%= assetServ.GetAsset(sitem.get(i).AssetId).AssetName%></td>
-                                                        <td><%= assetServ.GetAsset(sitem.get(i).AssetId).Description%></td>
-                                                        <td><%= sitem.get(i).price%></td>
-                                                        <td><input type="number" class="asset" name="newprice" autocomplete="off" placeholder="<%= sitem.get(i).price%>"> </td>
+                                                    <tr class="fieldT">
+                                                        <td><input type="checkbox" name="record"></td>
+                                                        <td>
+                                                            <input list="asset-list" name="assets" autocomplete="off" value="<%= s.Asset.AssetName %>">
+                                                        </td>
+                                                        <td><input type="number" class="price" name="price" autocomplete="off" value="<%= s.price %>"></td> 
+                                                        <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                                     </tr>
-
-                                                    <%
+                                                    <%                                                        
                                                         }
                                                     %>
                                                 </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th><button type="button" class="delete-row  btn btn-danger"> Delete Selected</button></th>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>
-                                    <%//                                        if (checker) {
-                                    %>
 
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center">
-                                            <button class="btn btn-theme" type="submit">Update Items</button>
+                                            <button class="btn btn-theme" type="submit">Add Supplier Items</button>
                                         </div>
                                     </div>
-
-                                    <%//                                        }
-%>
-
                                 </form>
                             </div>
+
+
+
                         </div>
                     </div>
                     <!-- /row -->
@@ -118,6 +133,89 @@
         </section>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
+
+        <script>
+            $(document).ready(function () {
+                var i = 1;
+                $("#addbutton").click(function () {
+                    $("table tr.fieldT:first").clone().find("input").each(function () {
+                        $(this).val('').attr({
+                            'id': function (_, id) {
+                                return id
+                            },
+                            'name': function (_, name) {
+                                return name
+                            },
+                            'value': ''
+                        });
+                    }).end().appendTo("table ");
+                    i++;
+                });
+
+                $(document.body).on('change', '.price', function () {
+                    // initialize the sum (total price) to zero
+                    var sum = 0;
+
+                    var price = [], qty = [];
+                    // we use jQuery each() to loop through all the textbox with 'price' class
+                    // and compute the sum for each loop
+                    $('.price').each(function () {
+                        price.push($(this).val());
+                    });
+                    $('.quantity').each(function () {
+                        qty.push($(this).val());
+                    });
+
+                    for (var i = 0; i < price.length; i++) {
+                        sum += (price[i] * qty[i]);
+                    }
+                    // set the computed value to 'totalPrice' textbox
+                    $('#totalPrice').val(sum);
+                });
+
+                $('#asset-type').on('change', function () {
+                    var type = $(this).val();
+                    console.log('asset type' + type);
+                    $.ajax({
+                        url: '/AMS/AjaxServlet/AssetListWithType',
+                        dataType: 'json',
+                        data: {type: type},
+                        success: function (data) {
+                            $('#asset-list').html("");
+                            for (var i = 0; i < data.Assets.length; i++) {
+                                console.log(data.Assets);
+                                $('#asset-list').append('<option>' + data.Assets[i].AssetName + '</option>')
+                            }
+                        }
+                    });
+                });
+
+                $(".delete-row").click(function () {
+                    $("table tbody").find('input[name="record"]').each(function () {
+                        if ($(this).is(":checked")) {
+                            $(this).parents("tr").remove();
+                        }
+                    });
+                    var sum = 0;
+
+                    var price = [], qty = [];
+                    // we use jQuery each() to loop through all the textbox with 'price' class
+                    // and compute the sum for each loop
+                    $('.price').each(function () {
+                        price.push($(this).val());
+                    });
+                    $('.quantity').each(function () {
+                        qty.push($(this).val());
+                    });
+
+                    for (var i = 0; i < price.length; i++) {
+                        sum += (price[i] * qty[i]);
+                    }
+                    // set the computed value to 'totalPrice' textbox
+                    $('#totalPrice').val(sum);
+                });
+            });
+        </script>
 
     </body>
     <jsp:include page="../../shared/js.jsp"/>
