@@ -156,7 +156,7 @@ public class SupplierServlet extends BaseServlet {
         }
         if (checker != 0) {
             System.out.println("PASSED");
-            return "/forms/supplier/list.jsp";
+            return "/SupplierServlet/List";
         } else {
             System.out.println("FAILED");
             return "/forms/supplier/list.jsp";

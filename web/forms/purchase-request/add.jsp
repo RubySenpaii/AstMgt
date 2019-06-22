@@ -131,7 +131,7 @@
                                                             <input list="asset-list" class="asset" name="assets" autocomplete="off" value="<%=assetName%>">
                                                         </td>
                                                         <td><input type="number" class="quantity" name="quantity" autocomplete="off"></td> 
-                                                        <td><input type="number" class="price" name="price" autocomplete="off"></td> 
+                                                        <td><input type="number" class="price" name="price" autocomplete="off" disabled="true"></td> 
                                                         <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                                     </tr>
                                                 </tbody>

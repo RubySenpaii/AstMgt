@@ -98,4 +98,28 @@ public class ReportingModule {
         jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
         JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
     }
+    
+    
+    public void createOrderForm(String logo, OrderForm orderForm, String jasperFile, String fileName) 
+            throws JRException, FileNotFoundException, SQLException {
+        File file = new File(jasperFile);
+        Map parameters = new HashMap();
+        parameters.put("logo", logo);
+        parameters.put("title", orderForm.getTitle());
+        parameters.put("approvedBy", orderForm.getApprovedBy());
+        parameters.put("requestedBy", orderForm.getRequestedBy());
+        parameters.put("fromName", orderForm.getFromName());
+        parameters.put("fromAddress", orderForm.getFromAddress());
+        parameters.put("fromContact", orderForm.getFromContact());
+        parameters.put("toName", orderForm.getToName());
+        parameters.put("toAddress", orderForm.getToAddress());
+        parameters.put("toContact", orderForm.getToContact());
+        JasperPrint jasperPrint;
+        
+        System.out.println("creating order form");
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(orderForm.getDetails(), false);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file);
+        jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
+    }
 }

@@ -47,4 +47,5 @@ public class PurchaseOrder {
     public PurchaseRequest PurchaseRequest;
     public Supplier Supplier;
     public Employee Approver;
+    public int DeliveryInpsection;
 }

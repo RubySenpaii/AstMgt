@@ -75,7 +75,7 @@
             %>
             <li class="fill-header"></li>
             <li class="header-limit">
-                Equipment Spending Limit: Php <%=SharedFormat.doubleToString(limit.Equipment)%>
+                Equipment Spending Limit for <%=SharedFormat.getQuarter()%>: Php <%=SharedFormat.doubleToString(limit.Equipment)%>
             </li>
 <!--            <li class="header-limit">
                 Supplies Spending Limit: Php <%=SharedFormat.doubleToString(limit.Supplies)%>
