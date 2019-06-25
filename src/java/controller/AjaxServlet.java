@@ -62,36 +62,51 @@ public class AjaxServlet extends HttpServlet {
         System.out.println("returns " + json);
         response.getWriter().write(json);
     }
-    
+
     private String AssetListWithType(HttpServletRequest request) {
         String type = request.getParameter("type");
         ArrayList<Asset> assets = new AssetService().GetAssetsWithType(type);
         Gson gson = new Gson();
         return "{\"Assets\":" + gson.toJson(assets) + "}";
-    } 
-    
+    }
+
     private String SupplierListWithType(HttpServletRequest request) {
         String type = request.getParameter("type");
         ArrayList<Supplier> assets = new SupplierService().FindSupplierByType(type);
         Gson gson = new Gson();
         return "{\"Assets\":" + gson.toJson(assets) + "}";
-    } 
-    
+    }
+
     private String RetrieveContactPerson(HttpServletRequest request) {
         String supplierName = request.getParameter("supplier");
         String contactPerson = new SupplierService().GetSupplierContactPerson(supplierName);
         Gson gson = new Gson();
         return "{\"ContactPerson\":" + gson.toJson(contactPerson) + "}";
     }
-    
+
     private String SupplierItem(HttpServletRequest request) {
         String supplierName = request.getParameter("supplierName");
         Supplier supplier = new SupplierService().FindSupplierByName(supplierName);
         ArrayList<SupplierItem> supplierItems = new SupplierItemService().FindSupplierItemById(supplier.SupplierId);
+        AssetService assetService = new AssetService();
+        for (SupplierItem si : supplierItems) {
+            Asset assetLimit = new Asset();
+            assetLimit = assetService.GetAssetLimit(si.AssetId);
+            si.Asset.AdminQuantityLimit = assetLimit.AdminQuantityLimit;
+            si.Asset.GeneralQuantityLimit = assetLimit.GeneralQuantityLimit;
+            si.Asset.PersonnelQuantityLimit = assetLimit.PersonnelQuantityLimit;
+            si.Asset.ProcurementQuantityLimit = assetLimit.ProcurementQuantityLimit;
+            si.Asset.RecordsQuantityLimit = assetLimit.RecordsQuantityLimit;
+            si.Asset.AdminQuantityOrdered = assetLimit.AdminQuantityOrdered;
+            si.Asset.GeneralQuantityOrdered = assetLimit.GeneralQuantityOrdered;
+            si.Asset.PersonnelQuantityOrdered = assetLimit.PersonnelQuantityOrdered;
+            si.Asset.ProcurementQuantityOrdered = assetLimit.ProcurementQuantityOrdered;
+            si.Asset.RecordsQuantityOrdered = assetLimit.RecordsQuantityOrdered;
+        }
         Gson gson = new Gson();
         return "{\"SupplierItems\":" + gson.toJson(supplierItems) + "}";
     }
-    
+
     private String SupplierItemPrice(HttpServletRequest request) {
         String supplierName = request.getParameter("supplierName");
         String assetName = request.getParameter("assetName");

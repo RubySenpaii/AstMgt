@@ -83,15 +83,16 @@ public class ExpenditureItemService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
             
-            String query = "UPDATE ExpendiutreItem SET " + ExpenditureItem.COLUMN_QUANTITY_ORDERED + " = ? "
+            String query = "UPDATE expenditureitem SET " + ExpenditureItem.COLUMN_QUANTITY_ORDERED + " = ? , " + ExpenditureItem.COLUMN_QUANTITY_LIMIT + " = ? "
                     + "WHERE " + ExpenditureItem.COLUMN_ASSET_ID + " = ? AND " + ExpenditureItem.COLUMN_DIVISION + " = ? AND "
-                    + ExpenditureItem.COLUMN_QUARTER + " = ? " + ExpenditureItem.COLUMN_YEAR + " = ?";
+                    + ExpenditureItem.COLUMN_QUARTER + " = ? AND " + ExpenditureItem.COLUMN_YEAR + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, expenditureItem.QuantityOrdered);
-            ps.setInt(2, expenditureItem.AssetId);
-            ps.setString(3, expenditureItem.Division);
-            ps.setString(4, expenditureItem.Quarter);
-            ps.setInt(5, expenditureItem.Year);
+            ps.setInt(2, expenditureItem.QuantityLimit);
+            ps.setInt(3, expenditureItem.AssetId);
+            ps.setString(4, expenditureItem.Division);
+            ps.setString(5, expenditureItem.Quarter);
+            ps.setInt(6, expenditureItem.Year);
             
             int result = ps.executeUpdate();
             con.close();
@@ -118,6 +119,28 @@ public class ExpenditureItemService {
         } catch (SQLException x) {
             System.err.println(x);
             return new ArrayList<>();
+        }
+    }
+    
+    public ExpenditureItem GetExpenditureItemsByDivision(String division , int assetid , String quarter ,int year) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            String query = "SELECT * FROM ExpenditureItem WHERE Division = ? and AssetId = ? and Quarter = ? and Year = ? ";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, division);
+            ps.setInt(2, assetid);
+            ps.setString(3, quarter);
+            ps.setInt(4, year);
+            ExpenditureItem  es = new ExpenditureItem();
+            ArrayList<ExpenditureItem> expenditureItems = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            es = expenditureItems.get(0);
+            return es;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return null;
         }
     }
     

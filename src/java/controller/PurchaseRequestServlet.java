@@ -26,11 +26,13 @@ import objects.Asset;
 import objects.AssetRequested;
 import objects.AssetTracking;
 import objects.Employee;
+import objects.ExpenditureItem;
 import objects.PurchaseRequest;
 import objects.Supplier;
 import services.AssetRequestedService;
 import services.AssetService;
 import services.AssetTrackingService;
+import services.ExpenditureItemService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
 import services.SupplierService;
@@ -101,10 +103,18 @@ public class PurchaseRequestServlet extends BaseServlet {
         }
         Collections.sort(filtered);
         session.setAttribute("fileList", filtered);
-
         try {
+            Asset al = new Asset();
             Asset asset = assetDB.GetAsset(Integer.parseInt(request.getParameter("asset-id")));
+            al = assetDB.GetAssetLimit(asset.AssetId);
+            asset.QuantityLimit = al.QuantityLimit;
+            asset.QuantityOrdered = al.QuantityOrdered;
             ArrayList<Asset> choices = assetDB.GetAssetsWithType(asset.AssetType);
+            for (Asset a : choices) {
+                Asset limiterasset = new Asset();
+                limiterasset = assetDB.GetAssetLimit(a.AssetId);
+
+            }
             session.setAttribute("choices", choices);
             session.setAttribute("asset", asset);
         } catch (NumberFormatException x) {
@@ -170,6 +180,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         String[] assets = request.getParameterValues("assets");
         String[] quantity = request.getParameterValues("quantity");
         String[] price = request.getParameterValues("price");
+        String division = request.getParameter("division");
         Date test = new Date(System.currentTimeMillis());
         Calendar cal = Calendar.getInstance();
         cal.setTime(test);
@@ -189,6 +200,7 @@ public class PurchaseRequestServlet extends BaseServlet {
         Supplier supplier = new SupplierService().FindSupplierByName(request.getParameter("supplier"));
         pr.SupplierId = supplier.SupplierId;
         ArrayList<AssetRequested> ALIST = new ArrayList<>();
+        ExpenditureItemService eitemDB = new ExpenditureItemService();
         AssetService assetService = new AssetService();
         for (int i = 0; i < assets.length; i++) {
             AssetRequested ar = new AssetRequested();
@@ -199,7 +211,13 @@ public class PurchaseRequestServlet extends BaseServlet {
             ar.Quantity = Integer.parseInt(quantity[i]);
             ar.UnitCost = Double.parseDouble(price[i]);
             ALIST.add(ar);
+            ExpenditureItem eitem = new ExpenditureItem();
+            eitem = eitemDB.GetExpenditureItemsByDivision(division, ar.AssetId ,SharedFormat.getQuarter(),year);
+            eitem.QuantityOrdered += ar.Quantity;
+            eitem.QuantityLimit -= ar.Quantity;
+            eitemDB.UpdateExpenditureItem(eitem);
         }
+
         AssetRequestedService ars = new AssetRequestedService();
         int result = purchaseRequestService.AddPurchaseRequest(pr);
         switch (result) {
