@@ -11,7 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import objects.AssetRequested;
+import objects.Employee;
+import objects.PurchaseOrder;
 import services.EquipmentService;
+import services.PurchaseOrderService;
 import services.RepairLogService;
 
 /**
@@ -272,5 +276,31 @@ public class ReportService {
             System.err.println(x);
             return new ArrayList<>();
         }
+    }
+    
+    public OrderForm getPurchaseOrder(int purchaseOrderId) {
+        PurchaseOrder purchaseOrder = new PurchaseOrderService().FindPurchaseOrderById(purchaseOrderId);
+        OrderForm orderForm = new OrderForm();
+        orderForm.setTitle("Purchase Order");
+        orderForm.setFromName(purchaseOrder.Supplier.SupplierName);
+        orderForm.setFromAddress(purchaseOrder.Supplier.SupplierAddress);
+        orderForm.setFromContact(purchaseOrder.Supplier.ContactPerson + " - " + purchaseOrder.Supplier.ContactNumber);
+        orderForm.setToName("Department of Agrarian Reforms");
+        orderForm.setToAddress("Eliptical Road, Diliman");
+        orderForm.setToContact(purchaseOrder.PurchaseRequest.Requester.FullName() + " - " + purchaseOrder.PurchaseRequest.Requester.ContactNumber);
+        
+        ArrayList<OrderDetail> orderDetails = new ArrayList<>();
+        for (int i = 0; i < purchaseOrder.PurchaseRequest.AssetsRequested.size(); i++) {
+            AssetRequested asset = purchaseOrder.PurchaseRequest.AssetsRequested.get(i);
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setAssetName(asset.Asset.AssetName);
+            orderDetail.setQuantity(asset.Quantity);
+            orderDetail.setPrice(asset.UnitCost);
+            orderDetails.add(orderDetail);
+        }
+        orderForm.setDetails(orderDetails);
+        orderForm.setRequestedBy(purchaseOrder.PurchaseRequest.Requester.FullName());
+        orderForm.setApprovedBy(purchaseOrder.PurchaseRequest.Approver.FullName());
+        return orderForm;
     }
 }

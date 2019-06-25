@@ -25,12 +25,14 @@ import objects.Employee;
 import objects.ExpenditureTracking;
 import objects.PurchaseOrder;
 import objects.PurchaseRequest;
+import objects.RequestForDeliveryInspection;
 import objects.Supplier;
 import services.AssetRequestedService;
 import services.AssetService;
 import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
+import services.RequestForDeliveryInspectionService;
 import services.SupplierService;
 
 /**
@@ -38,7 +40,7 @@ import services.SupplierService;
  * @author RubySenpaii
  */
 public class PurchaseOrderServlet extends BaseServlet {
-    
+
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getRequestURI();
@@ -73,7 +75,7 @@ public class PurchaseOrderServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-    
+
     private String ApproveAndAddPurchaseOrder(HttpServletRequest request) throws ServletException {
         SupplierService suppDB = new SupplierService();
         PurchaseRequestService prDB = new PurchaseRequestService();
@@ -88,17 +90,17 @@ public class PurchaseOrderServlet extends BaseServlet {
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
-        
+
         int approval = prDB.ApprovePurchaseRequest(employee.EmployeeId, approved, prid);
         PurchaseRequest purchaseRequest = prDB.FindPurhcaseRequesById(prid);
         if (approval == 0) {
             System.out.println("Number :  " + approval);
             return "/forms/purchase-request/list.jsp";
         }
-        
+
         ArrayList<AssetRequested> assetsRequested = new AssetRequestedService().GetAssetsRequestedWithPurchaseRequest(prid);
         double equipTotal = 0, suppliesTotal = 0;
-        for (AssetRequested assetRequested: assetsRequested) {
+        for (AssetRequested assetRequested : assetsRequested) {
             if (assetRequested.Asset.AssetType.contains("Equipment")) {
                 equipTotal += assetRequested.Quantity * assetRequested.UnitCost;
             } else {
@@ -106,12 +108,12 @@ public class PurchaseOrderServlet extends BaseServlet {
             }
         }
         System.out.println("expenditure for pr supplies " + suppliesTotal + " equipment " + equipTotal);
-        
+
         ExpenditureTrackingService expenditureTrackingService = new ExpenditureTrackingService();
         ExpenditureTracking expenditure = expenditureTrackingService.GetCurrentExpenditure(purchaseRequest.Requester.Division);
         expenditure.Timestamp = Calendar.getInstance().getTime();
         expenditure.Equipment -= equipTotal;
-        expenditure.Supplies -=  suppliesTotal;
+        expenditure.Supplies -= suppliesTotal;
         int result = expenditureTrackingService.AddEquipmentTracking(expenditure);
         ArrayList<Supplier> supplierList = suppDB.FindSupplierByType(assetsRequested.get(0).Asset.AssetType);
         System.out.println("found a list of supplier: " + supplierList.size());
@@ -121,7 +123,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("supplierList", supplierList);
         return "/forms/purchase-order/add.jsp";
     }
-    
+
     private String CreatePurchaseOrder(HttpServletRequest request) {
         HttpSession session = request.getSession();
         int purchaseRequestId = Integer.parseInt(request.getParameter("prid"));
@@ -133,7 +135,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("purchaseRequest", purchaseRequest);
         return "/forms/purchase-order/add.jsp";
     }
-    
+
     private String ListPurchaseOrder(HttpServletRequest request) throws SQLException {
         PurchaseOrderService poDB = new PurchaseOrderService();
         ArrayList<PurchaseOrder> poList = new ArrayList<>();
@@ -143,7 +145,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("PO", poList);
         return "/forms/purchase-order/list.jsp";
     }
-    
+
     private String AddPurchaseOrder(HttpServletRequest request) throws ParseException, SQLException {
         PurchaseOrder po = new PurchaseOrder();
         HttpSession session = request.getSession();
@@ -173,7 +175,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                 return "/forms/login.jsp";
         }
     }
-    
+
     private String EditPurchaseOrder() {
         int result = 0;
         switch (result) {
@@ -181,7 +183,7 @@ public class PurchaseOrderServlet extends BaseServlet {
                 return "";
         }
     }
-    
+
     private String ViewPurchaseOrder(HttpServletRequest request) {
         PurchaseOrderService poService = new PurchaseOrderService();
         HttpSession session = request.getSession();
@@ -195,7 +197,14 @@ public class PurchaseOrderServlet extends BaseServlet {
             System.out.println("NAMES are : " + name);
             assetNameList.add(name);
         }
-        
+
+        try {
+            RequestForDeliveryInspection inspection = new RequestForDeliveryInspectionService().GetRequestForInspectionByPurchaseOrder(purchaseOrder.PurchaseOrderId);
+            purchaseOrder.DeliveryInpsection = inspection.DeliveryInspectionId;
+        } catch (IndexOutOfBoundsException x) {
+            purchaseOrder.DeliveryInpsection = -1;
+        }
+
         session.setAttribute("assetRequested", assetReqList);
         session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseOrder", purchaseOrder);

@@ -26,6 +26,7 @@ import objects.Asset;
 import objects.AssetRequested;
 import objects.AssetTracking;
 import objects.Employee;
+import objects.PurchaseOrder;
 import objects.ExpenditureItem;
 import objects.PurchaseRequest;
 import objects.Supplier;
@@ -154,6 +155,12 @@ public class PurchaseRequestServlet extends BaseServlet {
             String name = assetDB.GetAsset(assetReqList.get(i).AssetId).AssetName;
             System.out.println("NAMES are : " + name);
             assetNameList.add(name);
+        }
+        try {
+            PurchaseOrder purchaseOrder = new PurchaseOrderService().FindPurchaseOrderByPurchaseRequestId(id);
+            purchaseRequest.PurchaseOrderNumber = purchaseOrder.PurchaseOrderId;
+        } catch (IndexOutOfBoundsException ex) {
+            purchaseRequest.PurchaseOrderNumber = -1;
         }
         ArrayList<AssetTracking> requesterAssets = new AssetTrackingService().GetArrayListOfEmployee(purchaseRequest.RequestedBy);
         System.out.println("requester asset size " + requesterAssets.size());

@@ -30,11 +30,13 @@ import report.Equipment;
 import report.Asset;
 import report.AssetRepair;
 import report.Expenditure;
+import report.OrderForm;
 import report.ReportService;
 import report.ReportingModule;
 import report.RequestParameter;
 import report.SpecificEquipment;
 import services.AssetService;
+import services.EmployeeService;
 import services.EquipmentService;
 import services.ExpenditureLimitService;
 import services.ExpenditureTrackingService;
@@ -45,7 +47,7 @@ import services.RepairLogService;
  * @author rubysenpaii
  */
 public class ReportServlet extends BaseServlet {
-    
+
     private ReportingModule reports = new ReportingModule();
     private String logo;
     private String jasperPath;
@@ -59,7 +61,7 @@ public class ReportServlet extends BaseServlet {
             logo = getServletContext().getRealPath("/img");
             jasperPath = getServletContext().getRealPath("/jasper");
             pdfReportsPath = getServletContext().getRealPath("/pdf");
-            
+
             switch (action.split("/")[action.split("/").length - 1]) {
                 case "GeneralPPE":
                     url = DirectToPage(request, "general-ppe");
@@ -94,6 +96,9 @@ public class ReportServlet extends BaseServlet {
                 case "AssetRepair":
                     url = DirectToPage(request, "asset-repair");
                     break;
+                case "GeneratePurchaseOrder":
+                    url = GeneratePurchaseOrder(request);
+                    break;
                 case "GenerateSpecificSupplies":
                 default:
                     url = "";
@@ -106,7 +111,7 @@ public class ReportServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-    
+
     private String DirectToPage(HttpServletRequest request, String folder) {
         pdfReportsPath += File.separator + folder;
         File file = new File(pdfReportsPath);
@@ -122,7 +127,7 @@ public class ReportServlet extends BaseServlet {
         session.setAttribute("fileList", filtered);
         return "/report/" + folder + ".jsp";
     }
-    
+
     private String GenerateGeneralPropertyPlantEquipmentReport(HttpServletRequest request) {
         try {
             RequestParameter reqParameter = new RequestParameter();
@@ -144,7 +149,7 @@ public class ReportServlet extends BaseServlet {
         }
         return "/ReportServlet/GeneralPPE";
     }
-    
+
     private String GenerateSpecificPropertyPlantEquipmentReport(HttpServletRequest request) {
         try {
             SpecificEquipment equipment = new ReportService().GetSpecificEquipmentDetails(request.getParameter("asset-name"));
@@ -166,7 +171,7 @@ public class ReportServlet extends BaseServlet {
         }
         return "/ReportServlet/SpecificPPE";
     }
-    
+
     private String GenerateSuppliesReport(HttpServletRequest request) {
         try {
             RequestParameter reqParameter = new RequestParameter();
@@ -188,7 +193,7 @@ public class ReportServlet extends BaseServlet {
         }
         return "/ReportServlet/GeneralSupplies";
     }
-    
+
     private String GenerateExpenditureReport(HttpServletRequest request) {
         try {
             ExpenditureLimit procurement = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), "Procurement");
@@ -201,38 +206,38 @@ public class ReportServlet extends BaseServlet {
             ExpenditureTracking generalTracking = new ExpenditureTrackingService().GetCurrentExpenditure("General");
             ExpenditureTracking recordsTracking = new ExpenditureTrackingService().GetCurrentExpenditure("Records");
             ExpenditureTracking adminTracking = new ExpenditureTrackingService().GetCurrentExpenditure("Admin");
-            
+
             ArrayList<Expenditure> expenditures = new ArrayList<>();
             Expenditure procurementExpenditure = new Expenditure();
             procurementExpenditure.setName("Procurement");
             procurementExpenditure.setAllocated(procurement.Equipment);
             procurementExpenditure.setCurrent(procurement.Equipment - procurementTracking.Equipment);
             expenditures.add(procurementExpenditure);
-            
+
             Expenditure personnelExpenditure = new Expenditure();
             personnelExpenditure.setName("Personnel");
             personnelExpenditure.setAllocated(personnel.Equipment);
             personnelExpenditure.setCurrent(personnel.Equipment - personnelTracking.Equipment);
             expenditures.add(personnelExpenditure);
-            
+
             Expenditure generalExpenditure = new Expenditure();
             generalExpenditure.setName("General");
             generalExpenditure.setAllocated(general.Equipment);
             generalExpenditure.setCurrent(general.Equipment - generalTracking.Equipment);
             expenditures.add(generalExpenditure);
-            
+
             Expenditure recordsExpenditure = new Expenditure();
             recordsExpenditure.setName("Records");
             recordsExpenditure.setAllocated(records.Equipment);
             recordsExpenditure.setCurrent(records.Equipment - recordsTracking.Equipment);
             expenditures.add(recordsExpenditure);
-            
+
             Expenditure adminExpenditure = new Expenditure();
             adminExpenditure.setName("Admin");
             adminExpenditure.setAllocated(admin.Equipment);
             adminExpenditure.setCurrent(admin.Equipment - adminTracking.Equipment);
             expenditures.add(adminExpenditure);
-            
+
             RequestParameter reqParameter = new RequestParameter();
             logo += File.separator + "darlogo.jpg";
             String jasperFile = jasperPath + File.separator + "ExpenditureReport.jasper";
@@ -243,25 +248,25 @@ public class ReportServlet extends BaseServlet {
             String fileName = pdfReportsPath + File.separator + "expenditure" + File.separator + "ExpenditureReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
             System.out.println("reportservlet 235");
             reports.createExpenditureReport(reqParameter, jasperFile, fileName, expenditures);
-            
+
         } catch (Exception ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "/ReportServlet/Expenditure";
     }
-    
+
     private String GenerateAssetRepairReport(HttpServletRequest request) {
         try {
             ArrayList<AssetRepair> assetRepairs = new ArrayList<>();
             ArrayList<objects.Asset> assets = new AssetService().GetAssets();
-            for (objects.Asset asset: assets) {
+            for (objects.Asset asset : assets) {
                 ArrayList<objects.Equipment> equipments = new EquipmentService().GetListOfEquipmentsWithAssetName(asset.AssetName);
                 int totalCount = 0;
                 double totalAmount = 0;
-                for (objects.Equipment equipment: equipments) {
+                for (objects.Equipment equipment : equipments) {
                     ArrayList<objects.RepairLog> repairs = new RepairLogService().GetApprovedRepairLogs(equipment.AssetTag);
                     totalCount += repairs.size();
-                    for (objects.RepairLog repair: repairs) {
+                    for (objects.RepairLog repair : repairs) {
                         totalAmount += repair.TotalCost;
                     }
                 }
@@ -272,7 +277,7 @@ public class ReportServlet extends BaseServlet {
                 assetRepair.setTotalRepair(totalAmount);
                 assetRepairs.add(assetRepair);
             }
-            
+
             RequestParameter reqParameter = new RequestParameter();
             logo += File.separator + "darlogo.jpg";
             String jasperFile = jasperPath + File.separator + "RepairReport.jasper";
@@ -283,10 +288,25 @@ public class ReportServlet extends BaseServlet {
             String fileName = pdfReportsPath + File.separator + "asset-repair" + File.separator + "RepairReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
             System.out.println("reportservlet 250 method");
             reports.createRepairReport(reqParameter, jasperFile, fileName, assetRepairs);
-            
         } catch (Exception ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "/ReportServlet/AssetRepair";
+    }
+
+    private String GeneratePurchaseOrder(HttpServletRequest request) {
+        String fileName = "";
+        try {
+            int purchaseOrder = Integer.parseInt(request.getParameter("purchaseOrder"));
+            logo += File.separator + "darlogo.jpg";
+            OrderForm orderForm = new ReportService().getPurchaseOrder(purchaseOrder);
+            String jasperFile = jasperPath + File.separator + "OrderForm.jasper";
+            fileName = pdfReportsPath + File.separator + "purchase-order" + File.separator + "PurchaseOrder" + purchaseOrder + ".pdf";
+            reports.createOrderForm(logo, orderForm, jasperFile, fileName);
+            return "/PurchaseOrderServlet/View?poId=" + purchaseOrder;
+        } catch (Exception ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
     }
 }

@@ -168,16 +168,16 @@
                                                 <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off" required>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="engine-number" placeholder="Engine Number" autocomplete="off">
+                                                <input class="form-control" name="engine-number" placeholder="Engine Number" autocomplete="off" required>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="chassis-number" placeholder="Chassis Number" autocomplete="off">
+                                                <input class="form-control" name="chassis-number" placeholder="Chassis Number" autocomplete="off" required>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="make" placeholder="Make" autocomplete="off">
+                                                <input class="form-control" name="make" placeholder="Make" autocomplete="off" required>
                                             </td>
                                             <td>
                                                 <input class="form-control" name="model" placeholder="Model" autocomplete="off">
