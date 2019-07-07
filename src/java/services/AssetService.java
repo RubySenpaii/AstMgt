@@ -130,6 +130,50 @@ public class AssetService {
         }
     }
 
+    public Asset GetAssetLimit(int AssetId) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT * FROM ExpenditureItem WHERE " + Asset.COLUMN_ASSET_ID + " = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, AssetId);
+            Asset asset = new Asset();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+              
+                switch(rs.getString("Division")){
+                    case "Admin":
+                        asset.AdminQuantityLimit = rs.getInt(asset.COLUMN_QUANTITY_LIMIT);
+                        asset.AdminQuantityOrdered = rs.getInt(asset.COLUMN_QUANTITY_ORDERED);
+                        break;
+                    case "General":
+                        asset.GeneralQuantityLimit = rs.getInt(asset.COLUMN_QUANTITY_LIMIT);
+                        asset.GeneralQuantityOrdered = rs.getInt(asset.COLUMN_QUANTITY_ORDERED);
+                        break;
+                    case "Personnel":
+                        asset.PersonnelQuantityLimit = rs.getInt(asset.COLUMN_QUANTITY_LIMIT);
+                        asset.PersonnelQuantityOrdered = rs.getInt(asset.COLUMN_QUANTITY_ORDERED);
+                        break;
+                    case "Procurement":
+                        asset.ProcurementQuantityLimit = rs.getInt(asset.COLUMN_QUANTITY_LIMIT);
+                        asset.ProcurementQuantityOrdered = rs.getInt(asset.COLUMN_QUANTITY_ORDERED);
+                        break;
+                    case "Records":
+                        asset.RecordsQuantityLimit = rs.getInt(asset.COLUMN_QUANTITY_LIMIT);
+                        asset.RecordsQuantityOrdered = rs.getInt(asset.COLUMN_QUANTITY_ORDERED);
+                        break;
+                }
+            }
+            ps.close();
+            con.close();
+            return asset;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new Asset();
+        }
+    }
+
     public Asset GetAssetByName(String AssetName) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
@@ -154,13 +198,26 @@ public class AssetService {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
-
+            
             String query = "SELECT * FROM Asset WHERE " + Asset.COLUMN_ASSET_TYPE + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, type);
 
             ArrayList<Asset> assets = getResult(ps.executeQuery());
-
+            for(Asset asset : assets){
+                Asset AssetLimit = new Asset();
+                AssetLimit = this.GetAssetLimit(asset.AssetId);
+                asset.AdminQuantityLimit = AssetLimit.AdminQuantityLimit;
+                asset.GeneralQuantityLimit = AssetLimit.GeneralQuantityLimit;
+                asset.PersonnelQuantityLimit = AssetLimit.PersonnelQuantityLimit;
+                asset.ProcurementQuantityLimit = AssetLimit.ProcurementQuantityLimit;
+                asset.RecordsQuantityLimit = AssetLimit.RecordsQuantityLimit;
+                asset.AdminQuantityOrdered = AssetLimit.AdminQuantityOrdered;
+                asset.GeneralQuantityOrdered = AssetLimit.GeneralQuantityOrdered;
+                asset.PersonnelQuantityOrdered = AssetLimit.PersonnelQuantityOrdered;
+                asset.ProcurementQuantityOrdered = AssetLimit.ProcurementQuantityOrdered;
+                asset.RecordsQuantityOrdered = AssetLimit.RecordsQuantityOrdered;
+            }
             ps.close();
             con.close();
             return assets;

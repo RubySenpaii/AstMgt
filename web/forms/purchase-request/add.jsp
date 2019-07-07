@@ -29,10 +29,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-panel">
+
                                 <select onchange="document.getElementById('pdfViewer').setAttribute('data', '/AMS/uploaded-files/wfp/' + document.getElementById('select-file').value)" id="select-file">
                                     <option selected="true" disabled>- Select an Option -</option>
                                     <%
                                         ArrayList<String> files = (ArrayList<String>) session.getAttribute("fileList");
+                                        String divsion = (String) session.getAttribute("UserDivision");
                                         for (String file : files) {
                                     %>
                                     <option value="<%=file%>"><%=file%></option>
@@ -48,6 +50,7 @@
                             <div class="form-panel">
                                 <h4>Create Purchase Request</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
+                                    <input type="hidden" id="division" name="division" value="<%= divsion%>">
                                     <%                                        Asset asset = (Asset) session.getAttribute("asset");
                                     %>
                                     <div class="form-group">
@@ -121,6 +124,7 @@
                                                         <th>Asset</th>
                                                         <th>Quantity</th> 
                                                         <th>Price</th>
+                                                        <th>Asset Limit</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -131,7 +135,8 @@
                                                             <input list="asset-list" class="asset" name="assets" autocomplete="off" value="<%=assetName%>">
                                                         </td>
                                                         <td><input type="number" class="quantity" name="quantity" autocomplete="off"></td> 
-                                                        <td><input type="number" class="price" name="price" autocomplete="off" disabled="true"></td> 
+                                                        <td><input type="number" class="price" name="price" autocomplete="off"></td> 
+                                                        <td><input type="number" class="limit" id="limit" name="limit" disabled="true" value=""</td>
                                                         <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                                     </tr>
                                                 </tbody>
@@ -153,7 +158,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center">
-                                            <button class="btn btn-theme" type="submit">Submit</button>
+                                            <button class="btn btn-theme " id="submit" name="submit" type="submit">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -198,17 +203,19 @@
                 $('.price').each(function () {
                     price.push($(this).val());
                 });
+
                 $('.quantity').each(function () {
                     qty.push($(this).val());
                 });
-
                 for (var i = 0; i < price.length; i++) {
                     sum += (price[i] * qty[i]);
                 }
                 // set the computed value to 'totalPrice' textbox
                 $('#totalPrice').val(sum);
+
+//                  $('#prid').prop("disabled", true);
             });
-            
+
             $(document.body).on('change', '.quantity', function () {
                 // initialize the sum (total price) to zero
                 var sum = 0;
@@ -220,6 +227,13 @@
                     price.push($(this).val());
                 });
                 $('.quantity').each(function () {
+                    console.log('tea', $(this).val())
+                    console.log('idiot', $('#limit').val())
+                    if ($(this).val() > $('#limit').val()) {
+                        $('#submit').prop("disabled", true);
+                    } else {
+                        $('#submit').prop("disabled", false);
+                    }
                     qty.push($(this).val());
                 });
 
@@ -256,44 +270,67 @@
                     data: {type: type},
                     success: function (data) {
                         $('#asset-list').html("");
+                        console.log("AHA TANGINA")
                         for (var i = 0; i < data.Assets.length; i++) {
-                            console.log(data.Assets);
                             $('#asset-list').append('<option>' + data.Assets[i].AssetName + '</option>')
                         }
                     }
                 });
             });
-            
-            $('#supplier-name').on('change', function() {
-               var supplierName = $(this).val();
-               console.log('supplier name', supplierName);
-               $.ajax({
-                  url: '/AMS/AjaxServlet/SupplierItem',
-                  dataType: 'json',
-                  data: {supplierName: supplierName},
-                  success: function(data) {
-                      console.log("supplier name ajax", data);
-                      $('#asset-list').html('');
-                      items = [];
-                      for (var i = 0; i < data.SupplierItems.length; i++) {
-                          $('#asset-list').append('<option>' + data.SupplierItems[i].Asset.AssetName + '</option>');
-                          items.push({
-                             'name': data.SupplierItems[i].Asset.AssetName,
-                             'price': data.SupplierItems[i].price
-                          });
-                      }
-                  }
-               });
+
+            $('#supplier-name').on('change', function () {
+                var supplierName = $(this).val();
+                console.log('supplier name', supplierName);
+                $.ajax({
+                    url: '/AMS/AjaxServlet/SupplierItem',
+                    dataType: 'json',
+                    data: {supplierName: supplierName},
+                    success: function (data) {
+                        console.log("supplier name ajax", data);
+                        $('#asset-list').html('');
+                        items = [];
+                        for (var i = 0; i < data.SupplierItems.length; i++) {
+                            $('#asset-list').append('<option>' + data.SupplierItems[i].Asset.AssetName + '</option>');
+                            items.push({
+                                'name': data.SupplierItems[i].Asset.AssetName,
+                                'price': data.SupplierItems[i].price,
+                                'alimit': data.SupplierItems[i].Asset.AdminQuantityLimit,
+                                'glimit': data.SupplierItems[i].Asset.GeneralQuantityLimit,
+                                'pelimit': data.SupplierItems[i].Asset.PersonnelQuantityLimit,
+                                'prlimit': data.SupplierItems[i].Asset.ProcurementQuantityLimit,
+                                'rlimit': data.SupplierItems[i].Asset.RecordsQuantityLimit
+                            });
+                        }
+                    }
+                });
             });
-            
-            $(document.body).on('change', '.asset', function() {
+
+            $(document.body).on('change', '.asset', function () {
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].name == $(this).val()) {
-                        console.log('value', items[i].price);
-                        $(this).find('td').each(function() {
-                            
+                        console.log('value', items[i]);
+                        $(this).find('td').each(function () {
+
                         });
+                        var division = $('#division').val();
                         $(this).closest('tr').find('td:nth-child(4)').find('.price').val(items[i].price);
+                        switch (division) {
+                            case "Admin":
+                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].alimit);
+                                break;
+                            case "General":
+                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].glimit);
+                                break;
+                            case "Personnel":
+                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].pelimit);
+                                break;
+                            case "Procurement":
+                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].prlimit);
+                                break;
+                            case "Records":
+                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].rlimit);
+                                break;
+                        }
                     }
                 }
             });
