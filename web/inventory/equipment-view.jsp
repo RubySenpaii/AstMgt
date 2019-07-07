@@ -166,7 +166,7 @@
                                         %>
                                         <button class="btn btn-info" name="action" value="reacquire" type="submit">Dispose and Reacquire</button> 
                                         <%
-                                            if (equipment.Flag != 4) {
+                                            if (equipment.Flag != 4 && equipment.Asset.AssetType.contains("Furniture")) {
                                         %>
                                         <button class="btn btn-info" name="action" value="extend" type="submit">Extend</button> 
                                         <%

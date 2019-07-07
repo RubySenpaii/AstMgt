@@ -32,7 +32,7 @@
                             Repair Requests <span class="badge bg-warning"><%=repair%></span>
                         </a>
                     </li>
-                    <li><a href="/AMS/AssetServlet/LogTracking">Log Transfer</a></li>
+                    <li><a href="/AMS/AssetServlet/LogTracking">Transfer To Custodian</a></li>
                     <li><a href="/AMS/AssetServlet/LogIncident">Log Incident</a></li>
                     <li><a href="/AMS/AssetServlet/LogRepair">Log Asset Repair</a></li>
                 </ul>

@@ -99,6 +99,38 @@ public class EmployeeService {
         }
         return null;
     }
+    
+    public ArrayList<Employee> FindCustodianList() {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Employee WHERE UserLevel = ?");
+            ps.setString(1, "Custodian");
+            ArrayList<Employee> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+    
+    public ArrayList<Employee> FindNotCustodianList() {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Employee WHERE UserLevel != ?");
+            ps.setString(1, "Custodian");
+            ArrayList<Employee> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
 
     public ArrayList<Employee> FindAllEmployee() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
