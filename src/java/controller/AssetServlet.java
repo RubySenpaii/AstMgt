@@ -157,8 +157,13 @@ public class AssetServlet extends BaseServlet {
     }
 
     private String LogTracking(HttpServletRequest request) {
-        ArrayList<Employee> employees = employeeService.FindAllEmployee();
         HttpSession session = request.getSession();
+        Employee user = (Employee) session.getAttribute("user");
+        ArrayList<Employee> employees = new ArrayList<>();
+        switch (user.UserLevel) {
+            case "Custodian": employees = employeeService.FindNotCustodianList(); break;
+            default: employees = employeeService.FindCustodianList(); break;
+        }
         session.setAttribute("employees", employees);
         return "/forms/asset/log-tracking.jsp";
     }

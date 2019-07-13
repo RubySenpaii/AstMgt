@@ -89,6 +89,7 @@
                                             <th>Year</th>
                                             <th>Color</th>
                                             <th>Warranty</th>
+                                            <th>Additional Info</th>
                                         </tr>
                                         <%
                                         } else if (items.get(0).Asset.AssetType.toLowerCase().contains("appliance")) {
@@ -126,7 +127,7 @@
                                         <%
                                             for (AssetRequested item : items) {
                                                 String assetName = item.Asset.AssetName;
-                                                String autofill = assetName.replace("a", "").replace("e", "").replace("i", "").replace("o", "").replace("u", "").toUpperCase().replace(" ","");
+                                                String autofill = assetName.replace("a", "").replace("e", "").replace("i", "").replace("o", "").replace("u", "").toUpperCase().replace(" ", "");
                                                 String propertyTag = String.valueOf(item.Asset.AssetType.split(" ")[0].charAt(0));
                                                 SharedFormat sf = new SharedFormat();
                                                 propertyTag += String.valueOf(item.Asset.AssetType.split(" ")[1].charAt(0));
@@ -143,7 +144,10 @@
                                                 <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                    <option>Brand New</option>
+                                                    <option>2nd Hand</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input class="form-control" name="color" placeholder="Color" autocomplete="off">
@@ -168,7 +172,10 @@
                                                 <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off" required>
+                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                    <option>Brand New</option>
+                                                    <option>2nd Hand</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input class="form-control" name="engine-number" placeholder="Engine Number" autocomplete="off" required>
@@ -191,6 +198,20 @@
                                             <td>
                                                 <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
                                             </td>
+                                            <td>
+                                                <div class="toggler">
+                                                    <input type="radio" name="vehicle-type" id="bnew">Brand New
+                                                    <input type="radio" name="vehicle-type" id="sec-hand">2nd Hand
+                                                    <div class="toggle-form" id="bnew">
+                                                        <input name="something">
+                                                    </div>
+                                                    <div class="toggle-form" id="sec-hand">
+                                                        <input name="or">
+                                                        <input name="cr">
+                                                        <input name="plate">
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <%
                                             }
@@ -205,7 +226,10 @@
                                                 <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                    <option>Brand New</option>
+                                                    <option>2nd Hand</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input class="form-control" name="brand" placeholder="Brand" autocomplete="off">
@@ -233,7 +257,10 @@
                                                 <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                    <option>Brand New</option>
+                                                    <option>2nd Hand</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input class="form-control" name="brand" placeholder="Brand" autocomplete="off">
@@ -277,5 +304,12 @@
         </section>
     </body>
     <jsp:include page="../shared/js.jsp"/>
+
+    <script>
+        $('input[name="vehicle-type"]:radio').change(function () {
+            var $div = $('#' + this.id).show();
+            $('.toggle-form').not($div).hide();
+        });
+    </script>
 </html>
 
