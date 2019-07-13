@@ -172,7 +172,7 @@
                                     %>
                                     <form role="form" action="/AMS/AssetServlet/EquipmentStatus">
                                         <input type="hidden" name="asset-tag" value="<%=equipment.AssetTag%>">
-                                        
+
                                         <!-- Modal -->
                                         <div class="modal fade" id="disposeModal" role="dialog">
                                             <div class="modal-dialog">
@@ -203,17 +203,17 @@
                                                         <h4 class="modal-title">Confirmation</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <label>Are you sure you want to <b style="color: #000">dispose and reaquire </b> this item?</label>
+                                                        <label>Are you sure you want to <b style="color: #000">dispose and reacquire </b> this item?</label>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-info" name="action"  value="reacquire" type="submit">Dispose and </button> 
+                                                        <button class="btn btn-info" name="action"  value="reacquire" type="submit">Dispose and Reacquire</button> 
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                         <div class="modal fade" id="extendModal" role="dialog">
+
+                                        <div class="modal fade" id="extendModal" role="dialog">
                                             <div class="modal-dialog">
 
                                                 <!-- Modal content-->
@@ -232,7 +232,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </form>
 
                                     <button class="btn btn-info" data-toggle="modal" data-target="#myModal" style="margin-left: 5px">
