@@ -128,8 +128,12 @@
                                         } catch (NullPointerException e) {
                                             editable = false;
                                         }
-                                        if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff")) && pr.PurchaseOrderNumber != -1) {
+                                        %>
+                                        
+                                        <%
+                                        if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff")) || pr.PurchaseOrderNumber != -1) {
                                     %>
+                                    
                                     <div class="form-group">
                                         <div class="col-lg-6" style="text-align: center">
                                             <form action="/AMS/PurchaseOrderServlet/Add">
