@@ -134,6 +134,7 @@ public class ExpenditureServlet extends BaseServlet {
         String[] procurement = request.getParameterValues("procurement");
         String[] personnel = request.getParameterValues("personnel");
         String[] records = request.getParameterValues("records");
+        String[] description = request.getParameterValues("description");
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
         ArrayList<ExpenditureItem> expenditureItems = new ArrayList<>();
@@ -149,7 +150,7 @@ public class ExpenditureServlet extends BaseServlet {
                 asset.AssetId = assetId;
                 asset.AssetName = names[i];
                 asset.AssetType = types[i];
-                asset.Description = price[i];
+                asset.Description = description[i];
                 asset.FundCluster = "N/A";
                 asset.StockNo = assetId + "";
                 asset.Unit = "pc";

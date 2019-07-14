@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="objects.AssetTracking"%>
 <%@page import="objects.ExpenditureTracking"%>
 <%@page import="java.util.ArrayList"%>
@@ -99,7 +100,7 @@
                                                         <td><c:out value="<%= ar.get(i).Asset.AssetName%>"></c:out></td>
                                                         <td><c:out value="<%= ar.get(i).Asset.AssetType%>"></c:out></td>
                                                         <td><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
-                                                        <td><c:out value="<%= ar.get(i).UnitCost%>"></c:out></td>
+                                                        <td><c:out value="<%= SharedFormat.doubleToMoney(ar.get(i).UnitCost)%>"></c:out></td>
                                                         </tr>
                                                     </tbody>
 

@@ -30,6 +30,17 @@
                                 <div class="row" style="border: 1px solid black; margin: 5px 30px">
                                     <form action="/AMS/ReportServlet/GenerateGeneralPPE">
                                         <h3 style="margin: 15px">Generate Reports</h3>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Date Range</label>
+                                            <div class="col-md-4">
+                                                <div class="input-group input-large" data-date="01/01/2014" data-date-format="mm/dd/yyyy">
+                                                    <input type="text" class="form-control dpd1" name="from">
+                                                    <span class="input-group-addon">To</span>
+                                                    <input type="text" class="form-control dpd2" name="to">
+                                                </div>
+                                                <span class="help-block">Select date range</span>
+                                            </div>
+                                        </div>
                                         <div class="col-md-2"></div>
                                         <div class="col-md-8" style="margin: 20px auto; text-align: center">
                                             <input type="text" name="certified-by" placeholder="Certified By" style="margin: 10px; width: 200px">

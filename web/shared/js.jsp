@@ -10,6 +10,13 @@
 <script src="/AMS/lib/jquery.scrollTo.min.js"></script>
 <script src="/AMS/lib/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="/AMS/lib/jquery.sparkline.js"></script>
+<script type="text/javascript" src="/AMS/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/AMS/lib/bootstrap-daterangepicker/date.js"></script>
+<script type="text/javascript" src="/AMS/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/AMS/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/AMS/lib/bootstrap-daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/AMS/lib/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<script src="/AMS/lib/advanced-form-components.js"></script>
 <!--common script for all pages-->
 <script src="/AMS/lib/common-scripts.js"></script>
 <script type="text/javascript" src="/AMS/lib/gritter/js/jquery.gritter.js"></script>

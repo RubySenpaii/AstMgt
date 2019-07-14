@@ -159,7 +159,7 @@ public class SupplierServlet extends BaseServlet {
             asset = assetService.GetAssetByName(assets[i]);
             sitem.AssetId = asset.AssetId;
             sitem.SupplierId = s.SupplierId;
-            sitem.price = Integer.parseInt(prices[i]);
+            sitem.price = Double.parseDouble(prices[i]);
             checker = sitemDB.AddNewSupplier(sitem);
         }
         if (checker != 0) {

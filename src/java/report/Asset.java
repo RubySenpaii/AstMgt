@@ -35,6 +35,8 @@ public class Asset {
     private int procurementConsumed;
     private int financialConsumed;
     private int managementConsumed;
+    
+    private int totalQuantity;
 
     /**
      * @return the assetId
@@ -258,5 +260,19 @@ public class Asset {
      */
     public void setManagementConsumed(int managementConsumed) {
         this.managementConsumed = managementConsumed;
+    }
+
+    /**
+     * @return the totalQuantity
+     */
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    /**
+     * @param totalQuantity the totalQuantity to set
+     */
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 }

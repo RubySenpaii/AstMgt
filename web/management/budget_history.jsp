@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="report.BudgetHistory"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -46,8 +47,8 @@
                                             <td><%=budget.getDivision()%></td>
                                             <td><%=budget.getQuarter()%></td>
                                             <td><%=budget.getYear()%></td>
-                                            <td><%=budget.getLimit()%></td>
-                                            <td><%=budget.getSpent()%></td>
+                                            <td><%=SharedFormat.doubleToMoney(budget.getLimit())%></td>
+                                            <td><%=SharedFormat.doubleToMoney(budget.getSpent())%></td>
                                         </tr>
                                         <%
                                             }

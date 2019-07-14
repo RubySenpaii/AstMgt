@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="objects.RepairLog"%>
 <%@page import="objects.AssetTracking"%>
 <%@page import="objects.AssetIncident"%>
@@ -61,7 +62,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Acquisition Cost</label>
-                                <label class="col-lg-10 control-label"><%=equipment.AcquisitionCost%></label>
+                                <label class="col-lg-10 control-label"><%=SharedFormat.doubleToMoney(equipment.AcquisitionCost)%></label>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Description</label>
@@ -114,7 +115,7 @@
                                             %>
                                             <tr>
                                                 <td><%=log.RequestedDate%></td>
-                                                <td><%=log.TotalCost%></td>
+                                                <td><%=SharedFormat.doubleToMoney(log.TotalCost)%></td>
                                             </tr>
                                             <%
                                                 }

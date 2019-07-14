@@ -29,6 +29,7 @@ import objects.ExpenditureTracking;
 import report.Equipment;
 import report.Asset;
 import report.AssetRepair;
+import report.BudgetHistory;
 import report.Expenditure;
 import report.OrderForm;
 import report.ReportService;
@@ -90,6 +91,18 @@ public class ReportServlet extends BaseServlet {
                 case "Expenditure":
                     url = DirectToPage(request, "expenditure");
                     break;
+                case "GenerateMonthlyExpenditureTrend":
+                    url = GenerateMontlyExpenditureTrend(request);
+                    break;
+                case "MonthlyExpenditureTrend":
+                    url = DirectToPage(request, "expenditureTrend");
+                    break;
+                case "GenerateAssetShares":
+                    url = GenerateMostBoughtAssetType(request);
+                    break;
+                case "AssetShares":
+                    url = DirectToPage(request, "assetShare");
+                    break;
                 case "GenerateAssetRepair":
                     url = GenerateAssetRepairReport(request);
                     break;
@@ -131,7 +144,7 @@ public class ReportServlet extends BaseServlet {
     private String GenerateGeneralPropertyPlantEquipmentReport(HttpServletRequest request) {
         try {
             RequestParameter reqParameter = new RequestParameter();
-            ArrayList<Asset> assets = new ReportService().GetGeneralPPEData();
+            ArrayList<Asset> assets = new ReportService().GetGeneralPPEData(request.getParameter("from"), request.getParameter("to"));
             logo += File.separator + "darlogo.jpg";
             reqParameter.Logo = logo;
             reqParameter.CertifiedBy = request.getParameter("certified-by");
@@ -152,7 +165,7 @@ public class ReportServlet extends BaseServlet {
 
     private String GenerateSpecificPropertyPlantEquipmentReport(HttpServletRequest request) {
         try {
-            SpecificEquipment equipment = new ReportService().GetSpecificEquipmentDetails(request.getParameter("asset-name"));
+            SpecificEquipment equipment = new ReportService().GetSpecificEquipmentDetails(request.getParameter("asset-name"), request.getParameter("from"), request.getParameter("to"));
             RequestParameter reqParameter = new RequestParameter();
             logo += File.separator + "darlogo.jpg";
             reqParameter.Logo = logo;
@@ -253,6 +266,48 @@ public class ReportServlet extends BaseServlet {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "/ReportServlet/Expenditure";
+    }
+
+    private String GenerateMontlyExpenditureTrend(HttpServletRequest request) {
+        try {
+            ArrayList<BudgetHistory> budgetHistory = new ReportService().getMonthlySpendingTrend(request.getParameter("from"), request.getParameter("to"));
+
+            RequestParameter reqParameter = new RequestParameter();
+            logo += File.separator + "darlogo.jpg";
+            String jasperFile = jasperPath + File.separator + "ExpenditureTrend.jasper";
+            reqParameter.Logo = logo;
+            reqParameter.CertifiedBy = request.getParameter("certified-by");
+            reqParameter.ApprovedBy = request.getParameter("approved-by");
+            reqParameter.VerifiedBy = request.getParameter("verified-by");
+            String fileName = pdfReportsPath + File.separator + "expenditureTrend" + File.separator + "ExpenditureTrendReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
+            System.out.println("reportservlet 235");
+            reports.createExpenditureTrendReport(reqParameter, jasperFile, fileName, budgetHistory);
+
+        } catch (Exception ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/ReportServlet/MonthlyExpenditureTrend";
+    }
+    
+    private String GenerateMostBoughtAssetType(HttpServletRequest request) {
+        try {
+            ArrayList<Asset> assets = new ReportService().getAssetDistribution(request.getParameter("from"), request.getParameter("to"));
+
+            RequestParameter reqParameter = new RequestParameter();
+            logo += File.separator + "darlogo.jpg";
+            String jasperFile = jasperPath + File.separator + "AssetShares.jasper";
+            reqParameter.Logo = logo;
+            reqParameter.CertifiedBy = request.getParameter("certified-by");
+            reqParameter.ApprovedBy = request.getParameter("approved-by");
+            reqParameter.VerifiedBy = request.getParameter("verified-by");
+            String fileName = pdfReportsPath + File.separator + "assetShare" + File.separator + "AssetShareReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
+            System.out.println("reportservlet 295");
+            reports.createAssetShares(reqParameter, jasperFile, fileName, assets);
+
+        } catch (Exception ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/ReportServlet/AssetShares";
     }
 
     private String GenerateAssetRepairReport(HttpServletRequest request) {

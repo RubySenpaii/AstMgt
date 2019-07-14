@@ -15,6 +15,7 @@ public class BudgetHistory {
     private String division;
     private double limit;
     private double spent;
+    private String month;
 
     /**
      * @return the year
@@ -84,5 +85,19 @@ public class BudgetHistory {
      */
     public void setSpent(double spent) {
         this.spent = spent;
+    }
+
+    /**
+     * @return the month
+     */
+    public String getMonth() {
+        return month;
+    }
+
+    /**
+     * @param month the month to set
+     */
+    public void setMonth(String month) {
+        this.month = month;
     }
 }

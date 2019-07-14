@@ -99,7 +99,7 @@
                                                     <tr>
                                                         <td><c:out value="<%= assetNames.get(i)%>"></c:out></td>
                                                         <td style="text-align: right"><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
-                                                        <td style="text-align: right"><c:out value="<%= sf.doubleToString(ar.get(i).UnitCost)%>"></c:out></td>
+                                                        <td style="text-align: right"><c:out value="<%= sf.doubleToMoney(ar.get(i).UnitCost)%>"></c:out></td>
                                                         </tr>
                                                     </tbody>
 
@@ -111,7 +111,7 @@
                                                     <tr>
                                                         <th>Total</th>
                                                         <td></td>
-                                                        <th style="text-align: right"><%= sf.doubleToString(sum)%></th>
+                                                        <th style="text-align: right"><%= sf.doubleToMoney(sum)%></th>
                                                     </tr>
                                                 </tfoot>
                                             </table>

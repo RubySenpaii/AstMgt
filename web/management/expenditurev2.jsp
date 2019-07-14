@@ -136,7 +136,7 @@
                     alert('CSV Parsing Error. Quantity and/or Price Not Available');
                 } else {
                     var filteredData = [], equipmentFlag = false, type;
-                    for (var i = 30; i < data.length; i++) {
+                    for (var i = 0; i < data.length; i++) {
                         if (data[i][0].toLowerCase().includes('equipment') || data[i][1].toLowerCase().includes('equipment') ||
                                 data[i][0].toLowerCase().includes('devices') || data[i][1].toLowerCase().includes('devices')) {
                             filteredData.push(data[i]);
@@ -148,6 +148,7 @@
                                 totalAmount += (Number(data[i][qtrIdx].replace(/ /g, '').replace(/,/g, '')) * Number(data[i][priceIdx].replace(/ /g, '').replace(/,/g, '')));
                                 var customObj = {};
                                 customObj.name = data[i][1];
+                                customObj.description = data[i][2];
                                 customObj.quantity = Number(data[i][qtrIdx].replace(/ /g, '').replace(/,/g, ''));
                                 customObj.price = Number(data[i][priceIdx].replace(/ /g, '').replace(/,/g, ''));
                                 customObj.type = type;
@@ -222,11 +223,15 @@
                     cell9Input.setAttribute('value', quantityPerDivision);
                     var cell9 = document.createElement('td');
                     cell9.appendChild(cell9Input);
+                    var cell10input = document.createElement('input');
+                    cell10input.setAttribute('name', 'description');
+                    cell10input.setAttribute('value', customArray[i].description);
                     tableRow.appendChild(cell5);
                     tableRow.appendChild(cell6);
                     tableRow.appendChild(cell7);
                     tableRow.appendChild(cell8);
                     tableRow.appendChild(cell9);
+                    tableRow.appendChild(cell10input);
                     tableBody.appendChild(tableRow);
                 }
 
