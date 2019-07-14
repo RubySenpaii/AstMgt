@@ -154,29 +154,93 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-6" style="text-align: center; display: flex">
+                                    <%
+                                        if (equipment.IncidentLogs.size() > 0 && equipment.getAge() < equipment.Asset.EstimatedUsefulLife) {
+                                    %>
+                                    <button class="btn btn-info" name="action" data-toggle="modal" data-target="#disposeModal">Dispose</button> 
+                                    <!-- Button trigger modal -->
+
+                                    <%
+                                        }
+                                    %>
+                                    <button class="btn btn-info" name="action" data-toggle="modal" data-target="#disposeAndModal" >Dispose and Reacquire</button> 
+                                    <%
+                                        if (equipment.Flag != 4) {
+                                    %>
+                                    <button class="btn btn-info" name="action" data-toggle="modal" data-target="#extendModal">Extend</button> 
+                                    <%
+                                        }
+                                    %>
                                     <form role="form" action="/AMS/AssetServlet/EquipmentStatus">
                                         <input type="hidden" name="asset-tag" value="<%=equipment.AssetTag%>">
-                                        <%
-                                            if (equipment.IncidentLogs.size() > 0 && equipment.getAge() < equipment.Asset.EstimatedUsefulLife) {
-                                        %>
-                                        <button class="btn btn-info" name="action" value="dispose" type="submit">Dispose</button> 
-                                        <!-- Button trigger modal -->
+                                        
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="disposeModal" role="dialog">
+                                            <div class="modal-dialog">
 
-                                        <%
-                                            }
-                                        %>
-                                        <button class="btn btn-info" name="action" value="reacquire" type="submit">Dispose and Reacquire</button> 
-                                        <%
-                                            if (equipment.Flag != 4 && equipment.Asset.AssetType.contains("Furniture")) {
-                                        %>
-                                        <button class="btn btn-info" name="action" value="extend" type="submit">Extend</button> 
-                                        <%
-                                            }
-                                        %>
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Confirmation</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <label>Are you sure you want to dispose this item?</label>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-info" name="action" value="extend" type="submit">Dispose</button> 
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="disposeAndModal" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Confirmation</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <label>Are you sure you want to <b style="color: #000">dispose and reaquire </b> this item?</label>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-info" name="action"  value="reacquire" type="submit">Dispose and </button> 
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                         <div class="modal fade" id="extendModal" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Confirmation</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <label>Are you sure you want to <b style="color: #000"> extend  </b>  this item?</label>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-info" name="action"  value="extend" type="submit">Extend</button> 
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                     </form>
+
                                     <button class="btn btn-info" data-toggle="modal" data-target="#myModal" style="margin-left: 5px">
                                         Donate
                                     </button>
+
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">

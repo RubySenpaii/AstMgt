@@ -126,6 +126,10 @@ public class ExpenditureItemService {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
+            System.out.println(division + "TETETETET");
+            System.out.println(assetid + "TETETETET");
+            System.out.println(quarter + "TETETETET");
+            System.out.println(year + "TETETETET");
             String query = "SELECT * FROM ExpenditureItem WHERE Division = ? and AssetId = ? and Quarter = ? and Year = ? ";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, division);
