@@ -31,6 +31,8 @@
                             <%
                                 Equipment equipment = (Equipment) session.getAttribute("equipment");
                             %>
+                            <button class="pull-right" onclick="printWin()">Print Asset Tag</button>
+                            <h4 style="display: none" id="asset-tag"><%=equipment.AssetTag%></h4>
                             <h4><%=equipment.Asset.AssetName + " - " + equipment.AssetTag%></h4><br/>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Description</label>
@@ -173,7 +175,7 @@
                                     %>
                                     <form role="form" action="/AMS/AssetServlet/EquipmentStatus">
                                         <input type="hidden" name="asset-tag" value="<%=equipment.AssetTag%>">
-                                        
+
                                         <!-- Modal -->
                                         <div class="modal fade" id="disposeModal" role="dialog">
                                             <div class="modal-dialog">
@@ -213,8 +215,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                         <div class="modal fade" id="extendModal" role="dialog">
+
+                                        <div class="modal fade" id="extendModal" role="dialog">
                                             <div class="modal-dialog">
 
                                                 <!-- Modal content-->
@@ -233,7 +235,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </form>
 
                                     <button class="btn btn-info" data-toggle="modal" data-target="#myModal" style="margin-left: 5px">
@@ -278,4 +280,13 @@
         </section>
     </body>
     <jsp:include page="../shared/js.jsp"/>
+    <script>
+        function printWin() {
+            var w = window.open();
+            var html = $('#asset-tag').html();
+            
+            $(w.document.body).html(html);
+            w.print();
+        }
+    </script>
 </html>
