@@ -190,7 +190,7 @@
                                                         <label>Are you sure you want to dispose this item?</label>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-info" name="action" value="extend" type="submit">Dispose</button> 
+                                                        <button class="btn btn-info" name="action" value="dispose" type="submit">Dispose</button> 
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
