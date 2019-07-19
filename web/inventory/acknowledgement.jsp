@@ -172,7 +172,7 @@
                                                 <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off" id="condition">
                                                     <option>Brand New</option>
                                                     <option>2nd Hand</option>
                                                 </select>
@@ -200,15 +200,13 @@
                                             </td>
                                             <td>
                                                 <div class="toggler">
-                                                    <input type="radio" name="vehicle-type" id="bnew">Brand New
-                                                    <input type="radio" name="vehicle-type" id="sec-hand">2nd Hand
                                                     <div class="toggle-form" id="bnew">
-                                                        <input name="something">
+                                                        <input name="conduction-sticker" placeholder="Conduction Sticker">
                                                     </div>
-                                                    <div class="toggle-form" id="sec-hand">
-                                                        <input name="or">
-                                                        <input name="cr">
-                                                        <input name="plate">
+                                                    <div class="toggle-form" id="sec-hand" style="display: none">
+                                                        <input name="or" placeholder="Official Receipt">
+                                                        <input name="cr" placeholder="Certificate of Registration">
+                                                        <input name="plate" placeholder="Plate Number">
                                                     </div>
                                                 </div>
                                             </td>
@@ -306,9 +304,16 @@
     <jsp:include page="../shared/js.jsp"/>
 
     <script>
-        $('input[name="vehicle-type"]:radio').change(function () {
-            var $div = $('#' + this.id).show();
-            $('.toggle-form').not($div).hide();
+        $(function() {
+           $('#condition').change(function() {
+               if ($(this).val() == 'Brand New') {
+                   $('#bnew').show();
+                   $('#sec-hand').hide();
+               } else {
+                   $('#bnew').hide();
+                   $('#sec-hand').show();
+               }
+           });
         });
     </script>
 </html>
