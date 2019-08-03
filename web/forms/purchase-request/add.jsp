@@ -27,31 +27,13 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-panel">
-
-                                <select onchange="document.getElementById('pdfViewer').setAttribute('data', '/AMS/uploaded-files/wfp/' + document.getElementById('select-file').value)" id="select-file">
-                                    <option selected="true" disabled>- Select an Option -</option>
-                                    <%
-                                        ArrayList<String> files = (ArrayList<String>) session.getAttribute("fileList");
-                                        String divsion = (String) session.getAttribute("UserDivision");
-                                        for (String file : files) {
-                                    %>
-                                    <option value="<%=file%>"><%=file%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                                <object id="pdfViewer" data="" type="application/pdf" width="100%" height="800px" style="padding: 20px">
-                                </object>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-panel">
                                 <h4>Create Purchase Request</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
-                                    <input type="hidden" id="division" name="division" value="<%= divsion%>">
-                                    <%                                        Asset asset = (Asset) session.getAttribute("asset");
+                                    <input type="hidden" id="division" name="division" value="<%=(String) session.getAttribute("UserDivision")%>">
+                                    <%                                        
+                                        Asset asset = (Asset) session.getAttribute("asset");
                                     %>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>

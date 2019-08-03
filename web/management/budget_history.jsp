@@ -36,6 +36,7 @@
                                             <th>Year</th>
                                             <th>Amount Budgeted</th>
                                             <th>Amount Spent</th>
+                                            <th>Amount Remaining</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -49,6 +50,7 @@
                                             <td><%=budget.getYear()%></td>
                                             <td><%=SharedFormat.doubleToMoney(budget.getLimit())%></td>
                                             <td><%=SharedFormat.doubleToMoney(budget.getSpent())%></td>
+                                            <td><%=SharedFormat.doubleToMoney(budget.getLimit() - budget.getSpent())%></td>
                                         </tr>
                                         <%
                                             }

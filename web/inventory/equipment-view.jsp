@@ -113,7 +113,9 @@
                                         </thead>
                                         <tbody>
                                             <%
+                                                double total = 0;
                                                 for (RepairLog log : equipment.RepairLogs) {
+                                                    total += log.Cost;
                                             %>
                                             <tr>
                                                 <td><%=log.RequestedDate%></td>
@@ -123,6 +125,12 @@
                                                 }
                                             %>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Grand Total</th>
+                                                <th><%=total%></th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
 

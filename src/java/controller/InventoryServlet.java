@@ -8,6 +8,7 @@ package controller;
 import extra.SharedFormat;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
@@ -30,6 +31,7 @@ import objects.Supplies;
 import services.AssetIncidentService;
 import services.AssetRequestedService;
 import services.AssetTrackingService;
+import services.EmployeeService;
 import services.EquipmentService;
 import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
@@ -78,6 +80,9 @@ public class InventoryServlet extends BaseServlet {
                 case "EquipmentView":
                     url = ViewEquipment(request);
                     break;
+                case "EmployeeEquipment":
+                    url = EmployeeEquipment(request);
+                    break;
                 case "ShowTrackingRequests":
                     url = ShowTrackingRequests(request);
                     break;
@@ -90,6 +95,12 @@ public class InventoryServlet extends BaseServlet {
                 case "EquipmentHistory":
                     url = EquipmentHistory(request);
                     break;
+                case "RetiringEmployee":
+                    url =  RetiringEmployee(request);
+                    break;
+                case "RetrieveItems":
+                    url = RetrieveItems(request);
+                    break;
                 case "EquipmentList":
                 default:
                     url = ListEquipment(request);
@@ -101,6 +112,23 @@ public class InventoryServlet extends BaseServlet {
         } catch (Exception x) {
             throw new ServletException(x);
         }
+    }
+    
+    private String RetrieveItems(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Employee user = (Employee) session.getAttribute("user");
+        String[] assetTags = request.getParameterValues("asset-name");
+        for (int i = 0; i < assetTags.length; i++) {
+            AssetTracking tracking = new AssetTracking();
+            tracking.AssetTag = assetTags[i];
+            tracking.ReleasedBy = new AssetTrackingService().GetCurrentuser(assetTags[i]).EmployeeId;
+            tracking.ReleasedTo = user.EmployeeId;
+            tracking.Remarks = 1 + request.getParameter("remarks");
+            tracking.TransferDate = Calendar.getInstance().getTime();
+            int result = assetTrackingService.AddAssetTracking(tracking);
+            System.out.println("Retrieve items result: " + result);
+        }
+        return "/HomeServlet";
     }
     
     private String EquipmentHistory(HttpServletRequest request) {
@@ -225,6 +253,22 @@ public class InventoryServlet extends BaseServlet {
         HttpSession session = request.getSession();
         session.setAttribute("equipments", equipments);
         return "/inventory/equipment-list.jsp";
+    }
+
+    private String EmployeeEquipment(HttpServletRequest request) {
+        ArrayList<Equipment> equipments = equipmentService.GetListOfEquipmentsOwnedBy(Integer.parseInt(request.getParameter("employeeId")));
+        HttpSession session = request.getSession();
+        session.setAttribute("equipments", equipments);
+        return "/inventory/employee_equipment.jsp";
+    }
+
+    private String RetiringEmployee(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Employee employee = (Employee) session.getAttribute("user");
+        employee.Flag  = 2;
+        int res = new EmployeeService().UpdateEmployee(employee);
+        System.out.println("retired emp " + res);
+        return "/inventory/employee_equipment.jsp";
     }
 
     private String ListSupplies(HttpServletRequest request) {

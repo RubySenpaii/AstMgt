@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.Employee"%>
 <%@page import="objects.PurchaseOrder"%>
 <%@page import="objects.Equipment"%>
 <%@page import="objects.Supplies"%>
@@ -193,6 +194,30 @@
                                                     <button type="submit" name="poId" value="<%=purchaseOrder.PurchaseOrderId%>">View</button>
                                                 </form>
                                             </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h3>Retiring Employees</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<Employee> retiringEmployees = (ArrayList<Employee>) session.getAttribute("retiringEmployees");
+                                            for (Employee employee : retiringEmployees) {
+                                        %>
+                                        <tr>
+                                            <td><a href="/AMS/InventoryServlet/EmployeeEquipment"><%=employee.FullName()%></a></td>
                                         </tr>
                                         <%
                                             }

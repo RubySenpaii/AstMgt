@@ -4,6 +4,8 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.AssetTracking"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +30,17 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="asset-tag" placeholder="" class="form-control" autocomplete="off">
+                                        <select name="asset-tag" placeholder="" id="asset-tag" class="form-control" autocomplete="off" >
+                                            <option disabled selected>- Select an Option -</option>
+                                            <%
+                                                ArrayList<AssetTracking> userAssets = (ArrayList<AssetTracking>) session.getAttribute("userAssets");
+                                                for (AssetTracking userAsset : userAssets) {
+                                            %>
+                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost%>"><%=userAsset.AssetTag%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
