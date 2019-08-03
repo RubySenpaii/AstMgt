@@ -33,6 +33,19 @@ public class SharedFormat {
             return "0.00";
         }
     }
+    
+    
+    public static String doubleToMoney(double value) {
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        if (value > 0 && value < 1) {
+            return "Php 0" + df.format(value);
+        } else if (value != 0) {
+            return "Php " + df.format(value);
+        } else {
+            return "Php 0.00";
+        }
+    }
+    
     public static Date stringToDate(String date){
         try {
             return DB_DATE_ENTRY.parse(date);

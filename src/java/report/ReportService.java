@@ -24,7 +24,7 @@ import services.RepairLogService;
  */
 public class ReportService {
 
-    public ArrayList<Asset> GetGeneralPPEData() {
+    public ArrayList<Asset> GetGeneralPPEData(String from, String to) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
@@ -33,9 +33,12 @@ public class ReportService {
                     + "FROM Asset A JOIN\n"
                     + "(SELECT Equipment.AssetId, Equipment.Flag, COUNT(Equipment.AssetTag) AS 'EquipmentCount'\n"
                     + "FROM Equipment\n"
+                    + "WHERE Equipment.DateAcquired >= STR_TO_DATE(?, '%m/%d/%Y') AND Equipment.DateAcquired <= STR_TO_DATE(?, '%m/%d/%Y')"
                     + "GROUP BY Equipment.AssetId, Equipment.Flag) T1 ON A.AssetId = T1.AssetId\n"
                     + "ORDER BY A.AssetId";
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, from);
+            ps.setString(2, to);
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Asset> assets = new ArrayList<>();
@@ -138,10 +141,10 @@ public class ReportService {
         }
     }
 
-    public SpecificEquipment GetSpecificEquipmentDetails(String assetName) {
+    public SpecificEquipment GetSpecificEquipmentDetails(String assetName, String from, String to) {
         SpecificEquipment specificEquipment = new SpecificEquipment();
         ArrayList<report.Equipment> reportEquipments = new ArrayList<>();
-        ArrayList<objects.Equipment> sqlEquipments = new EquipmentService().GetListOfEquipmentsWithAssetName(assetName);
+        ArrayList<objects.Equipment> sqlEquipments = new EquipmentService().GetListOfEquipmentsWithAssetNameOnDateRange(assetName, from, to);
         int used = 0, stock = 0, disposed = 0, expiring = 0, extended = 0;
         for (objects.Equipment sqlEquipment : sqlEquipments) {
             report.Equipment reportEquipment = new report.Equipment();
@@ -277,7 +280,81 @@ public class ReportService {
             return new ArrayList<>();
         }
     }
-    
+
+    public ArrayList<BudgetHistory> getMonthlySpendingTrend(String from, String to) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT CE.*, EL.Equipment AS 'EquipmentLimit', (EL.Equipment - CE.Equipment) AS 'EquipmentSpent'\n"
+                    + "FROM ExpenditureLimit EL JOIN\n"
+                    + "(SELECT T1.*, T2.Month \n"
+                    + "FROM ExpenditureTracking T1 INNER JOIN\n"
+                    + "	(SELECT T2.Year, T2.Quarter, T2.Division, MONTHNAME(T2.Timestamp) AS 'Month', MAX(T2.Timestamp) AS 'Latest' \n"
+                    + "	FROM ExpenditureTracking T2\n"
+                    + " WHERE T2.Timestamp >= STR_TO_DATE(?, '%m/%d/%Y') AND T2.Timestamp <= STR_TO_DATE(?, '%m/%d/%Y')\n"
+                    + "    GROUP BY T2.Year, T2.Quarter, T2.Division, MONTHNAME(T2.Timestamp)) T2\n"
+                    + "	ON T1.Year = T2.Year AND T1.Quarter = T2.Quarter AND T1.Division = T2.Division AND T1.Timestamp = T2.Latest) CE\n"
+                    + "    ON EL.Year = CE.Year AND EL.Quarter = CE.Quarter AND EL.Division = CE.Division";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, from);
+            ps.setString(2, to);
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<BudgetHistory> budgetHistory = new ArrayList<>();
+            while (rs.next()) {
+                BudgetHistory budget = new BudgetHistory();
+                budget.setDivision(rs.getString("Division"));
+                budget.setLimit(rs.getDouble("EquipmentLimit"));
+                budget.setQuarter(rs.getString("Quarter"));
+                budget.setSpent(rs.getDouble("EquipmentSpent"));
+                budget.setYear(rs.getInt("Year"));
+                budget.setMonth(rs.getString("Month"));
+                budgetHistory.add(budget);
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+            return budgetHistory;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+
+    public ArrayList<Asset> getAssetDistribution(String from, String to) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT A.AssetType, COUNT(E.AssetTag) AS 'EquipmentCount'\n"
+                    + "FROM Equipment E JOIN Asset A ON E.AssetId = A.AssetId\n"
+                    + "WHERE E.DateAcquired >= STR_TO_DATE(?, '%m/%d/%Y') AND E.DateAcquired <= STR_TO_DATE(?, '%m/%d/%Y')\n"
+                    + "GROUP BY A.AssetType;";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, from);
+            ps.setString(2, to);
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Asset> assets = new ArrayList<>();
+            while (rs.next()) {
+                Asset asset = new Asset();
+                asset.setAssetType(rs.getString("AssetType"));
+                asset.setTotalQuantity(rs.getInt("EquipmentCount"));
+                assets.add(asset);
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+            return assets;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+
     public OrderForm getPurchaseOrder(int purchaseOrderId) {
         PurchaseOrder purchaseOrder = new PurchaseOrderService().FindPurchaseOrderById(purchaseOrderId);
         OrderForm orderForm = new OrderForm();
@@ -288,7 +365,7 @@ public class ReportService {
         orderForm.setToName("Department of Agrarian Reforms");
         orderForm.setToAddress("Eliptical Road, Diliman");
         orderForm.setToContact(purchaseOrder.PurchaseRequest.Requester.FullName() + " - " + purchaseOrder.PurchaseRequest.Requester.ContactNumber);
-        
+
         ArrayList<OrderDetail> orderDetails = new ArrayList<>();
         for (int i = 0; i < purchaseOrder.PurchaseRequest.AssetsRequested.size(); i++) {
             AssetRequested asset = purchaseOrder.PurchaseRequest.AssetsRequested.get(i);

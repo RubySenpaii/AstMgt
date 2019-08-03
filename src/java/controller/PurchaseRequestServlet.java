@@ -160,7 +160,8 @@ public class PurchaseRequestServlet extends BaseServlet {
             PurchaseOrder purchaseOrder = new PurchaseOrderService().FindPurchaseOrderByPurchaseRequestId(id);
             purchaseRequest.PurchaseOrderNumber = purchaseOrder.PurchaseOrderId;
         } catch (IndexOutOfBoundsException ex) {
-            purchaseRequest.PurchaseOrderNumber = -1;
+            System.out.println(ex);
+            purchaseRequest.PurchaseOrderNumber = 0;
         }
         ArrayList<AssetTracking> requesterAssets = new AssetTrackingService().GetArrayListOfEmployee(purchaseRequest.RequestedBy);
         System.out.println("requester asset size " + requesterAssets.size());

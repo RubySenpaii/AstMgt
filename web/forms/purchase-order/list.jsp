@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="objects.PurchaseOrder"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -56,7 +57,7 @@
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryTerms%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
-                                            <td><c:out value="<%= po.PurchaseRequest.getTotalCost()%>"></c:out></td>
+                                            <td><c:out value="<%= SharedFormat.doubleToMoney(po.PurchaseRequest.getTotalCost())%>"></c:out></td>
                                                 <td>
                                                     <form action="/AMS/PurchaseOrderServlet/View">
                                                         <button type="submit" name="poId" value="<%=po.PurchaseOrderId%>">View</button>

@@ -11,12 +11,12 @@
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa fa-money"></i>
-                    <span>Set Expenditure Limit</span>
-                    <span>Expenditure Limit</span>
+                    <span>Expenditure</span>
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/ExpenditureServlet">Set Expenditure Limit</a></li>
-                    <li><a href="/AMS/management/expenditurev2.jsp">Expenditure Limit</a></li>
+                    <li><a href="/AMS/management/expenditurev2.jsp">Expenditure Limit v2</a></li>
+                    <li><a href="/AMS/ExpenditureServlet/BudgetHistory">Budget History</a></li>
                 </ul>
             </li>
             <li class="sub-menu">

@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : addsupplyitem
     Created on : Oct 7, 2018, 3:18:42 PM
     Author     : RubySenpaii
@@ -92,7 +92,7 @@
                                                         <td>
                                                             <input list="asset-list" name="assets" autocomplete="off">
                                                         </td>
-                                                        <td><input type="number" class="price" name="price" autocomplete="off"></td> 
+                                                        <td><input type="text" class="price" name="price" autocomplete="off"></td> 
                                                         <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                                     </tr>
                                                 </tbody>

@@ -82,6 +82,40 @@ public class ReportingModule {
         JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
     }
     
+    public void createExpenditureTrendReport(RequestParameter reqParameter, String jasperFile, String fileName, ArrayList<BudgetHistory> expenditures) 
+            throws JRException, FileNotFoundException, SQLException {
+        File file = new File(jasperFile);
+        Map parameters = new HashMap();
+        parameters.put("logo", reqParameter.Logo);
+        parameters.put("approvedBy", reqParameter.ApprovedBy);
+        parameters.put("certifiedBy", reqParameter.CertifiedBy);
+        parameters.put("verifiedBy", reqParameter.VerifiedBy);
+        JasperPrint jasperPrint;
+        
+        System.out.println("module 95");
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(expenditures, false);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file);
+        jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
+    }
+    
+    public void createAssetShares(RequestParameter reqParameter, String jasperFile, String fileName, ArrayList<Asset> assets) 
+            throws JRException, FileNotFoundException, SQLException {
+        File file = new File(jasperFile);
+        Map parameters = new HashMap();
+        parameters.put("logo", reqParameter.Logo);
+        parameters.put("approvedBy", reqParameter.ApprovedBy);
+        parameters.put("certifiedBy", reqParameter.CertifiedBy);
+        parameters.put("verifiedBy", reqParameter.VerifiedBy);
+        JasperPrint jasperPrint;
+        
+        System.out.println("module 112");
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(assets, false);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file);
+        jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
+    }
+    
     public void createRepairReport(RequestParameter reqParameter, String jasperFile, String fileName, ArrayList<AssetRepair> assetRepairs) 
             throws JRException, FileNotFoundException, SQLException {
         File file = new File(jasperFile);

@@ -96,6 +96,8 @@
                     <li><a href="/AMS/ReportServlet/GeneralPPE">General Equipment</a></li>
                     <li><a href="/AMS/ReportServlet/SpecificPPE">Specific Equipment</a></li>
                     <li><a href="/AMS/ReportServlet/Expenditure">Expenditure</a></li>
+                    <li><a href="/AMS/ReportServlet/MonthlyExpenditureTrend">Expenditure Trend</a></li>
+                    <li><a href="/AMS/ReportServlet/AssetShares">Asset Share</a></li>
                     <!--<li><a href="/AMS/ReportServlet/GeneralSupplies">General Supplies</a></li> -->
                 </ul>
             </li>

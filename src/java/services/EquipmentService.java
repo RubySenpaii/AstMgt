@@ -6,6 +6,7 @@
 package services;
 
 import db.DBConnectionFactory;
+import extra.SharedFormat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -120,6 +121,27 @@ public class EquipmentService {
             String query = "SELECT E.* FROM Equipment E JOIN Asset A ON E.AssetId = A.AssetId WHERE A.AssetName = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, assetName);
+            
+            ArrayList<Equipment> equipments = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return equipments;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+    
+    public ArrayList<Equipment> GetListOfEquipmentsWithAssetNameOnDateRange(String assetName, String from, String to) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT E.* FROM Equipment E JOIN Asset A ON E.AssetId = A.AssetId WHERE A.AssetName = ? AND E.DateAcquired >= STR_TO_DATE(?, '%m/%d/%Y) AND E.DateAcquired <= STR_TO_DATE(?, '%m/%d/%Y')";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetName);
+            ps.setString(2, from);
+            ps.setString(3, to);
             
             ArrayList<Equipment> equipments = getResult(ps.executeQuery());
             ps.close();

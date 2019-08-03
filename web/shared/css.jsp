@@ -19,3 +19,5 @@
 <link href="/AMS/lib/dashio/css/style-responsive.css" rel="stylesheet">
 <link href="/AMS/css/custom.css" rel="stylesheet">
 <link href="/AMS/lib/data-tables/datatables.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/AMS/lib/bootstrap-datepicker/css/datepicker.css" />
+<link rel="stylesheet" type="text/css" href="/AMS/lib/bootstrap-daterangepicker/daterangepicker.css" />
