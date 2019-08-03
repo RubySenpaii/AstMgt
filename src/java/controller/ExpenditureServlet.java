@@ -134,6 +134,7 @@ public class ExpenditureServlet extends BaseServlet {
 //        String[] procurement = request.getParameterValues("procurement");
 //        String[] personnel = request.getParameterValues("personnel");
 //        String[] records = request.getParameterValues("records");
+        String[] estimatedUsefulLife = request.getParameterValues("estUsefulLife");
         String[] description = request.getParameterValues("description");
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
@@ -154,7 +155,7 @@ public class ExpenditureServlet extends BaseServlet {
                 asset.FundCluster = "N/A";
                 asset.StockNo = assetId + "";
                 asset.Unit = "pc";
-                asset.EstimatedUsefulLife = 3;
+                asset.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLife[i]);
                 assets.add(asset);
             }
 //            ExpenditureItem procurementExpItem = new ExpenditureItem();

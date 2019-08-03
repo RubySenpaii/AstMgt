@@ -37,6 +37,8 @@
                                                         <th>Asset Type</th>
                                                         <th>Available Quantity</th>
                                                         <th>Price</th>
+                                                        <th>Estimated Useful Life</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="item-expenditure"></tbody>
@@ -137,6 +139,7 @@
                                 customObj.quantity = Number(data[i][qtrIdx].replace(/ /g, '').replace(/,/g, ''));
                                 customObj.price = Number(data[i][priceIdx].replace(/ /g, '').replace(/,/g, ''));
                                 customObj.type = type;
+                                customObj.estUsefulLife = data[i][23];
                                 customArray.push(customObj);
                                 console.log('row total', totalAmount);
                             } else {
@@ -169,7 +172,7 @@
                     cell2.appendChild(cell2Text);
                     var cell3 = document.createElement('td');
                     var cell3Text = document.createTextNode(customArray[i].quantity);
-                    var quantityPerDivision = Math.floor(Number(customArray[i].quantity) / 5);
+                    var quantityPerDivision = Math.floor(Number(customArray[i].quantity));
                     cell3.appendChild(cell3Text);
                     var cell4 = document.createElement('td');
                     var cell4Text = document.createTextNode(customArray[i].price);
@@ -179,6 +182,14 @@
                     cell4Input.value = customArray[i].price;
                     cell4.appendChild(cell4Input);
                     cell4.appendChild(cell4Text);
+                    var cell11 = document.createElement('td');
+                    var cell11Text = document.createTextNode(customArray[i].estUsefulLife);
+                    var cell11Input = document.createElement('input');
+                    cell11Input.setAttribute('type', 'hidden');
+                    cell11Input.setAttribute('name', 'estUsefulLife')
+                    cell11Input.value = customArray[i].estUsefulLife;
+                    cell11.appendChild(cell11Input);
+                    cell11.appendChild(cell11Text);
                     tableRow.appendChild(cell1);
                     tableRow.appendChild(cell2);
                     tableRow.appendChild(cell3);
@@ -212,6 +223,7 @@
 //                    cell10input.setAttribute('name', 'description');
 //                    cell10input.setAttribute('value', customArray[i].description);
 //                    tableRow.appendChild(cell5);
+                    tableRow.appendChild(cell11);
                     tableRow.appendChild(cell6);
 //                    tableRow.appendChild(cell7);
 //                    tableRow.appendChild(cell8);
