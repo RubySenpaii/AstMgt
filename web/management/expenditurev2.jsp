@@ -37,24 +37,11 @@
                                                         <th>Asset Type</th>
                                                         <th>Available Quantity</th>
                                                         <th>Price</th>
-                                                        <th>Admin</th>
-                                                        <th>General</th>
-                                                        <th>Procurement</th>
-                                                        <th>Personnel</th>
-                                                        <th>Records</th>
+                                                        <th>Estimated Useful Life</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="item-expenditure"></tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th colspan="4">Total</th>
-                                                        <th><input id="adminTotal" name="adminTotal"></th>
-                                                        <th><input id="generalTotal" name="generalTotal"></th>
-                                                        <th><input id="procurementTotal" name="procurementTotal"></th>
-                                                        <th><input id="personnelTotal" name="personnelTotal"></th>
-                                                        <th><input id="recordsTotal" name="recordsTotal"></th>
-                                                    </tr>
-                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>
@@ -75,29 +62,29 @@
     </body>
     <jsp:include page="../shared/js.jsp"/>
     <script>
-        $(document).ready(function() {
-            $("#compute").on("click", function() {
-                var admin = $("input[name='admin']");
-                var procurement = $("input[name='procurement']");
-                var general = $("input[name='general']");
-                var personnel = $("input[name='personnel']");
-                var records = $("input[name='records']");
-                var price = $("input[name='price']");
-                var adminPrice = 0, procurementPrice = 0, generalPrice = 0, personnelPrice = 0, recordsPrice = 0;
-                for (var i = 0; i < price.length; i++) {
-                    adminPrice += Number(admin[i].value) * Number(price[i].value);
-                    procurementPrice += Number(procurement[i].value) * Number(price[i].value);
-                    generalPrice += Number(general[i].value) * Number(price[i].value);
-                    personnelPrice += Number(personnel[i].value) * Number(price[i].value);
-                    recordsPrice += Number(records[i].value) * Number(price[i].value);
-                }
-                $("#adminTotal").val(adminPrice);
-                $("#procurementTotal").val(procurementPrice);
-                $("#generalTotal").val(generalPrice);
-                $("#personnelTotal").val(personnelPrice);
-                $("#recordsTotal").val(recordsPrice);
-            });
-        });
+//        $(document).ready(function() {
+//            $("#compute").on("click", function() {
+//                var admin = $("input[name='admin']");
+//                var procurement = $("input[name='procurement']");
+//                var general = $("input[name='general']");
+//                var personnel = $("input[name='personnel']");
+//                var records = $("input[name='records']");
+//                var price = $("input[name='price']");
+//                var adminPrice = 0, procurementPrice = 0, generalPrice = 0, personnelPrice = 0, recordsPrice = 0;
+//                for (var i = 0; i < price.length; i++) {
+//                    adminPrice += Number(admin[i].value) * Number(price[i].value);
+//                    procurementPrice += Number(procurement[i].value) * Number(price[i].value);
+//                    generalPrice += Number(general[i].value) * Number(price[i].value);
+//                    personnelPrice += Number(personnel[i].value) * Number(price[i].value);
+//                    recordsPrice += Number(records[i].value) * Number(price[i].value);
+//                }
+//                $("#adminTotal").val(adminPrice);
+//                $("#procurementTotal").val(procurementPrice);
+//                $("#generalTotal").val(generalPrice);
+//                $("#personnelTotal").val(personnelPrice);
+//                $("#recordsTotal").val(recordsPrice);
+//            });
+//        });
         
         function total() {
             var procurement = document.getElementById('procurement').value;
@@ -152,6 +139,7 @@
                                 customObj.quantity = Number(data[i][qtrIdx].replace(/ /g, '').replace(/,/g, ''));
                                 customObj.price = Number(data[i][priceIdx].replace(/ /g, '').replace(/,/g, ''));
                                 customObj.type = type;
+                                customObj.estUsefulLife = data[i][23];
                                 customArray.push(customObj);
                                 console.log('row total', totalAmount);
                             } else {
@@ -184,7 +172,7 @@
                     cell2.appendChild(cell2Text);
                     var cell3 = document.createElement('td');
                     var cell3Text = document.createTextNode(customArray[i].quantity);
-                    var quantityPerDivision = Math.floor(Number(customArray[i].quantity) / 5);
+                    var quantityPerDivision = Math.floor(Number(customArray[i].quantity));
                     cell3.appendChild(cell3Text);
                     var cell4 = document.createElement('td');
                     var cell4Text = document.createTextNode(customArray[i].price);
@@ -194,44 +182,53 @@
                     cell4Input.value = customArray[i].price;
                     cell4.appendChild(cell4Input);
                     cell4.appendChild(cell4Text);
+                    var cell11 = document.createElement('td');
+                    var cell11Text = document.createTextNode(customArray[i].estUsefulLife);
+                    var cell11Input = document.createElement('input');
+                    cell11Input.setAttribute('type', 'hidden');
+                    cell11Input.setAttribute('name', 'estUsefulLife')
+                    cell11Input.value = customArray[i].estUsefulLife;
+                    cell11.appendChild(cell11Input);
+                    cell11.appendChild(cell11Text);
                     tableRow.appendChild(cell1);
                     tableRow.appendChild(cell2);
                     tableRow.appendChild(cell3);
                     tableRow.appendChild(cell4);
-                    var cell5Input = document.createElement('input');
-                    cell5Input.setAttribute('name', 'admin');
-                    cell5Input.setAttribute('value', quantityPerDivision);
-                    var cell5 = document.createElement('td');
-                    cell5.appendChild(cell5Input);
+//                    var cell5Input = document.createElement('input');
+//                    cell5Input.setAttribute('name', 'admin');
+//                    cell5Input.setAttribute('value', quantityPerDivision);
+//                    var cell5 = document.createElement('td');
+//                    cell5.appendChild(cell5Input);
                     var cell6Input = document.createElement('input');
                     cell6Input.setAttribute('name', 'general');
                     cell6Input.setAttribute('value', quantityPerDivision);
                     var cell6 = document.createElement('td');
                     cell6.appendChild(cell6Input);
-                    var cell7Input = document.createElement('input');
-                    cell7Input.setAttribute('name', 'procurement');
-                    cell7Input.setAttribute('value', quantityPerDivision);
-                    var cell7 = document.createElement('td');
-                    cell7.appendChild(cell7Input);
-                    var cell8Input = document.createElement('input');
-                    cell8Input.setAttribute('name', 'personnel');
-                    cell8Input.setAttribute('value', quantityPerDivision);
-                    var cell8 = document.createElement('td');
-                    cell8.appendChild(cell8Input);
-                    var cell9Input = document.createElement('input');
-                    cell9Input.setAttribute('name', 'records');
-                    cell9Input.setAttribute('value', quantityPerDivision);
-                    var cell9 = document.createElement('td');
-                    cell9.appendChild(cell9Input);
-                    var cell10input = document.createElement('input');
-                    cell10input.setAttribute('name', 'description');
-                    cell10input.setAttribute('value', customArray[i].description);
-                    tableRow.appendChild(cell5);
+//                    var cell7Input = document.createElement('input');
+//                    cell7Input.setAttribute('name', 'procurement');
+//                    cell7Input.setAttribute('value', quantityPerDivision);
+//                    var cell7 = document.createElement('td');
+//                    cell7.appendChild(cell7Input);
+//                    var cell8Input = document.createElement('input');
+//                    cell8Input.setAttribute('name', 'personnel');
+//                    cell8Input.setAttribute('value', quantityPerDivision);
+//                    var cell8 = document.createElement('td');
+//                    cell8.appendChild(cell8Input);
+//                    var cell9Input = document.createElement('input');
+//                    cell9Input.setAttribute('name', 'records');
+//                    cell9Input.setAttribute('value', quantityPerDivision);
+//                    var cell9 = document.createElement('td');
+//                    cell9.appendChild(cell9Input);
+//                    var cell10input = document.createElement('input');
+//                    cell10input.setAttribute('name', 'description');
+//                    cell10input.setAttribute('value', customArray[i].description);
+//                    tableRow.appendChild(cell5);
+                    tableRow.appendChild(cell11);
                     tableRow.appendChild(cell6);
-                    tableRow.appendChild(cell7);
-                    tableRow.appendChild(cell8);
-                    tableRow.appendChild(cell9);
-                    tableRow.appendChild(cell10input);
+//                    tableRow.appendChild(cell7);
+//                    tableRow.appendChild(cell8);
+//                    tableRow.appendChild(cell9);
+//                    tableRow.appendChild(cell10input);
                     tableBody.appendChild(tableRow);
                 }
 

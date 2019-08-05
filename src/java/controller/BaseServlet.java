@@ -23,6 +23,7 @@ import objects.RepairLog;
 import objects.RequestForDeliveryInspection;
 import objects.Supplies;
 import services.AssetTrackingService;
+import services.EmployeeService;
 import services.EquipmentService;
 import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
@@ -93,6 +94,7 @@ public abstract class BaseServlet extends HttpServlet {
                         lowSupplies.add(supplies);
                     }
                 }*/
+                ArrayList<Employee> retiringEmployees = new EmployeeService().GetRetiringEmployeeList();
                 session.setAttribute("limit", limit);
                 session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
                 session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);
@@ -102,6 +104,7 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("trackingSize", assetTrackings.size());
                 session.setAttribute("repairSize", repairRequests.size());
                 session.setAttribute("purchaseOrderDelivering", deliveringPurchaseOrder);
+                session.setAttribute("retiringEmployees", retiringEmployees);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();

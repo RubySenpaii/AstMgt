@@ -129,11 +129,12 @@ public class ExpenditureServlet extends BaseServlet {
         String[] names = request.getParameterValues("name");
         String[] types = request.getParameterValues("type");
         String[] price = request.getParameterValues("price");
-        String[] admin = request.getParameterValues("admin");
+//        String[] admin = request.getParameterValues("admin");
         String[] general = request.getParameterValues("general");
-        String[] procurement = request.getParameterValues("procurement");
-        String[] personnel = request.getParameterValues("personnel");
-        String[] records = request.getParameterValues("records");
+//        String[] procurement = request.getParameterValues("procurement");
+//        String[] personnel = request.getParameterValues("personnel");
+//        String[] records = request.getParameterValues("records");
+        String[] estimatedUsefulLife = request.getParameterValues("estUsefulLife");
         String[] description = request.getParameterValues("description");
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
@@ -154,24 +155,24 @@ public class ExpenditureServlet extends BaseServlet {
                 asset.FundCluster = "N/A";
                 asset.StockNo = assetId + "";
                 asset.Unit = "pc";
-                asset.EstimatedUsefulLife = 3;
+                asset.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLife[i]);
                 assets.add(asset);
             }
-            ExpenditureItem procurementExpItem = new ExpenditureItem();
-            procurementExpItem.AssetId = assetId;
-            procurementExpItem.QuantityOrdered = 0;
-            procurementExpItem.Year = year;
-            procurementExpItem.Quarter = SharedFormat.getQuarter();
-            procurementExpItem.Division = "Procurement";
-            procurementExpItem.QuantityLimit = Integer.parseInt(procurement[i]);
+//            ExpenditureItem procurementExpItem = new ExpenditureItem();
+//            procurementExpItem.AssetId = assetId;
+//            procurementExpItem.QuantityOrdered = 0;
+//            procurementExpItem.Year = year;
+//            procurementExpItem.Quarter = SharedFormat.getQuarter();
+//            procurementExpItem.Division = "Procurement";
+//            procurementExpItem.QuantityLimit = Integer.parseInt(procurement[i]);
 
-            ExpenditureItem adminExpItem = new ExpenditureItem();
-            adminExpItem.AssetId = assetId;
-            adminExpItem.QuantityOrdered = 0;
-            adminExpItem.Year = year;
-            adminExpItem.Quarter = SharedFormat.getQuarter();
-            adminExpItem.Division = "Admin";
-            adminExpItem.QuantityLimit = Integer.parseInt(admin[i]);
+//            ExpenditureItem adminExpItem = new ExpenditureItem();
+//            adminExpItem.AssetId = assetId;
+//            adminExpItem.QuantityOrdered = 0;
+//            adminExpItem.Year = year;
+//            adminExpItem.Quarter = SharedFormat.getQuarter();
+//            adminExpItem.Division = "Admin";
+//            adminExpItem.QuantityLimit = Integer.parseInt(admin[i]);
 
             ExpenditureItem generalExpItem = new ExpenditureItem();
             generalExpItem.AssetId = assetId;
@@ -181,73 +182,73 @@ public class ExpenditureServlet extends BaseServlet {
             generalExpItem.Division = "General";
             generalExpItem.QuantityLimit = Integer.parseInt(general[i]);
 
-            ExpenditureItem personnelExpItem = new ExpenditureItem();
-            personnelExpItem.AssetId = assetId;
-            personnelExpItem.QuantityOrdered = 0;
-            personnelExpItem.Year = year;
-            personnelExpItem.Quarter = SharedFormat.getQuarter();
-            personnelExpItem.Division = "Personnel";
-            personnelExpItem.QuantityLimit = Integer.parseInt(personnel[i]);
+//            ExpenditureItem personnelExpItem = new ExpenditureItem();
+//            personnelExpItem.AssetId = assetId;
+//            personnelExpItem.QuantityOrdered = 0;
+//            personnelExpItem.Year = year;
+//            personnelExpItem.Quarter = SharedFormat.getQuarter();
+//            personnelExpItem.Division = "Personnel";
+//            personnelExpItem.QuantityLimit = Integer.parseInt(personnel[i]);
 
-            ExpenditureItem recordsExpItem = new ExpenditureItem();
-            recordsExpItem.AssetId = assetId;
-            recordsExpItem.QuantityOrdered = 0;
-            recordsExpItem.Year = year;
-            recordsExpItem.Quarter = SharedFormat.getQuarter();
-            recordsExpItem.Division = "Records";
-            recordsExpItem.QuantityLimit = Integer.parseInt(records[i]);
+//            ExpenditureItem recordsExpItem = new ExpenditureItem();
+//            recordsExpItem.AssetId = assetId;
+//            recordsExpItem.QuantityOrdered = 0;
+//            recordsExpItem.Year = year;
+//            recordsExpItem.Quarter = SharedFormat.getQuarter();
+//            recordsExpItem.Division = "Records";
+//            recordsExpItem.QuantityLimit = Integer.parseInt(records[i]);
 
-            expenditureItems.add(procurementExpItem);
-            expenditureItems.add(adminExpItem);
+//            expenditureItems.add(procurementExpItem);
+//            expenditureItems.add(adminExpItem);
             expenditureItems.add(generalExpItem);
-            expenditureItems.add(personnelExpItem);
-            expenditureItems.add(recordsExpItem);
+//            expenditureItems.add(personnelExpItem);
+//            expenditureItems.add(recordsExpItem);
         }
         assetService.AddAssets(assets);
         ExpenditureItemService eis = new ExpenditureItemService();
         eis.AddExpenditureItems(expenditureItems);
-        ExpenditureLimitService els = new ExpenditureLimitService();
-        
-        ExpenditureLimit adminLimit = new ExpenditureLimit();
-        adminLimit.Division = "Admin";
-        adminLimit.Equipment = Double.parseDouble(request.getParameter("adminTotal"));
-        adminLimit.Quarter = SharedFormat.getQuarter();
-        adminLimit.Supplies = 0;
-        adminLimit.Year = year;
-
-        ExpenditureLimit procurementLimit = new ExpenditureLimit();
-        procurementLimit.Division = "Procurement";
-        procurementLimit.Equipment = Double.parseDouble(request.getParameter("procurementTotal"));
-        procurementLimit.Quarter = SharedFormat.getQuarter();
-        procurementLimit.Supplies = 0;
-        procurementLimit.Year = year;
-
-        ExpenditureLimit managementLimit = new ExpenditureLimit();
-        managementLimit.Division = "Personnel";
-        managementLimit.Equipment = Double.parseDouble(request.getParameter("personnelTotal"));
-        managementLimit.Quarter = SharedFormat.getQuarter();
-        managementLimit.Supplies = 0;
-        managementLimit.Year = year;    
-
-        ExpenditureLimit generalLimit = new ExpenditureLimit();
-        generalLimit.Division = "General";
-        generalLimit.Equipment = Double.parseDouble(request.getParameter("generalTotal"));
-        generalLimit.Quarter = SharedFormat.getQuarter();
-        generalLimit.Supplies = 0;
-        generalLimit.Year = year;
-
-        ExpenditureLimit financeLimit = new ExpenditureLimit();
-        financeLimit.Division = "Records";
-        financeLimit.Equipment = Double.parseDouble(request.getParameter("recordsTotal"));
-        financeLimit.Quarter = SharedFormat.getQuarter();
-        financeLimit.Supplies = 0;
-        financeLimit.Year = year;
-        
-        els.AddExpenditureLimit(adminLimit);
-        els.AddExpenditureLimit(procurementLimit);
-        els.AddExpenditureLimit(managementLimit);
-        els.AddExpenditureLimit(generalLimit);
-        els.AddExpenditureLimit(financeLimit);
+//        ExpenditureLimitService els = new ExpenditureLimitService();
+//        
+//        ExpenditureLimit adminLimit = new ExpenditureLimit();
+//        adminLimit.Division = "Admin";
+//        adminLimit.Equipment = Double.parseDouble(request.getParameter("adminTotal"));
+//        adminLimit.Quarter = SharedFormat.getQuarter();
+//        adminLimit.Supplies = 0;
+//        adminLimit.Year = year;
+//
+//        ExpenditureLimit procurementLimit = new ExpenditureLimit();
+//        procurementLimit.Division = "Procurement";
+//        procurementLimit.Equipment = Double.parseDouble(request.getParameter("procurementTotal"));
+//        procurementLimit.Quarter = SharedFormat.getQuarter();
+//        procurementLimit.Supplies = 0;
+//        procurementLimit.Year = year;
+//
+//        ExpenditureLimit managementLimit = new ExpenditureLimit();
+//        managementLimit.Division = "Personnel";
+//        managementLimit.Equipment = Double.parseDouble(request.getParameter("personnelTotal"));
+//        managementLimit.Quarter = SharedFormat.getQuarter();
+//        managementLimit.Supplies = 0;
+//        managementLimit.Year = year;    
+//
+//        ExpenditureLimit generalLimit = new ExpenditureLimit();
+//        generalLimit.Division = "General";
+//        generalLimit.Equipment = Double.parseDouble(request.getParameter("generalTotal"));
+//        generalLimit.Quarter = SharedFormat.getQuarter();
+//        generalLimit.Supplies = 0;
+//        generalLimit.Year = year;
+//
+//        ExpenditureLimit financeLimit = new ExpenditureLimit();
+//        financeLimit.Division = "Records";
+//        financeLimit.Equipment = Double.parseDouble(request.getParameter("recordsTotal"));
+//        financeLimit.Quarter = SharedFormat.getQuarter();
+//        financeLimit.Supplies = 0;
+//        financeLimit.Year = year;
+//        
+//        els.AddExpenditureLimit(adminLimit);
+//        els.AddExpenditureLimit(procurementLimit);
+//        els.AddExpenditureLimit(managementLimit);
+//        els.AddExpenditureLimit(generalLimit);
+//        els.AddExpenditureLimit(financeLimit);
         
         return "/HomeServlet";
     }

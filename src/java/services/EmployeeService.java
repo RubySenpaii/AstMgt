@@ -48,6 +48,24 @@ public class EmployeeService {
         return null;
     }
     
+    public int UpdateEmployee(Employee employee) {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("UPDATE Employee SET Flag = ? WHERE EmployeeId = ?");
+            ps.setInt(1, employee.Flag);
+            ps.setInt(2, employee.EmployeeId);
+            int result = ps.executeUpdate();
+            ps.close();
+            conn.close();
+            return result;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return -1;
+        }
+    }
+    
     public Employee FindEmployeeByFullName(String fullName) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
@@ -87,7 +105,12 @@ public class EmployeeService {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
         try {
-            String query = "SELECT * FROM Employee WHERE " + Employee.COLUMN_SPECIALTY + " = ?";
+            String query = "SELECT T1.*, E.LastName, E.FirstName, E.Specialty\n"
+                    + "FROM Employee E JOIN\n"
+                    + "(SELECT RDI.AssignedTo, PO.DeliveryDate, COUNT(PO.\"PurchaseOrderId) AS 'CountPurchaseOrder'\n"
+                    + "FROM RequestForDeliveryInspection RDI JOIN PurchaseOrder PO ON RDI.PurchaseOrderId = PO.PurchaseOrderId\n"
+                    + "GROUP BY RDI.AssignedTo, PO.DeliveryDate) T1 ON E.EmployeeId = T1.AssignedTo\n"
+                    + "HAVING E.Specialty = ? AND T1.CountPurchaseOrder < 5";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, specialty);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
@@ -106,6 +129,22 @@ public class EmployeeService {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Employee WHERE UserLevel = ?");
             ps.setString(1, "Custodian");
+            ArrayList<Employee> elist = getResult(ps.executeQuery());
+            ps.close();
+            conn.close();
+            return elist;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+    
+    public ArrayList<Employee> GetRetiringEmployeeList() {
+        DBConnectionFactory db = DBConnectionFactory.getInstance();
+        Connection conn = db.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Employee WHERE Flag = ?");
+            ps.setInt(1, 2);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();
             conn.close();

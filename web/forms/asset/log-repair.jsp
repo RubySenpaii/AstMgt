@@ -38,11 +38,17 @@
                                                 ArrayList<RepairLog> userRepairrequest = ( ArrayList<RepairLog> ) session.getAttribute("repairRequestsperAsset");
                                                 for (AssetTracking userAsset : userAssets) {
                                             %>
-                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost%>"><%=userAsset.AssetTag%></option>
+                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost + '*' + userAsset.Equipment.Description%>"><%=userAsset.AssetTag%></option>
                                             <%
                                                 }
                                             %>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Warranty</label>
+                                    <div class="col-lg-10">
+                                        <span id="warranty"></span>
                                     </div>
                                 </div>
                                 <input type="hidden" id="acquisition-cost">
@@ -133,12 +139,19 @@
                 $('#totalCost').val(sum);
             });
         });
-        
-        $(document.body).on('change', '#asset-tag', function() {
+
+        $(document.body).on('change', '#asset-tag', function () {
             var acquisitionCost = Number($(this).val().split('*')[1]);
+            var description = $(this).val().split('*')[2];
+            description = description.split('__');
+            for (var i = 0; i < description.length; i++) {
+                if (description[i].includes('Warranty')) {
+                    $('#warranty').text(description[i].split("//")[1]);
+                }
+            }
             $('#acquisition-cost').val(acquisitionCost);
         });
-        
+
         $(document.body).on('change', '.cost', function () {
             // initialize the sum (total price) to zero
             var sum = 0;
@@ -156,9 +169,7 @@
 
             // set the computed value to 'totalPrice' textbox
             $('#totalCost').val(sum);
-            var userRepairRequest = document.getElementById("asset-tag");
-            console.log(userRepairRequest.value,'depota');
-            
+
             if (Number($('#acquisition-cost').val()) * 0.3 <= Number($('#totalCost').val())) {
                 console.log(true);
                  $('#warning').prop("hidden", false);

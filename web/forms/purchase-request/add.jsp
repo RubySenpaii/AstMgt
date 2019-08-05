@@ -30,25 +30,6 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div class="col-md-6" hidden="true">
-                            <div class="form-panel">
-
-                                <select onchange="document.getElementById('pdfViewer').setAttribute('data', '/AMS/uploaded-files/wfp/' + document.getElementById('select-file').value)" id="select-file">
-                                    <option selected="true" disabled>- Select an Option -</option>
-                                    <%
-                                        ArrayList<String> files = (ArrayList<String>) session.getAttribute("fileList");
-                                        String divsion = (String) session.getAttribute("UserDivision");
-                                        for (String file : files) {
-                                    %>
-                                    <option value="<%=file%>"><%=file%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                                <object id="pdfViewer" data="" type="application/pdf" width="100%" height="800px" style="padding: 20px">
-                                </object>
-                            </div>
-                        </div>
                         <div class="col-md-12">
                             <div class="form-panel">
                                 <h4>Create Purchase Request</h4><br/>

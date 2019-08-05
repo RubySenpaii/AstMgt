@@ -38,7 +38,7 @@
                                             <th>Order Date</th>
                                             <th>Delivery Address</th>
                                             <th>Delivery Date</th>
-                                            <th>Delivery Terms</th>
+                                            <!--<th>Delivery Terms</th> -->
                                             <th>Payment Terms</th>
                                             <th>Total Cost</th>
                                             <th></th>
@@ -55,7 +55,6 @@
                                             <td><c:out value="<%= po.OrderDate%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryAddress%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
-                                            <td><c:out value="<%= po.DeliveryTerms%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
                                             <td><c:out value="<%= SharedFormat.doubleToMoney(po.PurchaseRequest.getTotalCost())%>"></c:out></td>
                                                 <td>

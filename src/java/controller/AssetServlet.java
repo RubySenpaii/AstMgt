@@ -66,6 +66,10 @@ public class AssetServlet extends BaseServlet {
                     url = SubmitAsset(request);
                     break;
                 case "LogIncident":
+                    HttpSession session = request.getSession();
+                    Employee employee = (Employee) session.getAttribute("user");
+                    ArrayList<AssetTracking> userAssets = new AssetTrackingService().GetArrayListOfEmployee(employee.EmployeeId);
+                    session.setAttribute("userAssets", userAssets);
                     url = "/forms/asset/log-incident.jsp";
                     break;
                 case "LogTracking":
@@ -172,8 +176,12 @@ public class AssetServlet extends BaseServlet {
         Employee user = (Employee) session.getAttribute("user");
         ArrayList<Employee> employees = new ArrayList<>();
         switch (user.UserLevel) {
-            case "Custodian": employees = employeeService.FindNotCustodianList(); break;
-            default: employees = employeeService.FindCustodianList(); break;
+            case "Custodian":
+                employees = employeeService.FindNotCustodianList();
+                break;
+            default:
+                employees = employeeService.FindCustodianList();
+                break;
         }
         session.setAttribute("employees", employees);
         return "/forms/asset/log-tracking.jsp";
@@ -191,12 +199,26 @@ public class AssetServlet extends BaseServlet {
         incident.ReportedBy = employee.EmployeeId;
         int result = assetIncidentService.AddAssetIncident(incident);
         if (result == 1) {
-            if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal") || incident.Severity == 3) {
-                Equipment equipment = equipmentService.GetEquipmentWithAssetTag(incident.AssetTag);
-                equipment.Flag = 0;
-                result = equipmentService.UpdateEquipment(equipment);
-                System.out.println("successfully update equipment flag: " + result);
+            Equipment equipment = equipmentService.GetEquipmentWithAssetTag(incident.AssetTag);
+            switch (incident.Severity) {
+                case 1:
+                    equipment.Condition = "Slightly Used";
+                    break;
+                case 2:
+                    equipment.Condition = "Used";
+                    break;
+                case 3:
+                    equipment.Condition = "For Disposal";
+                    break;
+                default:
+                    equipment.Condition = "Used";
+                    break;
             }
+            if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal") || incident.Severity == 3) {
+                equipment.Flag = 0;
+            }
+            result = equipmentService.UpdateEquipment(equipment);
+            System.out.println("successfully update equipment flag: " + result);
             return "/InventoryServlet/EquipmentList";
         } else {
             return "/AssetServlet/LogIncident";

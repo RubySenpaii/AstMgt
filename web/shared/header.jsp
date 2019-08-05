@@ -74,9 +74,15 @@
                 String display = user.FullName() + " - " + user.Division + ": " + user.UserLevel;
             %>
             <li class="fill-header"></li>
+            <%
+                if (limit.Equipment > 0) {
+            %>
             <li class="header-limit">
                 Equipment Spending Limit for <%=SharedFormat.getQuarter()%>: Php <%=SharedFormat.doubleToString(limit.Equipment)%>
             </li>
+            <%
+                }
+            %>
 <!--            <li class="header-limit">
                 Supplies Spending Limit: Php <%=SharedFormat.doubleToString(limit.Supplies)%>
             </li>-->
