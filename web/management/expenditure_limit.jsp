@@ -33,10 +33,6 @@
                             </div>
                         </div>
                         <%
-                            Boolean isSaved = (Boolean) session.getAttribute("notif");
-                        %>
-                        <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
-                        <%
                             session.removeAttribute("Notification");
                         %>
                         <div class="col-md-6" style="display: none">
@@ -148,12 +144,6 @@
     </body>
     <jsp:include page="../shared/js.jsp"/>
     <script>
-        var notif = document.getElementById("notif");
-        if (notif.value === 'true') {
-            alert("Successfully saved the expenditure limit !");
-        } else if (notif.value === 'false') {
-            alert("Failed to save the expenditure limit !");
-        }
         function total() {
             var procurement = document.getElementById('procurement').value ? document.getElementById('procurement').value : 0;
             var management = document.getElementById('management').value ? document.getElementById('management').value : 0;

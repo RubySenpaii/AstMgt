@@ -28,7 +28,7 @@
                     <span class="badge bg-warning"><%=tracking + repair%></span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
+                    <li><a href="/AMS/InventoryServlet/EquipmentList">Asset List</a></li>
                     <li>
                         <a href="/AMS/InventoryServlet/ShowTrackingRequests">
                             Transfer Requests <span class="badge bg-warning"><%=tracking%></span>

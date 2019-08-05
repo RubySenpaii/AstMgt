@@ -25,6 +25,25 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
+                            
+                            <%
+                               String isSaved = "";
+                               String isTracked = "";
+                            try {
+                                isSaved = (String) session.getAttribute("repairnotif");
+                                isTracked = (String) session.getAttribute("trackingnotif");
+                                
+                            }
+                            catch(Exception e){
+                                
+                            }
+                            %>
+                            <input type="hidden" id="repairnotif" name="repairnotif" value="<%= isSaved%>">
+                            <input type="hidden" id="trackingnotif" name="trackingnotif" value="<%= isTracked%>">
+                            <%
+                                session.removeAttribute("repairnotif");
+                                session.removeAttribute("trackingnotif");
+                            %>
                             <h4>Asset List</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/InventoryServlet/EquipmentView">
                                 <table class="table table-bordered" id="equip-list">
@@ -76,6 +95,18 @@
             $('#equip-list').DataTable({
                 "order": [[2, "desc"]]
             });
+            var notif = document.getElementById("repairnotif");
+            if (notif.value === 'true') {
+                alert("Successfully saved the repair request!");
+            } else if (notif.value === 'false') {
+                alert("Failed to save the repair request!");
+            }
+            var tnotif = document.getElementById("trackingnotif");
+            if (tnotif.value === 'true') {
+                alert("Successfully saved the tracking request!");
+            } else if (notif.value === 'false') {
+                alert("Failed to save the tracking request!");
+            }
         });
     </script>
 </html>

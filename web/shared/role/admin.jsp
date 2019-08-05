@@ -32,11 +32,11 @@
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa fa-book"></i>
-                    <span>Asset</span>
+                    <span>Asset Catalog</span>
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/AssetServlet/Add">Add Asset</a></li>
-                    <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
+                    <li><a href="/AMS/AssetServlet/List">List of buyable assets</a></li>
                 </ul>
             </li>
             <li class="sub-menu">
@@ -52,7 +52,7 @@
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa fa-expand"></i>
-                    <span>Equipment</span>
+                    <span>Asset</span>
                     <%
                         int tracking = (int) session.getAttribute("trackingSize");
                         int repair = (int) session.getAttribute("repairSize");
@@ -60,8 +60,8 @@
                     <span class="badge bg-warning"><%=tracking + repair%></span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/InventoryServlet/EquipmentHistory">Equipment History</a></li>
-                    <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
+                    <li><a href="/AMS/InventoryServlet/EquipmentHistory">Asset History</a></li>
+                    <li><a href="/AMS/InventoryServlet/EquipmentList">Asset List</a></li>
                     <li>
                         <a href="/AMS/InventoryServlet/ShowTrackingRequests">
                             Transfer Requests <span class="badge bg-warning"><%=tracking%></span>

@@ -30,7 +30,13 @@
                     <div class="row">
                         <%
                             String notification = (String) session.getAttribute("notification");
-
+                            String notif = "";
+                            try {
+                                notif = (String) session.getAttribute("notif");
+                            }
+                            catch(Exception e){
+                                
+                            }
                         %>
                         <input type="hidden" id="notification" name="notification" value="<%= notification%>">
                         <div class="col-md-6" id="PPR">
@@ -247,7 +253,7 @@
             var notification = document.getElementById("notification");
             var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
                     for (var notif of arrayNotif){
-                        console.log(notification.value,'james')
+            console.log(notification.value, 'james')
             if (notification.value === 'None'){
             break;
             }
@@ -259,6 +265,12 @@
                 console.log(hiddener);
                 $(hiddener).prop("hidden", true);
             }
+        }
+        var notif = document.getElementById("notif");
+        if (notif.value === 'true') {
+            alert("Successfully saved the expenditure limit v2 !");
+        } else if (notif.value === 'false') {
+            alert("Failed to save the expenditure limit v2 !");
         }
         });
     </script>

@@ -19,7 +19,8 @@
                     <span class="badge bg-warning"><%=tracking + repair%></span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
+                    
+                    <li><a href="/AMS/AssetServlet/List">List of buyable assets</a></li>
                     <li><a href="/AMS/InventoryServlet/EquipmentList">Equipment List</a></li>
                     <li>
                         <a href="/AMS/InventoryServlet/ShowTrackingRequests">
