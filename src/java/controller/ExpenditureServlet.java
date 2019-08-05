@@ -339,8 +339,10 @@ public class ExpenditureServlet extends BaseServlet {
         result = expenditureService.AddExpenditureLimit(procurementLimit);
         result = expenditureService.AddExpenditureLimit(repair);
         if (result == 1) {
+            session.setAttribute("notif", true);
             return "/template.jsp";
         } else {
+            session.setAttribute("notif", false);
             return "/AMS/ExpenditureServlet";
         }
     }

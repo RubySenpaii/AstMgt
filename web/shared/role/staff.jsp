@@ -11,16 +11,16 @@
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa fa-book"></i>
-                    <span>Asset</span>
+                    <span>Asset Catalog </span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
+                    <li><a href="/AMS/AssetServlet/List">List of buyable asset</a></li>
                 </ul>
             </li>
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa fa-expand"></i>
-                    <span>Equipment</span>
+                    <span>Asset</span>
                     <%
                         int tracking = (int) session.getAttribute("trackingSize");
                         int repair = (int) session.getAttribute("repairSize");
@@ -39,7 +39,7 @@
                             Repair Requests <span class="badge bg-warning"><%=repair%></span>
                         </a>
                     </li>
-                    <li><a href="/AMS/AssetServlet/LogTracking">Transfer To Custodian</a></li>
+                    <li><a href="/AMS/AssetServlet/LogTracking">Transfer</a></li>
                     <li><a href="/AMS/AssetServlet/LogIncident">Log Incident</a></li>
                     <li><a href="/AMS/AssetServlet/LogRepair">Log Asset Repair</a></li>
                 </ul>

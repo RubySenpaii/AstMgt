@@ -132,7 +132,7 @@
                                         %>
                                         
                                         <%
-                                        if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff")) || pr.PurchaseOrderNumber != -1) {
+                                        if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff")) && pr.PurchaseOrderNumber != -1) {
                                     %>
                                     
                                     <div class="form-group">

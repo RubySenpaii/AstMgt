@@ -41,27 +41,27 @@
                         <p class="yellow">You have <%=pendingPurchaseRequests + approvedPurchaseRequests + expiringEquipment%> new notifications</p>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
+                        <a href="/AMS/HomeServlet/PPR">
                             <%=pendingPurchaseRequests%> Pending Purchase Requests
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
+                        <a href="/AMS/HomeServlet/APR">
                             <%=approvedPurchaseRequests%> Approved PR But No PO
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
+                        <a href="/AMS/HomeServlet/EE">
                             <%=expiringEquipment%> Equipments Expiring
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
+                        <a href="/AMS/HomeServlet/RPR">
                             <%=rejectedPurchaseRequests%> Rejected Purchase Requests
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
+                        <a href="/AMS/HomeServlet/UED">
                             <%=expectedDelivery%> Upcoming Equipment Deliveries
                         </a>
                     </li>

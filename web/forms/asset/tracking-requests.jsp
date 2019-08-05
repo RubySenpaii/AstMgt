@@ -32,6 +32,7 @@
                                 <table class="table" id="requestList">
                                     <thead>
                                         <tr>
+                                            <th>Asset Tag</th>
                                             <th>Requested By</th>
                                             <th>Requested Date</th>
                                             <th>Transfer To</th>
@@ -46,6 +47,7 @@
                                             for (AssetTracking tracking : trackings) {
                                         %>
                                         <tr>
+                                            <td><%=tracking.AssetTag %></td>
                                             <td><%=tracking.ReleaseBy.FullName()%></td>
                                             <td><%=tracking.TransferDate%></td>
                                             <td><%=tracking.ReleaseTo.FullName()%></td>
@@ -68,6 +70,7 @@
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
+                                                                            <th style="width: 20%">Asset Tag</th>
                                                                             <th style="width: 20%">From</th>
                                                                             <th style="width: 15%">Transfer Date</th>
                                                                             <th style="width: 20%">To</th>
@@ -79,6 +82,7 @@
                                                                             for (AssetTracking log : tracking.Trackings) {
                                                                         %>
                                                                         <tr>
+                                                                            <td><%=log.AssetTag %></td>
                                                                             <td><%=log.ReleaseBy.FullName()%></td>
                                                                             <td><%=log.TransferDate%></td>
                                                                             <td><%=log.ReleaseTo.FullName()%></td>

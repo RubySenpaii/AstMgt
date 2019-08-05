@@ -27,6 +27,13 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
+                        <%
+                            Boolean isSaved = (Boolean) session.getAttribute("Notification");
+                        %>
+                        <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                        <%
+                            session.removeAttribute("Notification");
+                        %>
                         <div class="col-md-12">
                             <div class="content-panel">
                                 <h4>List of Purchase Request</h4>
@@ -82,6 +89,13 @@
     <script>
         $(document).ready(function () {
             $('#prList').DataTable();
+
+            var notif = document.getElementById("notif");
+            if (notif.value === 'true') {
+                alert("Successfully saved the Purchase Request !")
+            } else if (notif.value === 'false') {
+                alert("Failed to save the Purchase Request !")
+            }
         });
     </script>
 </html>

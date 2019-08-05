@@ -119,6 +119,7 @@
                                         </thead>
                                         <tbody>
                                             <%
+                                                int totalCurrCost = 0;
                                                 for (RepairLog tableLog : log.Logs) {
                                             %>
                                             <tr>
@@ -126,14 +127,16 @@
                                                 <td><%=tableLog.Cost%></td>
                                             </tr>
                                             <%
+                                                totalCurrCost+=tableLog.Cost;
                                                 }
                                             %>
+                                        <input type="hidden" id="totalCurrCost" name="totalCurrCost" value="<%= totalCurrCost%>">
                                         </tbody>
                                     </table>
                                 </div>
                                 <%
-//                                    if (userRole.equalsIgnoreCase("Director")){
-%>
+                                    if (userRole.equalsIgnoreCase("Director") || userRole.equalsIgnoreCase("gsdchief")) {
+                                %>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <form action="/AMS/AssetServlet/ApproveRepair">
@@ -144,7 +147,7 @@
                                     </div>
                                 </div>
                                 <%
-//                                    }
+                                        }
                                     }
                                 %>
                             </div>
@@ -164,9 +167,12 @@
         $(function () {
             var eCost = document.getElementById('equipment-cost').value;
             var tCost = document.getElementById('total-cost').value;
-            console.log(eCost);
-            console.log(tCost);
-            if (Number(tCost) >= Number(eCost)) {
+            var totalCurrCost = document.getElementById('totalCurrCost').value;
+            console.log(eCost,'worth');
+            console.log(tCost,'repair');
+            var total = Number(tCost)+Number(totalCurrCost);
+            console.log(total,'total');
+            if (total >= Number(eCost)) {
                 $('#prid').prop("disabled", true);
             }
         });

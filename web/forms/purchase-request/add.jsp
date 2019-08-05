@@ -16,6 +16,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Asset Management - Add Purchase Request</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <jsp:include page="../../shared/css.jsp"/>
     </head>
 
@@ -27,7 +30,7 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" hidden="true">
                             <div class="form-panel">
 
                                 <select onchange="document.getElementById('pdfViewer').setAttribute('data', '/AMS/uploaded-files/wfp/' + document.getElementById('select-file').value)" id="select-file">
@@ -46,13 +49,16 @@
                                 </object>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-panel">
                                 <h4>Create Purchase Request</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
                                     <input type="hidden" id="division" name="division" value="<%= divsion%>">
-                                    <%                                        Asset asset = (Asset) session.getAttribute("asset");
+                                    <%
+                                        Asset asset = (Asset) session.getAttribute("asset");
+                                        Boolean isSaved = (Boolean) session.getAttribute("Notification");
                                     %>
+                                    <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>
                                         <div class="col-lg-10">
@@ -158,8 +164,12 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center">
-                                            <button class="btn btn-theme " id="submit" name="submit" type="submit">Submit</button>
+                                            <button class="btn btn-theme " id="submit" name="submit" type="submit">
+                                                Submit
+                                            </button>
+                                            <span id="warning"  hidden="true"><span class="fa fa-warning" style="color:red" data-toggle="tooltip" title="You cannot add more than the quantity of the asset limit"></span></span>
                                         </div>
+
                                     </div>
                                 </form>
                             </div>
@@ -227,12 +237,14 @@
                     price.push($(this).val());
                 });
                 $('.quantity').each(function () {
-                    console.log('tea', $(this).val())
-                    console.log('idiot', $('#limit').val())
                     if ($(this).val() > $('#limit').val()) {
+                        console.log('banned')
                         $('#submit').prop("disabled", true);
+                        $('#warning').prop("hidden", false);
                     } else {
+                        console.log('allowed')
                         $('#submit').prop("disabled", false);
+                        $('#warning').prop("hidden", true);
                     }
                     qty.push($(this).val());
                 });
@@ -294,11 +306,7 @@
                             items.push({
                                 'name': data.SupplierItems[i].Asset.AssetName,
                                 'price': data.SupplierItems[i].price,
-                                'alimit': data.SupplierItems[i].Asset.AdminQuantityLimit,
-                                'glimit': data.SupplierItems[i].Asset.GeneralQuantityLimit,
-                                'pelimit': data.SupplierItems[i].Asset.PersonnelQuantityLimit,
-                                'prlimit': data.SupplierItems[i].Asset.ProcurementQuantityLimit,
-                                'rlimit': data.SupplierItems[i].Asset.RecordsQuantityLimit
+                                'glimit': data.SupplierItems[i].Asset.GeneralQuantityLimit
                             });
                         }
                     }
@@ -314,25 +322,9 @@
                         });
                         var division = $('#division').val();
                         $(this).closest('tr').find('td:nth-child(4)').find('.price').val(items[i].price);
-                        switch (division) {
-                            case "Admin":
-                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].alimit);
-                                break;
-                            case "General":
-                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].glimit);
-                                break;
-                            case "Personnel":
-                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].pelimit);
-                                break;
-                            case "Procurement":
-                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].prlimit);
-                                break;
-                            case "Records":
-                                $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].rlimit);
-                                break;
+                        $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].glimit);
                         }
                     }
-                }
             });
 
             $(".delete-row").click(function () {

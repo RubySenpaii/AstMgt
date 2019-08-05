@@ -32,6 +32,13 @@
                                 <input type="file" onChange="readWfp(event)">
                             </div>
                         </div>
+                        <%
+                            Boolean isSaved = (Boolean) session.getAttribute("notif");
+                        %>
+                        <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                        <%
+                            session.removeAttribute("Notification");
+                        %>
                         <div class="col-md-6" style="display: none">
                             <div class="form-panel">
                                 <select onchange="document.getElementById('pdfViewer').setAttribute('data', '/AMS/uploaded-files/app/' + document.getElementById('select-file').value)" id="select-file">
@@ -141,6 +148,12 @@
     </body>
     <jsp:include page="../shared/js.jsp"/>
     <script>
+        var notif = document.getElementById("notif");
+        if (notif.value === 'true') {
+            alert("Successfully saved the expenditure limit !");
+        } else if (notif.value === 'false') {
+            alert("Failed to save the expenditure limit !");
+        }
         function total() {
             var procurement = document.getElementById('procurement').value ? document.getElementById('procurement').value : 0;
             var management = document.getElementById('management').value ? document.getElementById('management').value : 0;
@@ -214,11 +227,11 @@
 
             reader.readAsText(file);
         }
-        
+
         function readWfp(event) {
             console.log('read wfp');
             var file = event.target.files[0];
-            
+
             var index = {
                 "repair": 4,
                 "q1": 14,
@@ -233,7 +246,7 @@
                 var csv = e.target.result;
                 var data = $.csv.toArrays(csv);
                 console.log(data);
-                
+
                 var flag = false;
                 var repairs = 0;
                 for (var i = 0; i < data.length; i++) {
@@ -241,7 +254,7 @@
                         flag = true;
                         continue;
                     }
-                    
+
                     if (flag && data[i][index.repair] != '') {
                         repairs += parseFloat(data[i][index.total].replace(/,/g, ''));
                     } else if (flag) {
@@ -251,7 +264,7 @@
                 document.getElementById('repair').value = repairs;
                 total();
             };
-            
+
             reader.onerror = function (ex) {
                 console.log(ex);
             };

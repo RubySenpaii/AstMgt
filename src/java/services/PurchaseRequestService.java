@@ -28,7 +28,7 @@ public class PurchaseRequestService {
             + ")VALUES(?,?,?,?,?,?,?,?,?);";
     private final String FindPurchaseRequestbyId = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
     private final String FindPurchaseRequestbyNo = "SELECT * FROM PurchaseRequest WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO + " = ? ;";
-    private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ; ";
+    private final String FindAllPurchaseRequest = "SELECT * FROM PurchaseRequest ORDER BY "+ PurchaseRequest.COLUMN_PURCHASE_REQUEST_NO +" ASC ; ";
     private final String ApprovePurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " + PurchaseRequest.COLUMN_APPROVED_DATE + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
     private final String RejectPurchaseRequest = "UPDATE PurchaseRequest SET " + PurchaseRequest.COLUMN_APPROVED_BY + " = ? , " + PurchaseRequest.COLUMN_REMARKS + " = ?  WHERE " + PurchaseRequest.COLUMN_PURCHASE_REQUEST_ID + " = ? ; ";
 

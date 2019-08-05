@@ -25,7 +25,7 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
-                            <h4>Equipment List</h4><br/>
+                            <h4>Asset List</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/InventoryServlet/EquipmentView">
                                 <table class="table table-bordered" id="equip-list">
                                     <thead>

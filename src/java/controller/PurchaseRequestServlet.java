@@ -231,11 +231,14 @@ public class PurchaseRequestServlet extends BaseServlet {
         switch (result) {
             case 1:
                 int checker = ars.AddAssetRequest(ALIST);
-                if (checker != 0) {
-                    return "/forms/purchase-request/add.jsp";
+                if (checker != 0) {    
+                session.setAttribute("Notification",true);
+                    return "/PurchaseRequest/List";
                 }
+                session.setAttribute("Notification",false);
                 return "/forms/purchase-request/balh.jsp";
             default:
+            session.setAttribute("Notification",false);
                 return "/forms/login.jsp";
         }
     }

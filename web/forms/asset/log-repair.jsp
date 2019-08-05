@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.RepairLog"%>
 <%@page import="objects.AssetTracking"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,6 +35,7 @@
                                             <option disabled selected>- Select an Option -</option>
                                             <%
                                                 ArrayList<AssetTracking> userAssets = (ArrayList<AssetTracking>) session.getAttribute("userAssets");
+                                                ArrayList<RepairLog> userRepairrequest = ( ArrayList<RepairLog> ) session.getAttribute("repairRequestsperAsset");
                                                 for (AssetTracking userAsset : userAssets) {
                                             %>
                                             <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost%>"><%=userAsset.AssetTag%></option>
@@ -44,6 +46,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" id="acquisition-cost">
+                                <input type="hidden" id="userRepairRequest" value="<%= userRepairrequest%>">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Repair Costs</label>
                                     <div class="col-lg-10">
@@ -76,6 +79,7 @@
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" id="submit" type="submit">Submit</button>
+                                        <span id="warning"  hidden="true"><span class="fa fa-warning" style="color:red" data-toggle="tooltip" title="You cannot request for a repair more than 30% of its total amount"></span></span>
                                     </div>
                                 </div>
                             </form>
@@ -152,12 +156,16 @@
 
             // set the computed value to 'totalPrice' textbox
             $('#totalCost').val(sum);
+            var userRepairRequest = document.getElementById("asset-tag");
+            console.log(userRepairRequest.value,'depota');
             
             if (Number($('#acquisition-cost').val()) * 0.3 <= Number($('#totalCost').val())) {
                 console.log(true);
+                 $('#warning').prop("hidden", false);
                 $('#submit').prop('disabled', true);
             } else {
                 console.log(false);
+                 $('#warning').prop("hidden", true);
                 $('#submit').prop('disabled', false);
             }
         });
