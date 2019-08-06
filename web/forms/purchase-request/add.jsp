@@ -37,7 +37,11 @@
                                     
                                     <%
                                         Asset asset = (Asset) session.getAttribute("asset");
-                                        boolean isSaved = (boolean) session.getAttribute("Notification");
+                                        boolean isSaved = "";
+                                        try{
+                                        isSaved = (boolean) session.getAttribute("Notification");
+                                        }catch(Exception e){
+                                        }
                                     %>
                                     <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
                                     <div class="form-group">
