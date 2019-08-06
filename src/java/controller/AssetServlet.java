@@ -116,6 +116,17 @@ public class AssetServlet extends BaseServlet {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
         ArrayList<AssetTracking> userAssets = new AssetTrackingService().GetArrayListOfEmployee(employee.EmployeeId);
+        ArrayList<RepairLog> repairRequests = repairLogService.GetRepairLogs();
+        ArrayList<RepairLog> userRepairRequest = new ArrayList<>();
+        for (AssetTracking at : userAssets) {
+            for (RepairLog rlog : repairRequests) {
+                if (at.AssetTag.equalsIgnoreCase(rlog.AssetTag)) {
+                    userRepairRequest.add(rlog);
+                }
+            }
+        }
+        System.out.println("usser Asset Size " + userAssets.size());
+        session.setAttribute("repairRequestsperAsset", repairRequests);
         session.setAttribute("userAssets", userAssets);
         return "/forms/asset/log-repair.jsp";
     }
@@ -227,7 +238,9 @@ public class AssetServlet extends BaseServlet {
             tracking.Remarks = transferType + request.getParameter("remarks");
             tracking.TransferDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("transfer-date"));
             int result = assetTrackingService.AddAssetTracking(tracking);
+            
             if (result == 1) {
+                session.setAttribute("trackingnotif", true);
                 return "/InventoryServlet/EquipmentList";
             }
         } catch (ParseException x) {
@@ -253,8 +266,9 @@ public class AssetServlet extends BaseServlet {
             repairLog.Cost = Double.parseDouble(costs[i]);
             int result = repairLogService.AddRepairLog(repairLog);
             if (result == 1) {
-
+                session.setAttribute("repairnotif", true);
             }
+
             System.out.println("result: " + result);
         }
 

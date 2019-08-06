@@ -30,13 +30,34 @@ import services.SuppliesService;
  *
  * @author rubysenpaii
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/HomeServlet"})
+@WebServlet(name = "HomeServlet", urlPatterns = {"/HomeServlet/*"})
 public class HomeServlet extends BaseServlet {
 
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         ServletContext context = getServletContext();
+        String action = request.getRequestURI();
+            switch (action.split("/")[action.split("/").length - 1]) {
+                case "PPR":
+                    session.setAttribute("notification", "PPR");
+                    break;
+                case "EE":
+                    session.setAttribute("notification", "EE");
+                    break;
+                case "UED":
+                    session.setAttribute("notification", "UED");
+                    break;
+                case "APR":
+                    session.setAttribute("notification", "APR");
+                    break;
+                case "RPR":
+                    session.setAttribute("notification", "RPR");
+                    break;
+                default:
+                    session.setAttribute("notification", "None");
+                    break;
+            }
         RequestDispatcher rd = context.getRequestDispatcher("/homepage.jsp");
         rd.forward(request, response);
     }

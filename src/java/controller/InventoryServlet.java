@@ -173,7 +173,7 @@ public class InventoryServlet extends BaseServlet {
             } catch (NullPointerException x) {
                 System.out.println("full purchase received");
             }
-            if (assetsRequested.get(i).Asset.AssetType.contains("Equipment")) {
+            if (assetsRequested.get(i).Asset.AssetType.toLowerCase().contains("equipment")) {
                 String description = "";
                 // split description by \n and split details using //
                 if (assetsRequested.get(i).Asset.AssetType.contains("Furniture")) {

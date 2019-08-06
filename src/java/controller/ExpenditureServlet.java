@@ -173,7 +173,6 @@ public class ExpenditureServlet extends BaseServlet {
 //            adminExpItem.Quarter = SharedFormat.getQuarter();
 //            adminExpItem.Division = "Admin";
 //            adminExpItem.QuantityLimit = Integer.parseInt(admin[i]);
-
             ExpenditureItem generalExpItem = new ExpenditureItem();
             generalExpItem.AssetId = assetId;
             generalExpItem.QuantityOrdered = 0;
@@ -189,7 +188,6 @@ public class ExpenditureServlet extends BaseServlet {
 //            personnelExpItem.Quarter = SharedFormat.getQuarter();
 //            personnelExpItem.Division = "Personnel";
 //            personnelExpItem.QuantityLimit = Integer.parseInt(personnel[i]);
-
 //            ExpenditureItem recordsExpItem = new ExpenditureItem();
 //            recordsExpItem.AssetId = assetId;
 //            recordsExpItem.QuantityOrdered = 0;
@@ -197,13 +195,15 @@ public class ExpenditureServlet extends BaseServlet {
 //            recordsExpItem.Quarter = SharedFormat.getQuarter();
 //            recordsExpItem.Division = "Records";
 //            recordsExpItem.QuantityLimit = Integer.parseInt(records[i]);
-
 //            expenditureItems.add(procurementExpItem);
 //            expenditureItems.add(adminExpItem);
             expenditureItems.add(generalExpItem);
 //            expenditureItems.add(personnelExpItem);
 //            expenditureItems.add(recordsExpItem);
+            
         }
+        HttpSession session = request.getSession();
+        session.setAttribute("notif", true);
         assetService.AddAssets(assets);
         ExpenditureItemService eis = new ExpenditureItemService();
         eis.AddExpenditureItems(expenditureItems);
@@ -249,7 +249,7 @@ public class ExpenditureServlet extends BaseServlet {
 //        els.AddExpenditureLimit(managementLimit);
 //        els.AddExpenditureLimit(generalLimit);
 //        els.AddExpenditureLimit(financeLimit);
-        
+
         return "/HomeServlet";
     }
 
@@ -295,7 +295,7 @@ public class ExpenditureServlet extends BaseServlet {
         managementLimit.Equipment = managementEquipment;
         managementLimit.Quarter = quarter;
         managementLimit.Supplies = managementSupplies;
-        managementLimit.Year = year;    
+        managementLimit.Year = year;
 
         ExpenditureLimit generalLimit = new ExpenditureLimit();
         generalLimit.Division = "General";
@@ -310,7 +310,7 @@ public class ExpenditureServlet extends BaseServlet {
         financeLimit.Quarter = quarter;
         financeLimit.Supplies = financeSupplies;
         financeLimit.Year = year;
-        
+
         ExpenditureLimit repair = new ExpenditureLimit();
         repair.Division = "Repair";
         repair.Equipment = repairs;
@@ -340,12 +340,14 @@ public class ExpenditureServlet extends BaseServlet {
         result = expenditureService.AddExpenditureLimit(procurementLimit);
         result = expenditureService.AddExpenditureLimit(repair);
         if (result == 1) {
+            session.setAttribute("notif", true);
             return "/template.jsp";
         } else {
+            session.setAttribute("notif", false);
             return "/AMS/ExpenditureServlet";
         }
     }
-    
+
     private String BudgetHistory(HttpServletRequest request) {
         HttpSession session = request.getSession();
         ReportService reportService = new ReportService();

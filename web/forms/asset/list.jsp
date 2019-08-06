@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content-panel">
-                                <h4>List of Assets</h4>
+                                <h4>List of Buyable Assets</h4>
                                 <br/>
                                 <div class="col-md-12 content-panel">
                                     <table class="table" id="assetList">

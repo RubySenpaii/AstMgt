@@ -22,11 +22,11 @@
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa fa-book"></i>
-                    <span>Asset</span>
+                    <span>Asset Catalog</span>
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/AssetServlet/Add">Add Asset</a></li>
-                    <li><a href="/AMS/AssetServlet/List">Asset List</a></li>
+                    <li><a href="/AMS/AssetServlet/List">List of buyable assets</a></li>
                 </ul>
             </li>
             <li class="sub-menu">

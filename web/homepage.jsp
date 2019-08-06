@@ -28,8 +28,20 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div class="col-md-6">
+                        <%
+                            String notification = (String) session.getAttribute("notification");
+                            String notif = "";
+                            try {
+                                notif = (String) session.getAttribute("notif");
+                            }
+                            catch(Exception e){
+                                
+                            }
+                        %>
+                        <input type="hidden" id="notification" name="notification" value="<%= notification%>">
+                        <div class="col-md-6" id="PPR">
                             <div class="form-panel">
+
                                 <h3>Pending Purchase Requests</h3>
                                 <table class="table table-bordered">
                                     <thead>
@@ -43,6 +55,7 @@
                                     <tbody>
                                         <%
                                             ArrayList<PurchaseRequest> pendingRequests = (ArrayList<PurchaseRequest>) session.getAttribute("pendingPurchaseRequests");
+
                                             for (PurchaseRequest pendingRequest : pendingRequests) {
                                         %>
                                         <tr>
@@ -62,7 +75,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="APR">
                             <div class="form-panel">
                                 <h3>Approved Purchase Requests With No Purchase Order</h3>
                                 <table class="table table-bordered">
@@ -98,7 +111,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="EE">
                             <div class="form-panel">
                                 <h3>Expiring Equipments</h3>
                                 <table class="table table-bordered">
@@ -133,7 +146,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="RPR">
                             <div class="form-panel">
                                 <h3>Rejected Purchase Requests</h3>
                                 <table class="table table-bordered">
@@ -170,7 +183,7 @@
                     </div>
                     <!-- /row -->
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="UED">
                             <div class="form-panel">
                                 <h3>Upcoming Expected Delivery</h3>
                                 <table class="table table-bordered">
@@ -234,4 +247,31 @@
         </section>
     </body>
     <jsp:include page="shared/js.jsp"/>
+    <script>
+        $(document).ready(function () {
+            console.log('ready');
+            var notification = document.getElementById("notification");
+            var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
+                    for (var notif of arrayNotif){
+            console.log(notification.value, 'james')
+            if (notification.value === 'None'){
+            break;
+            }
+            if (notification.value === notif) {
+                console.log('will stay')
+            } else {
+                var hiddener = "#";
+                hiddener += notif;
+                console.log(hiddener);
+                $(hiddener).prop("hidden", true);
+            }
+        }
+        var notif = document.getElementById("notif");
+        if (notif.value === 'true') {
+            alert("Successfully saved the expenditure limit v2 !");
+        } else if (notif.value === 'false') {
+            alert("Failed to save the expenditure limit v2 !");
+        }
+        });
+    </script>
 </html>
