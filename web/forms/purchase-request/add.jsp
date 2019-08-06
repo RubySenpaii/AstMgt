@@ -37,7 +37,7 @@
                                     
                                     <%
                                         Asset asset = (Asset) session.getAttribute("asset");
-                                        boolean isSaved = "";
+                                        boolean isSaved = false;
                                         try{
                                         isSaved = (boolean) session.getAttribute("Notification");
                                         }catch(Exception e){
