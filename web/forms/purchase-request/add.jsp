@@ -34,10 +34,10 @@
                             <div class="form-panel">
                                 <h4>Create Purchase Request</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Submit">
-                                    <input type="hidden" id="division" name="division" value="<%= divsion%>">
+                                    
                                     <%
                                         Asset asset = (Asset) session.getAttribute("asset");
-                                        Boolean isSaved = (Boolean) session.getAttribute("Notification");
+                                        boolean isSaved = (boolean) session.getAttribute("Notification");
                                     %>
                                     <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
                                     <div class="form-group">
