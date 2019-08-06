@@ -219,16 +219,16 @@
 //                    cell9Input.setAttribute('value', quantityPerDivision);
 //                    var cell9 = document.createElement('td');
 //                    cell9.appendChild(cell9Input);
-//                    var cell10input = document.createElement('input');
-//                    cell10input.setAttribute('name', 'description');
-//                    cell10input.setAttribute('value', customArray[i].description);
+                    var cell10input = document.createElement('input');
+                    cell10input.setAttribute('name', 'description');
+                    cell10input.setAttribute('value', customArray[i].description);
 //                    tableRow.appendChild(cell5);
                     tableRow.appendChild(cell11);
                     tableRow.appendChild(cell6);
 //                    tableRow.appendChild(cell7);
 //                    tableRow.appendChild(cell8);
 //                    tableRow.appendChild(cell9);
-//                    tableRow.appendChild(cell10input);
+                    tableRow.appendChild(cell10input);
                     tableBody.appendChild(tableRow);
                 }
 
