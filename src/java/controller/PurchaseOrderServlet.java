@@ -170,6 +170,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         int result = poDB.AddNewPurchaseOrder(po);
         switch (result) {
             case 1:
+                session.setAttribute("notif",true);
                 return "/forms/purchase-order/add.jsp";
             default:
                 return "/forms/login.jsp";

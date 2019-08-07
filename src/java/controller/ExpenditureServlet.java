@@ -155,7 +155,11 @@ public class ExpenditureServlet extends BaseServlet {
                 asset.FundCluster = "N/A";
                 asset.StockNo = assetId + "";
                 asset.Unit = "pc";
-                asset.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLife[i]);
+                try{
+                    asset.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLife[i]);
+                }catch (Exception e){
+                    asset.EstimatedUsefulLife = 0;
+                }
                 assets.add(asset);
             }
 //            ExpenditureItem procurementExpItem = new ExpenditureItem();

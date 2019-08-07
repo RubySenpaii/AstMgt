@@ -220,7 +220,7 @@ public class PurchaseRequestServlet extends BaseServlet {
             ar.UnitCost = Double.parseDouble(price[i]);
             ALIST.add(ar);
             ExpenditureItem eitem = new ExpenditureItem();
-            eitem = eitemDB.GetExpenditureItemsByDivision(division, ar.AssetId ,SharedFormat.getQuarter(),year);
+            eitem = eitemDB.GetExpenditureItemsByDivision("General", ar.AssetId ,SharedFormat.getQuarter(),year);
             eitem.QuantityOrdered += ar.Quantity;
             eitem.QuantityLimit -= ar.Quantity;
             eitemDB.UpdateExpenditureItem(eitem);
