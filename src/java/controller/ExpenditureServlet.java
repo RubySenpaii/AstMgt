@@ -155,11 +155,12 @@ public class ExpenditureServlet extends BaseServlet {
                 asset.FundCluster = "N/A";
                 asset.StockNo = assetId + "";
                 asset.Unit = "pc";
-                try{
-                    asset.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLife[i]);
-                }catch (Exception e){
-                    asset.EstimatedUsefulLife = 0;
-                }
+                asset.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLife[i]);
+//                try{
+//                    asset.EstimatedUsefulLife = Integer.parseInt(estimatedUsefulLife[i]);
+//                }catch (Exception e){
+//                    asset.EstimatedUsefulLife = 0;
+//                }
                 assets.add(asset);
             }
 //            ExpenditureItem procurementExpItem = new ExpenditureItem();
@@ -207,7 +208,7 @@ public class ExpenditureServlet extends BaseServlet {
             
         }
         HttpSession session = request.getSession();
-        session.setAttribute("notif", true);
+        session.setAttribute("notif", "true");
         assetService.AddAssets(assets);
         ExpenditureItemService eis = new ExpenditureItemService();
         eis.AddExpenditureItems(expenditureItems);
