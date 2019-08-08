@@ -105,10 +105,9 @@ public class EmployeeService {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
         try {
-            System.out.println(specialty +" TETETE");
             String query = "SELECT T1.*, E.LastName, E.FirstName, E.Specialty\n"
                     + "FROM Employee E JOIN\n"
-                    + "(SELECT RDI.AssignedTo, PO.DeliveryDate, COUNT(PO.\"PurchaseOrderId) AS 'CountPurchaseOrder'\n"
+                    + "(SELECT RDI.AssignedTo, PO.DeliveryDate, COUNT(PO.PurchaseOrderId) AS 'CountPurchaseOrder'\n"
                     + "FROM RequestForDeliveryInspection RDI JOIN PurchaseOrder PO ON RDI.PurchaseOrderId = PO.PurchaseOrderId\n"
                     + "GROUP BY RDI.AssignedTo, PO.DeliveryDate) T1 ON E.EmployeeId = T1.AssignedTo\n"
                     + "HAVING E.Specialty = ? AND T1.CountPurchaseOrder < 5";
