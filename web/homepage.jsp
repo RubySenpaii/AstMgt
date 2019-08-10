@@ -230,7 +230,7 @@
                                             for (Employee employee : retiringEmployees) {
                                         %>
                                         <tr>
-                                            <td><a href="/AMS/InventoryServlet/EmployeeEquipment"><%=employee.FullName()%></a></td>
+                                            <td><a href="/AMS/InventoryServlet/EmployeeEquipment?employeeId=<%=employee.EmployeeId%>"><%=employee.FullName()%></a></td>
                                         </tr>
                                         <%
                                             }

@@ -105,12 +105,12 @@ public class EmployeeService {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
         try {
-            String query = "SELECT T1.*, E.LastName, E.FirstName, E.Specialty\n"
-                    + "FROM Employee E JOIN\n"
+            String query = "SELECT COALESCE(T1.CountPurchaseOrder, 0) AS 'CountPurchaseOrder', E.*\n"
+                    + "FROM Employee E LEFT OUTER JOIN\n"
                     + "(SELECT RDI.AssignedTo, PO.DeliveryDate, COUNT(PO.\"PurchaseOrderId) AS 'CountPurchaseOrder'\n"
                     + "FROM RequestForDeliveryInspection RDI JOIN PurchaseOrder PO ON RDI.PurchaseOrderId = PO.PurchaseOrderId\n"
                     + "GROUP BY RDI.AssignedTo, PO.DeliveryDate) T1 ON E.EmployeeId = T1.AssignedTo\n"
-                    + "HAVING E.Specialty = ? AND T1.CountPurchaseOrder < 5";
+                    + "HAVING E.Specialty = ? AND CountPurchaseOrder < 5";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, specialty);
             ArrayList<Employee> elist = getResult(ps.executeQuery());

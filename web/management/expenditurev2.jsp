@@ -46,7 +46,6 @@
                                         </div>
                                     </div>
                                     <div style="text-align: center">
-                                        <button type="button" class="btn btn" id="compute">Compute</button>
                                         <button type="submit" class="btn btn-theme">Submit</button>
                                     </div>
                                 </form>
