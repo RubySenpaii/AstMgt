@@ -28,7 +28,7 @@ public class PurchaseOrderService {
             + PurchaseOrder.COLUMN_SUPPLIER_ID + ") Values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private String CheckPurchaseOrderwithPurchaseRequestIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_REQUEST_ID + " = ? ;";
     private String FindPurchaseOrderIdQuery = "SELECT * FROM PurchaseOrder WHERE " + PurchaseOrder.COLUMN_PURCHASE_ORDER_ID + " = ?";
-    private String FindAllPurchaseOrderQ = "SELECT * FROM PurchaseOrder  ORDER BY "+ PurchaseOrder.COLUMN_PURCHASE_ORDER_NO+" ASC ;";
+    private String FindAllPurchaseOrderQ = "SELECT * FROM PurchaseOrder  ORDER BY "+ PurchaseOrder.COLUMN_PURCHASE_ORDER_NO+" = 1 ;";
 
     public int AddNewPurchaseOrder(PurchaseOrder po) {
         try {

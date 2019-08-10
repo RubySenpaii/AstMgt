@@ -88,7 +88,9 @@
     <jsp:include page="../../shared/js.jsp"/>
     <script>
         $(document).ready(function () {
-            $('#prList').DataTable();
+            $('#prList').DataTable({
+                "order":[]
+            });
 
             var notif = document.getElementById("notif");
             if (notif.value === 'true') {

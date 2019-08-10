@@ -116,7 +116,9 @@
     <jsp:include page="../../shared/js.jsp"/>
     <script>
         $(document).ready(function () {
-            $('#delList').DataTable();
+            $('#delList').DataTable({
+                "order":[]
+            });
         });
 
         var notif = document.getElementById("notif");
