@@ -35,7 +35,7 @@
                                                     <tr>
                                                         <th>Asset Name</th>
                                                         <th>Asset Type</th>
-                                                        <th>Available Quantity</th>
+                                                        <th>Planned Quantity</th>
                                                         <th>Price</th>
                                                         <th>Estimated Useful Life</th>
                                                         <th>Asset Limit</th>
