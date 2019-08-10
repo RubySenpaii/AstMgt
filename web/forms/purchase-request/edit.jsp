@@ -39,9 +39,9 @@
                         <%
                             PurchaseRequest pr = (PurchaseRequest) session.getAttribute("PR");
                         %>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-panel">
-                                <h4>Create Purchase Request</h4><br/>
+                                <h4>Edit Purchase Request</h4><br/>
                                 <form class="form-horizontal style-form" action="/AMS/PurchaseRequest/Update">
                                     <%
                                         Asset asset = (Asset) session.getAttribute("asset");
@@ -93,15 +93,15 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Supplier</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" id="purpose" name="supplier" value="<%= pr.Supplier.SupplierName%>" placeholder="Supplier" list="supplier-list" autocomplete="off">
+                                            <input type="text" class="form-control" id="supplier-name" name="supplier-name"  placeholder="Supplier" list="supplier-list" autocomplete="off">
                                             <datalist id="supplier-list">
                                             </datalist>
                                         </div>
                                     </div>
-                                            <div class="form-group">
+                                    <div class="form-group">
                                         <label class="col-lg-2 control-label">Remarks</label>
                                         <div class="col-lg-10">
-                                            <label><%= pr.Remarks %> </label>
+                                            <label><%= pr.Remarks%> </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -114,6 +114,7 @@
                                                         <th>Asset</th>
                                                         <th>Quantity</th> 
                                                         <th>Price</th>
+                                                        <th>Asset Limit</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -132,10 +133,11 @@
                                                     <tr class="fieldT">
                                                         <td><input type="checkbox" name="record"></td>
                                                         <td>
-                                                            <input list="asset-list" name="assets" autocomplete="off" value="<%=assetListed%>">
+                                                            <input list="asset-list" name="assets" class="asset-list" autocomplete="off" value="<%=assetListed%>">
                                                         </td>
                                                         <td><input type="number" class="quantity" name="quantity" autocomplete="off" value="<%= ar.Quantity%>" ></td> 
                                                         <td><input type="number" class="price" name="price" autocomplete="off" value="<%= ar.UnitCost%>"></td> 
+                                                        <td><input type="number" class="limit" id="limit" name="limit" disabled="true" value=""</td>
                                                         <td><button class="btn btn-theme" id='addbutton' type="button"><i class="fa fa-plus"></i></button></td>
                                                     </tr>
 
@@ -179,6 +181,7 @@
     </body>
     <jsp:include page="../../shared/js.jsp"/>
     <script>
+        var items = [];
         $(document).ready(function () {
             var i = 1;
             $("#addbutton").click(function () {
@@ -249,6 +252,44 @@
                         }
                     }
                 });
+            });
+            
+            $('#supplier-name').on('change', function () {
+                var supplierName = $(this).val();
+                console.log('supplier name', supplierName);
+                $.ajax({
+                    url: '/AMS/AjaxServlet/SupplierItem',
+                    dataType: 'json',
+                    data: {supplierName: supplierName},
+                    success: function (data) {
+                        console.log("supplier name ajax", data);
+                        $('#asset-list').html('');
+                        items = [];
+                        for (var i = 0; i < data.SupplierItems.length; i++) {
+                            $('#asset-list').append('<option>' + data.SupplierItems[i].Asset.AssetName + '</option>');
+                            items.push({
+                                'name': data.SupplierItems[i].Asset.AssetName,
+                                'price': data.SupplierItems[i].price,
+                                'glimit': data.SupplierItems[i].Asset.GeneralQuantityLimit
+                            });
+                        }
+                    }
+                });
+            });
+
+            $(document.body).on('change', '.asset-list', function () {
+                for (var i = 0; i < items.length; i++) {
+                    console.log('in forloop', items[i].name.length, ' = ', $(this).val().length)
+                    if (items[i].name.trim() === $(this).val().trim()) {
+                        console.log('value', items[i]);
+                        $(this).find('td').each(function () {
+
+                        });
+                        var division = $('#division').val();
+                        $(this).closest('tr').find('td:nth-child(4)').find('.price').val(items[i].price);
+                        $(this).closest('tr').find('td:nth-child(5)').find('.limit').val(items[i].glimit);
+                        }
+                    }
             });
 
             $(".delete-row").click(function () {
