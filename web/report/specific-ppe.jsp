@@ -42,7 +42,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2"></div>
-                                        <div class="col-md-8" style="margin: 20px auto; text-align: center">
+                                        <div class="col-md-12" style="margin: 20px auto; text-align: center">
                                             <input type="text" name="asset-name" placeholder="Asset Name" style="margin: 10px; width: 200px">
                                             <input type="text" name="certified-by" placeholder="Certified By" style="margin: 10px; width: 200px">
                                             <input type="text" name="approved-by" placeholder="Approved By" style="margin: 10px; width: 200px">

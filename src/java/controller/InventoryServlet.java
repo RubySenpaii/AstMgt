@@ -96,7 +96,7 @@ public class InventoryServlet extends BaseServlet {
                     url = EquipmentHistory(request);
                     break;
                 case "RetiringEmployee":
-                    url =  RetiringEmployee(request);
+                    url = RetiringEmployee(request);
                     break;
                 case "RetrieveItems":
                     url = RetrieveItems(request);
@@ -113,20 +113,29 @@ public class InventoryServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-    
+
     private String RetrieveItems(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee user = (Employee) session.getAttribute("user");
-        String[] assetTags = request.getParameterValues("asset-name");
+        String[] assetTags = request.getParameterValues("asset-tag");
         for (int i = 0; i < assetTags.length; i++) {
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
             AssetTracking tracking = new AssetTracking();
             tracking.AssetTag = assetTags[i];
             tracking.ReleasedBy = new AssetTrackingService().GetCurrentuser(assetTags[i]).EmployeeId;
             tracking.ReleasedTo = user.EmployeeId;
+            tracking.ApprovedBy = user.EmployeeId;
+            tracking.ApprovedDate = cal.getTime();
             tracking.Remarks = 1 + request.getParameter("remarks");
-            tracking.TransferDate = Calendar.getInstance().getTime();
+            tracking.TransferDate = cal.getTime();
             int result = assetTrackingService.AddAssetTracking(tracking);
-            
+            System.out.println("Updating asset tracking " + assetTrackingService.UpdateAssetTracking(tracking));
+
             Equipment equipment = new EquipmentService().GetEquipmentWithAssetTag(assetTags[i]);
             equipment.Flag = 1;
             System.out.println("Updated equip flag " + new EquipmentService().UpdateEquipment(equipment));
@@ -134,7 +143,7 @@ public class InventoryServlet extends BaseServlet {
         }
         return "/HomeServlet";
     }
-    
+
     private String EquipmentHistory(HttpServletRequest request) {
         int quarter = Integer.parseInt(SharedFormat.getQuarter().charAt(1) + "");
         ArrayList<Equipment> equipments = equipmentService.GetListOfEquipmentsForTheQuarter(quarter);
@@ -270,7 +279,7 @@ public class InventoryServlet extends BaseServlet {
     private String RetiringEmployee(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
-        employee.Flag  = 2;
+        employee.Flag = 2;
         int res = new EmployeeService().UpdateEmployee(employee);
         System.out.println("retired emp " + res);
         return "/HomeServlet";
@@ -344,8 +353,8 @@ public class InventoryServlet extends BaseServlet {
     private String ShowTrackingRequests(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee user = (Employee) session.getAttribute("user");
-        ArrayList<AssetTracking> assetTrackings = assetTrackingService.GetPendingTracking(user.EmployeeId,user.UserLevel);
-        
+        ArrayList<AssetTracking> assetTrackings = assetTrackingService.GetPendingTracking(user.EmployeeId, user.UserLevel);
+
         for (AssetTracking assetTracking : assetTrackings) {
             assetTracking.Trackings = assetTrackingService.GetAssetHistory(assetTracking.AssetTag);
             assetTracking.Incidents = assetIncidentService.GetIncidentsOfAsset(assetTracking.AssetTag);

@@ -25,7 +25,7 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
-                            <h4>Add an Asset</h4><br/>
+                            <h4>Log Incident</h4><br/>
                             <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitIncident">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>

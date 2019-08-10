@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-panel">
-                                <h4>Log Tracking of Asset</h4><br/>
+                                <h4>Log Tracking to Custodian</h4><br/>
                                 <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitTracking">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Asset Tag</label>
