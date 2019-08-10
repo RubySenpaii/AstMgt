@@ -86,7 +86,7 @@
                                     }
                                     if (user.UserLevel.equals("Custodian")) {
                                 %>
-                                <button class="btn-success">Collect Item</button>
+                                <button class="btn-success" formaction="/AMS/InventoryServlet/RetrieveItems" type="submit">Collect Item</button>
                                 <%
                                     }
                                 %>

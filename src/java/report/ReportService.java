@@ -33,7 +33,7 @@ public class ReportService {
                     + "FROM Asset A JOIN\n"
                     + "(SELECT Equipment.AssetId, Equipment.Flag, COUNT(Equipment.AssetTag) AS 'EquipmentCount'\n"
                     + "FROM Equipment\n"
-                    + "WHERE Equipment.DateAcquired >= STR_TO_DATE(?, '%m/%d/%Y') AND Equipment.DateAcquired <= STR_TO_DATE(?, '%m/%d/%Y')"
+                    + "WHERE Equipment.DateAcquired >= STR_TO_DATE(?, '%m/%d/%Y') AND Equipment.DateAcquired <= STR_TO_DATE(?, '%m/%d/%Y') "
                     + "GROUP BY Equipment.AssetId, Equipment.Flag) T1 ON A.AssetId = T1.AssetId\n"
                     + "ORDER BY A.AssetId";
             PreparedStatement ps = con.prepareStatement(query);
@@ -66,6 +66,84 @@ public class ReportService {
                     } else {
                         temp = populateGeneralPPE(rs);
                         assets.add(temp);
+                        count++;
+                    }
+                }
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+            return assets;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+
+    public ArrayList<Asset> GetGroupedGeneralPPEData(String from, String to) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT A.AssetType, SUM(T1.EquipmentCount) AS 'EquipmentCount', T1.Flag\n"
+                    + "FROM Asset A JOIN\n"
+                    + "(SELECT Equipment.AssetId, Equipment.Flag, COUNT(Equipment.AssetTag) AS 'EquipmentCount'\n"
+                    + "FROM Equipment\n"
+                    + "WHERE Equipment.DateAcquired >= STR_TO_DATE(?, '%m/%d/%Y') AND Equipment.DateAcquired <= STR_TO_DATE(?, '%m/%d/%Y') "
+                    + "GROUP BY Equipment.AssetId, Equipment.Flag) T1 ON A.AssetId = T1.AssetId\n"
+                    + "GROUP BY A.AssetType, T1.Flag";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, from);
+            ps.setString(2, to);
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Asset> assets = new ArrayList<>();
+            int count = 0;
+            Asset temp = new Asset();
+            while (rs.next()) {
+                if (count == 0) {
+                    temp.setAssetType(rs.getString(Asset.COLUMN_ASSET_TYPE));
+                    switch (rs.getInt("Flag")) {
+                        case 0:
+                            temp.setQuantityDisposed(rs.getInt("EquipmentCount"));
+                            break;
+                        case 1:
+                            temp.setQuantityOnStock(rs.getInt("EquipmentCount"));
+                            break;
+                        case 2:
+                            temp.setQuantityUsed(rs.getInt("EquipmentCount"));
+                            break;
+                    }
+                    assets.add(temp);
+                    count++;
+                } else {
+                    if (temp.getAssetType().equals(rs.getString(Asset.COLUMN_ASSET_TYPE))) {
+                        int flag = rs.getInt("Flag");
+                        switch (flag) {
+                            case 0:
+                                assets.get(assets.size() - 1).setQuantityDisposed(rs.getInt("EquipmentCount"));
+                                break;
+                            case 1:
+                                assets.get(assets.size() - 1).setQuantityOnStock(rs.getInt("EquipmentCount"));
+                                break;
+                            case 2:
+                                assets.get(assets.size() - 1).setQuantityUsed(rs.getInt("EquipmentCount"));
+                                break;
+                        }
+                    } else {
+                        temp.setAssetType(rs.getString(Asset.COLUMN_ASSET_TYPE));
+                        switch (rs.getInt("Flag")) {
+                            case 0:
+                                temp.setQuantityDisposed(rs.getInt("EquipmentCount"));
+                                break;
+                            case 1:
+                                temp.setQuantityOnStock(rs.getInt("EquipmentCount"));
+                                break;
+                            case 2:
+                                temp.setQuantityUsed(rs.getInt("EquipmentCount"));
+                                break;
+                        }
                         count++;
                     }
                 }

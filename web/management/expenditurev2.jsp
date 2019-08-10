@@ -38,6 +38,8 @@
                                                         <th>Available Quantity</th>
                                                         <th>Price</th>
                                                         <th>Estimated Useful Life</th>
+                                                        <th>Asset Limit</th>
+                                                        <th>Description</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>

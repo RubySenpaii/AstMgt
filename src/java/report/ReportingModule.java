@@ -26,7 +26,7 @@ import report.Asset;
  */
 public class ReportingModule {
     
-    public void createPropertyPlantEquipment(RequestParameter reqParameter, String jasperFile, String fileName, ArrayList<Asset> assets) 
+    public void createPropertyPlantEquipment(RequestParameter reqParameter, String jasperFile, String fileName, ArrayList<Asset> assets, ArrayList<Asset> groupedAssetType) 
             throws JRException, FileNotFoundException, SQLException {
         File file = new File(jasperFile);
         Map parameters = new HashMap();
@@ -34,6 +34,16 @@ public class ReportingModule {
         parameters.put("approvedBy", reqParameter.ApprovedBy);
         parameters.put("certifiedBy", reqParameter.CertifiedBy);
         parameters.put("verifiedBy", reqParameter.VerifiedBy);
+        for (Asset asset: groupedAssetType) {
+            String assetType = asset.getAssetType().replaceAll(" ", "");
+            assetType = assetType.substring(0, 1).toLowerCase() + assetType.substring(1);
+            System.out.println(assetType + "Disposed" + " - " + asset.getQuantityDisposed());
+            System.out.println(assetType + "Stocked" + " - " + asset.getQuantityOnStock());
+            System.out.println(assetType + "Used" + " - " + asset.getQuantityUsed());
+            parameters.put(assetType + "Disposed", asset.getQuantityDisposed());
+            parameters.put(assetType + "Stocked", asset.getQuantityOnStock());
+            parameters.put(assetType + "Used", asset.getQuantityUsed());
+        }
         JasperPrint jasperPrint;
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(assets, false);
