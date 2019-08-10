@@ -125,7 +125,7 @@
                                                     <tr class="fieldT">
                                                         <td><input type="checkbox" name="record"></td>
                                                         <td>
-                                                            <input list="asset-list" class="asset" name="assets" autocomplete="off" value="<%=assetName%>">
+                                                            <input list="asset-list" class="asset-list" name="assets" autocomplete="off" value="<%=assetName%>">
                                                         </td>
                                                         <td><input type="number" class="quantity" name="quantity" autocomplete="off"></td> 
                                                         <td><input type="text" class="price" name="price" autocomplete="off"></td> 
@@ -300,9 +300,10 @@
                 });
             });
 
-            $(document.body).on('change', '.asset', function () {
+            $(document.body).on('change', '.asset-list', function () {
                 for (var i = 0; i < items.length; i++) {
-                    if (items[i].name == $(this).val()) {
+                    console.log('in forloop', items[i].name.length, ' = ', $(this).val().length)
+                    if (items[i].name.trim() === $(this).val().trim()) {
                         console.log('value', items[i]);
                         $(this).find('td').each(function () {
 

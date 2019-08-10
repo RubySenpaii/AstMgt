@@ -30,15 +30,15 @@
                             <form class="form-horizontal style-form" action="/AMS/PurchaseOrderServlet/Submit">                                
                                 <%
                                     String division = (String) session.getAttribute("UserDivision");
-                                    boolean isSaved = false;
+                                    String approved = "";
                                     try {
-                                        isSaved = (boolean) session.getAttribute("notif");
+                                        approved = (String) session.getAttribute("approved");
                                     } catch (Exception e) {
                                     }
                                 %>
-                                <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                                <input type="hidden" id="notif" name="notif" value="<%= approved%>">
                                 <%
-                                    session.removeAttribute("Notification");
+                                    session.removeAttribute("approved");
                                 %>
                                 <input type="hidden" name="division" id="division" value="<%=division%>">
                                 <div class="form-group">
@@ -144,12 +144,10 @@
                     }
                 });
             });
-//            var notif = document.getElementById("notif");
-//            if (notif.value === 'true') {
-//                alert("Successfully saved the Purchase Request !")
-//            } else if (notif.value === 'false') {
-//                alert("Failed to save the Purchase Request !")
-//            }
+            var notif = document.getElementById("notif");
+            if (notif.value === 'true') {
+                alert("Approved Purchase Request !")
+            }
         });
     </script>
 </html>

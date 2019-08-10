@@ -121,6 +121,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("purchaseRequest", purchaseRequest);
         session.setAttribute("limit", expenditureTrackingService.GetCurrentExpenditure(employee.Division));
         session.setAttribute("supplierList", supplierList);
+        session.setAttribute("approved", "true");
         return "/forms/purchase-order/add.jsp";
     }
 
@@ -170,8 +171,8 @@ public class PurchaseOrderServlet extends BaseServlet {
         int result = poDB.AddNewPurchaseOrder(po);
         switch (result) {
             case 1:
-                session.setAttribute("notif",true);
-                return "/forms/purchase-order/add.jsp";
+                session.setAttribute("notif","true");
+                return "/PurchaseOrderServlet/List";
             default:
                 return "/forms/login.jsp";
         }

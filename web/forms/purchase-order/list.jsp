@@ -30,6 +30,17 @@
                             <div class="content-panel">
                                 <h4>List of Purchase Order</h4>
                                 <br/>
+                                <%
+                                    String isSaved = "";
+                                    try {
+                                        isSaved = (String) session.getAttribute("notif");
+                                    } catch (Exception e) {
+                                    }
+                                %>
+                                <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                                <%
+                                session.removeAttribute("notif");
+                                %>
                                 <table class="table" id="poList">
                                     <thead>
                                         <tr>
@@ -81,7 +92,16 @@
     <jsp:include page="../../shared/js.jsp"/>
     <script>
         $(document).ready(function () {
-            $('#poList').DataTable();
+            $('#poList').DataTable({
+                "order":[]
+            });
+
+            var notif = document.getElementById("notif");
+            if (notif.value === 'true') {
+                alert("Successfully saved the Purchase Order !")
+            } else if (notif.value === 'false') {
+                alert("Failed to save the Purchase Order !")
+            }
         });
     </script>
 </html>

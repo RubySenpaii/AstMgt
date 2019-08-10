@@ -176,6 +176,9 @@ public class PurchaseRequestServlet extends BaseServlet {
         PurchaseRequestService prservice = new PurchaseRequestService();
         ArrayList<PurchaseRequest> PRList = new ArrayList<>();
         PRList = prservice.FindAllPR();
+        for(PurchaseRequest pr : PRList){
+            System.out.println("test " + pr.PurchaseRequestNo );
+        }
         HttpSession session = request.getSession();
         session.setAttribute("PR", PRList);
         return "/forms/purchase-request/list.jsp";
