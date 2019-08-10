@@ -121,6 +121,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         session.setAttribute("purchaseRequest", purchaseRequest);
         session.setAttribute("limit", expenditureTrackingService.GetCurrentExpenditure(employee.Division));
         session.setAttribute("supplierList", supplierList);
+        session.setAttribute("approved", "true");
         return "/forms/purchase-order/add.jsp";
     }
 

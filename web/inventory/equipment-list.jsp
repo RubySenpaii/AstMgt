@@ -45,6 +45,7 @@
                             <%
                                 session.removeAttribute("repairnotif");
                                 session.removeAttribute("trackingnotif");
+                                session.removeAttribute("invNotif");
                             %>
                             <h4>Asset List</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/InventoryServlet/EquipmentView">

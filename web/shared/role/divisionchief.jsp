@@ -69,10 +69,6 @@
                 </ul>
             </li>
         </ul>
-        <!-- sidebar menu end-->
-        <div class="sidebar-footer">
-            <a href="/AMS/management/plans.jsp">Upload Plans</a>
-        </div>
     </div>
 
 </aside>
