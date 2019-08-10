@@ -245,6 +245,7 @@ public class InventoryServlet extends BaseServlet {
             }
             counter++;
         }
+        session.setAttribute("invNotif", "true");
         return "/InventoryServlet/EquipmentList";
     }
 

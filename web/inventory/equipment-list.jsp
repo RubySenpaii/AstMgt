@@ -29,10 +29,11 @@
                             <%
                                String isSaved = "";
                                String isTracked = "";
+                               String invNotif = "";
                             try {
                                 isSaved = (String) session.getAttribute("repairnotif");
                                 isTracked = (String) session.getAttribute("trackingnotif");
-                                
+                                invNotif = (String) session.getAttribute("invNotif");
                             }
                             catch(Exception e){
                                 
@@ -40,6 +41,7 @@
                             %>
                             <input type="hidden" id="repairnotif" name="repairnotif" value="<%= isSaved%>">
                             <input type="hidden" id="trackingnotif" name="trackingnotif" value="<%= isTracked%>">
+                            <input type="hidden" id="invNotif" name="invNotif" value="<%= invNotif%>">
                             <%
                                 session.removeAttribute("repairnotif");
                                 session.removeAttribute("trackingnotif");
@@ -106,6 +108,13 @@
                 alert("Successfully saved the tracking request!");
             } else if (notif.value === 'false') {
                 alert("Failed to save the tracking request!");
+            }
+            
+            var invnotif = document.getElementById("invNotif");
+            if (invnotif.value === 'true') {
+                alert("Successfully acknowledged!");
+            } else if (notif.value === 'false') {
+                alert("Failed to acknowledged!");
             }
         });
     </script>

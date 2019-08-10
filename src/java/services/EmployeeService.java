@@ -107,11 +107,12 @@ public class EmployeeService {
         try {
             String query = "SELECT COALESCE(T1.CountPurchaseOrder, 0) AS 'CountPurchaseOrder', E.*\n"
                     + "FROM Employee E LEFT OUTER JOIN\n"
-                    + "(SELECT RDI.AssignedTo, PO.DeliveryDate, COUNT(PO.\"PurchaseOrderId) AS 'CountPurchaseOrder'\n"
+                    + "(SELECT RDI.AssignedTo, PO.DeliveryDate, COUNT(PO.PurchaseOrderId) AS 'CountPurchaseOrder'\n"
                     + "FROM RequestForDeliveryInspection RDI JOIN PurchaseOrder PO ON RDI.PurchaseOrderId = PO.PurchaseOrderId\n"
                     + "GROUP BY RDI.AssignedTo, PO.DeliveryDate) T1 ON E.EmployeeId = T1.AssignedTo\n"
                     + "HAVING E.Specialty = ? AND CountPurchaseOrder < 5";
             PreparedStatement ps = conn.prepareStatement(query);
+            System.out.println("test" + specialty);
             ps.setString(1, specialty);
             ArrayList<Employee> elist = getResult(ps.executeQuery());
             ps.close();

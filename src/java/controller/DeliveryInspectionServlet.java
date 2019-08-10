@@ -119,7 +119,7 @@ public class DeliveryInspectionServlet extends BaseServlet {
                     requestInspection.IsCompleted = 0;
                     int added = deliveryInspectionService.AddRequestForDeliveryInspection(requestInspection);
                     if (added == 1) {
-                        session.setAttribute("notif", "true");
+                        session.setAttribute("notif", true);
                         return "/DeliveryInspectionServlet/List";
                     }
                 }
@@ -146,6 +146,7 @@ public class DeliveryInspectionServlet extends BaseServlet {
             RequestForDeliveryInspection requestInspection = deliveryInspectionService.GetRequestForDeliveryInspection(Integer.parseInt(request.getParameter("requestId")));
             requestInspection.ApprovedBy = user.EmployeeId;
             int update = deliveryInspectionService.UpdateRequestForDeliveryInspection(requestInspection);
+            session.setAttribute("approveNotif", true);
             System.out.println("update request for delivery inspection status: " + update);
         }
         return "/DeliveryInspectionServlet/List";

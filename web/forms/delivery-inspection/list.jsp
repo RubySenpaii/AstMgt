@@ -26,10 +26,13 @@
                     <div class="row">
                         <%
                             Boolean isSaved = (Boolean) session.getAttribute("notif");
+                             Boolean isApproved = (Boolean) session.getAttribute("approveNotif");
                         %>
                         <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                        <input type="hidden" id="anotif" name="anotif" value="<%= isApproved%>">
                         <%
                             session.removeAttribute("Notification");
+                            session.removeAttribute("approveNotif");
                         %>
                         <div class="col-md-12">
                             <div class="content-panel">
@@ -121,6 +124,13 @@
             alert("Successfully requested for delivery inspection!")
         } else if (notif.value === 'false') {
             alert("Failed requested for delivery inspection!")
+        }
+        
+        var anotif = document.getElementById("anotif");
+        if (anotif.value === 'true') {
+            alert("Approved Request Inspection!")
+        } else if (aotif.value === 'false') {
+            alert("Failed tp approved Request Inspection!")
         }
     </script>
 </html>
