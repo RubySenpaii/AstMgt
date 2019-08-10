@@ -42,8 +42,10 @@
                                         isSaved = (boolean) session.getAttribute("Notification");
                                         }catch(Exception e){
                                         }
+                                        String division = (String) session.getAttribute("UserDivision");
                                     %>
                                     <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                                    <input type="hidden" name="division" id="division" value="<%=division%>">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Asset Type</label>
                                         <div class="col-lg-10">

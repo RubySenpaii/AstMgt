@@ -33,11 +33,12 @@
                             String notif = "";
                             try {
                                 notif = (String) session.getAttribute("notif");
-                            }
-                            catch(Exception e){
-                                
+                            } catch (Exception e) {
+
                             }
                         %>
+                        <input type="hidden" id="notif" name="notif" value="<%= notif%>">
+                        <% session.removeAttribute("notif"); %>
                         <input type="hidden" id="notification" name="notification" value="<%= notification%>">
                         <div class="col-md-6" id="PPR">
                             <div class="form-panel">
@@ -249,28 +250,28 @@
     <jsp:include page="shared/js.jsp"/>
     <script>
         $(document).ready(function () {
-            console.log('ready');
-            var notification = document.getElementById("notification");
-            var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
-                    for (var notif of arrayNotif){
-            console.log(notification.value, 'james')
-            if (notification.value === 'None'){
-            break;
-            }
-            if (notification.value === notif) {
-                console.log('will stay')
-            } else {
-                var hiddener = "#";
-                hiddener += notif;
-                console.log(hiddener);
-                $(hiddener).prop("hidden", true);
-            }
+        console.log('ready');
+        var notification = document.getElementById("notification");
+        var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
+        for (var notif of arrayNotif){
+        console.log(notification.value, 'james')
+                if (notification.value === 'None'){
+        break;
+        }
+        if (notification.value === notif) {
+        console.log('will stay')
+        } else {
+        var hiddener = "#";
+        hiddener += notif;
+        console.log(hiddener);
+        $(hiddener).prop("hidden", true);
+        }
         }
         var notif = document.getElementById("notif");
         if (notif.value === 'true') {
-            alert("Successfully saved the expenditure limit v2 !");
+        alert("Successfully saved the expenditure limit v2 !");
         } else if (notif.value === 'false') {
-            alert("Failed to save the expenditure limit v2 !");
+        alert("Failed to save the expenditure limit v2 !");
         }
         });
     </script>

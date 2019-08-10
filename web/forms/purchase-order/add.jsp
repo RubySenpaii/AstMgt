@@ -27,14 +27,29 @@
                     <div class="row">
                         <div class="form-panel">
                             <h4>Create Purchase Order</h4><br/>
-                            <form class="form-horizontal style-form" action="/AMS/PurchaseOrderServlet/Submit">
+                            <form class="form-horizontal style-form" action="/AMS/PurchaseOrderServlet/Submit">                                
+                                <%
+                                    String division = (String) session.getAttribute("UserDivision");
+                                    boolean isSaved = false;
+                                    try {
+                                        isSaved = (boolean) session.getAttribute("notif");
+                                    } catch (Exception e) {
+                                    }
+                                %>
+                                <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                                <%
+                                    session.removeAttribute("Notification");
+                                %>
+                                <input type="hidden" name="division" id="division" value="<%=division%>">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="exampleInputPassword1">Supplier Name</label>
                                     <div class="col-lg-10">
                                         <%
                                             PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
+
                                         %>
                                         <input list="supp" name="supplier" id="supplier" class="form-control" autocomplete="off" value="<%=pr.Supplier.SupplierName%>">
+
                                         <datalist id="supp">
                                             <%
                                                 ArrayList<Supplier> slist = new ArrayList<Supplier>();
@@ -129,6 +144,12 @@
                     }
                 });
             });
+//            var notif = document.getElementById("notif");
+//            if (notif.value === 'true') {
+//                alert("Successfully saved the Purchase Request !")
+//            } else if (notif.value === 'false') {
+//                alert("Failed to save the Purchase Request !")
+//            }
         });
     </script>
 </html>
