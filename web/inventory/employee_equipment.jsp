@@ -79,7 +79,7 @@
                                     </tbody>
                                 </table>
                                 <%
-                                    if (user.EmployeeId == equipments.get(0).CurrentUser.EmployeeId) {
+                                    if (equipments.size() > 0 && user.EmployeeId == equipments.get(0).CurrentUser.EmployeeId) {
                                 %>
                                 <button class="btn-info" formaction="/AMS/InventoryServlet/RetiringEmployee" type="submit">Retire</button>
                                 <%

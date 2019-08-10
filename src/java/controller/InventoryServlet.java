@@ -268,7 +268,7 @@ public class InventoryServlet extends BaseServlet {
         employee.Flag  = 2;
         int res = new EmployeeService().UpdateEmployee(employee);
         System.out.println("retired emp " + res);
-        return "/inventory/employee_equipment.jsp";
+        return "/HomeServlet";
     }
 
     private String ListSupplies(HttpServletRequest request) {

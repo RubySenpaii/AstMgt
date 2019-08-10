@@ -192,7 +192,7 @@ public class AssetServlet extends BaseServlet {
         Employee employee = (Employee) session.getAttribute("user");
 
         AssetIncident incident = new AssetIncident();
-        incident.AssetTag = request.getParameter("asset-tag");
+        incident.AssetTag = request.getParameter("asset-tag").split("\\*")[0];
         incident.Timestamp = Calendar.getInstance().getTime();
         incident.Remarks = request.getParameter("remarks");
         incident.Severity = Integer.parseInt(request.getParameter("severity"));
