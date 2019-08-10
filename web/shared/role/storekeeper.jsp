@@ -1,3 +1,4 @@
+<%@page import="objects.Employee"%>
 <aside>
     <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
@@ -6,6 +7,15 @@
                 <a href="/AMS/HomeServlet">
                     <i class="fa fa-dashboard"></i>
                     <span>Home Page</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+                <%
+                    Employee employee = (Employee) session.getAttribute("user");
+                %>
+                <a href="/AMS/InventoryServlet/EmployeeEquipment?employeeId=<%=employee.EmployeeId%>">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Personal Equipment</span>
                 </a>
             </li>
             <li class="sub-menu">
