@@ -4,6 +4,9 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="services.EquipmentService"%>
+<%@page import="services.AssetService"%>
+<%@page import="objects.Asset"%>
 <%@page import="objects.AssetIncident"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="objects.Equipment"%>
@@ -31,12 +34,18 @@
                             <%
                                 RepairLog log = (RepairLog) session.getAttribute("repairRequest");
                                 double equipCost = (double) session.getAttribute("equipmentCost");
-
+                                
                                 String userRole = (String) session.getAttribute("UserLevel");
-                                double totalCost = (double) session.getAttribute("totalCost");
+                                double totalCost = (double) session.getAttribute("totalCost"); 
+                                EquipmentService eservice = new EquipmentService();
+                                
                             %>
                             <h4>Repair Request for Asset Tag :  <c:out value="<%= log.AssetTag%>"></c:out></h4><br/>
                                 <div class="form-horizontal style-form" action="#">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="exampleInputEmail1">Asset Name</label>
+                                        <label class="col-lg-10 control-label" > <c:out value="<%= new AssetService().GetAsset(eservice.GetEquipmentWithAssetTag(log.AssetTag).AssetId) %>"></c:out> </label>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputEmail1">Requested By</label>
                                         <label class="col-lg-10 control-label" > <c:out value="<%= log.Requester.FullName()%>"></c:out> </label>
