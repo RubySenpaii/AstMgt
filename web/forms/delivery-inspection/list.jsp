@@ -24,6 +24,13 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
+                        <%
+                            Boolean isSaved = (Boolean) session.getAttribute("notif");
+                        %>
+                        <input type="hidden" id="notif" name="notif" value="<%= isSaved%>">
+                        <%
+                            session.removeAttribute("Notification");
+                        %>
                         <div class="col-md-12">
                             <div class="content-panel">
                                 <h4>List of Requests For Delivery Inspection</h4>
@@ -108,5 +115,12 @@
         $(document).ready(function () {
             $('#delList').DataTable();
         });
+
+        var notif = document.getElementById("notif");
+        if (notif.value === 'true') {
+            alert("Successfully requested for delivery inspection!")
+        } else if (notif.value === 'false') {
+            alert("Failed requested for delivery inspection!")
+        }
     </script>
 </html>

@@ -119,6 +119,7 @@ public class DeliveryInspectionServlet extends BaseServlet {
                     requestInspection.IsCompleted = 0;
                     int added = deliveryInspectionService.AddRequestForDeliveryInspection(requestInspection);
                     if (added == 1) {
+                        session.setAttribute("notif", "true");
                         return "/DeliveryInspectionServlet/List";
                     }
                 }
