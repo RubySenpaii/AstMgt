@@ -145,6 +145,7 @@ public class ReportServlet extends BaseServlet {
         try {
             RequestParameter reqParameter = new RequestParameter();
             ArrayList<Asset> assets = new ReportService().GetGeneralPPEData(request.getParameter("from"), request.getParameter("to"));
+            ArrayList<Asset> groupedAssetType = new ReportService().GetGroupedGeneralPPEData(request.getParameter("from"), request.getParameter("to"));
             logo += File.separator + "darlogo.jpg";
             reqParameter.Logo = logo;
             reqParameter.CertifiedBy = request.getParameter("certified-by");
@@ -152,7 +153,7 @@ public class ReportServlet extends BaseServlet {
             reqParameter.VerifiedBy = request.getParameter("verified-by");
             String jasperFile = jasperPath + File.separator + "PropertyPlantEquipmentReport.jasper";
             String fileName = pdfReportsPath + File.separator + "general-ppe" + File.separator + "PropertyPlantEquipmentReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
-            reports.createPropertyPlantEquipment(reqParameter, jasperFile, fileName, assets);
+            reports.createPropertyPlantEquipment(reqParameter, jasperFile, fileName, assets, groupedAssetType);
         } catch (JRException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -196,7 +197,7 @@ public class ReportServlet extends BaseServlet {
             reqParameter.ApprovedBy = request.getParameter("approved-by");
             reqParameter.VerifiedBy = request.getParameter("verified-by");
             String fileName = pdfReportsPath + File.separator + "general-supplies" + File.separator + "SuppliesReportAsOf" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()) + ".pdf";
-            reports.createPropertyPlantEquipment(reqParameter, jasperFile, fileName, assets);
+            reports.createPropertyPlantEquipment(reqParameter, jasperFile, fileName, assets, assets);
         } catch (JRException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {

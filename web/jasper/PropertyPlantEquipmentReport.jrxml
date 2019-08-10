@@ -2,11 +2,38 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Error" uuid="31381ce4-003d-4829-9ff5-4dc1cdc11fd4">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="512"/>
 	<parameter name="logo" class="java.lang.String"/>
 	<parameter name="certifiedBy" class="java.lang.String"/>
 	<parameter name="approvedBy" class="java.lang.String"/>
 	<parameter name="verifiedBy" class="java.lang.String"/>
+	<parameter name="equipmentFurnitureDisposed" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentFurnitureUsed" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentFurnitureStocked" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentApplianceDisposed" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentApplianceStocked" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentApplianceUsed" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentVehicleDisposed" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentVehicleStocked" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="equipmentVehicleUsed" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
 	<field name="assetName" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="quantityDisposed" class="java.lang.Integer"/>
@@ -69,7 +96,7 @@
 				<reportElement x="0" y="0" width="89" height="20" uuid="55be18f7-9969-4d75-8a12-56053f3b3c86"/>
 				<textFieldExpression><![CDATA[$F{assetName}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="171" y="0" width="119" height="20" uuid="c1f9fc5b-0e71-467b-bb31-a6210da43bb5"/>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
@@ -85,8 +112,8 @@
 				<reportElement x="290" y="0" width="93" height="20" uuid="40447ef4-f9be-4f3b-9a3e-c54d9d835b3f"/>
 				<textFieldExpression><![CDATA[$F{quantityDisposed} + " " + $F{unit}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="89" y="0" width="82" height="20" uuid="9c778157-b58f-4ac1-9389-e233188b8f44"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="89" y="0" width="82" height="20" uuid="9c778157-b58f-4ac1-9389-e233188b8f44"/>
 				<textFieldExpression><![CDATA[$F{assetType}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -159,7 +186,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="168" splitType="Stretch">
+		<band height="435" splitType="Stretch">
 			<barChart>
 				<chart>
 					<reportElement x="0" y="0" width="555" height="168" uuid="cf3ef73e-7546-41f4-b963-080e0cc9385f"/>
@@ -195,6 +222,57 @@
 					</valueAxisFormat>
 				</barPlot>
 			</barChart>
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="199" width="555" height="236" uuid="7b2f22fa-7908-4a8a-8c91-c34534d1ea71"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset resetType="None"/>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Furniture Disposed"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentFurnitureDisposed}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Furniture Used"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentFurnitureUsed}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Furniture Stocked"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentFurnitureStocked}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Appliance Disposed"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentApplianceDisposed}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Appliance Stocked"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentApplianceStocked}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Appliance Used"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentApplianceUsed}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Vehicle Disposed"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentVehicleDisposed}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Vehicle Stocked"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentVehicleStocked}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Equipment Vehicle Used"]]></keyExpression>
+						<valueExpression><![CDATA[$P{equipmentVehicleUsed}]]></valueExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
 		</band>
 	</summary>
 </jasperReport>

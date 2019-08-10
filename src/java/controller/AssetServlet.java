@@ -241,6 +241,9 @@ public class AssetServlet extends BaseServlet {
             
             if (result == 1) {
                 session.setAttribute("trackingnotif", true);
+                Equipment equipment = equipmentService.GetEquipmentWithAssetTag(request.getParameter("asset-tag"));
+                equipment.Flag = 1;
+                System.out.println("Update equip flag " + equipmentService.UpdateEquipment(equipment));
                 return "/InventoryServlet/EquipmentList";
             }
         } catch (ParseException x) {

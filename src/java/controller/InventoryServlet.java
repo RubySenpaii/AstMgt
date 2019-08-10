@@ -126,6 +126,10 @@ public class InventoryServlet extends BaseServlet {
             tracking.Remarks = 1 + request.getParameter("remarks");
             tracking.TransferDate = Calendar.getInstance().getTime();
             int result = assetTrackingService.AddAssetTracking(tracking);
+            
+            Equipment equipment = new EquipmentService().GetEquipmentWithAssetTag(assetTags[i]);
+            equipment.Flag = 1;
+            System.out.println("Updated equip flag " + new EquipmentService().UpdateEquipment(equipment));
             System.out.println("Retrieve items result: " + result);
         }
         return "/HomeServlet";
@@ -208,7 +212,7 @@ public class InventoryServlet extends BaseServlet {
                 equipment.DateAcquired = Calendar.getInstance().getTime();
                 equipment.Description = description;
                 equipment.ModeOfProcurement = purchaseOrder.PurchaseRequest.ModeOfProcurement;
-                equipment.Flag = 1;
+                equipment.Flag = 2;
                 int result = equipmentService.AddEquipment(equipment);
 
                 AssetTracking init = new AssetTracking();
