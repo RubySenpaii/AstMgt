@@ -45,50 +45,50 @@
 				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="61" width="100" height="14" uuid="06247a8a-c67b-4165-b720-b9391c939dce"/>
+				<reportElement x="455" y="61" width="100" height="14" uuid="06247a8a-c67b-4165-b720-b9391c939dce"/>
 				<text><![CDATA[FROM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="61" width="100" height="14" uuid="fde61a59-7640-4da4-a323-aeb68f677e41"/>
+				<reportElement x="0" y="61" width="100" height="14" uuid="fde61a59-7640-4da4-a323-aeb68f677e41"/>
 				<text><![CDATA[TO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="75" width="100" height="20" uuid="bbae3ca4-aa14-4580-b421-30830f0d1404"/>
+				<reportElement x="455" y="75" width="100" height="20" uuid="bbae3ca4-aa14-4580-b421-30830f0d1404"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fromName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="95" width="100" height="20" uuid="7ac61f5e-26c4-45e8-b4cd-f91be09b0f45"/>
+				<reportElement x="455" y="95" width="100" height="20" uuid="7ac61f5e-26c4-45e8-b4cd-f91be09b0f45"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fromAddress}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="115" width="100" height="20" uuid="e470c238-528c-49b8-910a-33e99af9478e"/>
+				<reportElement x="455" y="115" width="100" height="20" uuid="e470c238-528c-49b8-910a-33e99af9478e"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fromContact}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="75" width="100" height="20" uuid="a5b195cb-5a08-4111-8486-79786e7598ca"/>
+				<reportElement x="0" y="75" width="100" height="20" uuid="a5b195cb-5a08-4111-8486-79786e7598ca"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{toName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="95" width="100" height="20" uuid="ad249e6b-c09a-481d-99f3-8e9f5fe96d2a"/>
+				<reportElement x="0" y="95" width="100" height="20" uuid="ad249e6b-c09a-481d-99f3-8e9f5fe96d2a"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{toAddress}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="115" width="100" height="20" uuid="0d141ca9-eb87-4189-bbb0-870deeba625e"/>
+				<reportElement x="0" y="115" width="100" height="20" uuid="0d141ca9-eb87-4189-bbb0-870deeba625e"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

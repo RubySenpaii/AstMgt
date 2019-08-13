@@ -36,6 +36,10 @@
                                             <%
                                                 ArrayList<AssetTracking> userAssets = (ArrayList<AssetTracking>) session.getAttribute("userAssets");
                                                 ArrayList<RepairLog> userRepairrequest = ( ArrayList<RepairLog> ) session.getAttribute("repairRequestsperAsset");
+                                                double totalCost = 0;
+                                                for (RepairLog repair: userRepairrequest) {
+                                                    totalCost += repair.Cost;
+                                                }
                                                 for (AssetTracking userAsset : userAssets) {
                                             %>
                                             <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost + '*' + userAsset.Equipment.Description%>"><%=userAsset.AssetTag%></option>
@@ -43,6 +47,7 @@
                                                 }
                                             %>
                                         </select>
+                                        <input id="totalRepairs" type="hidden" value="<%=totalCost%>">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -169,8 +174,9 @@
 
             // set the computed value to 'totalPrice' textbox
             $('#totalCost').val(sum);
+            var currentRepairs = Number($('#totalRepairs').val());
 
-            if (Number($('#acquisition-cost').val()) * 0.3 <= Number($('#totalCost').val())) {
+            if ((Number($('#acquisition-cost').val()) + currentRepairs) * 0.3 <= Number($('#totalCost').val())) {
                 console.log(true);
                  $('#warning').prop("hidden", false);
                 $('#submit').prop('disabled', true);
