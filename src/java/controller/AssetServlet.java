@@ -230,16 +230,26 @@ public class AssetServlet extends BaseServlet {
             HttpSession session = request.getSession();
             Employee employee = (Employee) session.getAttribute("user");
 
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
             AssetTracking tracking = new AssetTracking();
             tracking.AssetTag = request.getParameter("asset-tag");
             tracking.ReleasedBy = employee.EmployeeId;
             tracking.ReleasedTo = employeeService.FindEmployeeByFullName(request.getParameter("release-to")).EmployeeId;
             int transferType = Integer.parseInt(request.getParameter("transfer-type"));
             tracking.Remarks = transferType + request.getParameter("remarks");
-            tracking.TransferDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("transfer-date"));
+            tracking.TransferDate = cal.getTime();
             int result = assetTrackingService.AddAssetTracking(tracking);
             
+            
             if (result == 1) {
+                tracking.ApprovedBy = employee.EmployeeId;
+                tracking.ApprovedDate = cal.getTime();
+                System.out.println("Updated tracking with result: " + assetTrackingService.UpdateAssetTracking(tracking));
+                
                 session.setAttribute("trackingnotif", true);
                 Equipment equipment = equipmentService.GetEquipmentWithAssetTag(request.getParameter("asset-tag"));
                 equipment.Flag = 1;
