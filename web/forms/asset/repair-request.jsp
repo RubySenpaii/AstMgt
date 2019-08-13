@@ -44,7 +44,7 @@
                                 <div class="form-horizontal style-form" action="#">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputEmail1">Asset Name</label>
-                                        <label class="col-lg-10 control-label" > <c:out value="<%= new AssetService().GetAsset(eservice.GetEquipmentWithAssetTag(log.AssetTag).AssetId) %>"></c:out> </label>
+                                        <label class="col-lg-10 control-label" > <c:out value="<%= new AssetService().GetAsset(eservice.GetEquipmentWithAssetTag(log.AssetTag).AssetId).AssetName %>"></c:out> </label>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputEmail1">Requested By</label>
