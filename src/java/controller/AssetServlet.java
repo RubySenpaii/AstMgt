@@ -230,6 +230,11 @@ public class AssetServlet extends BaseServlet {
             HttpSession session = request.getSession();
             Employee employee = (Employee) session.getAttribute("user");
 
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
             AssetTracking tracking = new AssetTracking();
             tracking.AssetTag = request.getParameter("asset-tag");
             tracking.ReleasedBy = employee.EmployeeId;
@@ -241,11 +246,6 @@ public class AssetServlet extends BaseServlet {
             
             
             if (result == 1) {
-                Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
                 tracking.ApprovedBy = employee.EmployeeId;
                 tracking.ApprovedDate = cal.getTime();
                 System.out.println("Updated tracking with result: " + assetTrackingService.UpdateAssetTracking(tracking));
