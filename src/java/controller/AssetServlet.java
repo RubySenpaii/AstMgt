@@ -226,7 +226,6 @@ public class AssetServlet extends BaseServlet {
     }
 
     private String SubmitTracking(HttpServletRequest request) {
-        try {
             HttpSession session = request.getSession();
             Employee employee = (Employee) session.getAttribute("user");
 
@@ -256,9 +255,6 @@ public class AssetServlet extends BaseServlet {
                 System.out.println("Update equip flag " + equipmentService.UpdateEquipment(equipment));
                 return "/InventoryServlet/EquipmentList";
             }
-        } catch (ParseException x) {
-            System.err.println(x);
-        }
         return "/AssetServlet/LogTracking";
     }
 

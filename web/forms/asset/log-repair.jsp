@@ -38,7 +38,7 @@
                                                 ArrayList<RepairLog> userRepairrequest = ( ArrayList<RepairLog> ) session.getAttribute("repairRequestsperAsset");
                                                 double totalCost = 0;
                                                 for (RepairLog repair: userRepairrequest) {
-                                                    totalCost += repair.Cost;
+                                                    totalCost += repair.TotalCost;
                                                 }
                                                 for (AssetTracking userAsset : userAssets) {
                                             %>
