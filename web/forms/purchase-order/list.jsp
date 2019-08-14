@@ -6,6 +6,7 @@
 
 <%@page import="extra.SharedFormat"%>
 <%@page import="objects.PurchaseOrder"%>
+<%@page import="services.RequestForDeliveryInspectionService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -52,11 +53,13 @@
                                             <!--<th>Delivery Terms</th> -->
                                             <th>Payment Terms</th>
                                             <th>Total Cost</th>
+                                            <th>Inspector</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <%
+                                            RequestForDeliveryInspectionService rfiService = new RequestForDeliveryInspectionService();
                                             ArrayList<PurchaseOrder> PO = (ArrayList<PurchaseOrder>) session.getAttribute("PO");
                                             for (PurchaseOrder po : PO) {
                                         %>
@@ -68,6 +71,18 @@
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
                                             <td><c:out value="<%= SharedFormat.doubleToMoney(po.PurchaseRequest.getTotalCost())%>"></c:out></td>
+                                            <td>
+                                                <%
+                                                    try {
+                                                        String employeeName = rfiService.GetRequestForInspectionByPurchaseOrder(po.PurchaseOrderId).Assigned.FullName();
+                                                %>
+                                                <c:out value="<%= employeeName%>"></c:out>
+                                                <%
+                                                    } catch (Exception x) {
+                                                        
+                                                    }
+                                                %>
+                                            </td>
                                                 <td>
                                                     <form action="/AMS/PurchaseOrderServlet/View">
                                                         <button type="submit" name="poId" value="<%=po.PurchaseOrderId%>">View</button>
