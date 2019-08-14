@@ -177,7 +177,7 @@ public class AssetServlet extends BaseServlet {
         ArrayList<Employee> employees = new ArrayList<>();
         switch (user.UserLevel) {
             case "Custodian":
-                employees = employeeService.FindNotCustodianList();
+                employees = employeeService.FindAllEmployee();
                 break;
             default:
                 employees = employeeService.FindCustodianList();
