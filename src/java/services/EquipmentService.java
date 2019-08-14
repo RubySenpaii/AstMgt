@@ -99,7 +99,7 @@ public class EquipmentService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
 
-            String query = "SELECT * FROM Equipment WHERE " + Equipment.COLUMN_ASSET_TAG + " IS NOT NULL " + Equipment.COLUMN_FLAG + " = ?";
+            String query = "SELECT * FROM Equipment WHERE " + Equipment.COLUMN_ASSET_TAG + " IS NOT NULL AND " + Equipment.COLUMN_FLAG + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, flag);
 
