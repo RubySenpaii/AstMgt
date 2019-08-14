@@ -93,6 +93,25 @@ public class EquipmentService {
             return new ArrayList<>();
         }
     }
+    
+    public ArrayList<Equipment> GetListOfFlagEquipments(int flag) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT * FROM Equipment WHERE " + Equipment.COLUMN_ASSET_TAG + " IS NOT NULL " + Equipment.COLUMN_FLAG + " = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, flag);
+
+            ArrayList<Equipment> equipments = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return equipments;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
 
     public ArrayList<Equipment> GetListOfEquipmentsForTheQuarter(int quarter) {
         try {
