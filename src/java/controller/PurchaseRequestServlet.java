@@ -164,11 +164,13 @@ public class PurchaseRequestServlet extends BaseServlet {
             purchaseRequest.PurchaseOrderNumber = 0;
         }
         ArrayList<AssetTracking> requesterAssets = new AssetTrackingService().GetArrayListOfEmployee(purchaseRequest.RequestedBy);
+        ArrayList<Equipment> equipments = new EquipmentService().GetListOfEquipments();
         System.out.println("requester asset size " + requesterAssets.size());
         session.setAttribute("assetRequested", assetReqList);
         session.setAttribute("assetNames", assetNameList);
         session.setAttribute("purchaseRequest", purchaseRequest);
         session.setAttribute("requesterAssets", requesterAssets);
+        session.setAttribute("equipments", equipments);
         return "/forms/purchase-request/view.jsp";
     }
 
