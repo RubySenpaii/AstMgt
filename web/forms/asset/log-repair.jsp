@@ -177,7 +177,7 @@
             var currentRepairs = Number($('#totalRepairs').val());
             console.log('total repairs existing', currentRepairs);
 
-            if ((Number($('#acquisition-cost').val()) + currentRepairs) * 0.3 <= Number($('#totalCost').val())) {
+            if (Number($('#acquisition-cost').val()) * 0.3 <= Number($('#totalCost').val()) + currentRepairs) {
                 console.log('total upcoming repairs', (Number($('#acquisition-cost').val()) + currentRepairs));
                 console.log(true);
                  $('#warning').prop("hidden", false);
