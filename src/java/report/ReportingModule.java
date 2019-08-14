@@ -152,12 +152,12 @@ public class ReportingModule {
         parameters.put("title", orderForm.getTitle());
         parameters.put("approvedBy", orderForm.getApprovedBy());
         parameters.put("requestedBy", orderForm.getRequestedBy());
-        parameters.put("fromName", orderForm.getFromName());
-        parameters.put("fromAddress", orderForm.getFromAddress());
-        parameters.put("fromContact", orderForm.getFromContact());
-        parameters.put("toName", orderForm.getToName());
-        parameters.put("toAddress", orderForm.getToAddress());
-        parameters.put("toContact", orderForm.getToContact());
+        parameters.put("fromName", orderForm.getToName());
+        parameters.put("fromAddress", orderForm.getToAddress());
+        parameters.put("fromContact", orderForm.getToContact());
+        parameters.put("toName", orderForm.getFromName());
+        parameters.put("toAddress", orderForm.getFromAddress());
+        parameters.put("toContact", orderForm.getFromContact());
         JasperPrint jasperPrint;
         
         System.out.println("creating order form");
