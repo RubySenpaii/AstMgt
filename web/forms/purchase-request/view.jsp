@@ -215,7 +215,7 @@
                                         <tr>
                                             <td><%=equipment.Asset.AssetName%></td>
                                             <td><%=equipment.AssetTag%></td>
-                                            <td><%=equipment.CurrentUser%></td>
+                                            <td><%=equipment.CurrentUser.FullName()%></td>
                                         </tr>
                                         <%
                                             }
