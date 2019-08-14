@@ -166,7 +166,7 @@ public class PurchaseRequestServlet extends BaseServlet {
             purchaseRequest.PurchaseOrderNumber = 0;
         }
         ArrayList<AssetTracking> requesterAssets = new AssetTrackingService().GetArrayListOfEmployee(purchaseRequest.RequestedBy);
-        ArrayList<Equipment> equipments = new EquipmentService().GetListOfEquipments();
+        ArrayList<Equipment> equipments = new EquipmentService().GetListOfFlagEquipments(1);
         System.out.println("requester asset size " + requesterAssets.size());
         session.setAttribute("assetRequested", assetReqList);
         session.setAttribute("assetNames", assetNameList);
