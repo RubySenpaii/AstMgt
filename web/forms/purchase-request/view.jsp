@@ -29,7 +29,7 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <div class="form-panel">
                                 <%
                                     PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
@@ -197,6 +197,34 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-panel">
+                                <h3>Assets</h3>
+                                <table class="table table-bordered" id="equipList">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Name</th>
+                                            <th>Asset Tag</th>
+                                            <th>Current User</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<Equipment> equipments = (ArrayList<Equipment>) session.getAttribute("equipments");
+                                            for (Equipment equipment: equipments) {
+                                        %>
+                                        <tr>
+                                            <td><%=equipment.Asset.AssetName%></td>
+                                            <td><%=equipment.Asset.AssetTag%></td>
+                                            <td><%=equipment.CurrentUser%></td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-panel">
                                 <h3>Requester's Asset(s)</h3>
                                 <table class="table table-bordered">
                                     <thead>
@@ -233,6 +261,13 @@
     </body>
     <jsp:include page="../../shared/js.jsp"/>
     <script type='text/javascript'>
+        
+        $(document).ready(function () {
+            $('#equipList').DataTable({
+                "order":[]
+            });
+        });
+        
         $(function () {
             var equipLimit = document.getElementById('equipment-limit').value;
             var suppLimit = document.getElementById('supplies-limit').value;
