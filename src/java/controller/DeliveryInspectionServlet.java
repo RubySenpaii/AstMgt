@@ -95,7 +95,6 @@ public class DeliveryInspectionServlet extends BaseServlet {
             } catch (ParseException ex) {
                 Logger.getLogger(DeliveryInspectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }*/
-
             requestInspection.DeliveryInspectionId = deliveryInspectionService.GetTotalDeliveryInspection().size() + 1;
             System.out.println("LAMAN IS" + requestInspection.DeliveryInspectionId);
             Part invoiceFile = request.getPart("invoice");
@@ -120,6 +119,8 @@ public class DeliveryInspectionServlet extends BaseServlet {
                     int added = deliveryInspectionService.AddRequestForDeliveryInspection(requestInspection);
                     if (added == 1) {
                         session.setAttribute("notif", true);
+                        requestInspection.ApprovedBy = user.EmployeeId;
+                        int update = deliveryInspectionService.UpdateRequestForDeliveryInspection(requestInspection);
                         return "/DeliveryInspectionServlet/List";
                     }
                 }

@@ -87,6 +87,35 @@ public class AssetIncidentService {
         }
     }
     
+    public AssetIncident GetIncidentsOfAssetCount(String assetTag) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT AI.AssetTag, AI.Severity, COUNT(AI.AssetTag) AS 'AssetCount' FROM AssetIncident AI "
+                    + "WHERE AI.AssetTag = ? GROUP BY AI.AssetTag, AI.Severity";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetTag);
+            
+            AssetIncident incident = new AssetIncident();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                incident.AssetTag = rs.getString(AssetIncident.COLUMN_ASSET_TAG);
+                switch (rs.getInt(AssetIncident.COLUMN_SEVERITY)) {
+                    case 1: incident.lowCount = rs.getInt("AssetCount"); break;
+                    case 2: incident.mediumCount = rs.getInt("AssetCount"); break;
+                    case 3: incident.highCount = rs.getInt("AssetCount"); break;
+                }
+            }
+            ps.close();
+            con.close();
+            return incident;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return null;
+        }
+    }
+    
     public ArrayList<AssetIncident> getResult(ResultSet rs) throws SQLException {
         ArrayList<AssetIncident> incidents = new ArrayList<>();
         while (rs.next()) {

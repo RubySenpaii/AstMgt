@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.AssetRequested"%>
 <%@page import="objects.PurchaseRequest"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="objects.Supplier"%>
@@ -24,7 +25,7 @@
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
-                    <div class="row">
+                    <div class="col-md-8">
                         <div class="form-panel">
                             <h4>Create Purchase Order</h4><br/>
                             <form class="form-horizontal style-form" action="/AMS/PurchaseOrderServlet/Submit">                                
@@ -111,6 +112,58 @@
                         </div>
                     </div>
                     <!-- /row -->
+                    <div class="col-md-4">
+                        <div class="form-panel">
+                            <h4>Purchase Request</h4>
+                            <form class="form-horizontal style-form">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
+                                    <label class="col-lg-10 control-label"> <c:out value="<%= pr.PurchaseRequestNo%>" ></c:out></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
+                                    <label class="col-lg-10 control-label"> <c:out value="<%= pr.RequestedDate%>" ></c:out></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
+                                    <label class="col-lg-10 control-label"> <c:out value="<%= pr.Requester.FullName()%>" ></c:out></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
+                                    <label class="col-lg-10 control-label"> <c:out value="<%= pr.ApprovedDate%>" ></c:out></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
+                                    <label class="col-lg-10 control-label"> <c:out value="<%= pr.Approver.FullName()%>" ></c:out></label>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Name</th>
+                                            <th>Asset Type</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<AssetRequested> assets = pr.AssetsRequested;
+                                            for (AssetRequested asset : assets) {
+                                        %>
+                                        <tr>
+                                            <td><%=asset.Asset.AssetName%></td>
+                                            <td><%=asset.Asset.AssetType%></td>
+                                            <td><%=asset.Quantity%></td>
+                                            <td><%=asset.UnitCost%></td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
                 </section>
             </section>
             <!--main content end-->

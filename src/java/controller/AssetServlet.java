@@ -184,6 +184,7 @@ public class AssetServlet extends BaseServlet {
                 break;
         }
         session.setAttribute("employees", employees);
+        System.out.println("directing to page");
         return "/forms/asset/log-tracking.jsp";
     }
 
@@ -200,20 +201,7 @@ public class AssetServlet extends BaseServlet {
         int result = assetIncidentService.AddAssetIncident(incident);
         if (result == 1) {
             Equipment equipment = equipmentService.GetEquipmentWithAssetTag(incident.AssetTag);
-            switch (incident.Severity) {
-                case 1:
-                    equipment.Condition = "Slightly Used";
-                    break;
-                case 2:
-                    equipment.Condition = "Used";
-                    break;
-                case 3:
-                    equipment.Condition = "For Disposal";
-                    break;
-                default:
-                    equipment.Condition = "Used";
-                    break;
-            }
+            equipment.Condition = incident.resultComparison(incident.incidentResult(), incident.usefulLifeResult(equipment.getAge(), equipment.Asset.EstimatedUsefulLife));
             if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal") || incident.Severity == 3) {
                 equipment.Flag = 0;
             }
@@ -226,9 +214,10 @@ public class AssetServlet extends BaseServlet {
     }
 
     private String SubmitTracking(HttpServletRequest request) {
-            HttpSession session = request.getSession();
-            Employee employee = (Employee) session.getAttribute("user");
+        HttpSession session = request.getSession();
+        Employee employee = (Employee) session.getAttribute("user");
 
+        try {
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.MINUTE, 0);
@@ -240,21 +229,23 @@ public class AssetServlet extends BaseServlet {
             tracking.ReleasedTo = employeeService.FindEmployeeByFullName(request.getParameter("release-to")).EmployeeId;
             int transferType = Integer.parseInt(request.getParameter("transfer-type"));
             tracking.Remarks = transferType + request.getParameter("remarks");
-            tracking.TransferDate = cal.getTime();
+            tracking.TransferDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("transfer-date"));
             int result = assetTrackingService.AddAssetTracking(tracking);
-            
-            
+
             if (result == 1) {
-                tracking.ApprovedBy = employee.EmployeeId;
-                tracking.ApprovedDate = cal.getTime();
-                System.out.println("Updated tracking with result: " + assetTrackingService.UpdateAssetTracking(tracking));
-                
+                //tracking.ApprovedBy = employee.EmployeeId;
+                //tracking.ApprovedDate = cal.getTime();
+                //System.out.println("Updated tracking with result: " + assetTrackingService.UpdateAssetTracking(tracking));
+
                 session.setAttribute("trackingnotif", true);
                 Equipment equipment = equipmentService.GetEquipmentWithAssetTag(request.getParameter("asset-tag"));
                 equipment.Flag = 1;
                 System.out.println("Update equip flag " + equipmentService.UpdateEquipment(equipment));
                 return "/InventoryServlet/EquipmentList";
             }
+        } catch (ParseException x) {
+
+        }
         return "/AssetServlet/LogTracking";
     }
 

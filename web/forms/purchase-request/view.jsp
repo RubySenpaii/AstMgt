@@ -30,7 +30,7 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-7">
                             <div class="form-panel">
                                 <%
                                     PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
@@ -130,12 +130,12 @@
                                         } catch (NullPointerException e) {
                                             editable = false;
                                         }
-                                        %>
-                                        
-                                        <%
+                                    %>
+
+                                    <%
                                         if (pr.ApprovedBy == 0 && (!userRole.equalsIgnoreCase("staff")) && pr.PurchaseOrderNumber != -1) {
                                     %>
-                                    
+
                                     <div class="form-group">
                                         <div class="col-lg-6" style="text-align: center">
                                             <form action="/AMS/PurchaseOrderServlet/Add">
@@ -181,10 +181,16 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Remarks</h4>
+                                            <h4 class="modal-title">Reaspns for Rejection</h4>
                                         </div>
                                         <form action="/AMS/PurchaseRequest/Reject">
                                             <div class="modal-body">
+                                                <select class="form-control" name="reason">
+                                                    <option>Stock Available on Custodian</option>
+                                                    <option>Asset is Existing in Requestor's Inventory</option>
+                                                    <option>Wrong Details</option>
+                                                    <option>Low on Budget - Not Priority</option>
+                                                </select>
                                                 <input type="text" class="form-control" name="remarks" placeholder="Remarks" id="remarks">
                                             </div>
                                             <div class="modal-footer">
@@ -196,7 +202,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <button onclick="document.getElementById('asset').style.display = 'block'; document.getElementById('requester').style.display = 'hidden';">Asset</button>
+                        <button onclick="document.getElementById('requester').style.display = 'block'; document.getElementById('asset').style.display = 'hidden';">Requester</button>
+                        <div class="col-md-4" id="asset" style="display: none">
                             <div class="form-panel">
                                 <h3>Assets</h3>
                                 <table class="table table-bordered" id="equipList">
@@ -210,7 +218,7 @@
                                     <tbody>
                                         <%
                                             ArrayList<Equipment> equipments = (ArrayList<Equipment>) session.getAttribute("equipments");
-                                            for (Equipment equipment: equipments) {
+                                            for (Equipment equipment : equipments) {
                                         %>
                                         <tr>
                                             <td><%=equipment.Asset.AssetName%></td>
@@ -224,7 +232,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" id="requester" style="display: none"> 
                             <div class="form-panel">
                                 <h3>Requester's Asset(s)</h3>
                                 <table class="table table-bordered">
@@ -262,13 +270,13 @@
     </body>
     <jsp:include page="../../shared/js.jsp"/>
     <script type='text/javascript'>
-        
+
         $(document).ready(function () {
             $('#equipList').DataTable({
-                "order":[]
+                "order": []
             });
         });
-        
+
         $(function () {
             var equipLimit = document.getElementById('equipment-limit').value;
             var suppLimit = document.getElementById('supplies-limit').value;

@@ -32,6 +32,7 @@
                                 <table class="table" id="requestList">
                                     <thead>
                                         <tr>
+                                            <th>Asset Name</th>
                                             <th>Asset Tag</th>
                                             <th>Requested By</th>
                                             <th>Requested Date</th>
@@ -47,6 +48,7 @@
                                             for (AssetTracking tracking : trackings) {
                                         %>
                                         <tr>
+                                            <td><%=tracking.Equipment.Asset.AssetName%></td>
                                             <td><%=tracking.AssetTag %></td>
                                             <td><%=tracking.ReleaseBy.FullName()%></td>
                                             <td><%=tracking.TransferDate%></td>

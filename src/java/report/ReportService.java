@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import objects.AssetRequested;
 import objects.Employee;
 import objects.PurchaseOrder;
+import services.EmployeeService;
 import services.EquipmentService;
 import services.PurchaseOrderService;
 import services.RepairLogService;
@@ -60,6 +61,9 @@ public class ReportService {
                                 assets.get(assets.size() - 1).setQuantityOnStock(rs.getInt("EquipmentCount"));
                                 break;
                             case 2:
+                                assets.get(assets.size() - 1).setQuantityUsed(rs.getInt("EquipmentCount"));
+                                break;
+                            case 6:
                                 assets.get(assets.size() - 1).setQuantityUsed(rs.getInt("EquipmentCount"));
                                 break;
                         }
@@ -130,6 +134,9 @@ public class ReportService {
                             case 2:
                                 assets.get(assets.size() - 1).setQuantityUsed(rs.getInt("EquipmentCount"));
                                 break;
+                            case 6:
+                                assets.get(assets.size() - 1).setQuantityUsed(rs.getInt("EquipmentCount"));
+                                break;
                         }
                     } else {
                         temp.setAssetType(rs.getString(Asset.COLUMN_ASSET_TYPE));
@@ -141,6 +148,9 @@ public class ReportService {
                                 temp.setQuantityOnStock(rs.getInt("EquipmentCount"));
                                 break;
                             case 2:
+                                temp.setQuantityUsed(rs.getInt("EquipmentCount"));
+                                break;
+                            case 6:
                                 temp.setQuantityUsed(rs.getInt("EquipmentCount"));
                                 break;
                         }
@@ -227,7 +237,11 @@ public class ReportService {
         for (objects.Equipment sqlEquipment : sqlEquipments) {
             report.Equipment reportEquipment = new report.Equipment();
             reportEquipment.setAssetTag(sqlEquipment.AssetTag);
-            reportEquipment.setCurrentUser(sqlEquipment.CurrentUser.FullName());
+            if (sqlEquipment.CurrentUser.UserLevel.toLowerCase().contains("custodian")) {
+                reportEquipment.setCurrentUser("");
+            } else {
+                reportEquipment.setCurrentUser(sqlEquipment.CurrentUser.FullName());
+            }
             reportEquipment.setDateAcquired(sqlEquipment.DateAcquired);
             reportEquipment.setEstimatedUsefulLife(sqlEquipment.Asset.EstimatedUsefulLife);
             reportEquipment.setStatus(sqlEquipment.Status());
@@ -315,6 +329,9 @@ public class ReportService {
                 asset.setQuantityOnStock(rs.getInt("EquipmentCount"));
                 break;
             case 2:
+                asset.setQuantityUsed(rs.getInt("EquipmentCount"));
+                break;
+            case 6:
                 asset.setQuantityUsed(rs.getInt("EquipmentCount"));
                 break;
         }

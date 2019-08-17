@@ -118,12 +118,22 @@
                                         </div>
                                     </div>
                                     <%
-                                        if (userLevel.toLowerCase().equalsIgnoreCase("chief inspector")) {
+                                        if (!userLevel.toLowerCase().equalsIgnoreCase("chief inspector")) {
                                     %>
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center">
                                             <input type="hidden" name="purchaseOrder" value="<%=purchaseOrder.PurchaseOrderId%>">
-                                            <a href="/AMS/ReportServlet/GeneratePurchaseOrder?purchaseOrder=<%=purchaseOrder.PurchaseOrderId%>">Create PDF</a>
+                                            <a href="/AMS/ReportServlet/GeneratePurchaseOrder?purchaseOrder=<%=purchaseOrder.PurchaseOrderId%>">Print</a>
+                                        </div>
+                                    </div>
+                                    <%
+                                        }
+                                    %>
+                                    <%
+                                        if (userLevel.toLowerCase().equalsIgnoreCase("chief inspector")) {
+                                    %>
+                                    <div class="form-group">
+                                        <div class="col-lg-12" style="text-align: center">
                                             <%
                                                 if (purchaseOrder.DeliveryInpsection == -1) {
                                             %>
