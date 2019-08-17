@@ -73,6 +73,7 @@
                                             <th>Color</th>
                                             <th>Office Destination</th>
                                             <th>Warranty</th>
+                                            <th>End User</th>
                                         </tr>
                                         <%
                                         } else if (items.get(0).Asset.AssetType.toLowerCase().contains("vehicle")) {
@@ -90,6 +91,7 @@
                                             <th>Color</th>
                                             <th>Warranty</th>
                                             <th>Additional Info</th>
+                                            <th>End User</th>
                                         </tr>
                                         <%
                                         } else if (items.get(0).Asset.AssetType.toLowerCase().contains("appliance")) {
@@ -103,6 +105,7 @@
                                             <th>Model</th>
                                             <th>Color</th>
                                             <th>Warranty</th>
+                                            <th>End User</th>
                                         </tr>
                                         <%
                                         } else if (items.get(0).Asset.AssetType.toLowerCase().contains("electronics")) {
@@ -118,11 +121,22 @@
                                             <th>Warranty</th>
                                             <th>Build Number</th>
                                             <th>Color</th>
+                                            <th>End User</th>
                                         </tr>
                                         <%
                                             }
                                         %>
                                     </thead>
+                                    <datalist id="employee-choices">
+                                    <%
+                                        ArrayList<Employee> employees = (ArrayList<Employee>) session.getAttribute("employeeList");
+                                        for (Employee employee : employees) {
+                                    %>
+                                    <option value="<%=employee.FullName()%>">
+                                    <%
+                                        }
+                                    %>
+                                    </datalist>
                                     <tbody>
                                         <%
                                             for (AssetRequested item : items) {
@@ -157,6 +171,9 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="end-user" list="employee-choices">
                                             </td>
                                         </tr>
                                         <%
@@ -210,6 +227,9 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <input class="form-control" name="end-user" list="employee-choices">
+                                            </td>
                                         </tr>
                                         <%
                                             }
@@ -240,6 +260,9 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="end-user" list="employee-choices">
                                             </td>
                                         </tr>
                                         <%
@@ -278,6 +301,9 @@
                                             <td>
                                                 <input class="form-control" name="color" placeholder="Color" autocomplete="off">
                                             </td>
+                                            <td>
+                                                <input class="form-control" name="end-user" list="employee-choices">
+                                            </td>
                                         </tr>
                                         <%
                                                     }
@@ -304,16 +330,16 @@
     <jsp:include page="../shared/js.jsp"/>
 
     <script>
-        $(function() {
-           $('#condition').change(function() {
-               if ($(this).val() == 'Brand New') {
-                   $('#bnew').show();
-                   $('#sec-hand').hide();
-               } else {
-                   $('#bnew').hide();
-                   $('#sec-hand').show();
-               }
-           });
+        $(function () {
+            $('#condition').change(function () {
+                if ($(this).val() == 'Brand New') {
+                    $('#bnew').show();
+                    $('#sec-hand').hide();
+                } else {
+                    $('#bnew').hide();
+                    $('#sec-hand').show();
+                }
+            });
         });
     </script>
 </html>

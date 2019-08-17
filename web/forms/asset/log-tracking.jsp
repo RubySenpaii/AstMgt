@@ -12,7 +12,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management - Log Tracking</title>
+        <title>Asset Management - Log Transfer/title>
         <jsp:include page="../../shared/css.jsp"/>
     </head>
 
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-panel">
-                                <h4>Log Tracking to Custodian</h4><br/>
+                                <h4>Log Transfer</h4><br/>
                                 <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitTracking">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Asset Tag</label>
@@ -67,6 +67,11 @@
                                             <div class="radio">
                                                 <label>
                                                     <input type="radio" name="transfer-type" value="2">Using
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="transfer-type" value="6">Temporary
                                                 </label>
                                             </div>
                                         </div>

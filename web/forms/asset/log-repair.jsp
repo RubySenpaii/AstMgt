@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management - Log Repair</title>
+        <title>Asset Management - Log Asset Repair</title>
         <jsp:include page="../../shared/css.jsp"/>
     </head>
 
@@ -26,7 +26,7 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
-                            <h4>Log Repair</h4><br/>
+                            <h4>Log Asset Repair</h4><br/>
                             <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitRepair">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>

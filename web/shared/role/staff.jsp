@@ -15,7 +15,7 @@
                 %>
                 <a href="/AMS/InventoryServlet/EmployeeEquipment?employeeId=<%=employee.EmployeeId%>">
                     <i class="fa fa-dashboard"></i>
-                    <span>Personal Equipment</span>
+                    <span>Personal Asset List</span>
                 </a>
             </li>
             <li class="sub-menu">
@@ -24,7 +24,7 @@
                     <span>Asset Catalog </span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/AMS/AssetServlet/List">List of buyable asset</a></li>
+                    <li><a href="/AMS/AssetServlet/List">List of Buyable Asset</a></li>
                 </ul>
             </li>
             <li class="sub-menu">

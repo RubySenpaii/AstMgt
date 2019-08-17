@@ -15,7 +15,7 @@
                 </a>
                 <ul class="sub">
                     <li><a href="/AMS/AssetServlet/Add">Add Asset</a></li>
-                    <li><a href="/AMS/AssetServlet/List">List of buyable assets</a></li>
+                    <li><a href="/AMS/AssetServlet/List">List of Buyable Assets</a></li>
                 </ul>
             </li>
             <li class="sub-menu">

@@ -12,7 +12,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management - Equipment List</title>
+        <title>Asset Management - Asset History</title>
         <jsp:include page="../shared/css.jsp"/>
     </head>
 
@@ -25,7 +25,7 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="form-panel">
-                            <h4>Equipment History</h4><br/>
+                            <h4>Asset History</h4><br/>
                             <table class="table table-bordered" id="equip-list">
                                 <thead>
                                     <tr>

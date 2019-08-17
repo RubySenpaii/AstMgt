@@ -156,8 +156,10 @@ public class InventoryServlet extends BaseServlet {
         int requestId = Integer.parseInt(request.getParameter("requestId"));
         RequestForDeliveryInspection requestInspection = deliveryInspectionService.GetRequestForDeliveryInspection(requestId);
         HttpSession session = request.getSession();
+        ArrayList<Employee> employees = new EmployeeService().FindAllEmployee();
         session.setAttribute("purchaseOrder", requestInspection.PurchaseOrder);
         session.setAttribute("requestId", requestId);
+        session.setAttribute("employeeList", employees);
         return "/inventory/acknowledgement.jsp";
     }
 
@@ -168,6 +170,7 @@ public class InventoryServlet extends BaseServlet {
         ArrayList<AssetRequested> assetsRequested = purchaseOrder.PurchaseRequest.AssetsRequested;
         String[] assetTags = request.getParameterValues("asset-tag");
         String[] condition = request.getParameterValues("condition");
+        String[] endUser = request.getParameterValues("end-user");
         RequestForDeliveryInspection rfi = new RequestForDeliveryInspectionService().GetRequestForInspectionByPurchaseOrder(purchaseOrder.PurchaseOrderId);
         rfi.IsCompleted = 1;
         System.out.println("updated rfi: " + new RequestForDeliveryInspectionService().UpdateRequestForDeliveryInspection(rfi));
@@ -234,7 +237,7 @@ public class InventoryServlet extends BaseServlet {
                 cal.set(Calendar.MILLISECOND, 0);
                 init.ApprovedDate = cal.getTime();
                 init.ReleasedBy = employee.EmployeeId;
-                init.ReleasedTo = purchaseOrder.PurchaseRequest.RequestedBy;
+                init.ReleasedTo = new EmployeeService().FindEmployeeByFullName(endUser[i]).EmployeeId;
                 init.Remarks = "received asset";
                 init.TransferDate = cal.getTime();
                 int trackResult = assetTrackingService.AddAssetTracking(init);
