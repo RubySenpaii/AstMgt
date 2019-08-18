@@ -237,7 +237,7 @@ public class InventoryServlet extends BaseServlet {
                 cal.set(Calendar.MILLISECOND, 0);
                 init.ApprovedDate = cal.getTime();
                 init.ReleasedBy = employee.EmployeeId;
-                init.ReleasedTo = new EmployeeService().FindEmployeeByFullName(endUser[i]).EmployeeId;
+                init.ReleasedTo = new EmployeeService().FindEmployeeByFullName(endUser[counter]).EmployeeId;
                 init.Remarks = "received asset";
                 init.TransferDate = cal.getTime();
                 int trackResult = assetTrackingService.AddAssetTracking(init);
