@@ -158,6 +158,7 @@ public class PurchaseOrderServlet extends BaseServlet {
         po.PurchaseOrderId = poDB.FindAllPurchaseOrder().size() + 1;
         PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
         po.PurchaseRequestId = pr.PurchaseRequestId;
+        pr = new PurchaseRequestService().FindPurhcaseRequesById(pr.PurchaseRequestId);
         Supplier supp = suppDB.FindSupplierByName(request.getParameter("supplier"));
         po.SupplierId = supp.SupplierId;
         po.PurchaseOrderNumber = "PO" + "-" + po.PurchaseOrderId;
