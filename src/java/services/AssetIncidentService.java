@@ -107,6 +107,11 @@ public class AssetIncidentService {
                     case 3: incident.highCount = rs.getInt("AssetCount"); break;
                 }
             }
+            
+            System.out.println("Asset Tag:" + incident.AssetTag);
+            System.out.println("Asset Low:" + incident.lowCount);
+            System.out.println("Asset Medium:" + incident.mediumCount);
+            System.out.println("Asset High:" + incident.highCount);
             ps.close();
             con.close();
             return incident;
