@@ -54,9 +54,9 @@
                                         <%
                                             ArrayList<RequestForDeliveryInspection> requests = (ArrayList<RequestForDeliveryInspection>) session.getAttribute("requests");
                                             for (RequestForDeliveryInspection requestInspection : requests) {
-                                                String status = "Approved";
-                                                if (requestInspection.ApprovedBy == 0) {
-                                                    status = "Pending";
+                                                String status = "Pending";
+                                                if (requestInspection.IsCompleted == 1) {
+                                                    status = "Acknowledged";
                                                 }
                                         %>
                                         <tr>
