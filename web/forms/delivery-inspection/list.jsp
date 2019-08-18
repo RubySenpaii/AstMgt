@@ -86,7 +86,7 @@
                                                     <button class="btn btn-success" name="action" value="Approve" formaction="/AMS/DeliveryInspectionServlet/Review" type="submit">Approve</button>
                                                     <%                                                            }
                                                         }
-                                                    } else if (userRole.equalsIgnoreCase("Inspector") && requestInspection.IsCompleted != 1) {
+                                                    } else if (userRole.toLowerCase().contains("inspector") && requestInspection.IsCompleted != 1) {
                                                     %>
                                                     <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
                                                     <%
