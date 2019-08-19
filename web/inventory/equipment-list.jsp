@@ -76,7 +76,7 @@
                                             <td><%=equipment.DateAcquired%></td>
                                             <td><%=equipment.Condition%></td>
                                             <td><%=equipment.Status()%></td>
-                                            <td><%=equipment.CurrentUser.FullName()%></td>
+                                            <td><%=fullName%></td>
                                             <td>
                                                 <button type="submit" name="asset-tag" value="<%=equipment.AssetTag%>">View</button>
                                             </td>
