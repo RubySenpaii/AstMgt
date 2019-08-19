@@ -54,6 +54,10 @@
                                         <%
                                             ArrayList<Equipment> equipments = (ArrayList<Equipment>) session.getAttribute("equipments");
                                             for (Equipment equipment : equipments) {
+                                            String fullName = equipment.CurrentUser.FullName();
+                                                if (equipment.CurrentUser.UserLevel.toLowerCase().contains("custodian")) {
+                                                    fullName = "";
+                                                }
                                         %>
                                         <tr>
                                             <%
