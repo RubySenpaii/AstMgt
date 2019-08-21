@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Reporter Remarks</label>
+                                    <label class="col-lg-2 control-label">Incident Description</label>
                                     <div class="col-lg-10">
                                         <textarea type="text" placeholder="" class="form-control" disabled><%=incident.Remarks%></textarea>
                                     </div>
@@ -44,7 +44,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Severity</label>
                                     <div class="col-lg-10">
-                                        <select name="severity" placeholder="" class="form-control">
+                                        <select name="severity" placeholder="" class="form-control" onchange="doSomething(this.value)">
                                             <option value="1">Low</option>
                                             <option value="2">Medium</option>
                                             <option value="3">High</option>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Remarks</label>
+                                    <label class="col-lg-2 control-label">Inspector Recommendation</label>
                                     <div class="col-lg-10">
                                         <textarea type="text" name="remarks" placeholder="" class="form-control"></textarea>
                                     </div>
@@ -60,7 +60,7 @@
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" type="submit">Submit</button>
-                                        <button class="btn btn-theme" type="submit" name="repair" value="repair">Submit and Create Repair</button>
+                                        <button class="btn btn-theme" id="sbmt1" type="submit" name="repair" value="repair">Submit and Create Repair</button>
                                     </div>
                                 </div>
                             </form>
@@ -74,5 +74,15 @@
         </section>
     </body>
     <jsp:include page="../../shared/js.jsp"/>
+    <script>
+        doSomething(val) {
+            var sbmt1 = document.getElementById('sbmt1');
+            if (val == 3) {
+                sbmt1.style.display = 'none';
+            } else {
+                sbmt1.style.display = 'inline-block';
+            }
+        }
+    </script>
 </html>
 

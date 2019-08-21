@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.Equipment"%>
 <%@page import="objects.RepairLog"%>
 <%@page import="objects.AssetTracking"%>
 <%@page import="java.util.ArrayList"%>
@@ -34,15 +35,15 @@
                                         <select name="asset-tag" placeholder="" id="asset-tag" class="form-control" autocomplete="off" >
                                             <option disabled selected>- Select an Option -</option>
                                             <%
-                                                ArrayList<AssetTracking> userAssets = (ArrayList<AssetTracking>) session.getAttribute("userAssets");
+                                                ArrayList<Equipment> userAssets = (ArrayList<Equipment>) session.getAttribute("userAssets");
                                                 ArrayList<RepairLog> userRepairrequest = ( ArrayList<RepairLog> ) session.getAttribute("repairRequestsperAsset");
                                                 double totalCost = 0;
                                                 for (RepairLog repair: userRepairrequest) {
                                                     totalCost += repair.TotalCost;
                                                 }
-                                                for (AssetTracking userAsset : userAssets) {
+                                                for (Equipment userAsset : userAssets) {
                                             %>
-                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost + '*' + userAsset.Equipment.Description%>"><%=userAsset.AssetTag%></option>
+                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.AcquisitionCost + '*' + userAsset.Description%>"><%=userAsset.AssetTag%></option>
                                             <%
                                                 }
                                             %>

@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Remarks</label>
+                                    <label class="col-lg-2 control-label">Incident Description</label>
                                     <div class="col-lg-10">
                                         <textarea type="text" name="remarks" placeholder="" class="form-control"></textarea>
                                     </div>
