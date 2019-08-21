@@ -34,9 +34,9 @@
                                             <th>Division</th>
                                             <th>Quarter</th>
                                             <th>Year</th>
-                                            <th>Amount Budgeted</th>
-                                            <th>Amount Spent</th>
-                                            <th>Amount Remaining</th>
+                                            <th style="text-align: right">Amount Budgeted</th>
+                                            <th style="text-align: right">Amount Spent</th>
+                                            <th style="text-align: right">Amount Remaining</th>
                                         </tr>
                                     </thead>
                                     <tbody>

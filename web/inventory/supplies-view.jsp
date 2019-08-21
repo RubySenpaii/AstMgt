@@ -56,6 +56,7 @@
                                                 %>
                                             </tbody>
                                         </table>
+                                        <a href="/AMS/SupplierServlet/List">Back to Supplier List</a>
                                         <button type="submit" class="btn" name="asset-id" value="<%=supplies.get(0).Asset.AssetId%>">Re-acquire</button>
                                     </div>
                                 </div>

@@ -100,8 +100,8 @@
                                                     <tr>
                                                         <td><c:out value="<%= ar.get(i).Asset.AssetName%>"></c:out></td>
                                                         <td><c:out value="<%= ar.get(i).Asset.AssetType%>"></c:out></td>
-                                                        <td><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
-                                                        <td><c:out value="<%= SharedFormat.doubleToMoney(ar.get(i).UnitCost)%>"></c:out></td>
+                                                        <td style="text-align: right"><c:out value="<%= ar.get(i).Quantity%>"></c:out></td>
+                                                        <td style="text-align: right"><c:out value="<%= SharedFormat.doubleToMoney(ar.get(i).UnitCost)%>"></c:out></td>
                                                         </tr>
                                                     </tbody>
 
@@ -112,7 +112,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th colspan="3">Total</th>
-                                                        <th id="sum" value="<%= sum%>"><%= sum%></th>
+                                                        <th id="sum" value="<%= sum%>" style="text-align: right"><%= SharedFormat.doubleToMoney(sum)%></th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -169,7 +169,7 @@
                                         <%
                                             }
                                         %>
-
+                                        <a href="/AMS/PurchaseRequest/List">View Purchase Request List</a>
                                     </div>
                                 </div>
                             </div>

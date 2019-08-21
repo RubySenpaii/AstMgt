@@ -117,6 +117,8 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <a href="/AMS/PurchaseRequest/View?prid=<%=purchaseOrder.PurchaseRequest.PurchaseRequestId%>">View Purchase Request</a>
+                                    <a href="/AMS/PurchaseOrderServlet/List">Back to List</a>
                                     <%
                                         if (!userLevel.toLowerCase().equalsIgnoreCase("chief inspector")) {
                                     %>

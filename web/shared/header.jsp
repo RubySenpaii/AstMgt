@@ -4,6 +4,7 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.ExpenditureLimit"%>
 <%@page import="objects.PurchaseOrder"%>
 <%@page import="objects.Equipment"%>
 <%@page import="objects.Supplies"%>
@@ -72,12 +73,17 @@
                 ExpenditureTracking limit = (ExpenditureTracking) session.getAttribute("limit");
                 Employee user = (Employee) session.getAttribute("user");
                 String display = user.FullName() + " - " + user.Division + ": " + user.UserLevel;
+                ExpenditureLimit xlimit = (ExpenditureLimit) session.getAttribute("xlimit");
+                String bcolor = "black";
+                if (xlimit.Equipment * 0.1 >= limit.Equipment) {
+                    bcolor = "red";
+                }
             %>
             <li class="fill-header"></li>
             <%
                 if (limit.Equipment > 0) {
             %>
-            <li class="header-limit">
+            <li class="header-limit" style="color: <%=bcolor%>">
                 Equipment Spending Limit for <%=SharedFormat.getQuarter()%>: Php <%=SharedFormat.doubleToString(limit.Equipment)%>
             </li>
             <%

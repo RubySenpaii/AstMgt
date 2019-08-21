@@ -1,4 +1,5 @@
-    <%-- 
+    <%@page import="extra.SharedFormat"%>
+<%-- 
     Document   : addsupplyitem
     Created on : Oct 7, 2018, 3:18:42 PM
     Author     : RubySenpaii
@@ -129,7 +130,7 @@
                                                         <td><%= sitem.get(i).AssetId%></td>
                                                         <td><%= assetServ.GetAsset(sitem.get(i).AssetId).AssetName%></td>
                                                         <td><%= assetServ.GetAsset(sitem.get(i).AssetId).Description%></td>
-                                                        <td><%= sitem.get(i).price%></td> 
+                                                        <td style="text-align: right"><%= SharedFormat.doubleToMoney(sitem.get(i).price)%></td> 
                                                     </tr>
 
                                                     <%

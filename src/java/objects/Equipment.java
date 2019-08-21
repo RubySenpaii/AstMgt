@@ -41,7 +41,7 @@ public class Equipment {
     
     public String Status() {
         switch (this.Flag) {
-            case 0: return "Disposed";
+            case 0: return "For Disposal";
             case 1: return "Stocked";
             case 2: return "Being Used";
             case 3: return "Expiring";

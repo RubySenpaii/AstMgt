@@ -70,7 +70,7 @@
                                             <td><c:out value="<%= po.DeliveryAddress%>"></c:out></td>
                                             <td><c:out value="<%= po.DeliveryDate%>"></c:out></td>
                                             <td><c:out value="<%= po.PaymentTerm%>"></c:out></td>
-                                            <td><c:out value="<%= SharedFormat.doubleToMoney(po.PurchaseRequest.getTotalCost())%>"></c:out></td>
+                                            <td style="text-align: right"><c:out value="<%= SharedFormat.doubleToMoney(po.PurchaseRequest.getTotalCost())%>"></c:out></td>
                                             <td>
                                                 <%
                                                     try {

@@ -1,5 +1,6 @@
 package controller;
 
+import extra.SharedFormat;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import objects.AssetIncident;
 import objects.AssetTracking;
 import objects.Employee;
 import objects.Equipment;
+import objects.ExpenditureLimit;
 import objects.ExpenditureTracking;
 import objects.PurchaseOrder;
 import objects.PurchaseRequest;
@@ -27,6 +29,7 @@ import services.AssetIncidentService;
 import services.AssetTrackingService;
 import services.EmployeeService;
 import services.EquipmentService;
+import services.ExpenditureLimitService;
 import services.ExpenditureTrackingService;
 import services.PurchaseOrderService;
 import services.PurchaseRequestService;
@@ -56,6 +59,7 @@ public abstract class BaseServlet extends HttpServlet {
                 ArrayList<AssetTracking> assetTrackings = new AssetTrackingService().GetPendingTracking(user.EmployeeId, user.UserLevel);
                 ArrayList<RepairLog> repairRequests = new RepairLogService().GetRepairLogs();
                 //SuppliesService suppliesService = new SuppliesService();
+                ExpenditureLimit exLimist = new ExpenditureLimitService().GetExpenditureLimitForYear(Calendar.getInstance().get(Calendar.YEAR), user.Division);
                 ExpenditureTracking limit = new ExpenditureTrackingService().GetCurrentExpenditure(user.Division);
                 ArrayList<PurchaseRequest> pendingPurchaseRequest = purchaseRequestService.FindPendingPurchaseRequests();
                 // list of approved request and pending order
@@ -126,6 +130,7 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("poNoInspection", poNoInspections);
                 session.setAttribute("pendingAssetIncidents", incidents);
                 session.setAttribute("tempEquip", tempEquipments);
+                session.setAttribute("xlimit", exLimist);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();

@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="objects.AssetIncident"%>
 <%@page import="objects.RequestForDeliveryInspection"%>
 <%@page import="objects.Employee"%>
@@ -64,7 +65,7 @@
                                         <tr>
                                             <td><%=pendingRequest.PurchaseRequestNo%></td>
                                             <td><%=pendingRequest.Requester.FullName()%></td>
-                                            <td>Php <%=pendingRequest.TotalCost%></td>
+                                            <td style="text-align: right"><%=SharedFormat.doubleToMoney(pendingRequest.TotalCost)%></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <button type="submit" value="<%=pendingRequest.PurchaseRequestId%>" name="prid" >View</button>
@@ -98,7 +99,7 @@
                                         <tr>
                                             <td><%=approvedRequest.PurchaseRequestNo%></td>
                                             <td><%=approvedRequest.Requester.FullName()%></td>
-                                            <td>Php <%=approvedRequest.TotalCost%></td>
+                                            <td style="text-align: right"><%=SharedFormat.doubleToMoney(approvedRequest.TotalCost)%></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <button type="submit" value="<%=approvedRequest.PurchaseRequestId%>" name="prid" >View</button>
@@ -169,7 +170,7 @@
                                         <tr>
                                             <td><%=rejectedRequest.PurchaseRequestNo%></td>
                                             <td><%=rejectedRequest.Requester.FullName()%></td>
-                                            <td>Php <%=rejectedRequest.TotalCost%></td>
+                                            <td style="text-align: right"><%=SharedFormat.doubleToMoney(rejectedRequest.TotalCost)%></td>
                                             <td>
                                                 <form action="/AMS/PurchaseRequest/View">
                                                     <button type="submit" value="<%=rejectedRequest.PurchaseRequestId%>" name="prid" >View</button>
@@ -246,7 +247,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-panel">
-                                <h3>Pending Request For Delivery Inspection</h3>
+                                <h3>Pending Acknowledgment</h3>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>

@@ -42,6 +42,7 @@
                 jspFile = "role/finance.jsp";
                 break;
             case "storekeeper":
+            case "custodian":
                 jspFile = "role/storekeeper.jsp";
                 break;
             default:

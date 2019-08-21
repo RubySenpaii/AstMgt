@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="objects.Equipment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -45,7 +46,7 @@
                                         <td><%=equipment.Asset.AssetName%></td>
                                         <td><%=equipment.AssetTag%></td>
                                         <td><%=equipment.DateAcquired%></td>
-                                        <td><%=equipment.AcquisitionCost%></td>
+                                        <td style="text-align: right"><%=SharedFormat.doubleToMoney(equipment.AcquisitionCost)%></td>
                                         <td></td>
                                     </tr>
                                     <%

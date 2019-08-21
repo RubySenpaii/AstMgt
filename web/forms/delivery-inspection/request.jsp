@@ -104,6 +104,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
+                                        <a href="/AMS/PurchaseOrderServlet/View?poId=<%=purchaseOrder.PurchaseOrderId%>">View Purchase Order</a>
                                         <button class="btn btn-theme" type="submit">Submit</button>
                                     </div>
                                 </div>

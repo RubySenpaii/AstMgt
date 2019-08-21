@@ -151,6 +151,7 @@
                                         <form action="/AMS/AssetServlet/ApproveRepair">
                                             <input type="hidden" id="equipment-cost" value="<%= equipCost%>">
                                             <input type="hidden" id="total-cost" name="total-cost" value="<%= totalCost%>">
+                                            <a href="/AMS/AssetServlet/RepairRequests">Back to Repair Request List</a>
                                             <button class="btn btn-info" id="prid" name="prid" type="submit">Approve</button> 
                                         </form>
                                     </div>
