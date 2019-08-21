@@ -137,6 +137,7 @@
                                             <%
                                                 if (purchaseOrder.DeliveryInpsection == -1) {
                                             %>
+                                            <input type="hidden" name="purchaseOrder" value="<%=purchaseOrder.PurchaseOrderId%>">
                                             <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request">Request Inspection</button>
                                             <%
                                                 }

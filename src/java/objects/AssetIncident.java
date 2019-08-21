@@ -56,13 +56,13 @@ public class AssetIncident {
     
     public String usefulLifeResult(double age, double estUsefulLife) {
         double value = age / estUsefulLife;
-        if (value > 0.75) {
+        if (value < 0.1) {
             return "Excellent";
-        } else if (value > 0.5) {
+        } else if (value < 0.25) {
             return "Good";
-        } else if (value > 0.25) {
+        } else if (value < 0.5) {
             return "Adequate";
-        } else if (value > 0.1) {
+        } else if (value < 0.75) {
             return "Marginal";
         } else {
             return "Poor";

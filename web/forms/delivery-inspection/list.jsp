@@ -54,9 +54,9 @@
                                         <%
                                             ArrayList<RequestForDeliveryInspection> requests = (ArrayList<RequestForDeliveryInspection>) session.getAttribute("requests");
                                             for (RequestForDeliveryInspection requestInspection : requests) {
-                                                String status = "Approved";
-                                                if (requestInspection.ApprovedBy == 0) {
-                                                    status = "Pending";
+                                                String status = "Pending";
+                                                if (requestInspection.IsCompleted == 1) {
+                                                    status = "Acknowledged";
                                                 }
                                         %>
                                         <tr>
@@ -86,10 +86,11 @@
                                                     <button class="btn btn-success" name="action" value="Approve" formaction="/AMS/DeliveryInspectionServlet/Review" type="submit">Approve</button>
                                                     <%                                                            }
                                                         }
-                                                    } else if (userRole.equalsIgnoreCase("Inspector") && requestInspection.IsCompleted != 1) {
+                                                    else if (userRole.equalsIgnoreCase("Inspector") && requestInspection.IsCompleted < 1) {
                                                     %>
                                                     <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest">Acknowledge</button>
                                                     <%
+                                                        }
                                                         }
                                                     %>
                                                 </form>

@@ -65,6 +65,10 @@
                                         <%
                                             ArrayList<Equipment> equipments = (ArrayList<Equipment>) session.getAttribute("equipments");
                                             for (Equipment equipment : equipments) {
+                                            String fullName = equipment.CurrentUser.FullName();
+                                                if (equipment.CurrentUser.UserLevel.toLowerCase().contains("custodian")) {
+                                                    fullName = "";
+                                                }
                                         %>
                                         <tr>
                                             <td><%=equipment.Asset.AssetName%></td>
@@ -72,7 +76,7 @@
                                             <td><%=equipment.DateAcquired%></td>
                                             <td><%=equipment.Condition%></td>
                                             <td><%=equipment.Status()%></td>
-                                            <td><%=equipment.CurrentUser.FullName()%></td>
+                                            <td><%=fullName%></td>
                                             <td>
                                                 <button type="submit" name="asset-tag" value="<%=equipment.AssetTag%>">View</button>
                                             </td>
