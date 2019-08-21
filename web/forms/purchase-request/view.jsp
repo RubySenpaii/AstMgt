@@ -35,7 +35,8 @@
                                 <%
                                     PurchaseRequest pr = (PurchaseRequest) session.getAttribute("purchaseRequest");
                                 %>
-                                <h4>Viewing Purchase Request :  <c:out value="<%= pr.PurchaseRequestId%>"></c:out></h4><br/>
+                                <h4>Viewing Purchase Request :  <c:out value="<%= pr.PurchaseRequestId%>"></c:out>
+                                        <a href="/AMS/PurchaseRequest/List" class="view-back btn-info">View Purchase Request List</a></h4><br/>
                                     <div class="form-horizontal style-form" action="#">
                                         <div class="form-group" style="width: 100%">
                                             <label class="col-lg-2 control-label" for="exampleInputEmail1">Purchase Request No</label>
@@ -169,7 +170,6 @@
                                         <%
                                             }
                                         %>
-                                        <a href="/AMS/PurchaseRequest/List">View Purchase Request List</a>
                                     </div>
                                 </div>
                             </div>

@@ -121,11 +121,6 @@ public class AssetServlet extends BaseServlet {
     private String LogRepair(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
-        try {
-            employee = new EmployeeService().FindEmployeeById(Integer.parseInt(request.getParameter("empId")));
-        } catch (Exception x) {
-            
-        }
         ArrayList<AssetTracking> userAssets = new AssetTrackingService().GetArrayListOfEmployee(employee.EmployeeId);
         ArrayList<RepairLog> repairRequests = repairLogService.GetRepairLogs();
         ArrayList<RepairLog> userRepairRequest = new ArrayList<>();
@@ -239,7 +234,6 @@ public class AssetServlet extends BaseServlet {
 
     private String SubmitIncidentSubmission(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String repair = request.getParameter("repair");
 
         AssetIncident incident = (AssetIncident) session.getAttribute("assetIncident");
         incident.Remarks += "//" + request.getParameter("remarks");
@@ -253,10 +247,7 @@ public class AssetServlet extends BaseServlet {
             }
             result = equipmentService.UpdateEquipment(equipment);
             System.out.println("successfully update equipment flag: " + result);
-            if (repair.equals("repair")) {
-                return "/AssetServlet/LogRepair";
-            }
-            return "/InventoryServlet/EquipmentList";
+            return "/AssetServlet/LogRepair";
         } else {
             return "/InventoryServlet/EquipmentList";
         }

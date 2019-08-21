@@ -32,7 +32,8 @@
                                 <%
                                     PurchaseOrder purchaseOrder = (PurchaseOrder) session.getAttribute("purchaseOrder");
                                 %>
-                                <h4>Purchase Order #<%=purchaseOrder.PurchaseOrderNumber%></h4><br/>
+                                <h4>Purchase Order #<%=purchaseOrder.PurchaseOrderNumber%>
+                                <a href="/AMS/PurchaseOrderServlet/List" class="view-back btn-info">Back to List</a></h4><br/>
                                 <form class="form-horizontal style-form">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputPassword1">Purchase Request Number</label>
@@ -118,7 +119,7 @@
                                         </div>
                                     </div>
                                     <a href="/AMS/PurchaseRequest/View?prid=<%=purchaseOrder.PurchaseRequest.PurchaseRequestId%>">View Purchase Request</a>
-                                    <a href="/AMS/PurchaseOrderServlet/List">Back to List</a>
+                                    
                                     <%
                                         if (!userLevel.toLowerCase().equalsIgnoreCase("chief inspector")) {
                                     %>

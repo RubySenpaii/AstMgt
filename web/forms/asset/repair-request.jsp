@@ -40,7 +40,8 @@
                                 EquipmentService eservice = new EquipmentService();
                                 
                             %>
-                            <h4>Repair Request for Asset Tag :  <c:out value="<%= log.AssetTag%>"></c:out></h4><br/>
+                            <h4>Repair Request for Asset Tag :  <c:out value="<%= log.AssetTag%>"></c:out>
+                            <a href="/AMS/AssetServlet/RepairRequests" class="view-back btn-info">Back to Repair Request List</a></h4><br/>
                                 <div class="form-horizontal style-form" action="#">
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="exampleInputEmail1">Asset Name</label>
@@ -151,7 +152,7 @@
                                         <form action="/AMS/AssetServlet/ApproveRepair">
                                             <input type="hidden" id="equipment-cost" value="<%= equipCost%>">
                                             <input type="hidden" id="total-cost" name="total-cost" value="<%= totalCost%>">
-                                            <a href="/AMS/AssetServlet/RepairRequests">Back to Repair Request List</a>
+                                            
                                             <button class="btn btn-info" id="prid" name="prid" type="submit">Approve</button> 
                                         </form>
                                     </div>
