@@ -318,7 +318,7 @@
                         <div class="col-md-6">
                             <div class="form-panel">
                                 <h3>Pending Asset Incidents</h3>
-                                <table class="table-bordered">
+                                <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Asset Tag</th>
@@ -355,7 +355,7 @@
                         <div class="col-md-6">
                             <div class="form-panel">
                                 <h3>Temporary Assets</h3>
-                                <table class="table-bordered">
+                                <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Asset Tag</th>
