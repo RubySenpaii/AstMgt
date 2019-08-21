@@ -4,6 +4,8 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="services.ExpenditureItemService"%>
+<%@page import="objects.ExpenditureItem"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,6 +24,20 @@
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
+                    <%
+                        ArrayList<ExpenditureItem> items = new ExpenditureItemService().GetCurrentExpenditureItems();
+                        if (items.size() > 0) {
+                    %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-panel" style="text-align: center">
+                                Expenditure Limit for the Quarter Has Been Submitted
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-panel">
@@ -47,9 +63,15 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <%
+                                        if (items.size() == 0) {
+                                    %>
                                     <div style="text-align: center">
                                         <button type="submit" class="btn btn-theme">Submit</button>
                                     </div>
+                                    <%
+                                        }
+                                    %>
                                 </form>
                             </div>
                         </div>

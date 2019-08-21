@@ -26,10 +26,12 @@ import objects.Asset;
 import objects.Employee;
 import objects.ExpenditureItem;
 import objects.ExpenditureLimit;
+import objects.ExpenditureTracking;
 import report.ReportService;
 import services.AssetService;
 import services.ExpenditureItemService;
 import services.ExpenditureLimitService;
+import services.ExpenditureTrackingService;
 
 /**
  *
@@ -37,7 +39,7 @@ import services.ExpenditureLimitService;
  */
 @MultipartConfig
 public class ExpenditureServlet extends BaseServlet {
-
+    
     @Override
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getRequestURI();
@@ -71,8 +73,10 @@ public class ExpenditureServlet extends BaseServlet {
             throw new ServletException(x);
         }
     }
-
+    
     private String ExpenditureLimit(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Employee user = (Employee) session.getAttribute("user");
         File file = new File(getServletContext().getRealPath(SharedFormat.APP_FILE_PATH));
         String fileNames[] = file.list();
         ArrayList<String> filtered = new ArrayList<>();
@@ -82,11 +86,17 @@ public class ExpenditureServlet extends BaseServlet {
             }
         }
         Collections.sort(filtered);
-        HttpSession session = request.getSession();
+        
+        try {
+            ArrayList<ExpenditureTracking> tracking = new ExpenditureTrackingService().GetCurrentExpenditures();
+            session.setAttribute("expenditures", tracking);
+        } catch (IndexOutOfBoundsException x) {
+            session.setAttribute("expenditures", new ExpenditureTracking());
+        }
         session.setAttribute("fileList", filtered);
         return "/management/expenditure_limit.jsp";
     }
-
+    
     private String WFP(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
@@ -106,13 +116,13 @@ public class ExpenditureServlet extends BaseServlet {
         }
         return "/HomeServlet";
     }
-
+    
     private String APP(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
             Employee user = (Employee) session.getAttribute("user");
             FileModification file = new FileModification();
-
+            
             Part appFile = request.getPart("app");
             file.SaveFile(getServletContext().getRealPath("/uploaded-files/app"), appFile, "AnnualProcurementPlan" + SharedFormat.TIME_STAMP.format(Calendar.getInstance().getTime()));
         } catch (IOException x) {
@@ -124,7 +134,7 @@ public class ExpenditureServlet extends BaseServlet {
         }
         return "/HomeServlet";
     }
-
+    
     private String SubmitExpenditureLimitv2(HttpServletRequest request) {
         String[] names = request.getParameterValues("name");
         String[] types = request.getParameterValues("type");
@@ -137,7 +147,7 @@ public class ExpenditureServlet extends BaseServlet {
         String[] estimatedUsefulLife = request.getParameterValues("estUsefulLife");
         String[] description = request.getParameterValues("description");
         int year = Calendar.getInstance().get(Calendar.YEAR);
-
+        
         ArrayList<ExpenditureItem> expenditureItems = new ArrayList<>();
         ArrayList<Asset> assets = new ArrayList<>();
         AssetService assetService = new AssetService();
@@ -257,11 +267,11 @@ public class ExpenditureServlet extends BaseServlet {
 
         return "/HomeServlet";
     }
-
+    
     private String SubmitExpenditureLimit(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
-
+        
         int year = Calendar.getInstance().get(Calendar.YEAR);
         String quarter = SharedFormat.getQuarter();
 //        double adminSupplies = Double.parseDouble(request.getParameter("admin-supplies"));
@@ -280,42 +290,42 @@ public class ExpenditureServlet extends BaseServlet {
         double financeSupplies = 0.00;
         double financeEquipment = Double.parseDouble(request.getParameter("finance-equipment"));
         double repairs = Double.parseDouble(request.getParameter("repair-maintenance"));
-
+        
         ExpenditureLimit adminLimit = new ExpenditureLimit();
         adminLimit.Division = "Admin";
         adminLimit.Equipment = adminEquipment;
         adminLimit.Quarter = quarter;
         adminLimit.Supplies = adminSupplies;
         adminLimit.Year = year;
-
+        
         ExpenditureLimit procurementLimit = new ExpenditureLimit();
         procurementLimit.Division = "Procurement";
         procurementLimit.Equipment = procurementEquipment;
         procurementLimit.Quarter = quarter;
         procurementLimit.Supplies = procurementSupplies;
         procurementLimit.Year = year;
-
+        
         ExpenditureLimit managementLimit = new ExpenditureLimit();
         managementLimit.Division = "Personnel";
         managementLimit.Equipment = managementEquipment;
         managementLimit.Quarter = quarter;
         managementLimit.Supplies = managementSupplies;
         managementLimit.Year = year;
-
+        
         ExpenditureLimit generalLimit = new ExpenditureLimit();
         generalLimit.Division = "General";
         generalLimit.Equipment = generalEquipment;
         generalLimit.Quarter = quarter;
         generalLimit.Supplies = generalSupplies;
         generalLimit.Year = year;
-
+        
         ExpenditureLimit financeLimit = new ExpenditureLimit();
         financeLimit.Division = "Records";
         financeLimit.Equipment = financeEquipment;
         financeLimit.Quarter = quarter;
         financeLimit.Supplies = financeSupplies;
         financeLimit.Year = year;
-
+        
         ExpenditureLimit repair = new ExpenditureLimit();
         repair.Division = "Repair";
         repair.Equipment = repairs;
@@ -352,7 +362,7 @@ public class ExpenditureServlet extends BaseServlet {
             return "/AMS/ExpenditureServlet";
         }
     }
-
+    
     private String BudgetHistory(HttpServletRequest request) {
         HttpSession session = request.getSession();
         ReportService reportService = new ReportService();

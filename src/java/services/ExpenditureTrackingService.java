@@ -104,6 +104,30 @@ public class ExpenditureTrackingService {
         }
     }
     
+    public ArrayList<ExpenditureTracking> GetCurrentExpenditures() {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT T1.* FROM ExpenditureTracking T1 INNER JOIN \n" 
+                    + "(SELECT T2.Year, T2.Quarter, T2.Division, MAX(T2.Timestamp) AS 'Latest' "
+                    + "FROM ExpenditureTracking T2 "
+                    + "WHERE T2.Year = ? AND T2.Quarter = ? GROUP BY T2.Year, T2.Quarter, T2.Division) T2 \n" 
+                    + "ON T1.Year = T2.Year AND T1.Quarter = T2.Quarter AND T1.Division = T2.Division AND T1.Timestamp = T2.Latest";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, Calendar.getInstance().get(Calendar.YEAR));
+            ps.setString(2, SharedFormat.getQuarter());
+            
+            ArrayList<ExpenditureTracking> expenditures = GetResultSet(ps.executeQuery());
+            ps.close();
+            con.close();
+            return expenditures;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+    
     private ArrayList<ExpenditureTracking> GetResultSet(ResultSet rs) throws SQLException {
         ArrayList<ExpenditureTracking> expenditures = new ArrayList<>();
         while (rs.next()) {

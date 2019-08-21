@@ -4,6 +4,8 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
+<%@page import="objects.ExpenditureTracking"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,6 +24,31 @@
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
+                    <%
+                        ArrayList<ExpenditureTracking> limits = (ArrayList<ExpenditureTracking>) session.getAttribute("expenditures");
+                        double procurement = 0, personnel = 0, admin = 0, general = 0, records = 0, repair = 0;
+                        for (ExpenditureTracking limit : limits) {
+                            switch (limit.Division) {
+                                case "Procurement": procurement = limit.Equipment; break;
+                                case "Personnel": personnel = limit.Equipment; break;
+                                case "Admin": admin = limit.Equipment; break;
+                                case "General": general = limit.Equipment; break;
+                                case "Records": records = limit.Equipment; break;
+                                case "Repair": repair = limit.Equipment; break;
+                            }
+                        }
+                        if (limits.size() > 0) {
+                    %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-panel" style="text-align: center">
+                                Budget for the Quarter Has Been Submitted
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-panel">
@@ -70,7 +97,7 @@
                                                     <tr>
                                                         <td>Procurement Division</td>
                                                         <td>
-                                                            <input type="text" name="procurement-equipment" id="procurement" onchange="total()" autocomplete="off" style="text-align: right; width: 100%">
+                                                            <input type="text" name="procurement-equipment" id="procurement" value="<%=SharedFormat.doubleToString(procurement)%>" onchange="total()" autocomplete="off" style="text-align: right; width: 100%">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="procurement-supplies" autocomplete="off">
@@ -79,7 +106,7 @@
                                                     <tr>
                                                         <td>Personnel</td>
                                                         <td>
-                                                            <input type="text" name="management-equipment" id="management" onchange="total()" autocomplete="off" style="text-align: right; width: 100%">
+                                                            <input type="text" name="management-equipment" id="management" value=<%=SharedFormat.doubleToString(personnel)%> onchange="total()" autocomplete="off" style="text-align: right; width: 100%">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="management-supplies" autocomplete="off">
@@ -88,7 +115,7 @@
                                                     <tr>
                                                         <td>Admin Services</td>
                                                         <td>
-                                                            <input type="text" name="admin-equipment" id="admin" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
+                                                            <input type="text" name="admin-equipment" id="admin" value="<%=SharedFormat.doubleToString(admin)%>" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="admin-supplies" autocomplete="off">
@@ -97,7 +124,7 @@
                                                     <tr>
                                                         <td>General Services</td>
                                                         <td>
-                                                            <input type="text" name="general-equipment" id="general" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
+                                                            <input type="text" name="general-equipment" id="general" value="<%=SharedFormat.doubleToString(general)%>" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="general-supplies" autocomplete="off">
@@ -106,7 +133,7 @@
                                                     <tr>
                                                         <td>Records</td>
                                                         <td>
-                                                            <input type="text" name="finance-equipment" id="finance" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
+                                                            <input type="text" name="finance-equipment" id="finance" value="<%=SharedFormat.doubleToString(records)%>" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
                                                         </td>
                                                         <!--                                                        <td>
                                                                                                                     <input type="number" name="finance-supplies" autocomplete="off">
@@ -115,7 +142,7 @@
                                                     <tr>
                                                         <td>Repair and Maintenance</td>
                                                         <td>
-                                                            <input type="text" name="repair-maintenance" id="repair" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
+                                                            <input type="text" name="repair-maintenance" id="repair" value="<%=SharedFormat.doubleToString(repair)%>" onChange="total()" autocomplete="off" style="text-align: right; width: 100%">
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -128,9 +155,15 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <%
+                                        if (limits.size() == 0) {
+                                    %>
                                     <div style="text-align: center">
                                         <button type="submit" class="btn btn-theme">Submit</button>
                                     </div>
+                                    <%
+                                        }
+                                    %>
                                 </form>
                             </div>
                         </div>

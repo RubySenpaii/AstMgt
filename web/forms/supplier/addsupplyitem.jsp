@@ -155,7 +155,7 @@
                                 } else {
                                 %>
                                 <form class="form-horizontal style-form" action="/AMS/SupplierServlet/UpdateItem">
-                                    <button class="btn btn-info" name="upsupid" formaction="/AMS/SupplierServlet/UpdateItem" value="<%= supplier.SupplierId%>" type="submit"><span class="fa fa-plus">Update Supplier Items</span></button>
+                                    <button class="btn btn-info" name="upsupid" formaction="/AMS/SupplierServlet/UpdateItem" value="<%= supplier.SupplierId%>" onclick="alert('Supplier Item Added!')" type="submit"><span class="fa fa-plus">Update Supplier Items</span></button>
                                 </form>
                             </div>
                             <%

@@ -50,13 +50,13 @@ public class AssetIncidentService {
             Connection con = db.getConnection();
             
             String query = "UPDATE AssetIncident SET " + AssetIncident.COLUMN_REMARKS + " = ?, " 
-                    + AssetIncident.COLUMN_REPORTED_BY + " = ?, " + AssetIncident.COLUMN_TIMESTAMP + " = ? "
-                    + "WHERE " + AssetIncident.COLUMN_ASSET_TAG + " = ?";
+                    + AssetIncident.COLUMN_SEVERITY + " = ? "
+                    + "WHERE " + AssetIncident.COLUMN_ASSET_TAG + " = ? AND " + AssetIncident.COLUMN_TIMESTAMP + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, incident.Remarks);
-            ps.setInt(2, incident.ReportedBy);
-            ps.setObject(3, incident.Timestamp);
-            ps.setString(4, incident.AssetTag);
+            ps.setInt(2, incident.Severity);
+            ps.setString(3, incident.AssetTag);
+            ps.setObject(4, incident.Timestamp);
             
             int result = ps.executeUpdate();
             ps.close();
@@ -65,6 +65,24 @@ public class AssetIncidentService {
         } catch (SQLException x) {
             System.err.println(x);
             return -1;
+        }
+    }
+    
+    public ArrayList<AssetIncident> GetPendingIncidents() {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT * FROM AssetIncident WHERE Severity = 0";
+            PreparedStatement ps = con.prepareStatement(query);
+            
+            ArrayList<AssetIncident> incidents = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return incidents;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
         }
     }
     
@@ -84,6 +102,26 @@ public class AssetIncidentService {
         } catch (SQLException x) {
             System.err.println(x);
             return new ArrayList<>();
+        }
+    }
+    
+    public AssetIncident FindAssetIncidentDetails(String assetTag, String timestamp) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT * FROM AssetIncident WHERE AssetTag = ? AND Timestamp = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, assetTag);
+            ps.setString(2, timestamp);
+            
+            ArrayList<AssetIncident> incidents = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return incidents.get(0);
+        } catch (SQLException x) {
+            System.err.println(x);
+            return null;
         }
     }
     

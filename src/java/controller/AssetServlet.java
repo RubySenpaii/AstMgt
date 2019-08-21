@@ -75,6 +75,9 @@ public class AssetServlet extends BaseServlet {
                 case "LogTracking":
                     url = LogTracking(request);
                     break;
+                case "IncidentSubmission":
+                    url = IncidentSubmission(request);
+                    break;
                 case "LogRepair":
                     url = LogRepair(request);
                     break;
@@ -92,6 +95,9 @@ public class AssetServlet extends BaseServlet {
                     break;
                 case "SubmitIncident":
                     url = SubmitIncident(request);
+                    break;
+                case "SubmitIncidentSubmission":
+                    url = SubmitIncidentSubmission(request);
                     break;
                 case "EquipmentStatus":
                     url = ChangeEquipStatus(request);
@@ -188,6 +194,15 @@ public class AssetServlet extends BaseServlet {
         return "/forms/asset/log-tracking.jsp";
     }
 
+    private String IncidentSubmission(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String assetTag = request.getParameter("assetTag");
+        String timestamp = request.getParameter("timestamp");
+        AssetIncident incident = assetIncidentService.FindAssetIncidentDetails(assetTag, timestamp);
+        session.setAttribute("assetIncident", incident);
+        return "/forms/asset/incident-submission.jsp";
+    }
+
     private String SubmitIncident(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
@@ -196,10 +211,14 @@ public class AssetServlet extends BaseServlet {
         incident.AssetTag = request.getParameter("asset-tag").split("\\*")[0];
         incident.Timestamp = Calendar.getInstance().getTime();
         incident.Remarks = request.getParameter("remarks");
-        incident.Severity = Integer.parseInt(request.getParameter("severity"));
+        if (employee.UserLevel.equals("Custodian")) {
+            incident.Severity = Integer.parseInt(request.getParameter("severity"));
+        } else {
+            incident.Severity = 0;
+        }
         incident.ReportedBy = employee.EmployeeId;
         int result = assetIncidentService.AddAssetIncident(incident);
-        if (result == 1) {
+        if (result == 1 && incident.Severity > 0) {
             Equipment equipment = equipmentService.GetEquipmentWithAssetTag(incident.AssetTag);
             equipment.Condition = incident.resultComparison(incident.incidentResult(), incident.usefulLifeResult(equipment.getAge(), equipment.Asset.EstimatedUsefulLife));
             if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal") || incident.Severity == 3) {
@@ -209,7 +228,28 @@ public class AssetServlet extends BaseServlet {
             System.out.println("successfully update equipment flag: " + result);
             return "/InventoryServlet/EquipmentList";
         } else {
-            return "/AssetServlet/LogIncident";
+            return "/InventoryServlet/EquipmentList";
+        }
+    }
+
+    private String SubmitIncidentSubmission(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        AssetIncident incident = (AssetIncident) session.getAttribute("assetIncident");
+        incident.Remarks += "\n" + request.getParameter("remarks");
+        incident.Severity = Integer.parseInt(request.getParameter("severity"));
+        int result = assetIncidentService.UpdateAssetIncident(incident);
+        if (result == 1 && incident.Severity > 0) {
+            Equipment equipment = equipmentService.GetEquipmentWithAssetTag(incident.AssetTag);
+            equipment.Condition = incident.resultComparison(incident.incidentResult(), incident.usefulLifeResult(equipment.getAge(), equipment.Asset.EstimatedUsefulLife));
+            if (incident.Remarks.contains("dispose") || incident.Remarks.contains("disposal") || incident.Severity == 3) {
+                equipment.Flag = 0;
+            }
+            result = equipmentService.UpdateEquipment(equipment);
+            System.out.println("successfully update equipment flag: " + result);
+            return "/InventoryServlet/EquipmentList";
+        } else {
+            return "/InventoryServlet/EquipmentList";
         }
     }
 

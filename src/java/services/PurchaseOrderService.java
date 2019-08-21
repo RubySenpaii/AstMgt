@@ -114,7 +114,7 @@ public class PurchaseOrderService {
         return null;
     }
 
-    public ArrayList<PurchaseOrder> FindAllPurchaseOrder() throws SQLException {
+    public ArrayList<PurchaseOrder> FindAllPurchaseOrder() {
         DBConnectionFactory db = DBConnectionFactory.getInstance();
         Connection conn = db.getConnection();
         try {

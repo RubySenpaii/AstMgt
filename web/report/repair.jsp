@@ -35,7 +35,7 @@
                                             <input type="text" name="certified-by" placeholder="Certified By" style="margin: 10px; width: 200px">
                                             <input type="text" name="approved-by" placeholder="Approved By" style="margin: 10px; width: 200px">
                                             <input type="text" name="verified-by" placeholder="Verified By" style="margin: 10px; width: 200px">
-                                            <button class="btn" type="submit">Generate Report</button>
+                                            <button class="btn" type="submit" onclick="alert('Repair Report Submitted')">Generate Report</button>
                                         </div>
                                     </form>
                                 </div>

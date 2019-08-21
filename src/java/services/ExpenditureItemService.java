@@ -6,11 +6,13 @@
 package services;
 
 import db.DBConnectionFactory;
+import extra.SharedFormat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import objects.ExpenditureItem;
 
 /**
@@ -122,14 +124,31 @@ public class ExpenditureItemService {
         }
     }
     
+    public ArrayList<ExpenditureItem> GetCurrentExpenditureItems() {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+            
+            String query = "SELECT * FROM ExpenditureItem WHERE Year = ? AND Quarter = ?";
+            
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, Calendar.getInstance().get(Calendar.YEAR));
+            ps.setString(2, SharedFormat.getQuarter());
+            
+            ArrayList<ExpenditureItem> expenditureItems = getResult(ps.executeQuery());
+            ps.close();
+            con.close();
+            return expenditureItems;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return new ArrayList<>();
+        }
+    }
+    
     public ExpenditureItem GetExpenditureItemsByDivision(String division , int assetid , String quarter ,int year) {
         try {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
-            System.out.println(division + "TETETETET");
-            System.out.println(assetid + "TETETETET");
-            System.out.println(quarter + "TETETETET");
-            System.out.println(year + "TETETETET");
             String query = "SELECT * FROM ExpenditureItem WHERE Division = ? and AssetId = ? and Quarter = ? and Year = ? ";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, division);

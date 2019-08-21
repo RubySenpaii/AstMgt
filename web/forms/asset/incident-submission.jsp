@@ -1,12 +1,10 @@
 <%-- 
-    Document   : log-incident
-    Created on : 11 10, 18, 8:51:04 PM
+    Document   : incident-submission
+    Created on : 08 21, 19, 1:26:53 PM
     Author     : rubysenpaii
 --%>
 
-<%@page import="objects.Employee"%>
-<%@page import="objects.AssetTracking"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="objects.AssetIncident"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,33 +25,22 @@
                     <div class="row">
                         <div class="form-panel">
                             <h4>Log Incident</h4><br/>
-                            <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitIncident">
+                            <%
+                                AssetIncident incident = (AssetIncident) session.getAttribute("assetIncident");
+                            %>
+                            <form role="form" class="form-horizontal style-form" action="/AMS/AssetServlet/SubmitIncidentSubmission">
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Asset Tag</label>
                                     <div class="col-lg-10">
-                                        <select name="asset-tag" placeholder="" id="asset-tag" class="form-control" autocomplete="off" >
-                                            <option disabled selected>- Select an Option -</option>
-                                            <%
-                                                ArrayList<AssetTracking> userAssets = (ArrayList<AssetTracking>) session.getAttribute("userAssets");
-                                                for (AssetTracking userAsset : userAssets) {
-                                            %>
-                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost%>"><%=userAsset.AssetTag%></option>
-                                            <%
-                                                }
-                                            %>
-                                        </select>
+                                        <input placeholder="" id="asset-tag" class="form-control" disabled value="<%=incident.AssetTag%>" autocomplete="off" >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Remarks</label>
+                                    <label class="col-lg-2 control-label">Reporter Remarks</label>
                                     <div class="col-lg-10">
-                                        <textarea type="text" name="remarks" placeholder="" class="form-control"></textarea>
+                                        <textarea type="text" placeholder="" class="form-control" disabled value="<%=incident.Remarks%>"></textarea>
                                     </div>
                                 </div>
-                                <%
-                                    Employee employee = (Employee) session.getAttribute("user");
-                                    if (employee.UserLevel.equals("Custodian")) {
-                                %>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Severity</label>
                                     <div class="col-lg-10">
@@ -64,9 +51,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                <%
-                                    }
-                                %>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Remarks</label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" name="remarks" placeholder="" class="form-control"></textarea>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" type="submit">Submit</button>
@@ -84,3 +74,4 @@
     </body>
     <jsp:include page="../../shared/js.jsp"/>
 </html>
+

@@ -72,9 +72,9 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="fieldT">
-                                                    <td><input type="checkbox" name="record" </td>
-                                                    <td><input type="text" name="article"  autocomplete="off"></td>
-                                                    <td><input type="number" class="cost" name="cost" autocomplete="off"></td>
+                                                    <td><input type="checkbox" name="record" required ></td>
+                                                    <td><input type="text" name="article"  autocomplete="off" required ></td>
+                                                    <td><input type="number" class="cost" name="cost" required autocomplete="off"></td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
-                                        <button class="btn btn-theme" id="submit" type="submit">Submit</button>
+                                        <button class="btn btn-theme" id="submit" type="submit" onclick="alert('Submitted Repair')">Submit</button>
                                         <span id="warning"  hidden="true"><span class="fa fa-warning" style="color:red" data-toggle="tooltip" title="You cannot request for a repair more than 30% of its total amount"></span></span>
                                     </div>
                                 </div>

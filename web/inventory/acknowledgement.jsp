@@ -155,25 +155,25 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
+                                                <input class="form-control" name="asset-tag" required placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <select class="form-control" name="condition" required placeholder="Condition" autocomplete="off">
                                                     <option>Brand New</option>
                                                     <option>2nd Hand</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                                <input class="form-control" name="color" required placeholder="Color" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="office-destination" placeholder="Office Destination" autocomplete="off">
+                                                <input class="form-control" name="office-destination" required placeholder="Office Destination" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
+                                                <input class="form-control" name="warranty" required placeholder="Warranty" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="end-user" list="employee-choices">
+                                                <input class="form-control" name="end-user" required list="employee-choices">
                                             </td>
                                         </tr>
                                         <%
@@ -186,34 +186,34 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
+                                                <input class="form-control" name="asset-tag" required placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off" id="condition">
+                                                <select class="form-control" name="condition" required placeholder="Condition" autocomplete="off" id="condition">
                                                     <option>Brand New</option>
                                                     <option>2nd Hand</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="engine-number" placeholder="Engine Number" autocomplete="off" required>
+                                                <input class="form-control" name="engine-number" required placeholder="Engine Number" autocomplete="off" required>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="chassis-number" placeholder="Chassis Number" autocomplete="off" required>
+                                                <input class="form-control" name="chassis-number" required placeholder="Chassis Number" autocomplete="off" required>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="make" placeholder="Make" autocomplete="off" required>
+                                                <input class="form-control" name="make" required placeholder="Make" autocomplete="off" required>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="model" placeholder="Model" autocomplete="off">
+                                                <input class="form-control" name="model" required placeholder="Model" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="year" placeholder="Year" autocomplete="off">
+                                                <input class="form-control" name="year" required placeholder="Year" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                                <input class="form-control" name="color" required placeholder="Color" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
+                                                <input class="form-control" name="warranty" required placeholder="Warranty" autocomplete="off">
                                             </td>
                                             <td>
                                                 <div class="toggler">
@@ -228,7 +228,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="end-user" list="employee-choices">
+                                                <input class="form-control" required name="end-user" list="employee-choices">
                                             </td>
                                         </tr>
                                         <%
@@ -241,28 +241,28 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
+                                                <input class="form-control" name="asset-tag" required placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <select class="form-control" name="condition" required placeholder="Condition" autocomplete="off">
                                                     <option>Brand New</option>
                                                     <option>2nd Hand</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="brand" placeholder="Brand" autocomplete="off">
+                                                <input class="form-control" name="brand" required placeholder="Brand" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="model" placeholder="Model" autocomplete="off">
+                                                <input class="form-control" name="model" required placeholder="Model" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                                <input class="form-control" name="color" required placeholder="Color" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
+                                                <input class="form-control" name="warranty" required placeholder="Warranty" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="end-user" list="employee-choices">
+                                                <input class="form-control" name="end-user" required list="employee-choices">
                                             </td>
                                         </tr>
                                         <%
@@ -275,34 +275,34 @@
                                             <td><%=item.Asset.AssetName%></td>
                                             <td>
                                                 <input type="hidden" name="asset-id" value="<%=item.AssetId%>">
-                                                <input class="form-control" name="asset-tag" placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
+                                                <input class="form-control" name="asset-tag" required placeholder="Property Tag" autocomplete="off" value="<%=propertyTag + i%>">
                                             </td>
                                             <td>
-                                                <select class="form-control" name="condition" placeholder="Condition" autocomplete="off">
+                                                <select class="form-control" name="condition" required placeholder="Condition" autocomplete="off">
                                                     <option>Brand New</option>
                                                     <option>2nd Hand</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="brand" placeholder="Brand" autocomplete="off">
+                                                <input class="form-control" name="brand" required placeholder="Brand" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="model" placeholder="Model" autocomplete="off">
+                                                <input class="form-control" name="model" required placeholder="Model" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="serial-number" placeholder="Serial Number" autocomplete="off">
+                                                <input class="form-control" name="serial-number" required placeholder="Serial Number" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="warranty" placeholder="Warranty" autocomplete="off">
+                                                <input class="form-control" name="warranty" required placeholder="Warranty" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="build-number" placeholder="Build Number" autocomplete="off">
+                                                <input class="form-control" name="build-number" required placeholder="Build Number" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="color" placeholder="Color" autocomplete="off">
+                                                <input class="form-control" name="color" required placeholder="Color" autocomplete="off">
                                             </td>
                                             <td>
-                                                <input class="form-control" name="end-user" list="employee-choices">
+                                                <input class="form-control" name="end-user" required list="employee-choices">
                                             </td>
                                         </tr>
                                         <%

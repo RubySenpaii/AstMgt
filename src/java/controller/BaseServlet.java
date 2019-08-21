@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import objects.AssetIncident;
 import objects.AssetTracking;
 import objects.Employee;
 import objects.Equipment;
@@ -22,6 +23,7 @@ import objects.PurchaseRequest;
 import objects.RepairLog;
 import objects.RequestForDeliveryInspection;
 import objects.Supplies;
+import services.AssetIncidentService;
 import services.AssetTrackingService;
 import services.EmployeeService;
 import services.EquipmentService;
@@ -94,7 +96,21 @@ public abstract class BaseServlet extends HttpServlet {
                         lowSupplies.add(supplies);
                     }
                 }*/
+                ArrayList<RequestForDeliveryInspection> pendingInspections = new RequestForDeliveryInspectionService().GetPendingRfi();
                 ArrayList<Employee> retiringEmployees = new EmployeeService().GetRetiringEmployeeList();
+                ArrayList<PurchaseOrder> purchaseOrders = purchaseOrderService.FindAllPurchaseOrder();
+                ArrayList<RequestForDeliveryInspection> inspections = new RequestForDeliveryInspectionService().GetRequestsForDeliveryInspection();
+                ArrayList<PurchaseOrder> poNoInspections = new ArrayList<>();
+                for (PurchaseOrder purchaseOrder: purchaseOrders) {
+                    for (int i = 0; i < inspections.size(); i++) {
+                        if (purchaseOrder.PurchaseOrderId == inspections.get(i).PurchaseOrderId) {
+                            break;
+                        } else if (i == inspections.size() - 1) {
+                            poNoInspections.add(purchaseOrder);
+                        }
+                    }
+                }
+                ArrayList<AssetIncident> incidents = new AssetIncidentService().GetPendingIncidents();
                 session.setAttribute("limit", limit);
                 session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
                 session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);
@@ -105,6 +121,9 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("repairSize", repairRequests.size());
                 session.setAttribute("purchaseOrderDelivering", deliveringPurchaseOrder);
                 session.setAttribute("retiringEmployees", retiringEmployees);
+                session.setAttribute("pendingInspections", pendingInspections);
+                session.setAttribute("poNoInspection", poNoInspections);
+                session.setAttribute("pendingAssetIncidents", incidents);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();
