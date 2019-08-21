@@ -382,6 +382,36 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h3>Temporary Assets</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Tag</th>
+                                            <th>Asset Name</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<Equipment> repairEquip = (ArrayList<Equipment>) session.getAttribute("repairEquip");
+                                            for (Equipment tempEquip : repairEquip) {
+                                        %>
+                                        <tr>
+                                            <td><%=tempEquip.AssetTag%></td>
+                                            <td><%=tempEquip.Asset.AssetName%></td>
+                                            <td>
+                                                <a href="/AMS/InventoryServlet/EquipmentView?asset-tag=<%=tempEquip.AssetTag%>">View</a>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <%
                         }

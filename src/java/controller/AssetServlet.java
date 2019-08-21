@@ -364,6 +364,10 @@ public class AssetServlet extends BaseServlet {
             expenditure.Timestamp = Calendar.getInstance().getTime();
             expenditure.Equipment -= totalCost;
             result = expenditureTrackingService.AddEquipmentTracking(expenditure);
+            
+            Equipment equipment = new EquipmentService().GetEquipmentWithAssetTag(log.AssetTag);
+            equipment.Flag = 7;
+            new EquipmentService().UpdateEquipment(equipment);
         }
         return "/AssetServlet/RepairRequests";
     }

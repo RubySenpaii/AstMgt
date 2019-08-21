@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="objects.RepairLog"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -48,7 +49,7 @@
                                         %>
                                         <tr>
                                             <td><%=repairRequest.AssetTag%></td>
-                                            <td><%=repairRequest.TotalCost%></td>
+                                            <td><%=SharedFormat.doubleToMoney(repairRequest.TotalCost)%></td>
                                             <td><%=repairRequest.Requester.FullName()%></td>
                                             <td><%=repairRequest.RequestedDate%></td>
                                             <td><%=repairRequest.Approver.FullName()%></td>

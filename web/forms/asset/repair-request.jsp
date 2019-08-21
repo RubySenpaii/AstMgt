@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="extra.SharedFormat"%>
 <%@page import="services.EquipmentService"%>
 <%@page import="services.AssetService"%>
 <%@page import="objects.Asset"%>
@@ -107,7 +108,7 @@
                                             %>
                                             <tr>
                                                 <td><%=tableLog.Article%></td>
-                                                <td><%=tableLog.Cost%></td>
+                                                <td><%=SharedFormat.doubleToMoney(tableLog.Cost)%></td>
                                             </tr>
                                             <%
                                                 }
@@ -134,13 +135,13 @@
                                             %>
                                             <tr>
                                                 <td><%=tableLog.Article%></td>
-                                                <td><%=tableLog.Cost%></td>
+                                                <td><%=SharedFormat.doubleToMoney(tableLog.Cost)%></td>
                                             </tr>
                                             <%
                                                 totalCurrCost+=tableLog.Cost;
                                                 }
                                             %>
-                                        <input type="hidden" id="totalCurrCost" name="totalCurrCost" value="<%= totalCurrCost%>">
+                                        <input type="hidden" id="totalCurrCost" name="totalCurrCost" value="<%=SharedFormat.doubleToMoney(totalCurrCost)%>">
                                         </tbody>
                                     </table>
                                 </div>

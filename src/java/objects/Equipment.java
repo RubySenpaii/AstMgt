@@ -48,6 +48,7 @@ public class Equipment {
             case 4: return "Extended";
             case 5: return "Donated";
             case 6: return "Loan";
+            case 7: return "Under Repair/Maintenance";
             default: return "N/A";
         }
     }
