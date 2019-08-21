@@ -35,15 +35,15 @@
                                         <select name="asset-tag" placeholder="" id="asset-tag" class="form-control" autocomplete="off" >
                                             <option disabled selected>- Select an Option -</option>
                                             <%
-                                                ArrayList<Equipment> userAssets = (ArrayList<Equipment>) session.getAttribute("userAssets");
+                                                ArrayList<AssetTracking> userAssets = (ArrayList<AssetTracking>) session.getAttribute("userAssets");
                                                 ArrayList<RepairLog> userRepairrequest = ( ArrayList<RepairLog> ) session.getAttribute("repairRequestsperAsset");
                                                 double totalCost = 0;
                                                 for (RepairLog repair: userRepairrequest) {
                                                     totalCost += repair.TotalCost;
                                                 }
-                                                for (Equipment userAsset : userAssets) {
+                                                for (AssetTracking userAsset : userAssets) {
                                             %>
-                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.AcquisitionCost + '*' + userAsset.Description%>"><%=userAsset.AssetTag%></option>
+                                            <option value="<%=userAsset.AssetTag + '*' + userAsset.Equipment.AcquisitionCost + '*' + userAsset.Equipment.Description%>"><%=userAsset.AssetTag%></option>
                                             <%
                                                 }
                                             %>
