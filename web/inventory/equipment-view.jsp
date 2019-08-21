@@ -153,7 +153,7 @@
                                                 <td><%=log.ReleaseBy.FullName()%></td>
                                                 <td><%=log.TransferDate%></td>
                                                 <td><%=log.ReleaseTo.FullName()%></td>
-                                                <td><%=log.Remarks%></td>
+                                                <td><%=log.Remarks.replace("//", "\n")%></td>
                                             </tr>
                                             <%
                                                 }

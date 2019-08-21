@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Reporter Remarks</label>
                                     <div class="col-lg-10">
-                                        <textarea type="text" placeholder="" class="form-control" disabled value="<%=incident.Remarks%>"></textarea>
+                                        <textarea type="text" placeholder="" class="form-control" disabled><%=incident.Remarks%></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

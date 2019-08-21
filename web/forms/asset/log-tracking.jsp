@@ -18,6 +18,8 @@
 
     <body>
         <section id="container">
+            <jsp:include page="../../shared/header.jsp"/>
+            <jsp:include page="../../shared/sidebar.jsp"/>
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">

@@ -166,7 +166,7 @@ public class AssetIncidentService {
             incident.AssetTag = rs.getString(AssetIncident.COLUMN_ASSET_TAG);
             incident.Remarks = rs.getString(AssetIncident.COLUMN_REMARKS);
             incident.ReportedBy = rs.getInt(AssetIncident.COLUMN_REPORTED_BY);
-            incident.Timestamp = rs.getDate(AssetIncident.COLUMN_TIMESTAMP);
+            incident.Timestamp = rs.getTimestamp(AssetIncident.COLUMN_TIMESTAMP);
             incident.Severity = rs.getInt(AssetIncident.COLUMN_SEVERITY);
             
             incident.Reporter = new EmployeeService().FindEmployeeById(incident.ReportedBy);

@@ -236,7 +236,7 @@ public class AssetServlet extends BaseServlet {
         HttpSession session = request.getSession();
 
         AssetIncident incident = (AssetIncident) session.getAttribute("assetIncident");
-        incident.Remarks += "\n" + request.getParameter("remarks");
+        incident.Remarks += "//" + request.getParameter("remarks");
         incident.Severity = Integer.parseInt(request.getParameter("severity"));
         int result = assetIncidentService.UpdateAssetIncident(incident);
         if (result == 1 && incident.Severity > 0) {
