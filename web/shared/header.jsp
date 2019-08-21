@@ -74,7 +74,7 @@
                 Employee user = (Employee) session.getAttribute("user");
                 String display = user.FullName() + " - " + user.Division + ": " + user.UserLevel;
                 ExpenditureLimit xlimit = (ExpenditureLimit) session.getAttribute("xlimit");
-                String bcolor = "black";
+                String bcolor = "white";
                 if (xlimit.Equipment * 0.1 >= limit.Equipment) {
                     bcolor = "red";
                 }

@@ -347,6 +347,11 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <%
+                    } else if (employee.UserLevel.equals("Custodian")) {
+                    %>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-panel">
                                 <h3>Temporary Assets</h3>
