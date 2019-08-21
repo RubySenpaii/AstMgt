@@ -121,20 +121,24 @@ public class AssetServlet extends BaseServlet {
     private String LogRepair(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
+        try {
+            employee = new EmployeeService().FindEmployeeById(Integer.parseInt("empId"));
+        } catch (Exception x) {
+            
+        }
         ArrayList<AssetTracking> userAssets = new AssetTrackingService().GetArrayListOfEmployee(employee.EmployeeId);
-        ArrayList<Equipment> equipments = new EquipmentService().GetListOfEquipments();
         ArrayList<RepairLog> repairRequests = repairLogService.GetRepairLogs();
         ArrayList<RepairLog> userRepairRequest = new ArrayList<>();
-        for (Equipment equipment: equipments) {
+        for (AssetTracking at : userAssets) {
             for (RepairLog rlog : repairRequests) {
-                if (equipment.AssetTag.equalsIgnoreCase(rlog.AssetTag)) {
+                if (at.AssetTag.equalsIgnoreCase(rlog.AssetTag)) {
                     userRepairRequest.add(rlog);
                 }
             }
         }
         System.out.println("usser Asset Size " + userAssets.size());
         session.setAttribute("repairRequestsperAsset", repairRequests);
-        session.setAttribute("userAssets", equipments);
+        session.setAttribute("userAssets", userAssets);
         return "/forms/asset/log-repair.jsp";
     }
 

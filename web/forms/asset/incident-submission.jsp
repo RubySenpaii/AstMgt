@@ -59,6 +59,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
+                                        <input type="hidden" name="empId" value="<%=incident.ReportedBy%>">
                                         <button class="btn btn-theme" type="submit">Submit</button>
                                         <button class="btn btn-theme" id="sbmt1" type="submit" name="repair" value="repair">Submit and Create Repair</button>
                                     </div>
@@ -75,7 +76,7 @@
     </body>
     <jsp:include page="../../shared/js.jsp"/>
     <script>
-        doSomething(val) {
+        function doSomething(val) {
             var sbmt1 = document.getElementById('sbmt1');
             if (val == 3) {
                 sbmt1.style.display = 'none';
