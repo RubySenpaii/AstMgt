@@ -168,6 +168,8 @@ public class AssetIncidentService {
             incident.ReportedBy = rs.getInt(AssetIncident.COLUMN_REPORTED_BY);
             incident.Timestamp = rs.getDate(AssetIncident.COLUMN_TIMESTAMP);
             incident.Severity = rs.getInt(AssetIncident.COLUMN_SEVERITY);
+            
+            incident.Reporter = new EmployeeService().FindEmployeeById(incident.ReportedBy);
             incidents.add(incident);
         }
         rs.close();
