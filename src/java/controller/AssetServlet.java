@@ -234,6 +234,7 @@ public class AssetServlet extends BaseServlet {
 
     private String SubmitIncidentSubmission(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        String repair = request.getParameter("repair");
 
         AssetIncident incident = (AssetIncident) session.getAttribute("assetIncident");
         incident.Remarks += "//" + request.getParameter("remarks");
@@ -247,6 +248,9 @@ public class AssetServlet extends BaseServlet {
             }
             result = equipmentService.UpdateEquipment(equipment);
             System.out.println("successfully update equipment flag: " + result);
+            if (repair.equals("repair")) {
+                return "/AssetServlet/LogRepair";
+            }
             return "/InventoryServlet/EquipmentList";
         } else {
             return "/InventoryServlet/EquipmentList";

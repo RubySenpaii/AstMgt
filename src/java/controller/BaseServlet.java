@@ -111,6 +111,7 @@ public abstract class BaseServlet extends HttpServlet {
                     }
                 }
                 ArrayList<AssetIncident> incidents = new AssetIncidentService().GetPendingIncidents();
+                ArrayList<Equipment> tempEquipments = new EquipmentService().GetListOfFlagEquipments(6);
                 session.setAttribute("limit", limit);
                 session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
                 session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);
@@ -124,6 +125,7 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("pendingInspections", pendingInspections);
                 session.setAttribute("poNoInspection", poNoInspections);
                 session.setAttribute("pendingAssetIncidents", incidents);
+                session.setAttribute("tempEquip", tempEquipments);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();

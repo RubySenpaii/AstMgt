@@ -60,6 +60,7 @@
                                 <div class="form-group">
                                     <div class="col-lg-12" style="text-align: center">
                                         <button class="btn btn-theme" type="submit">Submit</button>
+                                        <button class="btn btn-theme" type="submit" name="repair" value="repair">Submit and Create Repair</button>
                                     </div>
                                 </div>
                             </form>

@@ -93,7 +93,7 @@
                                             <tr>
                                                 <td><%=incident.Timestamp%></td>
                                                 <td><%=incident.getSeverity()%></td>
-                                                <td><%=incident.Remarks%></td>
+                                                <td><%=incident.Remarks.replace("//", "<br>")%></td>
                                             </tr>
                                             <%
                                                 }
@@ -153,7 +153,7 @@
                                                 <td><%=log.ReleaseBy.FullName()%></td>
                                                 <td><%=log.TransferDate%></td>
                                                 <td><%=log.ReleaseTo.FullName()%></td>
-                                                <td><%=log.Remarks.replace("//", "\n")%></td>
+                                                <td><%=log.Remarks%></td>
                                             </tr>
                                             <%
                                                 }
