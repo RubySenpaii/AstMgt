@@ -122,7 +122,7 @@ public class AssetServlet extends BaseServlet {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("user");
         try {
-            employee = new EmployeeService().FindEmployeeById(Integer.parseInt("empId"));
+            employee = new EmployeeService().FindEmployeeById(Integer.parseInt(request.getParameter("empId")));
         } catch (Exception x) {
             
         }
