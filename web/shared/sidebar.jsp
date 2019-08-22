@@ -32,6 +32,9 @@
                     jspFile = "role/divisionchief.jsp";
                 }
                 break;
+            case "chief inspector":
+                jspFile = "role/chief inspector.jsp";
+                break;
             case "supply officer":
                 jspFile = "role/supply_officer.jsp";
                 break;

@@ -31,6 +31,8 @@
                             <div class="form-panel">
                                 <%
                                     PurchaseOrder purchaseOrder = (PurchaseOrder) session.getAttribute("purchaseOrder");
+                                    String userRole = "";
+                                    userRole = (String) session.getAttribute("UserLevel");
                                 %>
                                 <h4>Purchase Order #<%=purchaseOrder.PurchaseOrderNumber%>
                                 <a href="/AMS/PurchaseOrderServlet/List" class="view-back btn-info">Back to List</a></h4><br/>
@@ -121,7 +123,7 @@
                                     <a href="/AMS/PurchaseRequest/View?prid=<%=purchaseOrder.PurchaseRequest.PurchaseRequestId%>">View Purchase Request</a>
                                     
                                     <%
-                                        if (!userLevel.toLowerCase().equalsIgnoreCase("chief inspector")) {
+                                        if (!userLevel.toLowerCase().equalsIgnoreCase("chief inspector") && !userRole.equalsIgnoreCase("finance")) {
                                     %>
                                     <div class="form-group">
                                         <div class="col-lg-12" style="text-align: center">

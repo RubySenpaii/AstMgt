@@ -17,7 +17,7 @@
                 %>
                 <a href="/AMS/InventoryServlet/EmployeeEquipment?employeeId=<%=employee.EmployeeId%>">
                     <i class="fa fa-dashboard"></i>
-                    <span>Personal Asset List</span>
+                    <span>Retiring Employee Asset List</span>
                 </a>
             </li>
             <li class="sub-menu">

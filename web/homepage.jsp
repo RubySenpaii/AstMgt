@@ -34,6 +34,10 @@
                         <%
                             String notification = (String) session.getAttribute("notification");
                             String notif = "";
+                            String userRole = "";
+                            String userDivision = "";
+                            userRole = (String) session.getAttribute("UserLevel");
+                            userDivision = (String) session.getAttribute("UserDivision");
                             try {
                                 notif = (String) session.getAttribute("notif");
                             } catch (Exception e) {
@@ -43,7 +47,12 @@
                         <input type="hidden" id="notif" name="notif" value="<%= notif%>">
                         <% session.removeAttribute("notif");%>
                         <input type="hidden" id="notification" name="notification" value="<%= notification%>">
+                        <input type="hidden" id="userRole" name="userRole" value="<%= userRole%>">
+                        <input type="hidden" id="userDivision" name="userDivision" value="<%= userDivision%>">
                         <div class="col-md-6" id="PPR">
+                            <%
+                                if ((!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("inspector"))) {
+                            %>
                             <div class="form-panel">
 
                                 <h3>Pending Purchase Requests</h3>
@@ -78,7 +87,13 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <%
+                                }
+                            %>
                         </div>
+                        <%
+                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("inspector"))) {
+                        %>
                         <div class="col-md-6" id="APR">
                             <div class="form-panel">
                                 <h3>Approved Purchase Requests With No Purchase Order</h3>
@@ -113,8 +128,14 @@
                                 </table>
                             </div>
                         </div>
+                        <%
+                            }
+                        %>
                     </div>
                     <div class="row">
+                        <%
+                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief"))) {
+                        %>
                         <div class="col-md-6" id="EE">
                             <div class="form-panel">
                                 <h3>Expiring Equipments</h3>
@@ -149,7 +170,12 @@
                                 </table>
                             </div>
                         </div>
-
+                        <%
+                            }
+                        %>
+                        <%
+                            if ((!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("inspector"))) {
+                        %>
                         <div class="col-md-6" id="RPR">
                             <div class="form-panel">
                                 <h3>Rejected Purchase Requests</h3>
@@ -184,10 +210,16 @@
                                 </table>
                             </div>
                         </div>
+                        <%
+                            }
+                        %>
                     </div>
                     <!-- /row -->
                     <div class="row">
-                        <div class="col-md-6" id="UED">
+                        <%
+                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief"))) {
+                        %>
+                        <div class="col-md-6" id="UED" >
                             <div class="form-panel">
                                 <h3>Upcoming Expected Delivery</h3>
                                 <table class="table table-bordered">
@@ -219,7 +251,13 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <%
+                            }
+                        %>
+                        <%
+                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && !userRole.equalsIgnoreCase("custodian")) {
+                        %>
+                        <div class="col-md-6" id="RE">
                             <div class="form-panel">
                                 <h3>Retiring Employees</h3>
                                 <table class="table table-bordered">
@@ -243,6 +281,9 @@
                                 </table>
                             </div>
                         </div>
+                        <%
+                            }
+                        %>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -425,28 +466,29 @@
     <jsp:include page="shared/js.jsp"/>
     <script>
         $(document).ready(function () {
-            console.log('ready');
-            var notification = document.getElementById("notification");
-            var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
-            for (var notif of arrayNotif) {
-                if (notification.value === 'None') {
-                    break;
-                }
-                if (notification.value === notif) {
-                    console.log('will stay')
-                } else {
-                    var hiddener = "#";
-                    hiddener += notif;
-                    console.log(hiddener);
-                    $(hiddener).prop("hidden", true);
-                }
-            }
-            var notif = document.getElementById("notif");
-            if (notif.value === 'true') {
-                alert("Successfully saved the expenditure limit v2 !");
-            } else if (notif.value === 'false') {
-                alert("Failed to save the expenditure limit v2 !");
-            }
+        console.log('ready');
+        var notification = document.getElementById("notification");
+        var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
+        for (var notif of arrayNotif) {
+        if (notification.value === 'None') {
+        break;
+        }
+        if (notification.value === notif) {
+        console.log('will stay')
+        } else {
+        var hiddener = "#";
+        hiddener += notif;
+        console.log(hiddener);
+        $(hiddener).prop("hidden", true);
+        }
+        }
+        var notif = document.getElementById("notif");
+        if (notif.value === 'true') {
+        alert("Successfully saved the expenditure limit v2 !");
+        } else if (notif.value === 'false') {
+        alert("Failed to save the expenditure limit v2 !");
+        }
+
         });
     </script>
 </html>
