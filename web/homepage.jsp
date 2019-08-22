@@ -365,7 +365,7 @@
                                     </thead>
                                     <tbody>
                                         <%
-                                            ArrayList<Equipment> tempEquipments = (ArrayList<Equipment>) session.getAttribute("tempEquips");
+                                            ArrayList<Equipment> tempEquipments = (ArrayList<Equipment>) session.getAttribute("tempEquip");
                                             for (Equipment tempEquip : tempEquipments) {
                                         %>
                                         <tr>
