@@ -92,7 +92,7 @@
                             %>
                         </div>
                         <%
-                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("inspector"))) {
+                            if (!userRole.equalsIgnoreCase("staff") && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("inspector"))) {
                         %>
                         <div class="col-md-6" id="APR">
                             <div class="form-panel">
@@ -134,7 +134,7 @@
                     </div>
                     <div class="row">
                         <%
-                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief"))) {
+                            if (!userRole.equalsIgnoreCase("staff") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief"))) {
                         %>
                         <div class="col-md-6" id="EE">
                             <div class="form-panel">
@@ -217,7 +217,7 @@
                     <!-- /row -->
                     <div class="row">
                         <%
-                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief"))) {
+                            if (!userRole.equalsIgnoreCase("staff") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief"))) {
                         %>
                         <div class="col-md-6" id="UED" >
                             <div class="form-panel">
@@ -255,7 +255,7 @@
                             }
                         %>
                         <%
-                            if (!userDivision.equalsIgnoreCase("procurement") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && !userRole.equalsIgnoreCase("custodian")) {
+                            if (!userRole.equalsIgnoreCase("staff") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && !userRole.equalsIgnoreCase("custodian")) {
                         %>
                         <div class="col-md-6" id="RE">
                             <div class="form-panel">
@@ -308,7 +308,7 @@
                                             <td><%=pendingInspection.PurchaseOrder.PurchaseRequest.AssetsRequested.size()%></td>
                                             <td><%=pendingInspection.Assigned.FullName()%></td>
                                             <%
-                                            if((!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && !userRole.equalsIgnoreCase("Director")){
+                                            if(userRole.equalsIgnoreCase("Inspector")){
                                             %>
                                             <td>
                                                 <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest" name="requestId" value="<%=pendingInspection.DeliveryInspectionId%>">Acknowledge</button>
@@ -346,7 +346,7 @@
                                             <td><%=poNoRf.PurchaseRequest.AssetsRequested.size()%></td>
                                             <td><%=poNoRf.PurchaseRequest.Requester.FullName()%></td>
                                             <%
-                                            if((!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && !userRole.equalsIgnoreCase("Director")){
+                                            if(userRole.equalsIgnoreCase("Chief Inspector")){
                                             %>
                                             <td>
                                                 <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request" name="purchaseOrder" value="<%=poNoRf.PurchaseOrderId%>">Request Inspection</button>
