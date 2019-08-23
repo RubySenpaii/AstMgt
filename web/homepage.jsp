@@ -308,13 +308,16 @@
                                             <td><%=pendingInspection.PurchaseOrder.PurchaseRequest.AssetsRequested.size()%></td>
                                             <td><%=pendingInspection.Assigned.FullName()%></td>
                                             <%
-                                            if(userRole.equalsIgnoreCase("Inspector")){
+                                                if (userRole.equalsIgnoreCase("Inspector")) {
                                             %>
+
                                             <td>
-                                                <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest" name="requestId" value="<%=pendingInspection.DeliveryInspectionId%>">Acknowledge</button>
+                                                <form>
+                                                    <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest" name="requestId" value="<%=pendingInspection.DeliveryInspectionId%>">Acknowledge</button>
+                                                </form>
                                             </td>
                                             <%
-                                            }
+                                                }
                                             %>
                                         </tr>
                                         <%
@@ -346,13 +349,15 @@
                                             <td><%=poNoRf.PurchaseRequest.AssetsRequested.size()%></td>
                                             <td><%=poNoRf.PurchaseRequest.Requester.FullName()%></td>
                                             <%
-                                            if(userRole.equalsIgnoreCase("Chief Inspector")){
+                                                if (userRole.equalsIgnoreCase("Chief Inspector")) {
                                             %>
                                             <td>
-                                                <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request" name="purchaseOrder" value="<%=poNoRf.PurchaseOrderId%>">Request Inspection</button>
+                                                <form>
+                                                    <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request" name="purchaseOrder" value="<%=poNoRf.PurchaseOrderId%>">Request Inspection</button>
+                                                </form>
                                             </td>
                                             <%
-                                            }
+                                                }
                                             %>
                                         </tr>
                                         <%
