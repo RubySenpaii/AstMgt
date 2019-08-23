@@ -307,9 +307,15 @@
                                             <td><%=pendingInspection.PurchaseOrder.PurchaseOrderNumber%></td>
                                             <td><%=pendingInspection.PurchaseOrder.PurchaseRequest.AssetsRequested.size()%></td>
                                             <td><%=pendingInspection.Assigned.FullName()%></td>
+                                            <%
+                                            if((!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && !userRole.equalsIgnoreCase("Director")){
+                                            %>
                                             <td>
                                                 <button class="btn" formaction="/AMS/InventoryServlet/AcknowledgementRequest" name="requestId" value="<%=pendingInspection.DeliveryInspectionId%>">Acknowledge</button>
                                             </td>
+                                            <%
+                                            }
+                                            %>
                                         </tr>
                                         <%
                                             }
@@ -339,9 +345,15 @@
                                             <td><%=poNoRf.PurchaseOrderNumber%></td>
                                             <td><%=poNoRf.PurchaseRequest.AssetsRequested.size()%></td>
                                             <td><%=poNoRf.PurchaseRequest.Requester.FullName()%></td>
+                                            <%
+                                            if((!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && !userRole.equalsIgnoreCase("Director")){
+                                            %>
                                             <td>
                                                 <button class="btn btn-theme" type="submit" formaction="/AMS/DeliveryInspectionServlet/Request" name="purchaseOrder" value="<%=poNoRf.PurchaseOrderId%>">Request Inspection</button>
                                             </td>
+                                            <%
+                                            }
+                                            %>
                                         </tr>
                                         <%
                                             }
