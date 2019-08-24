@@ -162,6 +162,52 @@ public class RepairLogService {
             return null;
         }
     }
+    
+    public ArrayList<RepairLog> Get7Flag(int flag) {
+        try {
+            DBConnectionFactory db = DBConnectionFactory.getInstance();
+            Connection con = db.getConnection();
+
+            String query = "SELECT RL.RequestedBy, RL.RequestedDate, RL.AssetTag, RL.ApprovedBy, RL.ApprovedDate"
+                    + ", SUM(Cost) AS \"Total Cost\" "
+                    + "FROM RepairLog JOIN Equipment ON RL.AssetTag = E.AssetTag"
+                    + "WHERE RL.ApprovedBy IS NOT NULL "
+                    + "GROUP BY RL.RequestedBy, RL.RequestedDate, RL.AssetTag, RL.ApprovedBy, RL.ApprovedDate "
+                    + "HAVING E.Flag = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, flag);
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<RepairLog> logs = new ArrayList<>();
+            while (rs.next()) {
+                RepairLog log = new RepairLog();
+                log.ApprovedBy = rs.getInt(RepairLog.COLUMN_APPROVED_BY);
+                log.ApprovedDate = rs.getDate(RepairLog.COLUMN_APPROVED_DATE);
+                log.AssetTag = rs.getString(RepairLog.COLUMN_ASSET_TAG);
+                log.RequestedBy = rs.getInt(RepairLog.COLUMN_REQUESTED_BY);
+                log.RequestedDate = rs.getDate(RepairLog.COLUMN_REQUESTED_DATE);
+                log.TotalCost = rs.getDouble("Total Cost");
+                log.Requester = new EmployeeService().FindEmployeeById(log.RequestedBy);
+                if (log.ApprovedBy != 0) {
+                    log.Approver = new EmployeeService().FindEmployeeById(log.ApprovedBy);
+                    log.Logs = GetRepairLogsByRequests(log);
+                } else {
+                    log.Approver = new Employee();
+                    log.Approver.LastName = "-";
+                    log.Approver.FirstName = "";
+                    log.Logs = GetRepairLogsByRequestsNull(log);
+                }
+                logs.add(log);
+            }
+            rs.close();
+            ps.close();
+            con.close();
+            return logs;
+        } catch (SQLException x) {
+            System.err.println(x);
+            return null;
+        }
+    }
 
     public ArrayList<RepairLog> GetRepairLogsByRequests(RepairLog log) {
         try {

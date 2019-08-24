@@ -28,6 +28,6 @@ public class AssetRequested {
     
     public Asset Asset;
     public PurchaseRequest PurchaseRequest;
-    public int PurchaseOrderNumber;
+    public String PurchaseOrderNumber;
     public String AssetName;
 }

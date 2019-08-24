@@ -125,7 +125,7 @@ public class AssetRequestedService {
             Connection con = db.getConnection();
 
             String query = "SELECT A.AssetName, AR.Quantity, AR.QuantityRefunded, AR.UnitCost, PO.PurchaseOrderNo "
-                    + "FROM AssetRequested AR JOIN PurchaseRequest PR ON AR.PurcaseRequestId = PR.PurchaseRequestId "
+                    + "FROM AssetRequested AR JOIN PurchaseRequest PR ON AR.PurchaseRequestId = PR.PurchaseRequestId "
                     + "                     JOIN PurchaseOrder PO ON PR.PurchaseRequestId = PO.PurchaseRequestId "
                     + "                     JOIN Asset A ON AR.AssetId = A.AssetId "
                     + "WHERE AR.QuantityRefunded > 0";
@@ -136,7 +136,7 @@ public class AssetRequestedService {
             while (rs.next()) {
                 AssetRequested assetRequested = new AssetRequested();
                 assetRequested.AssetName = rs.getString("AssetName");
-                assetRequested.PurchaseOrderNumber = rs.getInt("PurchaseOrderNumber");
+                assetRequested.PurchaseOrderNumber = rs.getString("PurchaseOrderNo");
                 assetRequested.Quantity = rs.getInt(AssetRequested.COLUMN_QUANTITY);
                 assetRequested.UnitCost = rs.getDouble(AssetRequested.COLUMN_UNIT_COST);
                 assetRequested.QuantityRefunded = rs.getInt(AssetRequested.COLUMN_QUANTITY_REFUNDED);

@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.RepairLog"%>
 <%@page import="objects.AssetRequested"%>
 <%@page import="extra.SharedFormat"%>
 <%@page import="objects.AssetIncident"%>
@@ -454,12 +455,12 @@
                                     </thead>
                                     <tbody>
                                         <%
-                                            ArrayList<Equipment> repairEquip = (ArrayList<Equipment>) session.getAttribute("repairEquip");
-                                            for (Equipment tempEquip : repairEquip) {
+                                            ArrayList<RepairLog> repairEquip = (ArrayList<RepairLog>) session.getAttribute("rlogsz");
+                                            for (RepairLog tempEquip : repairEquip) {
                                         %>
                                         <tr>
                                             <td><%=tempEquip.AssetTag%></td>
-                                            <td><%=tempEquip.Asset.AssetName%></td>
+                                            <td></td>
                                             <td>
                                                 <a href="/AMS/InventoryServlet/EquipmentView?asset-tag=<%=tempEquip.AssetTag%>">View</a>
                                             </td>
@@ -501,7 +502,7 @@
                                             <td><%=ar.Quantity%></td>
                                             <td><%=ar.Quantity - ar.QuantityRefunded%></td>
                                             <td><%=ar.QuantityRefunded%></td>
-                                            <td><%="PO-" + ar.PurchaseOrderNumber%></td>
+                                            <td><%=ar.PurchaseOrderNumber%></td>
                                         </tr>
                                         <%
                                             }

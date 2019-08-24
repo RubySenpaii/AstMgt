@@ -117,6 +117,7 @@ public abstract class BaseServlet extends HttpServlet {
                     }
                 }
                 ArrayList<Equipment> maintenanceEquip = new EquipmentService().GetListOfFlagEquipments(7);
+                ArrayList<RepairLog> repairLogs = new RepairLogService().Get7Flag(7);
                 ArrayList<AssetIncident> incidents = new AssetIncidentService().GetPendingIncidents();
                 ArrayList<Equipment> tempEquipments = new EquipmentService().GetListOfFlagEquipments(6);
                 ArrayList<AssetRequested> arequested = new AssetRequestedService().GetRefundList();
@@ -138,6 +139,7 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("xlimit", exLimist);
                 session.setAttribute("repairEquip", maintenanceEquip);
                 session.setAttribute("refundList", arequested);
+                session.setAttribute("rlogsz", repairLogs);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();
