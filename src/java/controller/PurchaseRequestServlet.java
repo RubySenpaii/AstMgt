@@ -225,6 +225,7 @@ public class PurchaseRequestServlet extends BaseServlet {
             ar.PurchaseRequestId = pr.PurchaseRequestId;
             ar.Quantity = Integer.parseInt(quantity[i]);
             ar.UnitCost = Double.parseDouble(price[i]);
+            ar.QuantityRefunded = 0;
             ALIST.add(ar);
             ExpenditureItem eitem = new ExpenditureItem();
             eitem = eitemDB.GetExpenditureItemsByDivision("General", ar.AssetId ,SharedFormat.getQuarter(),year);

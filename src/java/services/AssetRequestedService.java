@@ -27,7 +27,7 @@ public class AssetRequestedService {
             con.setAutoCommit(false);
 
             String query = "INSERT INTO AssetRequested (" + AssetRequested.COLUMN_ASSET_ID + ", " + AssetRequested.COLUMN_PURCHASE_REQUEST_ID + ", "
-                    + AssetRequested.COLUMN_QUANTITY + ", " + AssetRequested.COLUMN_UNIT_COST + ") "
+                    + AssetRequested.COLUMN_QUANTITY + ", " + AssetRequested.COLUMN_UNIT_COST  + ", " + AssetRequested.COLUMN_QUANTITY_REFUNDED + ") "
                     + "VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             for (AssetRequested assetRequested : assetsRequested) {
@@ -35,6 +35,7 @@ public class AssetRequestedService {
                 ps.setInt(2, assetRequested.PurchaseRequestId);
                 ps.setInt(3, assetRequested.Quantity);
                 ps.setDouble(4, assetRequested.UnitCost);
+                ps.setInt(5, assetRequested.QuantityRefunded);
                 ps.addBatch();
             }
 
@@ -57,14 +58,16 @@ public class AssetRequestedService {
             Connection con = db.getConnection();
             con.setAutoCommit(false);
             
-            String query = "UPDATE AssetRequested SET " +AssetRequested.COLUMN_QUANTITY + " = ?, " + AssetRequested.COLUMN_UNIT_COST + " = ? "
+            String query = "UPDATE AssetRequested SET " + AssetRequested.COLUMN_QUANTITY + " = ?, " 
+                    + AssetRequested.COLUMN_QUANTITY_REFUNDED + " = ?, " + AssetRequested.COLUMN_UNIT_COST + " = ? "
                     + "WHERE " + AssetRequested.COLUMN_PURCHASE_REQUEST_ID + " = ? AND " + AssetRequested.COLUMN_ASSET_ID + " = ?";
             PreparedStatement ps = con.prepareStatement(query);
             for (AssetRequested assetRequested: assetsRequested) {
                 ps.setInt(1, assetRequested.Quantity);
-                ps.setDouble(2, assetRequested.UnitCost);
-                ps.setInt(3, assetRequested.PurchaseRequestId);
-                ps.setInt(4, assetRequested.AssetId);
+                ps.setInt(2, assetRequested.QuantityRefunded);
+                ps.setDouble(3, assetRequested.UnitCost);
+                ps.setInt(4, assetRequested.PurchaseRequestId);
+                ps.setInt(5, assetRequested.AssetId);
                 ps.addBatch();
             }
             
@@ -124,6 +127,7 @@ public class AssetRequestedService {
             assetRequested.PurchaseRequestId = rs.getInt(AssetRequested.COLUMN_PURCHASE_REQUEST_ID);
             assetRequested.Quantity = rs.getInt(AssetRequested.COLUMN_QUANTITY);
             assetRequested.UnitCost = rs.getDouble(AssetRequested.COLUMN_UNIT_COST);
+            assetRequested.QuantityRefunded = rs.getInt(AssetRequested.COLUMN_QUANTITY_REFUNDED);
             
             assetRequested.Asset = new AssetService().GetAsset(assetRequested.AssetId);
             assetsRequested.add(assetRequested);

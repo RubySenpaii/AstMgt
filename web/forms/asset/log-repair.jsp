@@ -73,7 +73,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="fieldT">
-                                                    <td><input type="checkbox" name="record" required ></td>
+                                                    <td><input type="checkbox" name="record" ></td>
                                                     <td><input type="text" name="article"  autocomplete="off" required ></td>
                                                     <td><input type="number" class="cost" name="cost" required autocomplete="off"></td>
                                                 </tr>

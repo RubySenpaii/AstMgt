@@ -384,7 +384,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-panel">
-                                <h3>Temporary Assets</h3>
+                                <h3>Approved Repair Requests</h3>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -409,6 +409,19 @@
                                             }
                                         %>
                                     </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                    } else if (employee.UserLevel.equals("Division Chief") && employee.Division.equals("General")) {
+                    %>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-panel">
+                                <h3>Refund List</h3>
+                                <table class="table table-bordered">
+                                    
                                 </table>
                             </div>
                         </div>

@@ -66,12 +66,56 @@
                             <%=expectedDelivery%> Upcoming Equipment Deliveries
                         </a>
                     </li>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            Retiring Employee
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            Pending Acknowledgment
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            Pending Request for Delivery Inspection
+                        </a>
+                    </li>
+                    <%
+                        Employee user = (Employee) session.getAttribute("user");
+                        if (user.UserLevel.equals("Inspector")) {
+                    %>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            Pending Asset Incident
+                        </a>
+                    </li>
+                    <%
+                        } else if (user.UserLevel.equals("Custodian")) {
+                    %>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            Temporary Asset
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AMS/HomeServlet">
+                            Approved Repair Requests
+                        </a>
+                    </li>
+                    <%
+                        }
+                    %>
+                    <li>
+                        <a href="/AMS/HomeSevlet">
+                            Refund List
+                        </a>
+                    </li>
                 </ul>
             </li>
             <!-- notification dropdown end -->
             <%
                 ExpenditureTracking limit = (ExpenditureTracking) session.getAttribute("limit");
-                Employee user = (Employee) session.getAttribute("user");
                 String display = user.FullName() + " - " + user.Division + ": " + user.UserLevel;
                 ExpenditureLimit xlimit = (ExpenditureLimit) session.getAttribute("xlimit");
                 String bcolor = "white";

@@ -14,11 +14,13 @@ public class AssetRequested {
     public static final String COLUMN_ASSET_ID = "AssetId";
     public static final String COLUMN_QUANTITY = "Quantity";
     public static final String COLUMN_UNIT_COST = "UnitCost";
+    public static final String COLUMN_QUANTITY_REFUNDED = "QuantityRefunded";
     
     public int PurchaseRequestId;
     public int AssetId;
     public int Quantity;
     public double UnitCost;
+    public int QuantityRefunded;
     
     public double getTotalCost(){
         return this.Quantity * this.UnitCost;

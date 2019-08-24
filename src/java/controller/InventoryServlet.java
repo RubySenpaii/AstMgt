@@ -394,7 +394,7 @@ public class InventoryServlet extends BaseServlet {
         String[] newQtys = request.getParameterValues("newQuantity");
         for (int i = 0; i < newQtys.length; i++) {
             assetsQty.add(assetsRequested.get(i).Quantity);
-            assetsRequested.get(i).Quantity = Integer.parseInt(newQtys[i]);
+            assetsRequested.get(i).QuantityRefunded = Integer.parseInt(newQtys[i]);
         }
         session.setAttribute("ogAssetsReq", assetsQty);
         new AssetRequestedService().UpdateAssetRequest(assetsRequested);
