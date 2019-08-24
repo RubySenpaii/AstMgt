@@ -528,7 +528,7 @@
         $(document).ready(function () {
             console.log('ready');
             var notification = document.getElementById("notification");
-            var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
+            var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED", "RE", "PA", "PRDI", "PAI", "TA", "ARR", "RL"];
             for (var notif of arrayNotif) {
                 if (notification.value === 'None') {
                     break;
