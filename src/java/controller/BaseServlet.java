@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import objects.AssetIncident;
+import objects.AssetRequested;
 import objects.AssetTracking;
 import objects.Employee;
 import objects.Equipment;
@@ -26,6 +27,7 @@ import objects.RepairLog;
 import objects.RequestForDeliveryInspection;
 import objects.Supplies;
 import services.AssetIncidentService;
+import services.AssetRequestedService;
 import services.AssetTrackingService;
 import services.EmployeeService;
 import services.EquipmentService;
@@ -117,7 +119,7 @@ public abstract class BaseServlet extends HttpServlet {
                 ArrayList<Equipment> maintenanceEquip = new EquipmentService().GetListOfFlagEquipments(7);
                 ArrayList<AssetIncident> incidents = new AssetIncidentService().GetPendingIncidents();
                 ArrayList<Equipment> tempEquipments = new EquipmentService().GetListOfFlagEquipments(6);
-                ArrayList<Arr
+                ArrayList<AssetRequested> arequested = new AssetRequestedService().GetRefundList();
                 session.setAttribute("limit", limit);
                 session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
                 session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);
@@ -135,6 +137,7 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("tempEquip", tempEquipments);
                 session.setAttribute("xlimit", exLimist);
                 session.setAttribute("repairEquip", maintenanceEquip);
+                session.setAttribute("refundList", arequested);
                 servletAction(request, response);
             } else {
                 ServletContext context = getServletContext();
