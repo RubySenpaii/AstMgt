@@ -118,7 +118,7 @@
                         }
                     %>
                     <li>
-                        <a href="/AMS/HomeSevlet/RL">
+                        <a href="/AMS/HomeServlet/RL">
                            <%=refunds%> Refund List
                         </a>
                     </li>
