@@ -115,13 +115,16 @@
                         </a>
                     </li>
                     <%
-                        }
+                        } else if (user.UserLevel.equals("Division Chief") && user.Division.equals("General")) {
                     %>
                     <li>
                         <a href="/AMS/HomeServlet/RL">
                            <%=refunds%> Refund List
                         </a>
                     </li>
+                    <%
+                        }
+                    %>
                 </ul>
             </li>
             <!-- notification dropdown end -->
