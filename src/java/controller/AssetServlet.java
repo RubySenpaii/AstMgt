@@ -133,6 +133,7 @@ public class AssetServlet extends BaseServlet {
             for (RepairLog rlog : repairRequests) {
                 if (at.AssetTag.equalsIgnoreCase(rlog.AssetTag)) {
                     userRepairRequest.add(rlog);
+                    System.out.println("testtesttest " + rlog.Cost);
                 }
             }
         }

@@ -176,10 +176,14 @@
             // set the computed value to 'totalPrice' textbox
             $('#totalCost').val(sum);
             var currentRepairs = Number($('#totalRepairs').val());
+            var acquiCost = 0;
+            acquiCost = Number($('#acquisition-cost').val());
             console.log('total repairs existing', currentRepairs);
 
-            if (Number($('#acquisition-cost').val()) * 0.3 <= Number($('#totalCost').val()) + currentRepairs) {
-                console.log('total upcoming repairs', (Number($('#acquisition-cost').val()) + currentRepairs));
+            if (acquiCost * 0.3 <= Number($('#totalCost').val()) + currentRepairs) {
+                console.log(currentRepairs);
+                console.log(acquiCost);
+                console.log('total upcoming repairs', (acquiCost) + currentRepairs);
                 console.log(true);
                  $('#warning').prop("hidden", false);
                 $('#submit').prop('disabled', true);

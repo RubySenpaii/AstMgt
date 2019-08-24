@@ -129,6 +129,7 @@ public abstract class BaseServlet extends HttpServlet {
                 session.setAttribute("retiringEmployees", retiringEmployees);
                 session.setAttribute("pendingInspections", pendingInspections);
                 session.setAttribute("poNoInspection", poNoInspections);
+                System.out.println(incidents);
                 session.setAttribute("pendingAssetIncidents", incidents);
                 session.setAttribute("tempEquip", tempEquipments);
                 session.setAttribute("xlimit", exLimist);

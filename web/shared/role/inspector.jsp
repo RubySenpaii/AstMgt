@@ -10,16 +10,6 @@
             </li>
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-book"></i>
-                    <span>Asset Catalog</span>
-                </a>
-                <ul class="sub">
-                    <li><a href="/AMS/AssetServlet/Add">Add Asset</a></li>
-                    <li><a href="/AMS/AssetServlet/List">List of Buyable Assets</a></li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:;">
                     <i class="fa fa-paperclip"></i>
                     <span>Purchase Request</span>
                 </a>
@@ -35,6 +25,17 @@
                 <ul class="sub">
                     <li><a href="/AMS/PurchaseOrderServlet/List">Purchase Order List</a></li>
                     <li><a href="/AMS/DeliveryInspectionServlet/List">Inspection Requests</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa fa-reply"></i>
+                    <span>Report</span>
+                </a>
+                <ul class="sub">
+                    <li><a href="/AMS/ReportServlet/GeneralPPE">General Equipment</a></li>
+                    <li><a href="/AMS/ReportServlet/SpecificPPE">Specific Equipment</a></li>
+                    <!--<li><a href="/AMS/ReportServlet/GeneralSupplies">General Supplies</a></li> -->
                 </ul>
             </li>
         </ul>

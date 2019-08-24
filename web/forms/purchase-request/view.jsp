@@ -122,8 +122,10 @@
                                     <%
                                         String userRole = "";
                                         String userName = "";
+                                        String userDivision = "";
                                         userRole = (String) session.getAttribute("UserLevel");
                                         userName = (String) session.getAttribute("UserName");
+                                        userDivision = (String) session.getAttribute("UserDivision");
                                         boolean editable = false;
                                         try {
                                             String test = pr.Remarks;
@@ -146,20 +148,26 @@
                                                 <button class="btn btn-info" id="prid" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit">Approve</button> 
                                             </form>
                                         </div>
+                                            <%
+                                                if (!userRole.equalsIgnoreCase("finance")){
+                                            %>
                                         <div class="col-lg-6" style="text-align: center">
                                             <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" data-toggle="modal" data-target="#myModal" type="submit">Reject</button> 
                                         </div>
+                                        <%
+                                            }
+                                            %>
 
                                         <%
 
                                             }
-                                            if (pr.ApprovedBy != 0 && pr.ApprovedDate != null && !pr.Requester.FullName().equalsIgnoreCase(userName)) {
+                                            if (pr.ApprovedBy != 0 && pr.ApprovedDate != null && !pr.Requester.FullName().equalsIgnoreCase(userName) && (!userRole.equalsIgnoreCase("finance")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("inspector"))) {
                                         %>
                                         <form action="/AMS/PurchaseOrderServlet/GoToPO">
                                             <button class="btn btn-info" name="prid" value="<%= pr.PurchaseRequestId%>" type="submit"><span class="fa fa-plus">  Purchase Order </span></button> 
                                         </form>
                                         <%
-                                        } else if (editable && pr.ApprovedBy != 0 && pr.ApprovedDate == null) {
+                                        } else if (editable && pr.ApprovedBy != 0 && pr.ApprovedDate == null && (!userRole.equalsIgnoreCase("finance"))) {
                                         %>
 
 
