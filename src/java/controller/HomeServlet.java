@@ -54,6 +54,27 @@ public class HomeServlet extends BaseServlet {
                 case "RPR":
                     session.setAttribute("notification", "RPR");
                     break;
+                case "RE":
+                    session.setAttribute("notification", "RE");
+                    break;
+                case "PA":
+                    session.setAttribute("notification", "PA");
+                    break;
+                case "PRDI":
+                    session.setAttribute("notification", "PRDI");
+                    break;
+                case "PAI":
+                    session.setAttribute("notification", "PAI");
+                    break;
+                case "TA":
+                    session.setAttribute("notification", "TA");
+                    break;
+                case "ARR":
+                    session.setAttribute("notification", "ARR");
+                    break;
+                case "RL":
+                    session.setAttribute("notification", "RL");
+                    break;
                 default:
                     session.setAttribute("notification", "None");
                     break;

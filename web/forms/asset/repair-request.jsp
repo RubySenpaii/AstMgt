@@ -152,7 +152,7 @@
                                     <div class="col-lg-12" style="text-align: center">
                                         <form action="/AMS/AssetServlet/ApproveRepair">
                                             <input type="hidden" id="equipment-cost" value="<%= equipCost%>">
-                                            <input type="hidden" id="total-cost" name="total-cost" value="<%= totalCost%>">
+                                            <input type="hidden" id="total-cost" name="total-cost" value="<%= totalCost + totalCurrCost%>">
                                             
                                             <button class="btn btn-info" id="prid" name="prid" type="submit">Approve</button> 
                                         </form>

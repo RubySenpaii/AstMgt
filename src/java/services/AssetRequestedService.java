@@ -28,7 +28,7 @@ public class AssetRequestedService {
 
             String query = "INSERT INTO AssetRequested (" + AssetRequested.COLUMN_ASSET_ID + ", " + AssetRequested.COLUMN_PURCHASE_REQUEST_ID + ", "
                     + AssetRequested.COLUMN_QUANTITY + ", " + AssetRequested.COLUMN_UNIT_COST + ", " + AssetRequested.COLUMN_QUANTITY_REFUNDED + ") "
-                    + "VALUES (?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             for (AssetRequested assetRequested : assetsRequested) {
                 ps.setInt(1, assetRequested.AssetId);

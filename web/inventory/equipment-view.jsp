@@ -128,7 +128,7 @@
                                         <tfoot>
                                             <tr>
                                                 <th>Grand Total</th>
-                                                <th><%=total%></th>
+                                                <th><%=SharedFormat.doubleToMoney(total)%></th>
                                             </tr>
                                         </tfoot>
                                     </table>

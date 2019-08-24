@@ -288,7 +288,7 @@
                         %>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="PA">
                             <div class="form-panel">
                                 <h3>Pending Acknowledgment</h3>
                                 <table class="table table-bordered">
@@ -329,7 +329,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="PRDI">
                             <div class="form-panel">
                                 <h3>Pending Request For Delivery Inspection</h3>
                                 <table class="table table-bordered">
@@ -375,7 +375,7 @@
                         if (employee.UserLevel.equals("Inspector")) {
                     %>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="PAI">
                             <div class="form-panel">
                                 <h3>Pending Asset Incidents</h3>
                                 <table class="table table-bordered">
@@ -412,7 +412,7 @@
                     } else if (employee.UserLevel.equals("Custodian")) {
                     %>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="TA">
                             <div class="form-panel">
                                 <h3>Temporary Assets</h3>
                                 <table class="table table-bordered">
@@ -442,7 +442,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="ARR">
                             <div class="form-panel">
                                 <h3>Approved Repair Requests</h3>
                                 <table class="table table-bordered">
@@ -461,7 +461,7 @@
                                         %>
                                         <tr>
                                             <td><%=tempEquip.AssetTag%></td>
-                                            <td></td>
+                                            <td><%=tempEquip.AssetName%></td>
                                             <td>
                                                 <a href="/AMS/AssetServlet/RepairRequest2?index=<%=i%>">View</a>
                                             </td>
@@ -479,7 +479,7 @@
                     } else if (employee.UserLevel.equals("Division Chief") && employee.Division.equals("General")) {
                     %>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="RL">
                             <div class="form-panel">
                                 <h3>Refund List</h3>
                                 <table class="table table-bordered">

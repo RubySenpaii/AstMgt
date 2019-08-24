@@ -4,6 +4,10 @@
     Author     : RubySenpaii
 --%>
 
+<%@page import="objects.AssetRequested"%>
+<%@page import="objects.RepairLog"%>
+<%@page import="objects.AssetIncident"%>
+<%@page import="objects.RequestForDeliveryInspection"%>
 <%@page import="objects.ExpenditureLimit"%>
 <%@page import="objects.PurchaseOrder"%>
 <%@page import="objects.Equipment"%>
@@ -31,6 +35,13 @@
                     int expiringEquipment = ((ArrayList<Equipment>) session.getAttribute("expiringEquipments")).size();
                     int rejectedPurchaseRequests = ((ArrayList<PurchaseRequest>) session.getAttribute("rejectedPurchaseRequests")).size();
                     int expectedDelivery = ((ArrayList<PurchaseOrder>) session.getAttribute("purchaseOrderDelivering")).size();
+                    int retiringEmployees = ((ArrayList<Employee>) session.getAttribute("retiringEmployees")).size();
+                    int pendingInspections = ((ArrayList<RequestForDeliveryInspection>) session.getAttribute("pendingInspections")).size();
+                    int poNoPoSize = ((ArrayList<PurchaseOrder>) session.getAttribute("poNoInspection")).size();
+                    int pendingIncidents = ((ArrayList<AssetIncident>) session.getAttribute("pendingAssetIncidents")).size();
+                    int tempEquipSize = ((ArrayList<Equipment>) session.getAttribute("tempEquip")).size();
+                    int rlogsz = ((ArrayList<RepairLog>) session.getAttribute("rlogsz")).size();
+                    int refunds = ((ArrayList<AssetRequested>) session.getAttribute("refundList")).size();
                 %>
                 <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                     <i class="fa fa-bell-o"></i>
@@ -67,18 +78,18 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
-                            Retiring Employee
+                        <a href="/AMS/HomeServlet/RE">
+                            <%=retiringEmployees%> Retiring Employee
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
-                            Pending Acknowledgment
+                        <a href="/AMS/HomeServlet/PA">
+                            <%=pendingInspections%> Pending Acknowledgment
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
-                            Pending Request for Delivery Inspection
+                        <a href="/AMS/HomeServlet/PRDI">
+                            <%=poNoPoSize%> Pending Request for Delivery Inspection
                         </a>
                     </li>
                     <%
@@ -86,29 +97,29 @@
                         if (user.UserLevel.equals("Inspector")) {
                     %>
                     <li>
-                        <a href="/AMS/HomeServlet">
-                            Pending Asset Incident
+                        <a href="/AMS/HomeServlet/PAI">
+                            <%=pendingIncidents%> Pending Asset Incident
                         </a>
                     </li>
                     <%
                         } else if (user.UserLevel.equals("Custodian")) {
                     %>
                     <li>
-                        <a href="/AMS/HomeServlet">
-                            Temporary Asset
+                        <a href="/AMS/HomeServlet/TA">
+                            <%=tempEquipSize%> Temporary Asset
                         </a>
                     </li>
                     <li>
-                        <a href="/AMS/HomeServlet">
-                            Approved Repair Requests
+                        <a href="/AMS/HomeServlet/ARR">
+                            <%=rlogsz%> Approved Repair Requests
                         </a>
                     </li>
                     <%
                         }
                     %>
                     <li>
-                        <a href="/AMS/HomeSevlet">
-                            Refund List
+                        <a href="/AMS/HomeSevlet/RL">
+                           <%=refunds%> Refund List
                         </a>
                     </li>
                 </ul>

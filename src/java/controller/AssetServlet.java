@@ -91,7 +91,7 @@ public class AssetServlet extends BaseServlet {
                     url = RepairRequest(request);
                     break;
                 case "RepairRequest2":
-                    url = RepairRequest(request);
+                    url = RepairRequest2(request);
                     break;
                 case "ApproveRepair":
                     url = ApproveRepair(request);
