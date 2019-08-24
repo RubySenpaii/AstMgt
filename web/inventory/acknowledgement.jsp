@@ -147,8 +147,9 @@
                                                 propertyTag += String.valueOf(item.Asset.AssetType.split(" ")[1].charAt(0));
                                                 propertyTag += "-" + new java.sql.Date(System.currentTimeMillis());
                                                 propertyTag += "-" + autofill + "-" + item.PurchaseRequestId + "00";
+                                                int ordered = item.Quantity - item.QuantityRefunded;
                                                 if (item.Asset.AssetType.toLowerCase().contains("furniture")) {
-                                                    for (int i = 0; i < item.Quantity; i++) {
+                                                    for (int i = 0; i < ordered; i++) {
                                         %>
                                         <tr>
                                             <td><%=item.Asset.StockNo%></td>
@@ -179,7 +180,7 @@
                                         <%
                                             }
                                         } else if (item.Asset.AssetType.toLowerCase().contains("vehicle")) {
-                                            for (int i = 0; i < item.Quantity; i++) {
+                                            for (int i = 0; i < ordered; i++) {
                                         %>
                                         <tr>
                                             <td><%=item.Asset.StockNo%></td>
@@ -234,7 +235,7 @@
                                         <%
                                             }
                                         } else if (item.Asset.AssetType.toLowerCase().contains("appliance")) {
-                                            for (int i = 0; i < item.Quantity; i++) {
+                                            for (int i = 0; i < ordered; i++) {
                                         %>
                                         <tr>
                                             <td><%=item.Asset.StockNo%></td>
@@ -268,7 +269,7 @@
                                         <%
                                             }
                                         } else if (item.Asset.AssetType.toLowerCase().contains("electronics")) {
-                                            for (int i = 0; i < item.Quantity; i++) {
+                                            for (int i = 0; i < ordered; i++) {
                                         %>
                                         <tr>
                                             <td><%=item.Asset.StockNo%></td>

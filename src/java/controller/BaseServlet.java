@@ -117,6 +117,7 @@ public abstract class BaseServlet extends HttpServlet {
                 ArrayList<Equipment> maintenanceEquip = new EquipmentService().GetListOfFlagEquipments(7);
                 ArrayList<AssetIncident> incidents = new AssetIncidentService().GetPendingIncidents();
                 ArrayList<Equipment> tempEquipments = new EquipmentService().GetListOfFlagEquipments(6);
+                ArrayList<Arr
                 session.setAttribute("limit", limit);
                 session.setAttribute("pendingPurchaseRequests", pendingPurchaseRequest);
                 session.setAttribute("approvedPurchaseRequests", approvedPurchaseRequest);

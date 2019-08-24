@@ -4,6 +4,7 @@
     Author     : rubysenpaii
 --%>
 
+<%@page import="objects.AssetRequested"%>
 <%@page import="extra.SharedFormat"%>
 <%@page import="objects.AssetIncident"%>
 <%@page import="objects.RequestForDeliveryInspection"%>
@@ -255,7 +256,7 @@
                             }
                         %>
                         <%
-                            if (!userRole.equalsIgnoreCase("staff") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && !userRole.equalsIgnoreCase("custodian")) {
+                            if (!userRole.equalsIgnoreCase("staff") && (!userDivision.equalsIgnoreCase("general") && !userRole.equalsIgnoreCase("Division Chief")) && (!userDivision.equalsIgnoreCase("management") || !userRole.equalsIgnoreCase("Chief Inspector")) && userRole.equalsIgnoreCase("custodian")) {
                         %>
                         <div class="col-md-6" id="RE">
                             <div class="form-panel">
@@ -479,7 +480,33 @@
                             <div class="form-panel">
                                 <h3>Refund List</h3>
                                 <table class="table table-bordered">
-                                    
+                                    <thead>
+                                        <tr>
+                                            <th>Asset Name</th>
+                                            <th>Unit Cost</th>
+                                            <th>Quantity Ordered</th>
+                                            <th>Quantity Delivered</th>
+                                            <th>Quantity Refunded</th>
+                                            <th>Purchase Order Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            ArrayList<AssetRequested> refundList = (ArrayList<AssetRequested>) session.getAttribute("refundList");
+                                            for (AssetRequested ar : refundList) {
+                                        %>
+                                        <tr>
+                                            <td><%=ar.AssetName%></td>
+                                            <td><%=ar.UnitCost%></td>
+                                            <td><%=ar.Quantity%></td>
+                                            <td><%=ar.Quantity - ar.QuantityRefunded%></td>
+                                            <td><%=ar.QuantityRefunded%></td>
+                                            <td><%="PO-" + ar.PurchaseOrderNumber%></td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -496,28 +523,28 @@
     <jsp:include page="shared/js.jsp"/>
     <script>
         $(document).ready(function () {
-        console.log('ready');
-        var notification = document.getElementById("notification");
-        var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
-        for (var notif of arrayNotif) {
-        if (notification.value === 'None') {
-        break;
-        }
-        if (notification.value === notif) {
-        console.log('will stay')
-        } else {
-        var hiddener = "#";
-        hiddener += notif;
-        console.log(hiddener);
-        $(hiddener).prop("hidden", true);
-        }
-        }
-        var notif = document.getElementById("notif");
-        if (notif.value === 'true') {
-        alert("Successfully saved the expenditure limit v2 !");
-        } else if (notif.value === 'false') {
-        alert("Failed to save the expenditure limit v2 !");
-        }
+            console.log('ready');
+            var notification = document.getElementById("notification");
+            var arrayNotif = ["PPR", "RPR", "APR", "EE", "UED"];
+            for (var notif of arrayNotif) {
+                if (notification.value === 'None') {
+                    break;
+                }
+                if (notification.value === notif) {
+                    console.log('will stay')
+                } else {
+                    var hiddener = "#";
+                    hiddener += notif;
+                    console.log(hiddener);
+                    $(hiddener).prop("hidden", true);
+                }
+            }
+            var notif = document.getElementById("notif");
+            if (notif.value === 'true') {
+                alert("Successfully saved the expenditure limit v2 !");
+            } else if (notif.value === 'false') {
+                alert("Failed to save the expenditure limit v2 !");
+            }
 
         });
     </script>
