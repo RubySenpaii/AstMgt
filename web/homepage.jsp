@@ -456,16 +456,18 @@
                                     <tbody>
                                         <%
                                             ArrayList<RepairLog> repairEquip = (ArrayList<RepairLog>) session.getAttribute("rlogsz");
+                                            int i = 0;
                                             for (RepairLog tempEquip : repairEquip) {
                                         %>
                                         <tr>
                                             <td><%=tempEquip.AssetTag%></td>
                                             <td></td>
                                             <td>
-                                                <a href="/AMS/InventoryServlet/EquipmentView?asset-tag=<%=tempEquip.AssetTag%>">View</a>
+                                                <a href="/AMS/AssetServlet/RepairRequest2?index=<%=i%>">View</a>
                                             </td>
                                         </tr>
                                         <%
+                                                    i++;
                                             }
                                         %>
                                     </tbody>

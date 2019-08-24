@@ -35,4 +35,5 @@ public class RepairLog {
     public Employee Approver;
     public double TotalCost;
     public ArrayList<RepairLog> Logs;
+    public String AssetName;
 }

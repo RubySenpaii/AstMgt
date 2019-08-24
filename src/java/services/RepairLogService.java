@@ -168,12 +168,11 @@ public class RepairLogService {
             DBConnectionFactory db = DBConnectionFactory.getInstance();
             Connection con = db.getConnection();
 
-            String query = "SELECT RL.RequestedBy, RL.RequestedDate, RL.AssetTag, RL.ApprovedBy, RL.ApprovedDate"
+            String query = "SELECT RL.RequestedBy, RL.RequestedDate, RL.AssetTag, RL.ApprovedBy, RL.ApprovedDate, A.AssetName"
                     + ", SUM(Cost) AS \"Total Cost\" "
-                    + "FROM RepairLog JOIN Equipment ON RL.AssetTag = E.AssetTag"
-                    + "WHERE RL.ApprovedBy IS NOT NULL "
-                    + "GROUP BY RL.RequestedBy, RL.RequestedDate, RL.AssetTag, RL.ApprovedBy, RL.ApprovedDate "
-                    + "HAVING E.Flag = ?";
+                    + "FROM RepairLog RL JOIN Equipment E ON RL.AssetTag = E.AssetTag JOIN Asset A ON E.AssetId = A.AssetId "
+                    + "WHERE RL.ApprovedBy IS NOT NULL AND E.Flag = ? "
+                    + "GROUP BY RL.RequestedBy, RL.RequestedDate, RL.AssetTag, RL.ApprovedBy, RL.ApprovedDate, A.AssetName";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, flag);
 
@@ -186,6 +185,7 @@ public class RepairLogService {
                 log.AssetTag = rs.getString(RepairLog.COLUMN_ASSET_TAG);
                 log.RequestedBy = rs.getInt(RepairLog.COLUMN_REQUESTED_BY);
                 log.RequestedDate = rs.getDate(RepairLog.COLUMN_REQUESTED_DATE);
+                log.AssetName = rs.getString("AssetName");
                 log.TotalCost = rs.getDouble("Total Cost");
                 log.Requester = new EmployeeService().FindEmployeeById(log.RequestedBy);
                 if (log.ApprovedBy != 0) {

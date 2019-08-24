@@ -90,6 +90,9 @@ public class AssetServlet extends BaseServlet {
                 case "RepairRequest":
                     url = RepairRequest(request);
                     break;
+                case "RepairRequest2":
+                    url = RepairRequest(request);
+                    break;
                 case "ApproveRepair":
                     url = ApproveRepair(request);
                     break;
@@ -333,6 +336,27 @@ public class AssetServlet extends BaseServlet {
         int idx = Integer.parseInt(request.getParameter("index"));
         HttpSession session = request.getSession();
         RepairLog log = ((ArrayList<RepairLog>) session.getAttribute("repairRequests")).get(idx);
+        ArrayList<AssetIncident> incidents = new AssetIncidentService().GetIncidentsOfAsset(log.AssetTag);
+        session.setAttribute("repairRequest", log);
+        Equipment equip = new Equipment();
+        equip = equipmentService.GetEquipmentWithAssetTag(log.AssetTag);
+        session.setAttribute("incidents", incidents);
+        session.setAttribute("equipmentCost", equip.AcquisitionCost);
+        RepairLogService rlogService = new RepairLogService();
+        ArrayList<RepairLog> rlist = rlogService.GetApprovedRepairLogs(log.AssetTag);
+        double total = 0.00;
+        if (rlist.size() > 0) {
+            System.out.println("RLSIT" + rlist.get(0).TotalCost);
+            total = rlist.get(0).TotalCost;
+        }
+        session.setAttribute("totalCost", total);
+        return "/forms/asset/repair-request.jsp";
+    }
+
+    private String RepairRequest2(HttpServletRequest request) {
+        int idx = Integer.parseInt(request.getParameter("index"));
+        HttpSession session = request.getSession();
+        RepairLog log = ((ArrayList<RepairLog>) session.getAttribute("rlogsz")).get(idx);
         ArrayList<AssetIncident> incidents = new AssetIncidentService().GetIncidentsOfAsset(log.AssetTag);
         session.setAttribute("repairRequest", log);
         Equipment equip = new Equipment();
