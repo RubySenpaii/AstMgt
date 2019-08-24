@@ -49,7 +49,7 @@
                                         <tr>
                                             <td><%=item.Asset.AssetName%></td>
                                             <td><%=item.Quantity%></td>
-                                            <td><input name="newQuantity"></td>
+                                            <td><input name="newQuantity" type="number" max="<%=item.Quantity * 0.1%>"></td>
                                         </tr>
                                         <%
                                             }
