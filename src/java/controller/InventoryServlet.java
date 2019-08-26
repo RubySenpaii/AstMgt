@@ -176,6 +176,7 @@ public class InventoryServlet extends BaseServlet {
         System.out.println("updated rfi: " + new RequestForDeliveryInspectionService().UpdateRequestForDeliveryInspection(rfi));
         int qty = 1, counter = 0;
         double total = 0;
+        try {
         for (int i = 0; i < assetsRequested.size(); i++) {
             try {
                 if (assetsRequested.get(i).Quantity != originalAssetsRequested.get(i)) {
@@ -260,6 +261,9 @@ public class InventoryServlet extends BaseServlet {
                 System.out.println(supplies.AssetId + " is updated: " + result);
             }
             counter++;
+        }
+        } catch (IndexOutOfBoundsException x) {
+            System.out.println("Out of bounds");
         }
         session.setAttribute("invNotif", "true");
         return "/InventoryServlet/EquipmentList";
