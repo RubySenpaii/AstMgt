@@ -485,31 +485,39 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>Purchase Order Number</th>
                                             <th>Asset Name</th>
-                                            <th>Unit Cost</th>
                                             <th>Quantity Ordered</th>
                                             <th>Quantity Delivered</th>
                                             <th>Quantity Refunded</th>
-                                            <th>Purchase Order Number</th>
+                                            <th>Unit Cost</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <%
+                                            double total = 0;
                                             ArrayList<AssetRequested> refundList = (ArrayList<AssetRequested>) session.getAttribute("refundList");
                                             for (AssetRequested ar : refundList) {
+                                                total += (ar.UnitCost * ar.QuantityRefunded)
                                         %>
                                         <tr>
+                                            <td><%=ar.PurchaseOrderNumber%></td>
                                             <td><%=ar.AssetName%></td>
-                                            <td><%=ar.UnitCost%></td>
                                             <td><%=ar.Quantity%></td>
                                             <td><%=ar.Quantity - ar.QuantityRefunded%></td>
                                             <td><%=ar.QuantityRefunded%></td>
-                                            <td><%=ar.PurchaseOrderNumber%></td>
+                                            <td><%=ar.UnitCost%></td>
                                         </tr>
                                         <%
                                             }
                                         %>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">Total</td>
+                                            <td style="text-align: right"><%=SharedFormat.doubleToMoney(total)%></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
