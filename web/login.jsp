@@ -34,8 +34,9 @@
                     <div class="login-wrap">
                         <%
                             boolean checker = true;
-                            boolean loggedout = (boolean) session.getAttribute("loggedout");
+                            boolean loggedout = false;
                             try {
+                                loggedout = (boolean) session.getAttribute("loggedout");
                                 checker = (boolean) session.getAttribute("logged");
                             } catch (Exception e) {
                             }
