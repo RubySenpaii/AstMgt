@@ -85,7 +85,7 @@
                                 <%
                                     if (equipments.size() > 0 && user.EmployeeId == equipments.get(0).CurrentUser.EmployeeId) {
                                 %>
-                                <button class="btn-info" formaction="/AMS/InventoryServlet/RetiringEmployee" type="submit">Retire</button>
+                                <button class="btn-info" formaction="/AMS/InventoryServlet/RetiringEmployee" type="submit" onclick="confirm('Are you sure you want to retire?')">Retire</button>
                                 <%
                                     }
                                     if (user.UserLevel.equals("Custodian")) {
