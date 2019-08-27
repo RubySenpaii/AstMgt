@@ -491,6 +491,7 @@
                                             <th>Quantity Delivered</th>
                                             <th>Quantity Refunded</th>
                                             <th>Unit Cost</th>
+                                            <th>Total Refunded</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -507,6 +508,7 @@
                                             <td><%=ar.Quantity - ar.QuantityRefunded%></td>
                                             <td><%=ar.QuantityRefunded%></td>
                                             <td><%=ar.UnitCost%></td>
+                                            <td><%=SharedFormat.doubleToMoney((ar.UnitCost * ar.QuantityRefunded))%></td>
                                         </tr>
                                         <%
                                             }
@@ -514,7 +516,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="5">Total</td>
+                                            <td colspan="6">Total</td>
                                             <td style="text-align: right"><%=SharedFormat.doubleToMoney(total)%></td>
                                         </tr>
                                     </tfoot>
