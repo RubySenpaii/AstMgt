@@ -25,9 +25,10 @@ public class Logout extends BaseServlet {
     public void servletAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        request.getSession().invalidate();
         ServletContext context = getServletContext();
-        RequestDispatcher rd = context.getRequestDispatcher("/index.jsp");
+        HttpSession session = request.getSession();
+        session.setAttribute("loggedout", true);
+        RequestDispatcher rd = context.getRequestDispatcher("/login.jsp");
         rd.forward(request, response);
-    
     }
 
 }

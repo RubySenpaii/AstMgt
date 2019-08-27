@@ -25,26 +25,31 @@
     <body>
         <!-- Main Content -->
         <div id="login-page">
-              <h1 class="text-center text-bold">Department of Agrarian Reform</h1>
-              <h2 class="text-center text-bold">Asset Management Information System</h2>
-	  	<div class="container">
-	  	
-		      <form class="form-login" action="Login" method="post">
-		        <h2 class="form-login-heading">Log In to Start your Session</h2>
+            <h1 class="text-center text-bold">Department of Agrarian Reform</h1>
+            <h2 class="text-center text-bold">Asset Management Information System</h2>
+            <div class="container">
+
+                <form class="form-login" action="Login" method="post">
+                    <h2 class="form-login-heading">Log In to Start your Session</h2>
                     <div class="login-wrap">
                         <%
                             boolean checker = true;
+                            boolean loggedout = (boolean) session.getAttribute("loggedout");
                             try {
                                 checker = (boolean) session.getAttribute("logged");
                             } catch (Exception e) {
                             }
                             if (!checker) {
                         %>
-
-                        <br>
                         <div class=" alert alert-danger"> <b> Invalid Username/Password ! </b> </div>
 
                         <%                            }
+                        %>
+                        
+                         <input type="hidden" id="loggedout" name="loggedout" value="<%= loggedout%>">
+                        <br>
+                        <%
+                            session.removeAttribute("loggedout");
                         %>
                         <input type="text" class="form-control" name="username" id="username" placeholder="User ID" autofocus>
                         <br>
@@ -60,6 +65,15 @@
         <!-- js placed at the end of the document so the pages load faster -->
         <script src="lib/jquery/jquery.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var notif = document.getElementById("loggedout");
+                console.log(notif)
+                if (notif.value === 'true') {
+                    alert("Successfully logged out !")
+                }
+            });
+        </script>
     </body>
 
 </html>

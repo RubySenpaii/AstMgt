@@ -498,7 +498,7 @@
                                             double total = 0;
                                             ArrayList<AssetRequested> refundList = (ArrayList<AssetRequested>) session.getAttribute("refundList");
                                             for (AssetRequested ar : refundList) {
-                                                total += (ar.UnitCost * ar.QuantityRefunded)
+                                                total += (ar.UnitCost * ar.QuantityRefunded);
                                         %>
                                         <tr>
                                             <td><%=ar.PurchaseOrderNumber%></td>
